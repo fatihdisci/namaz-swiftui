@@ -5,7 +5,13 @@ struct HomeView: View {
 
     @Environment(LanguageService.self) private var lang
 
-    init(viewModel: HomeViewModel = HomeViewModel()) {
+    @MainActor
+    init() {
+        _viewModel = State(initialValue: HomeViewModel())
+    }
+
+    @MainActor
+    init(viewModel: HomeViewModel) {
         _viewModel = State(initialValue: viewModel)
     }
 
