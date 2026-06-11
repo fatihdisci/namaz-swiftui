@@ -80,12 +80,7 @@ struct HomeView: View {
             Spacer()
 
             NavigationLink {
-                // Phase 4+'ta gerçek SettingsView gelecek.
-                ZStack {
-                    Color.vakitBg.ignoresSafeArea()
-                    Text(lang.t("settings.title"))
-                        .foregroundStyle(Color.vakitText)
-                }
+                NotificationSettingsView()
             } label: {
                 Image(systemName: "gearshape.fill")
                     .font(.system(size: 18, weight: .medium))

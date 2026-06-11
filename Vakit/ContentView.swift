@@ -12,7 +12,7 @@ struct ContentView: View {
                     Label(lang.t("tab.home"), systemImage: "house.fill")
                 }
 
-            QiblaPlaceholderView()
+            QiblaView()
                 .tabItem {
                     Label(lang.t("tab.qibla"), systemImage: "location.north.line.fill")
                 }
@@ -23,18 +23,6 @@ struct ContentView: View {
                 }
         }
         .tint(.vakitAccent)
-    }
-}
-
-private struct QiblaPlaceholderView: View {
-    @Environment(LanguageService.self) private var lang
-
-    var body: some View {
-        ZStack {
-            Color.vakitBg.ignoresSafeArea()
-            Text(lang.t("tab.qibla"))
-                .foregroundStyle(Color.vakitText)
-        }
     }
 }
 

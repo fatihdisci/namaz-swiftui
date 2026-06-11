@@ -17,6 +17,7 @@ final class StorageService {
         static let method = "method"
         static let language = "language"
         static let onboardingDone = "onboarding_done"
+        static let notificationSettings = "notification_settings"
     }
 
     private static let cacheRetentionDays = 30
@@ -126,6 +127,18 @@ final class StorageService {
     var onboardingDone: Bool {
         get { defaults.bool(forKey: Key.onboardingDone) }
         set { defaults.set(newValue, forKey: Key.onboardingDone) }
+    }
+
+    /// Vakit bazlı bildirim ayarları. Kayıtlı değer yoksa veya bozuksa varsayılana döner.
+    var notificationSettings: NotificationSettings {
+        get {
+            guard let data = defaults.data(forKey: Key.notificationSettings) else { return .default }
+            return (try? decoder.decode(NotificationSettings.self, from: data)) ?? .default
+        }
+        set {
+            guard let data = try? encoder.encode(newValue) else { return }
+            defaults.set(data, forKey: Key.notificationSettings)
+        }
     }
 
     // MARK: - Hicri Tarih (offline)

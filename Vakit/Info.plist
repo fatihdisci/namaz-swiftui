@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Vakit uses your location to find the Qibla direction and calculate accurate prayer times for where you are. Your location is never stored or shared.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Vakit uses your location to find the Qibla direction and calculate accurate prayer times for where you are. Your location is never stored or shared.</string>
+</dict>
+</plist>
