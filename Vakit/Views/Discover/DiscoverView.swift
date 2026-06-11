@@ -9,7 +9,6 @@ struct DiscoverView: View {
     private let hadith = DailyContent.dailyHadith()
     private let dua = DailyContent.dailyDua()
     private let dailyEsma = DailyContent.dailyEsma()
-    private let allEsma = DailyContent.esma
 
     var body: some View {
         ZStack {
@@ -30,9 +29,6 @@ struct DiscoverView: View {
                     }
                     if let dailyEsma {
                         esmaCard(dailyEsma)
-                    }
-                    if !allEsma.isEmpty {
-                        esmaList
                     }
                 }
                 .padding(.horizontal, 20)
@@ -126,38 +122,6 @@ struct DiscoverView: View {
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
-        }
-    }
-
-    private var esmaList: some View {
-        section(titleKey: "discover.allEsma", icon: "list.bullet", tint: .fajr) {
-            VStack(spacing: 0) {
-                ForEach(allEsma) { esma in
-                    HStack(spacing: 12) {
-                        Text("\(esma.number)")
-                            .font(.system(.caption, design: .rounded, weight: .semibold))
-                            .foregroundStyle(Color.vakitAccent)
-                            .frame(width: 30, height: 30)
-                            .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
-
-                        VStack(alignment: .leading, spacing: 1) {
-                            Text(esma.name(language: lang.currentLanguage))
-                                .font(.system(.subheadline, design: .default, weight: .semibold))
-                                .foregroundStyle(Color.vakitText)
-                            Text(esma.meaning(language: lang.currentLanguage))
-                                .font(.caption)
-                                .foregroundStyle(Color.vakitTextDim)
-                        }
-
-                        Spacer()
-                    }
-                    .padding(.vertical, 8)
-
-                    if esma.id != allEsma.last?.id {
-                        Divider().overlay(Color.vakitBorder)
-                    }
-                }
-            }
         }
     }
 

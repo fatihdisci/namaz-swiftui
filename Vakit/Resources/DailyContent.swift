@@ -142,7 +142,12 @@ enum DailyContent {
     }
 
     static func dailyEsma(for date: Date = Date()) -> EsmaName? {
-        esma.isEmpty ? nil : esma[dayIndex(for: date) % esma.count]
+        guard !esma.isEmpty else { return nil }
+
+        // Aynı gün boyunca sabit, günler arasında karışık dağılan seçim.
+        let seed = dayIndex(for: date)
+        let mixedIndex = (seed &* 37 &+ 17) % esma.count
+        return esma[mixedIndex]
     }
 
     private static func load<T: Decodable>(_ resource: String) -> [T] {
