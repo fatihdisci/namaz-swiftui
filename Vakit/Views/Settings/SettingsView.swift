@@ -6,8 +6,10 @@ struct SettingsView: View {
     @State private var viewModel = SettingsViewModel()
     @State private var cityPickerModel = OnboardingViewModel()
     @State private var showCityPicker = false
+    @State private var showProGate = false
 
     @Environment(LanguageService.self) private var lang
+    @Environment(PurchaseService.self) private var purchaseService
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
@@ -35,6 +37,11 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showCityPicker) {
             cityPickerSheet
+        }
+        .sheet(isPresented: $showProGate) {
+            ProGateView()
+                .environment(lang)
+                .environment(purchaseService)
         }
     }
 
@@ -147,15 +154,23 @@ struct SettingsView: View {
 
     private var proSection: some View {
         section(titleKey: "settings.pro") {
-            HStack {
-                rowLabel(icon: "sparkles", titleKey: "settings.pro")
-                Spacer()
-                // Phase 6'da RevenueCat paywall'a bağlanacak.
-                Text(lang.t("settings.proComingSoon"))
-                    .font(.caption)
-                    .foregroundStyle(Color.vakitTextDim)
+            Button {
+                showProGate = true
+            } label: {
+                HStack {
+                    rowLabel(icon: "sparkles", titleKey: "settings.pro")
+                    Spacer()
+                    Text(lang.t(purchaseService.hasProAccess ? "pro.active" : "pro.unlock"))
+                        .font(.caption)
+                        .foregroundStyle(
+                            purchaseService.hasProAccess ? Color.vakitAccent : Color.vakitTextDim
+                        )
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                .padding(.vertical, 10)
             }
-            .padding(.vertical, 10)
         }
     }
 
@@ -232,6 +247,7 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environment(LanguageService.shared)
+        .environment(PurchaseService.shared)
         .modelContainer(for: [City.self, KazaEntry.self], inMemory: true)
         .preferredColorScheme(.dark)
 }

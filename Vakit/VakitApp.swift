@@ -5,7 +5,12 @@ import SwiftData
 struct VakitApp: App {
     @State private var languageService = LanguageService.shared
     @State private var notificationService = NotificationService.shared
+    @State private var purchaseService = PurchaseService.shared
     @State private var showOnboarding = !StorageService.shared.onboardingDone
+
+    init() {
+        PurchaseService.shared.configure()
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -13,6 +18,7 @@ struct VakitApp: App {
                 .preferredColorScheme(.dark)
                 .environment(languageService)
                 .environment(notificationService)
+                .environment(purchaseService)
                 .fullScreenCover(isPresented: $showOnboarding) {
                     OnboardingView {
                         showOnboarding = false
@@ -26,6 +32,7 @@ struct VakitApp: App {
                     if !showOnboarding {
                         await rescheduleNotifications()
                     }
+                    await purchaseService.refresh()
                 }
         }
         .modelContainer(for: [City.self, KazaEntry.self])

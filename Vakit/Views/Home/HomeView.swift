@@ -6,9 +6,15 @@ struct HomeView: View {
 
     @Environment(LanguageService.self) private var lang
 
-    init(viewModel: HomeViewModel = HomeViewModel(), onOpenDiscover: @escaping () -> Void = {}) {
+    @MainActor
+    init(viewModel: HomeViewModel, onOpenDiscover: @escaping () -> Void = {}) {
         _viewModel = State(initialValue: viewModel)
         self.onOpenDiscover = onOpenDiscover
+    }
+
+    @MainActor
+    init(onOpenDiscover: @escaping () -> Void = {}) {
+        self.init(viewModel: HomeViewModel(), onOpenDiscover: onOpenDiscover)
     }
 
     var body: some View {

@@ -5,8 +5,10 @@ import UIKit
 /// "Bu bilgilendirme amaçlıdır, fetva değildir" uyarısı her zaman görünür.
 struct SafarView: View {
     @State private var viewModel = SafarViewModel()
+    @State private var showProGate = false
 
     @Environment(LanguageService.self) private var lang
+    @Environment(PurchaseService.self) private var purchaseService
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -26,6 +28,31 @@ struct SafarView: View {
                 .padding(.top, 16)
                 .padding(.bottom, 32)
             }
+            .blur(radius: purchaseService.hasProAccess ? 0 : 8)
+            .allowsHitTesting(purchaseService.hasProAccess)
+
+            if !purchaseService.hasProAccess {
+                Button {
+                    showProGate = true
+                } label: {
+                    Label(lang.t("pro.unlock"), systemImage: "lock.fill")
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .foregroundStyle(Color.vakitText)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 16)
+                        .background(Color.vakitAccent)
+                        .clipShape(Capsule())
+                }
+            }
+        }
+        .task {
+            await purchaseService.refresh()
+            showProGate = !purchaseService.hasProAccess
+        }
+        .sheet(isPresented: $showProGate) {
+            ProGateView()
+                .environment(lang)
+                .environment(purchaseService)
         }
     }
 
@@ -219,5 +246,6 @@ struct SafarView: View {
 #Preview {
     SafarView()
         .environment(LanguageService.shared)
+        .environment(PurchaseService.shared)
         .preferredColorScheme(.dark)
 }
