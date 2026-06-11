@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var homeViewModel = HomeViewModel()
+
     var body: some View {
         TabView {
-            HomePlaceholderView()
+            HomeView(viewModel: homeViewModel)
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
@@ -19,16 +21,6 @@ struct ContentView: View {
                 }
         }
         .tint(.vakitAccent)
-    }
-}
-
-private struct HomePlaceholderView: View {
-    var body: some View {
-        ZStack {
-            Color.vakitBg.ignoresSafeArea()
-            Text("Home")
-                .foregroundStyle(Color.vakitText)
-        }
     }
 }
 

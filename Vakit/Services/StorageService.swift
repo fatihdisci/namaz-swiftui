@@ -13,6 +13,7 @@ final class StorageService {
     private enum Key {
         static let timesPrefix = "times_"
         static let selectedCityID = "selected_city_id"
+        static let selectedCity = "selected_city"
         static let method = "method"
         static let language = "language"
         static let onboardingDone = "onboarding_done"
@@ -88,6 +89,22 @@ final class StorageService {
         set { defaults.set(newValue?.uuidString, forKey: Key.selectedCityID) }
     }
 
+    /// Seçili şehrin Codable kopyası. Widget ve ViewModel'ler SwiftData context'i
+    /// olmadan da şehre erişebilsin diye App Group'ta tutulur.
+    var selectedCity: CitySnapshot? {
+        get {
+            guard let data = defaults.data(forKey: Key.selectedCity) else { return nil }
+            return try? decoder.decode(CitySnapshot.self, from: data)
+        }
+        set {
+            if let newValue, let data = try? encoder.encode(newValue) {
+                defaults.set(data, forKey: Key.selectedCity)
+            } else {
+                defaults.removeObject(forKey: Key.selectedCity)
+            }
+        }
+    }
+
     var method: CalculationMethod {
         get {
             guard defaults.object(forKey: Key.method) != nil else { return .default }
@@ -134,6 +151,65 @@ final class StorageService {
             day: String(components.day ?? 1),
             monthName: monthName,
             year: String(components.year ?? 1)
+        )
+    }
+}
+
+/// Seçili şehrin hafif Codable kopyası (SwiftData `City` modelinden bağımsız).
+struct CitySnapshot: Codable, Equatable {
+    var id: UUID
+    var name: String
+    var latitude: Double
+    var longitude: Double
+    var country: String
+    var timezone: String
+    var method: CalculationMethod
+    var school: Int
+
+    init(
+        id: UUID = UUID(),
+        name: String,
+        latitude: Double,
+        longitude: Double,
+        country: String,
+        timezone: String,
+        method: CalculationMethod = .diyanet,
+        school: Int = 1
+    ) {
+        self.id = id
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.country = country
+        self.timezone = timezone
+        self.method = method
+        self.school = school
+    }
+
+    init(city: City) {
+        self.init(
+            id: city.id,
+            name: city.name,
+            latitude: city.latitude,
+            longitude: city.longitude,
+            country: city.country,
+            timezone: city.timezone,
+            method: city.method,
+            school: city.school
+        )
+    }
+
+    /// SwiftData context'ine bağlı olmayan geçici bir `City` örneği üretir.
+    func makeCity() -> City {
+        City(
+            id: id,
+            name: name,
+            latitude: latitude,
+            longitude: longitude,
+            country: country,
+            timezone: timezone,
+            method: method,
+            school: school
         )
     }
 }
