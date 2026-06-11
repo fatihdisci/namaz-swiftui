@@ -1,8 +1,8 @@
-# Vakit - App Store Connect Metadata
+# Ufuk - Namaz Vakitleri - App Store Connect Metadata
 
 ## Uygulama Bilgileri
 
-- Uygulama adı: Vakit
+- Uygulama adı: Ufuk - Namaz Vakitleri
 - Bundle ID: `com.vakit.app`
 - Sürüm: `1.0.0`
 - Build: `1`
