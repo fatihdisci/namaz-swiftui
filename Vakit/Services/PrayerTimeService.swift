@@ -28,12 +28,15 @@ final class PrayerTimeService {
 
     /// Aladhan'dan tek günün vakitlerini çeker.
     /// URL: https://api.aladhan.com/v1/timings/DD-MM-YYYY?latitude=&longitude=&method=&school=
+    /// `timezone`: vakitlerin ait olduğu şehrin saat dilimi. API, saatleri şehrin yerel
+    /// saatinde döndürdüğü için Date'e çevirirken bu dilim kullanılır (nil → cihaz dilimi).
     func fetchFromAladhan(
         lat: Double,
         lng: Double,
         date: Date,
         method: CalculationMethod,
-        school: Int
+        school: Int,
+        timezone: TimeZone? = nil
     ) async throws -> PrayerTimes {
         var components = URLComponents(string: "\(Self.apiBaseURL)/timings/\(Self.apiDateString(from: date))")
         components?.queryItems = [
@@ -55,19 +58,33 @@ final class PrayerTimeService {
         let payload = try JSONDecoder().decode(AladhanResponse.self, from: data)
         guard payload.code == 200 else { throw ServiceError.invalidResponse }
 
+        let tz = timezone ?? .current
         let timings = payload.data.timings
         guard
-            let fajr = Self.combine(date: date, withTiming: timings.fajr),
-            let sunrise = Self.combine(date: date, withTiming: timings.sunrise),
-            let dhuhr = Self.combine(date: date, withTiming: timings.dhuhr),
-            let asr = Self.combine(date: date, withTiming: timings.asr),
-            let maghrib = Self.combine(date: date, withTiming: timings.maghrib),
-            let isha = Self.combine(date: date, withTiming: timings.isha)
+            let fajr = Self.combine(date: date, withTiming: timings.fajr, timeZone: tz),
+            let sunrise = Self.combine(date: date, withTiming: timings.sunrise, timeZone: tz),
+            let dhuhr = Self.combine(date: date, withTiming: timings.dhuhr, timeZone: tz),
+            let asr = Self.combine(date: date, withTiming: timings.asr, timeZone: tz),
+            let maghrib = Self.combine(date: date, withTiming: timings.maghrib, timeZone: tz),
+            let isha = Self.combine(date: date, withTiming: timings.isha, timeZone: tz)
         else {
             throw ServiceError.incompleteTimings
         }
 
-        let hijri = payload.data.date.hijri
+        // Hicri tarih API'den gelmezse offline hesapla — decode bu yüzden çökmesin.
+        let hijriDay: String
+        let hijriMonthName: String
+        let hijriYear: String
+        if let hijri = payload.data.date?.hijri {
+            hijriDay = hijri.day
+            hijriMonthName = hijri.month.en
+            hijriYear = hijri.year
+        } else {
+            let offline = storage.offlineHijri(for: date)
+            hijriDay = offline.day
+            hijriMonthName = offline.monthName
+            hijriYear = offline.year
+        }
 
         return PrayerTimes(
             date: Calendar.current.startOfDay(for: date),
@@ -77,9 +94,9 @@ final class PrayerTimeService {
             asr: asr,
             maghrib: maghrib,
             isha: isha,
-            hijriDay: hijri.day,
-            hijriMonthName: hijri.month.en,
-            hijriYear: hijri.year
+            hijriDay: hijriDay,
+            hijriMonthName: hijriMonthName,
+            hijriYear: hijriYear
         )
     }
 
@@ -92,36 +109,58 @@ final class PrayerTimeService {
         lng: Double,
         date: Date,
         method: CalculationMethod,
-        school: Int = 1
+        school: Int = 1,
+        timezone: TimeZone? = nil
     ) -> PrayerTimes {
+        calculateWithAdhan(lat: lat, lng: lng, date: date, method: method, school: school, timezone: timezone)
+            ?? approximateTimes(for: date)
+    }
+
+    /// Adhan Swift hesabı. Uç enlemlerde (güneş batmayan/doğmayan günler) nil dönebilir.
+    private func calculateWithAdhan(
+        lat: Double,
+        lng: Double,
+        date: Date,
+        method: CalculationMethod,
+        school: Int,
+        timezone: TimeZone?
+    ) -> PrayerTimes? {
         let coordinates = Coordinates(latitude: lat, longitude: lng)
         var params = Self.adhanParameters(for: method)
         params.madhab = school == 1 ? .hanafi : .shafi
 
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        let hijri = storage.offlineHijri(for: date)
-        let day = Calendar.current.startOfDay(for: date)
+        // Gün, şehrin saat dilimine göre belirlenir; Adhan mutlak (UTC tabanlı)
+        // Date döndürdüğü için sonuç her cihaz diliminde doğrudur.
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timezone ?? .current
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
 
-        if let adhanTimes = Adhan.PrayerTimes(
+        guard let adhanTimes = Adhan.PrayerTimes(
             coordinates: coordinates,
             date: components,
             calculationParameters: params
-        ) {
-            return PrayerTimes(
-                date: day,
-                fajr: adhanTimes.fajr,
-                sunrise: adhanTimes.sunrise,
-                dhuhr: adhanTimes.dhuhr,
-                asr: adhanTimes.asr,
-                maghrib: adhanTimes.maghrib,
-                isha: adhanTimes.isha,
-                hijriDay: hijri.day,
-                hijriMonthName: hijri.monthName,
-                hijriYear: hijri.year
-            )
-        }
+        ) else { return nil }
 
-        // Çok nadir durum (uç enlemler): kaba yaklaşık değerlerle asla boş dönme.
+        let hijri = storage.offlineHijri(for: date)
+        return PrayerTimes(
+            date: Calendar.current.startOfDay(for: date),
+            fajr: adhanTimes.fajr,
+            sunrise: adhanTimes.sunrise,
+            dhuhr: adhanTimes.dhuhr,
+            asr: adhanTimes.asr,
+            maghrib: adhanTimes.maghrib,
+            isha: adhanTimes.isha,
+            hijriDay: hijri.day,
+            hijriMonthName: hijri.monthName,
+            hijriYear: hijri.year
+        )
+    }
+
+    /// Çok nadir durum (uç enlemler): kaba yaklaşık değerlerle asla boş dönme.
+    /// Bu sonuç cache'e YAZILMAZ — gerçek veri gibi 30 gün yaşamasın.
+    private func approximateTimes(for date: Date) -> PrayerTimes {
+        let day = Calendar.current.startOfDay(for: date)
+        let hijri = storage.offlineHijri(for: date)
         func approximate(_ hour: Int, _ minute: Int) -> Date {
             Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: day) ?? day
         }
@@ -145,6 +184,7 @@ final class PrayerTimeService {
     func getPrayerTimes(city: City, date: Date) async -> PrayerTimes {
         let method = city.method
         let school = city.school
+        let timezone = TimeZone(identifier: city.timezone)
 
         if let cached = storage.cachedPrayerTimes(for: date),
            cached.matches(
@@ -156,37 +196,44 @@ final class PrayerTimeService {
             return cached.times
         }
 
-        let times: PrayerTimes
+        var times: PrayerTimes?
         do {
             times = try await fetchFromAladhan(
                 lat: city.latitude,
                 lng: city.longitude,
                 date: date,
                 method: method,
-                school: school
+                school: school,
+                timezone: timezone
             )
         } catch {
-            times = calculateLocally(
+            times = calculateWithAdhan(
                 lat: city.latitude,
                 lng: city.longitude,
                 date: date,
                 method: method,
-                school: school
+                school: school,
+                timezone: timezone
             )
         }
 
-        storage.cachePrayerTimes(
-            CachedPrayerTimes(
-                times: times,
-                latitude: city.latitude,
-                longitude: city.longitude,
-                method: method.rawValue,
-                school: school,
-                cachedAt: Date()
-            ),
-            for: date
-        )
-        return times
+        // Yalnızca gerçek (API veya Adhan) sonuçlar cache'lenir.
+        if let times {
+            storage.cachePrayerTimes(
+                CachedPrayerTimes(
+                    times: times,
+                    latitude: city.latitude,
+                    longitude: city.longitude,
+                    method: method.rawValue,
+                    school: school,
+                    cachedAt: Date()
+                ),
+                for: date
+            )
+            return times
+        }
+
+        return approximateTimes(for: date)
     }
 
     /// Uygulama açılışında bugün + sonraki 7 günü cache'e doldurur.
@@ -211,7 +258,10 @@ final class PrayerTimeService {
         if let tomorrow {
             return (.fajr, tomorrow.fajr)
         }
-        return (.fajr, today.fajr.addingTimeInterval(24 * 60 * 60))
+        // Yaklaşıklama: takvimle gün ekle (DST geçişlerinde sabit 86400 sn kayar).
+        let approximateFajr = Calendar.current.date(byAdding: .day, value: 1, to: today.fajr)
+            ?? today.fajr.addingTimeInterval(24 * 60 * 60)
+        return (.fajr, approximateFajr)
     }
 
     // MARK: - Yardımcılar
@@ -225,7 +275,8 @@ final class PrayerTimeService {
     }
 
     /// "05:43 (+03)" gibi bir timing string'inden HH:mm çekip verilen güne yerleştirir.
-    static func combine(date: Date, withTiming timing: String) -> Date? {
+    /// `timeZone`: saatin ait olduğu (şehrin) saat dilimi.
+    static func combine(date: Date, withTiming timing: String, timeZone: TimeZone = .current) -> Date? {
         let scanner = Scanner(string: timing)
         guard
             let hour = scanner.scanInt(),
@@ -235,7 +286,9 @@ final class PrayerTimeService {
             (0..<60).contains(minute)
         else { return nil }
 
-        return Calendar.current.date(
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        return calendar.date(
             bySettingHour: hour,
             minute: minute,
             second: 0,
@@ -259,13 +312,13 @@ final class PrayerTimeService {
 
 struct AladhanResponse: Codable {
     let code: Int
-    let status: String
+    let status: String?
     let data: AladhanData
 }
 
 struct AladhanData: Codable {
     let timings: AladhanTimings
-    let date: AladhanDate
+    let date: AladhanDate?
 }
 
 struct AladhanTimings: Codable {
@@ -287,8 +340,8 @@ struct AladhanTimings: Codable {
 }
 
 struct AladhanDate: Codable {
-    let readable: String
-    let hijri: AladhanHijri
+    let readable: String?
+    let hijri: AladhanHijri?
 }
 
 struct AladhanHijri: Codable {
