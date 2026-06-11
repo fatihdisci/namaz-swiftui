@@ -86,6 +86,142 @@
         }
       }
     },
+    "daily.viewInDiscover": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See in Discover"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keşfet'te gör"
+          }
+        }
+      }
+    },
+    "discover.allEsma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All 99 Divine Names"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tüm Esmaül Hüsna (99)"
+          }
+        }
+      }
+    },
+    "discover.dua": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Supplication"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Duası"
+          }
+        }
+      }
+    },
+    "discover.esma": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Divine Name of the Day"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Esması"
+          }
+        }
+      }
+    },
+    "discover.hadith": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hadith of the Day"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Hadisi"
+          }
+        }
+      }
+    },
+    "discover.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily verse, hadith, supplication, and Divine Names."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük ayet, hadis, dua ve Esmaül Hüsna."
+          }
+        }
+      }
+    },
+    "discover.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discover"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keşfet"
+          }
+        }
+      }
+    },
+    "discover.verse": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verse of the Day"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Ayeti"
+          }
+        }
+      }
+    },
     "error.generic": {
       "extractionState": "manual",
       "localizations": {
@@ -1276,6 +1412,23 @@
         }
       }
     },
+    "qibla.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get your location once, then hold the phone flat and follow the needle."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konumunuzu bir kez alın, ardından telefonu düz tutarak ibreyi takip edin."
+          }
+        }
+      }
+    },
     "qibla.title": {
       "extractionState": "manual",
       "localizations": {
@@ -1310,6 +1463,40 @@
         }
       }
     },
+    "safar.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calculate the direct distance between your home city and current location."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ev şehriniz ile anlık konumunuz arasındaki kuş uçuşu mesafeyi hesaplayın."
+          }
+        }
+      }
+    },
+    "safar.disclaimer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This information is for educational purposes only and does not constitute a religious ruling (fatwa). For definitive guidance, consult the Diyanet or a qualified religious authority."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu bilgiler bilgilendirme amaçlıdır, fetva niteliği taşımaz. Kesin hüküm için Diyanet İşleri Başkanlığı'na veya yetkili bir din görevlisine danışınız."
+          }
+        }
+      }
+    },
     "safar.distance": {
       "extractionState": "manual",
       "localizations": {
@@ -1323,6 +1510,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ km"
+          }
+        }
+      }
+    },
+    "safar.distanceFromHome": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are %@ km from your home city."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ev şehrinize %@ km uzaktasınız."
           }
         }
       }
@@ -1344,6 +1548,91 @@
         }
       }
     },
+    "safar.infoDistance": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This distance is the modern equivalent of the Hanafi \"three-day journey\" (approximately 18 farsakhs). Today, journeys of 90 km or more by road are considered within the scope of travel rulings. Different schools of thought may have varying opinions on distance and duration."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu mesafe, Hanefî fıkhındaki \"üç günlük yol\" (yaklaşık 18 fersah) ölçüsünün modern karşılığıdır. Günümüzde kara yolu ile 90 km ve üzeri mesafeye yapılan yolculuklar seferîlik kapsamında değerlendirilir. Mezhepler arasında mesafe ve süre konusunda farklı görüşler bulunabilir."
+          }
+        }
+      }
+    },
+    "safar.infoPrayer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A traveler shortens (qasr) the 4-rakat obligatory prayers to 2 rakats. There are also concessions regarding sunnah prayers. Traveler status continues during the journey and at the destination if staying fewer than 15 days."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seferî olan kişi, 4 rekatlı farz namazları 2 rekat olarak kısaltarak (kasr) kılar. Sünnet namazlar konusunda da kolaylıklar bulunur. Seferîlik hali, yolculuk süresince ve varış yerinde 15 günden az kalmak şartıyla devam eder."
+          }
+        }
+      }
+    },
+    "safar.infoSource": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source: Diyanet (Presidency of Religious Affairs, Turkey) — Qur'an, An-Nisa 4:101; Hanafi jurisprudence (Ibn Abidin, Radd al-Muhtar)."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaynak: Diyanet İşleri Başkanlığı — Kur'an-ı Kerim, Nisâ Suresi 4:101; Hanefî fıkhı (İbn Âbidîn, Reddü'l-Muhtâr)."
+          }
+        }
+      }
+    },
+    "safar.infoTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About Traveler Status (Safar)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seferîlik Hakkında"
+          }
+        }
+      }
+    },
+    "safar.infoWhat": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Islamic jurisprudence, traveler status (safar) allows a person traveling a certain distance from their home to benefit from certain worship concessions. Turkey's Diyanet (Presidency of Religious Affairs) follows the Hanafi school and sets the travel distance at approximately 90 km."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seferîlik, İslam fıkhında kişinin ikamet ettiği yerden belirli bir mesafe uzağa yolculuk yapması durumunda bazı ibadet kolaylıklarından faydalanmasını sağlayan bir hükümdür. Diyanet İşleri Başkanlığı, Hanefî mezhebine göre seferîlik mesafesini yaklaşık 90 km olarak esas alır."
+          }
+        }
+      }
+    },
     "safar.locationNote": {
       "extractionState": "manual",
       "localizations": {
@@ -1361,6 +1650,23 @@
         }
       }
     },
+    "safar.noHomeCity": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select your city first from onboarding or Settings."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Önce onboarding'den veya Ayarlar'dan şehrinizi seçin."
+          }
+        }
+      }
+    },
     "safar.notTraveler": {
       "extractionState": "manual",
       "localizations": {
@@ -1374,6 +1680,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seferi değilsiniz."
+          }
+        }
+      }
+    },
+    "safar.threshold": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traveler threshold: %ld km"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seferi eşiği: %ld km"
+          }
+        }
+      }
+    },
+    "safar.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traveler Status"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seferi Hesabı"
           }
         }
       }
@@ -1412,6 +1752,57 @@
         }
       }
     },
+    "settings.asrHanafi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hanafi"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hanefi"
+          }
+        }
+      }
+    },
+    "settings.asrSchool": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asr Prayer / School"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İkindi Vakti / Mezhep"
+          }
+        }
+      }
+    },
+    "settings.asrStandard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard (Shafi)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standart (Şafi)"
+          }
+        }
+      }
+    },
     "settings.city": {
       "extractionState": "manual",
       "localizations": {
@@ -1425,6 +1816,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Şehir"
+          }
+        }
+      }
+    },
+    "settings.general": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genel"
           }
         }
       }
@@ -1497,6 +1905,40 @@
         }
       }
     },
+    "settings.pro": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vakit Pro"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vakit Pro"
+          }
+        }
+      }
+    },
+    "settings.proComingSoon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro features are coming soon."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro özellikler çok yakında."
+          }
+        }
+      }
+    },
     "settings.support": {
       "extractionState": "manual",
       "localizations": {
@@ -1548,6 +1990,23 @@
         }
       }
     },
+    "tab.discover": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discover"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keşfet"
+          }
+        }
+      }
+    },
     "tab.home": {
       "extractionState": "manual",
       "localizations": {
@@ -1578,6 +2037,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kıble"
+          }
+        }
+      }
+    },
+    "tab.safar": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safar"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seferi"
           }
         }
       }

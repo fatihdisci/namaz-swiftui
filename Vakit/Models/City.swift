@@ -10,7 +10,9 @@ final class City {
     var country: String
     var timezone: String
     var method: CalculationMethod
-    /// Aladhan `school`: 0 = Shafi, 1 = Hanafi (Türkiye varsayılan)
+    /// Aladhan `school` / Asr mezhebi: 0 = Standart (Şafi), 1 = Hanefi.
+    /// Varsayılan 0 — Diyanet'in yayımladığı ikindi vakti standart Asr'dır;
+    /// Hanefi'ye sabitlemek ikindiyi ~70+ dk geç gösterir. Kullanıcı seçimlidir.
     var school: Int
     var isPrimary: Bool
 
@@ -22,7 +24,7 @@ final class City {
         country: String,
         timezone: String,
         method: CalculationMethod = .diyanet,
-        school: Int = 1,
+        school: Int = 0,
         isPrimary: Bool = false
     ) {
         self.id = id
