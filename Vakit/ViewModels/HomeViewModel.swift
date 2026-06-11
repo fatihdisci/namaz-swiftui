@@ -11,7 +11,7 @@ final class HomeViewModel {
     var nextPrayerTime: Date = Date()
     var countdownString: String = ""
     var hijriDate: String = ""
-    var dailyContent: DailyContentEntry
+    var dailyVerse: Verse?
     var isLoading: Bool = false
     var currentCity: City?
     var needsOnboarding: Bool = false
@@ -28,7 +28,7 @@ final class HomeViewModel {
         self.storage = storage
         self.prayerService = prayerService
         self.languageService = languageService
-        self.dailyContent = DailyContent.today()
+        self.dailyVerse = DailyContent.dailyVerse()
 
         if let snapshot = storage.selectedCity {
             currentCity = snapshot.makeCity()
@@ -39,7 +39,7 @@ final class HomeViewModel {
 
     /// Bugün + yarın vakitlerini yükler, sonraki 7 günü cache'e doldurur.
     func load() async {
-        dailyContent = DailyContent.today()
+        dailyVerse = DailyContent.dailyVerse()
 
         guard let city = currentCity ?? storage.selectedCity.map({ $0.makeCity() }) else {
             needsOnboarding = true
@@ -68,6 +68,19 @@ final class HomeViewModel {
 
     /// Her saniye View'dan (TimelineView) çağrılır: geri sayımı ve sıradaki vakti günceller.
     func tick(date: Date) {
+        // Ayarlar'dan şehir/metod/mezhep değiştiyse yeniden yükle
+        // (ucuz kontrol: JSON decode yok, sadece ID + iki Int okunur).
+        if !isLoading, let city = currentCity,
+           storage.selectedCityID != city.id
+               || storage.method != city.method
+               || storage.school != city.school {
+            currentCity = storage.selectedCity?.makeCity()
+            todaysTimes = nil
+            tomorrowsTimes = nil
+            Task { await load() }
+            return
+        }
+
         guard let today = todaysTimes else {
             // Onboarding az önce bitmiş olabilir: şehir geldiyse veriyi yükle.
             if !isLoading, storage.selectedCity != nil {

@@ -2,17 +2,13 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModel
+    private let onOpenDiscover: () -> Void
 
     @Environment(LanguageService.self) private var lang
 
-    @MainActor
-    init() {
-        _viewModel = State(initialValue: HomeViewModel())
-    }
-
-    @MainActor
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel = HomeViewModel(), onOpenDiscover: @escaping () -> Void = {}) {
         _viewModel = State(initialValue: viewModel)
+        self.onOpenDiscover = onOpenDiscover
     }
 
     var body: some View {
@@ -60,10 +56,15 @@ struct HomeView: View {
                         }
                     }
 
-                    DailyContentCard(
-                        entry: viewModel.dailyContent,
-                        language: lang.currentLanguage
-                    )
+                    qiblaCard
+
+                    if let verse = viewModel.dailyVerse {
+                        DailyContentCard(
+                            verse: verse,
+                            language: lang.currentLanguage,
+                            onOpenDiscover: onOpenDiscover
+                        )
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -84,17 +85,44 @@ struct HomeView: View {
             }
 
             Spacer()
+        }
+    }
 
-            NavigationLink {
-                NotificationSettingsView()
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 18, weight: .medium))
+    /// Kıble artık sekme değil: ana ekrandan push ile açılır.
+    private var qiblaCard: some View {
+        NavigationLink {
+            QiblaView()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "safari.fill")
+                    .font(.system(size: 22, weight: .medium))
+                    .foregroundStyle(Color.vakitAccent)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(lang.t("qibla.title"))
+                        .font(.system(.body, design: .default, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                    Text(lang.t("qibla.subtitle"))
+                        .font(.footnote)
+                        .foregroundStyle(Color.vakitTextDim)
+                        .multilineTextAlignment(.leading)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(Color.vakitTextDim)
-                    .padding(10)
-                    .background(Circle().fill(Color.vakitSurface))
-                    .overlay(Circle().strokeBorder(Color.vakitBorder, lineWidth: 1))
             }
+            .padding(16)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
+            )
         }
     }
 }

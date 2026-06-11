@@ -147,6 +147,10 @@ final class OnboardingViewModel {
         guard var snapshot = selectedCity else { return }
         snapshot.method = method
 
+        // Tek birincil şehir: mevcut kayıtların isPrimary işaretini kaldır.
+        let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
+        existing.forEach { $0.isPrimary = false }
+
         let city = snapshot.makeCity()
         city.isPrimary = true
         context.insert(city)
@@ -155,6 +159,7 @@ final class OnboardingViewModel {
         storage.selectedCity = snapshot
         storage.selectedCityID = snapshot.id
         storage.method = method
+        storage.school = snapshot.school
     }
 }
 

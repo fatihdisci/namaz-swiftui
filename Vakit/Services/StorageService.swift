@@ -15,6 +15,7 @@ final class StorageService {
         static let selectedCityID = "selected_city_id"
         static let selectedCity = "selected_city"
         static let method = "method"
+        static let school = "school"
         static let language = "language"
         static let onboardingDone = "onboarding_done"
         static let notificationSettings = "notification_settings"
@@ -114,6 +115,12 @@ final class StorageService {
         set { defaults.set(newValue.rawValue, forKey: Key.method) }
     }
 
+    /// Asr mezhebi: 0 = Standart (Şafi, varsayılan), 1 = Hanefi.
+    var school: Int {
+        get { defaults.integer(forKey: Key.school) }
+        set { defaults.set(newValue, forKey: Key.school) }
+    }
+
     /// "tr" veya "en"
     var language: String {
         get { defaults.string(forKey: Key.language) ?? Self.deviceDefaultLanguage }
@@ -187,7 +194,7 @@ struct CitySnapshot: Codable, Equatable {
         country: String,
         timezone: String,
         method: CalculationMethod = .diyanet,
-        school: Int = 1
+        school: Int = 0
     ) {
         self.id = id
         self.name = name

@@ -103,13 +103,13 @@ final class PrayerTimeService {
     // MARK: - Offline hesaplama (Adhan Swift)
 
     /// İnternet yokken Adhan Swift ile lokal hesaplama.
-    /// diyanet → `CalculationMethod.turkey` + Hanafi madhab (school == 1).
+    /// school: 0 = Standart (Şafi, varsayılan), 1 = Hanefi madhab.
     func calculateLocally(
         lat: Double,
         lng: Double,
         date: Date,
         method: CalculationMethod,
-        school: Int = 1,
+        school: Int = 0,
         timezone: TimeZone? = nil
     ) -> PrayerTimes {
         calculateWithAdhan(lat: lat, lng: lng, date: date, method: method, school: school, timezone: timezone)
