@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "Vakit";
+"NSLocationWhenInUseUsageDescription" = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
