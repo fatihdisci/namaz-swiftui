@@ -8,6 +8,8 @@ struct PrayerListRow: View {
     let isPast: Bool
     let isNext: Bool
 
+    @Environment(LanguageService.self) private var lang
+
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: prayer.systemImage)
@@ -15,7 +17,7 @@ struct PrayerListRow: View {
                 .foregroundStyle(isNext ? prayer.accentColor : Color.vakitTextDim)
                 .frame(width: 28)
 
-            Text(prayer.localizedName)
+            Text(lang.t(prayer.localizationKey))
                 .font(.system(.body, design: .default, weight: isNext ? .semibold : .medium))
                 .foregroundStyle(isNext ? prayer.accentColor : Color.vakitText)
 
@@ -47,4 +49,5 @@ struct PrayerListRow: View {
     }
     .padding()
     .background(Color.vakitBg)
+    .environment(LanguageService.shared)
 }

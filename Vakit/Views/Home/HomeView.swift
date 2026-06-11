@@ -3,6 +3,8 @@ import SwiftUI
 struct HomeView: View {
     @State private var viewModel: HomeViewModel
 
+    @Environment(LanguageService.self) private var lang
+
     init(viewModel: HomeViewModel = HomeViewModel()) {
         _viewModel = State(initialValue: viewModel)
     }
@@ -23,14 +25,6 @@ struct HomeView: View {
         }
         .task {
             await viewModel.load()
-        }
-        .fullScreenCover(isPresented: $viewModel.needsOnboarding) {
-            // Phase 3'te gerçek OnboardingView gelecek.
-            ZStack {
-                Color.vakitBg.ignoresSafeArea()
-                Text("Onboarding")
-                    .foregroundStyle(Color.vakitText)
-            }
         }
     }
 
@@ -62,7 +56,7 @@ struct HomeView: View {
 
                     DailyContentCard(
                         entry: viewModel.dailyContent,
-                        language: StorageService.shared.language
+                        language: lang.currentLanguage
                     )
                 }
                 .padding(.horizontal, 20)
@@ -89,7 +83,7 @@ struct HomeView: View {
                 // Phase 4+'ta gerçek SettingsView gelecek.
                 ZStack {
                     Color.vakitBg.ignoresSafeArea()
-                    Text("Settings")
+                    Text(lang.t("settings.title"))
                         .foregroundStyle(Color.vakitText)
                 }
             } label: {
@@ -106,4 +100,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environment(LanguageService.shared)
 }

@@ -18,15 +18,16 @@ final class HomeViewModel {
 
     private let storage: StorageService
     private let prayerService: PrayerTimeService
-    private var language: String
+    private let languageService: LanguageService
 
     init(
         storage: StorageService = .shared,
-        prayerService: PrayerTimeService = .shared
+        prayerService: PrayerTimeService = .shared,
+        languageService: LanguageService = .shared
     ) {
         self.storage = storage
         self.prayerService = prayerService
-        self.language = storage.language
+        self.languageService = languageService
         self.dailyContent = DailyContent.today()
 
         if let snapshot = storage.selectedCity {
@@ -38,7 +39,6 @@ final class HomeViewModel {
 
     /// Bugün + yarın vakitlerini yükler, sonraki 7 günü cache'e doldurur.
     func load() async {
-        language = storage.language
         dailyContent = DailyContent.today()
 
         guard let city = currentCity ?? storage.selectedCity.map({ $0.makeCity() }) else {
@@ -68,7 +68,13 @@ final class HomeViewModel {
 
     /// Her saniye View'dan (TimelineView) çağrılır: geri sayımı ve sıradaki vakti günceller.
     func tick(date: Date) {
-        guard let today = todaysTimes else { return }
+        guard let today = todaysTimes else {
+            // Onboarding az önce bitmiş olabilir: şehir geldiyse veriyi yükle.
+            if !isLoading, storage.selectedCity != nil {
+                Task { await load() }
+            }
+            return
+        }
 
         // Gün değiştiyse (gece yarısı) verileri yeniden yükle.
         if Calendar.current.startOfDay(for: date) != today.date, !isLoading {
@@ -79,22 +85,17 @@ final class HomeViewModel {
         let next = prayerService.nextPrayer(from: today, tomorrow: tomorrowsTimes, at: date)
         nextPrayer = next.prayer
         nextPrayerTime = next.time
-        countdownString = Self.countdownString(
-            until: next.time,
-            from: date,
-            language: language
-        )
+        countdownString = countdownString(until: next.time, from: date)
     }
 
-    /// Geçerli dile göre geri sayım metni.
+    /// String Catalog üzerinden geri sayım metni.
     /// TR: "2s 34dk sonra" / "34dk sonra" / "Az kaldı"
     /// EN: "in 2h 34m" / "in 34m" / "Almost time"
-    static func countdownString(until target: Date, from now: Date, language: String) -> String {
+    func countdownString(until target: Date, from now: Date) -> String {
         let interval = max(0, target.timeIntervalSince(now))
-        let isTurkish = language == "tr"
 
         if interval < 60 {
-            return isTurkish ? "Az kaldı" : "Almost time"
+            return languageService.t("countdown.soon")
         }
 
         let totalMinutes = Int(interval) / 60
@@ -102,9 +103,9 @@ final class HomeViewModel {
         let minutes = totalMinutes % 60
 
         if hours == 0 {
-            return isTurkish ? "\(minutes)dk sonra" : "in \(minutes)m"
+            return languageService.t("countdown.minutes", minutes)
         }
-        return isTurkish ? "\(hours)s \(minutes)dk sonra" : "in \(hours)h \(minutes)m"
+        return languageService.t("countdown.hoursMinutes", hours, minutes)
     }
 
     /// Liste için satır durumları.
@@ -115,23 +116,6 @@ final class HomeViewModel {
         let time = today.time(for: prayer)
         let isNext = prayer == nextPrayer && Calendar.current.isDate(time, inSameDayAs: date)
         return (time, time <= date, isNext)
-    }
-}
-
-// MARK: - Geçici lokalizasyon yardımcıları
-// Phase 3'te String Catalog (Localizable.xcstrings) bunların yerini alacak.
-
-extension Prayer {
-    var localizedName: String {
-        let isTurkish = StorageService.shared.language == "tr"
-        switch self {
-        case .fajr: return isTurkish ? "Sabah" : "Fajr"
-        case .sunrise: return isTurkish ? "Güneş" : "Sunrise"
-        case .dhuhr: return isTurkish ? "Öğle" : "Dhuhr"
-        case .asr: return isTurkish ? "İkindi" : "Asr"
-        case .maghrib: return isTurkish ? "Akşam" : "Maghrib"
-        case .isha: return isTurkish ? "Yatsı" : "Isha"
-        }
     }
 }
 

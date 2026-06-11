@@ -6,13 +6,15 @@ struct NextPrayerCard: View {
     let time: Date
     let countdown: String
 
+    @Environment(LanguageService.self) private var lang
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
                 Image(systemName: prayer.systemImage)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundStyle(prayer.accentColor)
-                Text(prayer.localizedName)
+                Text(lang.t(prayer.localizationKey))
                     .font(.system(.headline, design: .default, weight: .medium))
                     .foregroundStyle(Color.vakitTextDim)
                 Spacer()
@@ -52,4 +54,5 @@ struct NextPrayerCard: View {
     NextPrayerCard(prayer: .maghrib, time: Date(), countdown: "2s 34dk sonra")
         .padding()
         .background(Color.vakitBg)
+        .environment(LanguageService.shared)
 }

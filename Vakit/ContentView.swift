@@ -3,21 +3,23 @@ import SwiftUI
 struct ContentView: View {
     @State private var homeViewModel = HomeViewModel()
 
+    @Environment(LanguageService.self) private var lang
+
     var body: some View {
         TabView {
             HomeView(viewModel: homeViewModel)
                 .tabItem {
-                    Label("Home", systemImage: "house.fill")
+                    Label(lang.t("tab.home"), systemImage: "house.fill")
                 }
 
             QiblaPlaceholderView()
                 .tabItem {
-                    Label("Qibla", systemImage: "location.north.line.fill")
+                    Label(lang.t("tab.qibla"), systemImage: "location.north.line.fill")
                 }
 
             SettingsPlaceholderView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
+                    Label(lang.t("tab.settings"), systemImage: "gearshape.fill")
                 }
         }
         .tint(.vakitAccent)
@@ -25,20 +27,24 @@ struct ContentView: View {
 }
 
 private struct QiblaPlaceholderView: View {
+    @Environment(LanguageService.self) private var lang
+
     var body: some View {
         ZStack {
             Color.vakitBg.ignoresSafeArea()
-            Text("Qibla")
+            Text(lang.t("tab.qibla"))
                 .foregroundStyle(Color.vakitText)
         }
     }
 }
 
 private struct SettingsPlaceholderView: View {
+    @Environment(LanguageService.self) private var lang
+
     var body: some View {
         ZStack {
             Color.vakitBg.ignoresSafeArea()
-            Text("Settings")
+            Text(lang.t("tab.settings"))
                 .foregroundStyle(Color.vakitText)
         }
     }
@@ -46,4 +52,5 @@ private struct SettingsPlaceholderView: View {
 
 #Preview {
     ContentView()
+        .environment(LanguageService.shared)
 }
