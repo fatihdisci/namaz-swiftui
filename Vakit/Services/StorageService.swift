@@ -19,6 +19,7 @@ final class StorageService {
         static let language = "language"
         static let onboardingDone = "onboarding_done"
         static let notificationSettings = "notification_settings"
+        static let kazaCounts = "kaza_counts"
     }
 
     private static let cacheRetentionDays = 30
@@ -148,6 +149,18 @@ final class StorageService {
         }
     }
 
+    /// Beş farz vakit için kullanıcının girdiği kaza adetleri.
+    var kazaCounts: KazaCounts {
+        get {
+            guard let data = defaults.data(forKey: Key.kazaCounts) else { return .empty }
+            return (try? decoder.decode(KazaCounts.self, from: data)) ?? .empty
+        }
+        set {
+            guard let data = try? encoder.encode(newValue) else { return }
+            defaults.set(data, forKey: Key.kazaCounts)
+        }
+    }
+
     // MARK: - Hicri Tarih (offline)
 
     /// Offline hicri tarih: `Calendar(identifier: .islamicUmmAlQura)` ile hesaplanır.
@@ -172,6 +185,44 @@ final class StorageService {
             monthName: monthName,
             year: String(components.year ?? 1)
         )
+    }
+}
+
+struct KazaCounts: Codable, Equatable {
+    var fajr = 0
+    var dhuhr = 0
+    var asr = 0
+    var maghrib = 0
+    var isha = 0
+
+    static let empty = KazaCounts()
+
+    var total: Int {
+        fajr + dhuhr + asr + maghrib + isha
+    }
+
+    subscript(prayer: Prayer) -> Int {
+        get {
+            switch prayer {
+            case .fajr: fajr
+            case .dhuhr: dhuhr
+            case .asr: asr
+            case .maghrib: maghrib
+            case .isha: isha
+            case .sunrise: 0
+            }
+        }
+        set {
+            let value = max(0, newValue)
+            switch prayer {
+            case .fajr: fajr = value
+            case .dhuhr: dhuhr = value
+            case .asr: asr = value
+            case .maghrib: maghrib = value
+            case .isha: isha = value
+            case .sunrise: break
+            }
+        }
     }
 }
 

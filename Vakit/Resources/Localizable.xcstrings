@@ -297,6 +297,74 @@
         }
       }
     },
+    "kaza.storageNote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your counts are stored securely on this device."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sayaçlarınız güvenli şekilde bu cihazda saklanır."
+          }
+        }
+      }
+    },
+    "kaza.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Track your missed prayers"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaza namazı sayılarını takip et"
+          }
+        }
+      }
+    },
+    "kaza.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missed Prayers"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaza Namazları"
+          }
+        }
+      }
+    },
+    "kaza.total" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Missed Prayers"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Kaza"
+          }
+        }
+      }
+    },
     "kaza.completed" : {
       "extractionState" : "manual",
       "localizations" : {

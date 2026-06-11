@@ -5,6 +5,7 @@ struct HomeView: View {
     private let onOpenDiscover: () -> Void
 
     @Environment(LanguageService.self) private var lang
+    @Environment(PurchaseService.self) private var purchaseService
 
     @MainActor
     init(viewModel: HomeViewModel, onOpenDiscover: @escaping () -> Void = {}) {
@@ -63,6 +64,7 @@ struct HomeView: View {
                     }
 
                     qiblaCard
+                    kazaCard
 
                     if let verse = viewModel.dailyVerse {
                         DailyContentCard(
@@ -131,9 +133,53 @@ struct HomeView: View {
             )
         }
     }
+
+    private var kazaCard: some View {
+        NavigationLink {
+            KazaView()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "checklist")
+                    .font(.system(size: 22, weight: .medium))
+                    .foregroundStyle(Color.vakitAccent)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(lang.t("kaza.title"))
+                        .font(.system(.body, design: .default, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                    Text(lang.t("kaza.subtitle"))
+                        .font(.footnote)
+                        .foregroundStyle(Color.vakitTextDim)
+                        .multilineTextAlignment(.leading)
+                }
+
+                Spacer()
+
+                if !purchaseService.hasProAccess {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitAccent)
+                }
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+            .padding(16)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
+            )
+        }
+    }
 }
 
 #Preview {
     HomeView()
         .environment(LanguageService.shared)
+        .environment(PurchaseService.shared)
 }
