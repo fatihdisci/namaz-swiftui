@@ -86,9 +86,10 @@ final class QiblaViewModel: NSObject {
 extension QiblaViewModel: CLLocationManagerDelegate {
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         let value = newHeading.trueHeading >= 0 ? newHeading.trueHeading : newHeading.magneticHeading
-        // CLLocationManager delegate callback'leri her zaman main thread'de çağrılır,
-        // ama defensive: DispatchQueue.main.async ile UI state güncellemesini garantile.
-        DispatchQueue.main.async { [weak self] in
+        // CLLocationManager delegate callback'i main thread'de garantidir.
+        // assumeIsolated: DispatchQueue.main.async gibi @MainActor context'ini kırmaz,
+        // @Observable tracking için gerekli olan actor isolation'ı korur.
+        MainActor.assumeIsolated { [weak self] in
             self?.heading = value
         }
     }
