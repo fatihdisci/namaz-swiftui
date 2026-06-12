@@ -1,91 +1,38 @@
 import SwiftUI
 
-// MARK: - Paylaşım Boyutu
+// MARK: - Paylaşım Görseli — Tüm Günlük İçerik
 
-enum ShareImageSize: String, CaseIterable, Identifiable {
-    case story = "Story (1080×1920)"
-    case square = "Kare (1080×1080)"
-
-    var id: String { rawValue }
-
-    var cgSize: CGSize {
-        switch self {
-        case .story:  return CGSize(width: 1080, height: 1920)
-        case .square: return CGSize(width: 1080, height: 1080)
-        }
-    }
-
-    var displayName: String {
-        switch self {
-        case .story:  return "Story"
-        case .square: return "Kare"
-        }
-    }
-}
-
-// MARK: - İçerik Tipi
-
-enum ShareableContentType {
-    case verse(Verse)
-    case hadith(Hadith)
-    case dua(Dua)
-    case esma(EsmaName)
-
-    var tint: Color {
-        switch self {
-        case .verse:  return .vakitAccent
-        case .hadith: return .sunrise
-        case .dua:    return .isha
-        case .esma:   return .fajr
-        }
-    }
-}
-
-// MARK: - Ana Paylaşım Görseli View'ı
-
-/// Discover içeriğini paylaşılabilir görsel olarak render eden view.
-/// `ImageRenderer` ile UIImage'a dönüştürülür.
+/// Discover'daki tüm günlük içeriği tek Story (1080×1920) görselinde toplar.
 struct ShareableContentView: View {
-    let contentType: ShareableContentType
-    let language: String       // "tr" veya "en"
+    let verse: Verse?
+    let hadith: Hadith?
+    let dua: Dua?
+    let language: String
+
+    private let size = CGSize(width: 1080, height: 1920)
 
     var body: some View {
         ZStack {
-            // Aurora gradient arka plan
             auroraBackground
-
-            // İslami geometrik motif (8 köşeli yıldız pattern)
             IslamicStarPattern()
-                .stroke(contentType.tint.opacity(0.06), lineWidth: 1)
-                .padding(40)
+                .stroke(Color.vakitAccent.opacity(0.05), lineWidth: 1)
+                .padding(60)
 
-            // İçerik katmanı
             VStack(spacing: 0) {
-                // Üst: wordmark
                 wordmark
-                    .padding(.top, 60)
+                    .padding(.top, 80)
 
-                Spacer()
+                separator
+                    .padding(.top, 20)
 
-                // Merkez: içerik
-                contentArea
-                    .padding(.horizontal, 60)
+                contentStack
+                    .padding(.horizontal, 80)
+                    .padding(.top, 50)
 
-                Spacer()
-
-                // Alt: separatör + watermark
-                VStack(spacing: 12) {
-                    Rectangle()
-                        .fill(Color.vakitAccent.opacity(0.3))
-                        .frame(height: 1)
-                        .padding(.horizontal, 80)
-
-                    watermark
-                }
-                .padding(.bottom, 50)
+                Spacer(minLength: 80)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(width: size.width, height: size.height)
         .background(Color.vakitBg)
     }
 
@@ -94,70 +41,73 @@ struct ShareableContentView: View {
     private var auroraBackground: some View {
         ZStack {
             Color.vakitBg
-
             LinearGradient(
-                colors: [
-                    Color.vakitBg,
-                    Color(hex: "#1a0a2e"),
-                    Color.vakitBg,
-                ],
+                colors: [Color.vakitBg, Color(hex: "#1a0a2e"), Color.vakitBg],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
-
-            // Yumuşak ışık lekeleri
             Circle()
-                .fill(contentType.tint.opacity(0.08))
+                .fill(Color.vakitAccent.opacity(0.06))
+                .frame(width: 600, height: 600)
+                .blur(radius: 150)
+                .offset(x: -200, y: -250)
+            Circle()
+                .fill(Color.fajr.opacity(0.04))
                 .frame(width: 500, height: 500)
                 .blur(radius: 120)
-                .offset(x: -150, y: -200)
-
-            Circle()
-                .fill(Color.vakitAccent.opacity(0.05))
-                .frame(width: 400, height: 400)
-                .blur(radius: 100)
-                .offset(x: 150, y: 200)
+                .offset(x: 200, y: 300)
         }
     }
 
     // MARK: - Wordmark
 
     private var wordmark: some View {
-        Text("Ufuk")
-            .font(.system(size: 28, weight: .semibold, design: .serif))
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [Color.vakitAccent, Color.sunrise],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .tracking(4)
+        Text("vakit.app")
+            .font(.system(size: 30, weight: .semibold, design: .monospaced))
+            .foregroundStyle(Color.vakitAccent)
+            .tracking(3)
     }
 
-    // MARK: - İçerik alanı
+    // MARK: - Separator
 
-    @ViewBuilder
-    private var contentArea: some View {
-        switch contentType {
-        case .verse(let verse):
-            verseContent(verse)
-        case .hadith(let hadith):
-            hadithContent(hadith)
-        case .dua(let dua):
-            duaContent(dua)
-        case .esma(let esma):
-            esmaContent(esma)
+    private var separator: some View {
+        Rectangle()
+            .fill(Color.vakitAccent.opacity(0.25))
+            .frame(width: 200, height: 1)
+    }
+
+    // MARK: - İçerik
+
+    private var contentStack: some View {
+        VStack(spacing: 50) {
+            if let verse { verseSection(verse) }
+            if let hadith {
+                thinSeparator
+                hadithSection(hadith)
+            }
+            if let dua {
+                thinSeparator
+                duaSection(dua)
+            }
         }
+    }
+
+    private var thinSeparator: some View {
+        Rectangle()
+            .fill(Color.vakitBorder)
+            .frame(height: 1)
+            .padding(.horizontal, 100)
     }
 
     // MARK: Ayet
 
-    private func verseContent(_ verse: Verse) -> some View {
+    private func verseSection(_ verse: Verse) -> some View {
         VStack(spacing: 24) {
+            sectionLabel("Günün Ayeti", icon: "book.fill")
+
             if let arabic = verse.arabic, !arabic.isEmpty {
                 Text(arabic)
-                    .font(.system(size: 42, weight: .medium))
+                    .font(.system(size: 46, weight: .medium))
                     .foregroundStyle(Color.vakitText)
                     .multilineTextAlignment(.trailing)
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -165,69 +115,63 @@ struct ShareableContentView: View {
             }
 
             Text("\(verse.surahName) · \(verse.verseNumber)")
-                .font(.system(size: 20, weight: .medium))
+                .font(.system(size: 22, weight: .medium))
                 .foregroundStyle(Color.vakitAccent)
 
             Text(verse.text(language: language))
-                .font(.system(size: 22, weight: .regular))
+                .font(.system(size: 24, weight: .regular))
                 .foregroundStyle(Color(hex: "#e8e0d0"))
                 .multilineTextAlignment(.center)
                 .lineSpacing(8)
-                .lineLimit(3)
+                .lineLimit(4)
         }
     }
 
     // MARK: Hadis
 
-    private func hadithContent(_ hadith: Hadith) -> some View {
+    private func hadithSection(_ hadith: Hadith) -> some View {
         VStack(spacing: 24) {
-            Image(systemName: "quote.opening")
-                .font(.system(size: 48, weight: .thin))
-                .foregroundStyle(Color.vakitAccent)
+            sectionLabel("Günün Hadisi", icon: "text.quote")
 
             Text(hadith.text(language: language))
-                .font(.system(size: 22, weight: .regular))
+                .font(.system(size: 24, weight: .regular))
                 .foregroundStyle(Color.vakitText)
                 .multilineTextAlignment(.center)
                 .lineSpacing(8)
                 .lineLimit(5)
+                .padding(.horizontal, 20)
 
-            if !hadith.grade.isEmpty {
-                Text(hadith.grade)
-                    .font(.system(size: 18, weight: .semibold))
+            HStack(spacing: 12) {
+                Text(hadith.source)
+                    .font(.system(size: 20, weight: .medium))
                     .foregroundStyle(Color.vakitAccent)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
-                    .background(
-                        Capsule()
-                            .fill(Color.vakitAccent.opacity(0.12))
-                    )
+                if !hadith.grade.isEmpty {
+                    Text("·")
+                        .foregroundStyle(Color.vakitTextDim)
+                    Text(hadith.grade)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(Color.vakitAccent.opacity(0.8))
+                }
             }
         }
     }
 
     // MARK: Dua
 
-    private func duaContent(_ dua: Dua) -> some View {
-        VStack(spacing: 20) {
+    private func duaSection(_ dua: Dua) -> some View {
+        VStack(spacing: 24) {
+            sectionLabel("Günün Duası", icon: "hands.and.sparkles.fill")
+
             if let arabic = dua.arabic, !arabic.isEmpty {
                 Text(arabic)
-                    .font(.system(size: 32, weight: .medium))
+                    .font(.system(size: 36, weight: .medium))
                     .foregroundStyle(Color.vakitText)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
             }
 
-            if let transliteration = dua.transliteration, !transliteration.isEmpty {
-                Text(transliteration)
-                    .font(.system(size: 18, weight: .regular))
-                    .italic()
-                    .foregroundStyle(Color.vakitTextDim)
-                    .multilineTextAlignment(.center)
-            }
-
             Text(dua.text(language: language))
-                .font(.system(size: 20, weight: .regular))
+                .font(.system(size: 22, weight: .regular))
                 .foregroundStyle(Color(hex: "#e8e0d0"))
                 .multilineTextAlignment(.center)
                 .lineSpacing(6)
@@ -235,36 +179,34 @@ struct ShareableContentView: View {
         }
     }
 
-    // MARK: Esma
+    // MARK: - Bölüm başlığı
 
-    private func esmaContent(_ esma: EsmaName) -> some View {
-        VStack(spacing: 20) {
-            Text(esma.name(language: language))
-                .font(.system(size: 56, weight: .bold, design: .serif))
-                .foregroundStyle(Color.vakitText)
-
-            Rectangle()
-                .fill(Color.vakitAccent.opacity(0.4))
-                .frame(width: 60, height: 2)
-
-            Text(esma.meaning(language: language))
-                .font(.system(size: 28, weight: .medium))
-                .foregroundStyle(Color.vakitAccent)
-                .multilineTextAlignment(.center)
+    private func sectionLabel(_ title: String, icon: String) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 20, weight: .medium))
+            Text(title)
+                .font(.system(size: 22, weight: .semibold, design: .serif))
         }
+        .foregroundStyle(Color.vakitAccent)
     }
+}
 
-    // MARK: - Watermark
+// MARK: - Görsel Üretici
 
-    private var watermark: some View {
-        HStack {
-            Spacer()
-            Text("vakit.app")
-                .font(.system(size: 16, weight: .regular, design: .monospaced))
-                .foregroundStyle(Color.vakitTextDim.opacity(0.6))
-        }
-        .padding(.horizontal, 80)
-    }
+@MainActor
+func makeShareImage(verse: Verse?, hadith: Hadith?, dua: Dua?, language: String) -> UIImage? {
+    let view = ShareableContentView(
+        verse: verse,
+        hadith: hadith,
+        dua: dua,
+        language: language
+    )
+    .frame(width: 1080, height: 1920)
+
+    let renderer = ImageRenderer(content: view)
+    renderer.scale = 1.0
+    return renderer.uiImage
 }
 
 // MARK: - İslami 8 Köşeli Yıldız Pattern
@@ -282,7 +224,6 @@ struct IslamicStarPattern: Shape {
             let radius = i.isMultiple(of: 2) ? outerRadius : innerRadius
             let x = center.x + CGFloat(cos(angle)) * radius
             let y = center.y + CGFloat(sin(angle)) * radius
-
             if i == 0 {
                 path.move(to: CGPoint(x: x, y: y))
             } else {
@@ -291,7 +232,6 @@ struct IslamicStarPattern: Shape {
         }
         path.closeSubpath()
 
-        // 45° döndürülmüş iç içe bir yıldız daha
         let innerPattern = path
             .rotation(.degrees(22.5), anchor: .center)
             .path(in: CGRect(
@@ -300,44 +240,36 @@ struct IslamicStarPattern: Shape {
                 width: outerRadius * 1.1,
                 height: outerRadius * 1.1
             ))
-
         path.addPath(innerPattern)
         return path
     }
 }
 
-// MARK: - UIImage Generator
-
-@MainActor
-func generateShareImage(contentType: ShareableContentType, language: String, size: CGSize) -> UIImage? {
-    let view = ShareableContentView(contentType: contentType, language: language)
-        .frame(width: size.width, height: size.height)
-
-    let renderer = ImageRenderer(content: view)
-    renderer.scale = 3.0
-    return renderer.uiImage
-}
-
 // MARK: - Preview
 
-#Preview("Verse Story") {
+#Preview {
     let verse = Verse(
         id: "0", arabic: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
-        textTR: "Rahman ve Rahim olan Allah'ın adıyla.", textEN: "In the name of Allah, the Most Gracious, the Most Merciful.",
+        textTR: "Rahman ve Rahim olan Allah'ın adıyla.",
+        textEN: "In the name of Allah, the Most Gracious, the Most Merciful.",
         surahName: "Fatiha", surahNumber: 1, verseNumber: "1",
         source: "Kur'an-ı Kerim", referenceURL: nil
     )
-    ShareableContentView(contentType: .verse(verse), language: "tr")
-        .frame(width: 270, height: 480)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-}
-
-#Preview("Hadith Square") {
     let hadith = Hadith(
-        id: "0", textTR: "Ameller niyetlere göredir.", textEN: "Actions are by intentions.",
+        id: "0",
+        textTR: "Ameller niyetlere göredir. Herkes için ancak niyet ettiği şey vardır.",
+        textEN: "Actions are by intentions.",
         source: "Buhari", grade: "Sahih", referenceURL: nil
     )
-    ShareableContentView(contentType: .hadith(hadith), language: "tr")
-        .frame(width: 270, height: 270)
+    let dua = Dua(
+        id: "0", kind: "kurani",
+        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
+        transliteration: "Rabbenâ âtinâ fi'd-dünyâ haseneten",
+        textTR: "Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver.",
+        textEN: "Our Lord! Give us in this world good and in the Hereafter good.",
+        source: "Bakara Suresi, 201. Ayet", grade: nil, referenceURL: nil
+    )
+    ShareableContentView(verse: verse, hadith: hadith, dua: dua, language: "tr")
+        .frame(width: 270, height: 480)
         .clipShape(RoundedRectangle(cornerRadius: 12))
 }

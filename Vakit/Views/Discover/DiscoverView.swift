@@ -2,11 +2,11 @@ import SwiftUI
 
 /// Keşfet: Günün Ayeti + Hadisi + Duası + Esmaül Hüsna.
 /// İçerik tamamen offline (bundle JSON); gün seed'i: yılın günü mod içerik sayısı.
-/// Her kartta paylaş butonu: görsel üret → native iOS share sheet.
+/// Sağ üstte tek paylaş butonu: tüm içeriği Story görseli olarak üretir.
 struct DiscoverView: View {
     @Environment(LanguageService.self) private var lang
 
-    @State private var shareState: ShareState?
+    @State private var isGeneratingImage = false
 
     private let verse = DailyContent.dailyVerse()
     private let hadith = DailyContent.dailyHadith()
@@ -39,21 +39,9 @@ struct DiscoverView: View {
                 .padding(.bottom, 32)
             }
         }
-        .confirmationDialog(
-            "Paylaşım Boyutu",
-            isPresented: Binding(
-                get: { shareState?.isChoosingSize == true },
-                set: { if !$0 { shareState = nil } }
-            )
-        ) {
-            ForEach(ShareImageSize.allCases) { size in
-                Button(size.displayName) {
-                    shareState?.selectedSize = size
-                    generateAndShare()
-                }
-            }
-            Button("İptal", role: .cancel) {
-                shareState = nil
+        .overlay(alignment: .topTrailing) {
+            if isGeneratingImage {
+                generatingOverlay
             }
         }
     }
@@ -61,25 +49,56 @@ struct DiscoverView: View {
     // MARK: - Header
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(lang.t("discover.title"))
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                .foregroundStyle(Color.vakitText)
-            Text(lang.t("discover.subtitle"))
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(lang.t("discover.title"))
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    .foregroundStyle(Color.vakitText)
+                Text(lang.t("discover.subtitle"))
+                    .font(.subheadline)
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+
+            Spacer()
+
+            Button {
+                generateAndShare()
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(Color.vakitAccent)
+                    .frame(width: 40, height: 40)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color.vakitAccent.opacity(0.12))
+                    )
+            }
+            .disabled(isGeneratingImage)
+        }
+    }
+
+    // MARK: - Generating overlay
+
+    private var generatingOverlay: some View {
+        HStack(spacing: 10) {
+            ProgressView()
+                .tint(Color.vakitAccent)
+            Text("Görsel hazırlanıyor...")
                 .font(.subheadline)
                 .foregroundStyle(Color.vakitTextDim)
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(.ultraThinMaterial)
+        .clipShape(Capsule())
+        .padding(.top, 100)
+        .padding(.trailing, 20)
     }
 
     // MARK: - Kartlar
 
     private func verseCard(_ verse: Verse) -> some View {
-        section(
-            titleKey: "discover.verse",
-            icon: "book.fill",
-            tint: .vakitAccent,
-            onShare: { shareState = ShareState(contentType: .verse(verse)) }
-        ) {
+        section(titleKey: "discover.verse", icon: "book.fill", tint: .vakitAccent) {
             VStack(alignment: .leading, spacing: 12) {
                 if let arabic = verse.arabic, !arabic.isEmpty {
                     Text(arabic)
@@ -88,44 +107,31 @@ struct DiscoverView: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .environment(\.layoutDirection, .rightToLeft)
                 }
-
                 Text(verse.text(language: lang.currentLanguage))
                     .font(.system(.body, design: .default))
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
-
                 referenceRow(verse.reference)
             }
         }
     }
 
     private func hadithCard(_ hadith: Hadith) -> some View {
-        section(
-            titleKey: "discover.hadith",
-            icon: "text.quote",
-            tint: .sunrise,
-            onShare: { shareState = ShareState(contentType: .hadith(hadith)) }
-        ) {
+        section(titleKey: "discover.hadith", icon: "text.quote", tint: .sunrise) {
             VStack(alignment: .leading, spacing: 12) {
                 Text(hadith.text(language: lang.currentLanguage))
                     .font(.system(.body, design: .default))
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
-
                 referenceRow(hadith.source, badge: hadith.grade)
             }
         }
     }
 
     private func duaCard(_ dua: Dua) -> some View {
-        section(
-            titleKey: "discover.dua",
-            icon: "hands.and.sparkles.fill",
-            tint: .isha,
-            onShare: { shareState = ShareState(contentType: .dua(dua)) }
-        ) {
+        section(titleKey: "discover.dua", icon: "hands.and.sparkles.fill", tint: .isha) {
             VStack(alignment: .leading, spacing: 12) {
                 if let arabic = dua.arabic, !arabic.isEmpty {
                     Text(arabic)
@@ -134,26 +140,19 @@ struct DiscoverView: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .environment(\.layoutDirection, .rightToLeft)
                 }
-
                 Text(dua.text(language: lang.currentLanguage))
                     .font(.system(.body, design: .default))
                     .italic()
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
-
                 referenceRow(dua.source, badge: dua.grade)
             }
         }
     }
 
     private func esmaCard(_ esma: EsmaName) -> some View {
-        section(
-            titleKey: "discover.esma",
-            icon: "sparkles",
-            tint: .fajr,
-            onShare: { shareState = ShareState(contentType: .esma(esma)) }
-        ) {
+        section(titleKey: "discover.esma", icon: "sparkles", tint: .fajr) {
             VStack(spacing: 6) {
                 Text(esma.name(language: lang.currentLanguage))
                     .font(.system(.title, design: .rounded, weight: .bold))
@@ -170,47 +169,31 @@ struct DiscoverView: View {
     // MARK: - Paylaşım
 
     private func generateAndShare() {
-        guard let state = shareState, let size = state.selectedSize else { return }
-        state.isGenerating = true
-        shareState = state
+        isGeneratingImage = true
 
-        let contentType = state.contentType
-        let language = lang.currentLanguage
-        let cgSize = size.cgSize
+        let v = verse
+        let h = hadith
+        let d = dua
+        let langCode = lang.currentLanguage
 
         Task {
             let image = await Task.detached(priority: .userInitiated) {
-                await generateShareImage(
-                    contentType: contentType,
-                    language: language,
-                    size: cgSize
-                )
+                await makeShareImage(verse: v, hadith: h, dua: d, language: langCode)
             }.value
 
             await MainActor.run {
-                shareState?.isGenerating = false
+                isGeneratingImage = false
                 if let image {
-                    shareState?.generatedImage = image
-                    presentShareSheet(image: image)
+                    let av = UIActivityViewController(
+                        activityItems: [image],
+                        applicationActivities: nil
+                    )
+                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let root = scene.windows.first?.rootViewController {
+                        root.present(av, animated: true)
+                    }
                 }
-                shareState = nil
             }
-        }
-    }
-
-    private func presentShareSheet(image: UIImage) {
-        let activityVC = UIActivityViewController(
-            activityItems: [image],
-            applicationActivities: nil
-        )
-
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootVC = windowScene.windows.first?.rootViewController {
-            var topVC = rootVC
-            while let presented = topVC.presentedViewController {
-                topVC = presented
-            }
-            topVC.present(activityVC, animated: true)
         }
     }
 
@@ -220,7 +203,6 @@ struct DiscoverView: View {
         titleKey: String,
         icon: String,
         tint: Color,
-        onShare: @escaping () -> Void,
         @ViewBuilder content: () -> some View
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -229,35 +211,14 @@ struct DiscoverView: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(tint)
                     .frame(width: 30, height: 30)
-                    .background(RoundedRectangle(cornerRadius: 9, style: .continuous).fill(tint.opacity(0.12)))
-
+                    .background(
+                        RoundedRectangle(cornerRadius: 9, style: .continuous)
+                            .fill(tint.opacity(0.12))
+                    )
                 Text(lang.t(titleKey))
                     .font(.system(.headline, design: .default, weight: .semibold))
                     .foregroundStyle(Color.vakitText)
-
-                Spacer()
-
-                // Paylaş butonu
-                if let ss = shareState,
-                   ss.contentType.matches(titleKey: titleKey),
-                   ss.isGenerating {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                        .frame(width: 30, height: 30)
-                } else {
-                    Button(action: onShare) {
-                        Image(systemName: "square.and.arrow.up")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(tint)
-                            .frame(width: 30, height: 30)
-                            .background(
-                                RoundedRectangle(cornerRadius: 9, style: .continuous)
-                                    .fill(tint.opacity(0.12))
-                            )
-                    }
-                }
             }
-
             content()
                 .padding(18)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -275,13 +236,10 @@ struct DiscoverView: View {
             Image(systemName: "bookmark")
                 .font(.system(size: 11))
                 .foregroundStyle(Color.vakitTextDim)
-
             Text(source)
                 .font(.caption)
                 .foregroundStyle(Color.vakitTextDim)
-
             Spacer()
-
             if let badge, !badge.isEmpty {
                 Text(badge)
                     .font(.system(.caption2, design: .default, weight: .bold))
@@ -290,35 +248,6 @@ struct DiscoverView: View {
                     .padding(.vertical, 3)
                     .background(Capsule().fill(Color.vakitAccent.opacity(0.12)))
             }
-        }
-    }
-}
-
-// MARK: - Paylaşım State
-
-@Observable
-private final class ShareState {
-    let contentType: ShareableContentType
-    var selectedSize: ShareImageSize?
-    var isGenerating = false
-    var generatedImage: UIImage?
-
-    var isChoosingSize: Bool {
-        selectedSize == nil && !isGenerating
-    }
-
-    init(contentType: ShareableContentType) {
-        self.contentType = contentType
-    }
-}
-
-extension ShareableContentType {
-    func matches(titleKey: String) -> Bool {
-        switch self {
-        case .verse:  return titleKey == "discover.verse"
-        case .hadith: return titleKey == "discover.hadith"
-        case .dua:    return titleKey == "discover.dua"
-        case .esma:   return titleKey == "discover.esma"
         }
     }
 }
