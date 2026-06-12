@@ -16,6 +16,11 @@ final class OnboardingViewModel {
     var isLocating = false
     var errorKey: String?
 
+    /// Yeni cascading konum seçimi için ViewModel (isteğe bağlı).
+    /// Onboarding yeni akışta LocationSelectionViewModel kullanır;
+    /// Settings'ten açılan sheet eski CitySelectionView ile çalışır.
+    var locationSelectionVM: LocationSelectionViewModel?
+
     @ObservationIgnored private var searchTask: Task<Void, Never>?
     @ObservationIgnored private let storage: StorageService
     @ObservationIgnored private let locationService = LocationService()
@@ -103,7 +108,7 @@ final class OnboardingViewModel {
         }
     }
 
-    // MARK: - Konumdan şehir
+    // MARK: - Konumdan şehir (opsiyonel, Ayarlar'dan kullanılır)
 
     func useCurrentLocation() async {
         isLocating = true
@@ -160,6 +165,25 @@ final class OnboardingViewModel {
         storage.selectedCityID = snapshot.id
         storage.method = method
         storage.school = snapshot.school
+    }
+
+    /// Yeni cascading konum seçiminden `PrayerLocation` kaydeder.
+    func saveSelectedLocation(from locationVM: LocationSelectionViewModel, context: ModelContext) {
+        guard var location = locationVM.buildPrayerLocation() else { return }
+        location.calculationMethod = locationVM.method
+        storage.selectedPrayerLocation = location
+        storage.method = locationVM.method
+
+        // SwiftData'ya da yaz (geriye uyumluluk).
+        let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
+        existing.forEach { $0.isPrimary = false }
+
+        let city = location.makeCity(school: storage.school)
+        city.isPrimary = true
+        context.insert(city)
+        try? context.save()
+
+        storage.selectedCityID = location.id
     }
 }
 

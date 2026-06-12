@@ -5,7 +5,9 @@ import SwiftData
 struct SettingsView: View {
     @State private var viewModel = SettingsViewModel()
     @State private var cityPickerModel = OnboardingViewModel()
+    @State private var locationPickerModel = LocationSelectionViewModel()
     @State private var showCityPicker = false
+    @State private var showLocationPicker = false
     @State private var showProGate = false
 
     @Environment(LanguageService.self) private var lang
@@ -38,6 +40,9 @@ struct SettingsView: View {
         .sheet(isPresented: $showCityPicker) {
             cityPickerSheet
         }
+        .sheet(isPresented: $showLocationPicker) {
+            locationPickerSheet
+        }
         .sheet(isPresented: $showProGate) {
             ProGateView()
                 .environment(lang)
@@ -52,6 +57,8 @@ struct SettingsView: View {
             languageRow
             divider
             cityRow
+            divider
+            autoLocationRow
             divider
             methodRow
             divider
@@ -78,17 +85,34 @@ struct SettingsView: View {
 
     private var cityRow: some View {
         Button {
+            locationPickerModel = LocationSelectionViewModel()
+            showLocationPicker = true
+        } label: {
+            HStack {
+                rowLabel(icon: "building.2", titleKey: "settings.city")
+                Spacer()
+                Text(viewModel.locationDisplayName)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.vakitTextDim)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+            .padding(.vertical, 10)
+        }
+    }
+
+    /// Opsiyonel konumla otomatik bul butonu (izin ister).
+    private var autoLocationRow: some View {
+        Button {
             let model = OnboardingViewModel()
             model.method = viewModel.method
             cityPickerModel = model
             showCityPicker = true
         } label: {
             HStack {
-                rowLabel(icon: "building.2", titleKey: "settings.city")
+                rowLabel(icon: "location.fill", titleKey: "location.autoFind")
                 Spacer()
-                Text(viewModel.city?.name ?? "—")
-                    .font(.subheadline)
-                    .foregroundStyle(Color.vakitTextDim)
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(Color.vakitTextDim)
@@ -189,7 +213,24 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Şehir seçimi sheet'i (onboarding bileşeni yeniden kullanılır)
+    // MARK: - Location picker sheet (new cascading flow)
+
+    private var locationPickerSheet: some View {
+        ZStack {
+            Color.vakitBg.ignoresSafeArea()
+            LocationSelectionView(viewModel: locationPickerModel) {
+                guard let location = locationPickerModel.buildPrayerLocation() else { return }
+                var loc = location
+                loc.calculationMethod = locationPickerModel.method
+                viewModel.saveLocation(loc, context: modelContext)
+                showLocationPicker = false
+            }
+        }
+        .environment(lang)
+        .preferredColorScheme(.dark)
+    }
+
+    // MARK: - City picker sheet (eski: konumla otomatik bul)
 
     private var cityPickerSheet: some View {
         ZStack {

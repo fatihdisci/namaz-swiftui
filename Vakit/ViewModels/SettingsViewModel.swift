@@ -10,6 +10,7 @@ final class SettingsViewModel {
     var method: CalculationMethod
     var school: Int
     private(set) var city: CitySnapshot?
+    private(set) var location: PrayerLocation?
 
     @ObservationIgnored private let storage: StorageService
     @ObservationIgnored private let notificationService: NotificationService
@@ -23,6 +24,15 @@ final class SettingsViewModel {
         self.method = storage.method
         self.school = storage.school
         self.city = storage.selectedCity
+        self.location = storage.selectedPrayerLocation
+    }
+
+    /// UI'da gösterilecek konum adı.
+    var locationDisplayName: String {
+        if let loc = location {
+            return loc.displayName
+        }
+        return city?.name ?? "—"
     }
 
     var appVersion: String {
@@ -35,8 +45,8 @@ final class SettingsViewModel {
         guard newMethod != method else { return }
         method = newMethod
         storage.method = newMethod
-        updateSelectedCity(context: context) {
-            $0.method = newMethod
+        updateSelectedLocation(context: context) {
+            $0.calculationMethod = newMethod
         }
     }
 
@@ -49,11 +59,59 @@ final class SettingsViewModel {
         }
     }
 
+    /// Yeni cascading konum seçiminden kaydeder.
+    func saveLocation(_ location: PrayerLocation, context: ModelContext) {
+        storage.selectedPrayerLocation = location
+        storage.method = location.calculationMethod
+        self.location = location
+        self.method = location.calculationMethod
+        city = location.toSnapshot(school: school)
+
+        // SwiftData'yı da güncelle.
+        let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
+        existing.forEach { $0.isPrimary = false }
+
+        let cityModel = location.makeCity(school: school)
+        cityModel.isPrimary = true
+        context.insert(cityModel)
+        try? context.save()
+
+        storage.selectedCityID = location.id
+        rescheduleNotifications()
+    }
+
     /// Şehir seçim sheet'i kapandıktan sonra çağrılır: snapshot'ı tazele, bildirimleri planla.
     func refreshCity() {
         city = storage.selectedCity
+        location = storage.selectedPrayerLocation
         method = storage.method
         school = storage.school
+        rescheduleNotifications()
+    }
+
+    private func updateSelectedLocation(context: ModelContext, mutate: (inout PrayerLocation) -> Void) {
+        guard var loc = storage.selectedPrayerLocation else {
+            // Eski model varsa onu güncelle.
+            updateSelectedCity(context: context) { snapshot in
+                snapshot.method = method
+            }
+            return
+        }
+        mutate(&loc)
+        storage.selectedPrayerLocation = loc
+        storage.method = loc.calculationMethod
+        location = loc
+        city = loc.toSnapshot(school: school)
+
+        // SwiftData'yı da güncelle.
+        let cityID = loc.id
+        let descriptor = FetchDescriptor<City>(predicate: #Predicate { $0.id == cityID })
+        if let stored = try? context.fetch(descriptor).first {
+            stored.method = loc.calculationMethod
+            stored.school = school
+            try? context.save()
+        }
+
         rescheduleNotifications()
     }
 
@@ -76,7 +134,7 @@ final class SettingsViewModel {
     }
 
     private func rescheduleNotifications() {
-        guard let city = storage.selectedCity?.makeCity() else { return }
+        guard let city = storage.resolvedCity else { return }
         Task {
             await notificationService.reschedule(city: city)
         }

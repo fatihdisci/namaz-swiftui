@@ -14,6 +14,7 @@ final class StorageService {
         static let timesPrefix = "times_"
         static let selectedCityID = "selected_city_id"
         static let selectedCity = "selected_city"
+        static let prayerLocation = "prayer_location"
         static let method = "method"
         static let school = "school"
         static let language = "language"
@@ -87,6 +88,14 @@ final class StorageService {
 
     // MARK: - Ayarlar
 
+    /// Yeni veya eski modelden `City` üretir (HomeViewModel, bildirimler vs. için).
+    var resolvedCity: City? {
+        if let location = selectedPrayerLocation {
+            return location.makeCity(school: school)
+        }
+        return selectedCity?.makeCity()
+    }
+
     var selectedCityID: UUID? {
         get { defaults.string(forKey: Key.selectedCityID).flatMap(UUID.init(uuidString:)) }
         set { defaults.set(newValue?.uuidString, forKey: Key.selectedCityID) }
@@ -96,6 +105,10 @@ final class StorageService {
     /// olmadan da şehre erişebilsin diye App Group'ta tutulur.
     var selectedCity: CitySnapshot? {
         get {
+            // Önce yeni PrayerLocation modelini dene, yoksa eski snapshot'a düş.
+            if let prayerLoc = selectedPrayerLocation {
+                return prayerLoc.toSnapshot(school: school)
+            }
             guard let data = defaults.data(forKey: Key.selectedCity) else { return nil }
             return try? decoder.decode(CitySnapshot.self, from: data)
         }
@@ -104,6 +117,30 @@ final class StorageService {
                 defaults.set(data, forKey: Key.selectedCity)
             } else {
                 defaults.removeObject(forKey: Key.selectedCity)
+            }
+        }
+    }
+
+    /// Yeni cascading konum seçimi modeli.
+    /// Kaydedildiğinde eski `selectedCity` ile senkronize edilir.
+    var selectedPrayerLocation: PrayerLocation? {
+        get {
+            guard let data = defaults.data(forKey: Key.prayerLocation) else { return nil }
+            return try? decoder.decode(PrayerLocation.self, from: data)
+        }
+        set {
+            if let newValue, let data = try? encoder.encode(newValue) {
+                defaults.set(data, forKey: Key.prayerLocation)
+                // Eski selectedCity ve selectedCityID'yi de güncelle (geriye uyumluluk).
+                let snapshot = newValue.toSnapshot(school: school)
+                if let snapData = try? encoder.encode(snapshot) {
+                    defaults.set(snapData, forKey: Key.selectedCity)
+                }
+                defaults.set(newValue.id.uuidString, forKey: Key.selectedCityID)
+            } else {
+                defaults.removeObject(forKey: Key.prayerLocation)
+                defaults.removeObject(forKey: Key.selectedCity)
+                defaults.removeObject(forKey: Key.selectedCityID)
             }
         }
     }

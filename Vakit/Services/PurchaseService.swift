@@ -23,6 +23,7 @@ final class PurchaseService {
     enum ServiceError: Error {
         case notConfigured
         case productUnavailable
+        case entitlementNotActive
     }
 
     private(set) var hasProAccess = false
@@ -30,21 +31,25 @@ final class PurchaseService {
     private(set) var isLoading = false
 
     @ObservationIgnored private var storeProducts: [ProductID: StoreProduct] = [:]
+    @ObservationIgnored private var customerInfoTask: Task<Void, Never>?
 
     private init() {}
 
     func configure() {
-        guard !Purchases.isConfigured else { return }
-        guard
-            let apiKey = Bundle.main.object(forInfoDictionaryKey: "REVENUECAT_API_KEY") as? String,
-            !apiKey.isEmpty,
-            !apiKey.contains("$(")
-        else { return }
+        if !Purchases.isConfigured {
+            guard
+                let apiKey = Bundle.main.object(forInfoDictionaryKey: "REVENUECAT_API_KEY") as? String,
+                !apiKey.isEmpty,
+                !apiKey.contains("$(")
+            else { return }
 
-        #if DEBUG
-        Purchases.logLevel = .debug
-        #endif
-        Purchases.configure(withAPIKey: apiKey)
+            #if DEBUG
+            Purchases.logLevel = .debug
+            #endif
+            Purchases.configure(withAPIKey: apiKey)
+        }
+
+        observeCustomerInfo()
     }
 
     func refresh() async {
@@ -86,6 +91,15 @@ final class PurchaseService {
         let result = try await Purchases.shared.purchase(product: storeProduct)
         guard !result.userCancelled else { return }
         updateAccess(from: result.customerInfo)
+
+        if !hasProAccess {
+            let customerInfo = try await Purchases.shared.customerInfo(fetchPolicy: .fetchCurrent)
+            updateAccess(from: customerInfo)
+        }
+
+        guard hasProAccess else {
+            throw ServiceError.entitlementNotActive
+        }
     }
 
     func restorePurchases() async throws {
@@ -100,5 +114,16 @@ final class PurchaseService {
 
     private func updateAccess(from customerInfo: CustomerInfo) {
         hasProAccess = customerInfo.entitlements[Self.entitlementIdentifier]?.isActive == true
+    }
+
+    private func observeCustomerInfo() {
+        guard customerInfoTask == nil else { return }
+
+        customerInfoTask = Task { [weak self] in
+            for await customerInfo in Purchases.shared.customerInfoStream {
+                guard !Task.isCancelled else { return }
+                self?.updateAccess(from: customerInfo)
+            }
+        }
     }
 }

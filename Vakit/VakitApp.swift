@@ -38,9 +38,13 @@ struct VakitApp: App {
         .modelContainer(for: [City.self, KazaEntry.self])
     }
 
-    /// Seçili şehir için bildirimleri yeniden planlar (uygulama açılışı + onboarding sonrası).
+    /// Seçili konum için bildirimleri yeniden planlar (uygulama açılışı + onboarding sonrası).
     private func rescheduleNotifications() async {
-        guard let city = StorageService.shared.selectedCity?.makeCity() else { return }
-        await notificationService.reschedule(city: city)
+        // Yeni PrayerLocation veya eski CitySnapshot üzerinden City oluştur.
+        if let location = StorageService.shared.selectedPrayerLocation {
+            await notificationService.reschedule(city: location.makeCity())
+        } else if let city = StorageService.shared.selectedCity?.makeCity() {
+            await notificationService.reschedule(city: city)
+        }
     }
 }

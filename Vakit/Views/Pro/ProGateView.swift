@@ -217,6 +217,8 @@ struct ProGateView: View {
             if purchaseService.hasProAccess {
                 dismiss()
             }
+        } catch PurchaseService.ServiceError.entitlementNotActive {
+            errorMessage = lang.t("pro.error.entitlement")
         } catch {
             errorMessage = lang.t("pro.error.generic")
         }

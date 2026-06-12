@@ -30,9 +30,9 @@ final class HomeViewModel {
         self.languageService = languageService
         self.dailyVerse = DailyContent.dailyVerse()
 
-        if let snapshot = storage.selectedCity {
-            currentCity = snapshot.makeCity()
-        } else {
+        currentCity = storage.resolvedCity
+
+        if currentCity == nil {
             needsOnboarding = true
         }
     }
@@ -41,7 +41,7 @@ final class HomeViewModel {
     func load() async {
         dailyVerse = DailyContent.dailyVerse()
 
-        guard let city = currentCity ?? storage.selectedCity.map({ $0.makeCity() }) else {
+        guard let city = currentCity ?? storage.resolvedCity else {
             needsOnboarding = true
             return
         }
@@ -74,7 +74,7 @@ final class HomeViewModel {
            storage.selectedCityID != city.id
                || storage.method != city.method
                || storage.school != city.school {
-            currentCity = storage.selectedCity?.makeCity()
+            currentCity = storage.resolvedCity
             todaysTimes = nil
             tomorrowsTimes = nil
             Task { await load() }
@@ -83,7 +83,7 @@ final class HomeViewModel {
 
         guard let today = todaysTimes else {
             // Onboarding az önce bitmiş olabilir: şehir geldiyse veriyi yükle.
-            if !isLoading, storage.selectedCity != nil {
+            if !isLoading, storage.resolvedCity != nil {
                 Task { await load() }
             }
             return
