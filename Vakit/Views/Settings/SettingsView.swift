@@ -9,6 +9,7 @@ struct SettingsView: View {
     @State private var showCityPicker = false
     @State private var showLocationPicker = false
     @State private var showProGate = false
+    @State private var showPaywall = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -29,6 +30,9 @@ struct SettingsView: View {
                         notificationsSection
                         proSection
                         aboutSection
+                        #if DEBUG
+                        developerSection
+                        #endif
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -44,6 +48,11 @@ struct SettingsView: View {
             locationPickerSheet
         }
         .sheet(isPresented: $showProGate) {
+            ProGateView()
+                .environment(lang)
+                .environment(purchaseService)
+        }
+        .sheet(isPresented: $showPaywall) {
             ProGateView()
                 .environment(lang)
                 .environment(purchaseService)
@@ -213,17 +222,55 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Geliştirici (sadece DEBUG)
+
+    #if DEBUG
+    private var developerSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Geliştirici")
+                .font(.system(.footnote, design: .default, weight: .semibold))
+                .foregroundStyle(Color.sunrise)
+                .textCase(.uppercase)
+
+            VStack(spacing: 0) {
+                Button {
+                    showPaywall = true
+                } label: {
+                    HStack {
+                        rowLabel(icon: "eyes", title: "Paywall'ı Önizle")
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Color.vakitTextDim)
+                    }
+                    .padding(.vertical, 10)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 6)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(Color.sunrise.opacity(0.3), lineWidth: 1)
+            )
+        }
+    }
+    #endif
+
     // MARK: - Location picker sheet (new cascading flow)
 
     private var locationPickerSheet: some View {
-        ZStack {
-            Color.vakitBg.ignoresSafeArea()
-            LocationSelectionView(viewModel: locationPickerModel) {
-                guard let location = locationPickerModel.buildPrayerLocation() else { return }
-                var loc = location
-                loc.calculationMethod = locationPickerModel.method
-                viewModel.saveLocation(loc, context: modelContext)
-                showLocationPicker = false
+        NavigationStack {
+            ZStack {
+                Color.vakitBg.ignoresSafeArea()
+                LocationSelectionView(viewModel: locationPickerModel) {
+                    guard let location = locationPickerModel.buildPrayerLocation() else { return }
+                    var loc = location
+                    loc.calculationMethod = locationPickerModel.method
+                    viewModel.saveLocation(loc, context: modelContext)
+                    showLocationPicker = false
+                }
             }
         }
         .environment(lang)
@@ -268,13 +315,17 @@ struct SettingsView: View {
     }
 
     private func rowLabel(icon: String, titleKey: String) -> some View {
+        rowLabel(icon: icon, title: lang.t(titleKey))
+    }
+
+    private func rowLabel(icon: String, title: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundStyle(Color.vakitAccent)
                 .frame(width: 24)
 
-            Text(lang.t(titleKey))
+            Text(title)
                 .font(.body)
                 .foregroundStyle(Color.vakitText)
         }

@@ -38,7 +38,11 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         self.continuation = nil
         manager?.delegate = nil
         manager = nil
-        continuation.resume(with: result)
+        // CLLocationManager delegate callback'i her zaman main thread'de
+        // çağrılır, ama defensive olarak DispatchQueue.main ile garantile.
+        DispatchQueue.main.async {
+            continuation.resume(with: result)
+        }
     }
 
     // MARK: - CLLocationManagerDelegate

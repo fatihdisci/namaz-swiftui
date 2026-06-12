@@ -30,9 +30,11 @@ struct OnboardingView: View {
                     }
                     .transition(stepTransition)
                 case .locationSelection:
-                    LocationSelectionView(viewModel: locationVM) {
-                        viewModel.saveSelectedLocation(from: locationVM, context: modelContext)
-                        step = .notifications
+                    NavigationStack {
+                        LocationSelectionView(viewModel: locationVM) {
+                            viewModel.saveSelectedLocation(from: locationVM, context: modelContext)
+                            step = .notifications
+                        }
                     }
                     .transition(stepTransition)
                 case .notifications:

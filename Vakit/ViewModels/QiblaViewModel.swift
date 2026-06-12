@@ -64,6 +64,7 @@ final class QiblaViewModel: NSObject {
         }
     }
 
+    @MainActor
     private func startHeadingUpdates() {
         guard CLLocationManager.headingAvailable() else { return }
         let manager = CLLocationManager()
@@ -74,6 +75,7 @@ final class QiblaViewModel: NSObject {
     }
 
     /// Pusula güncellemelerini durdurur. View kaybolduğunda çağrılır.
+    @MainActor
     func stopUpdates() {
         headingManager?.stopUpdatingHeading()
         headingManager?.delegate = nil
@@ -84,8 +86,10 @@ final class QiblaViewModel: NSObject {
 extension QiblaViewModel: CLLocationManagerDelegate {
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         let value = newHeading.trueHeading >= 0 ? newHeading.trueHeading : newHeading.magneticHeading
-        Task { @MainActor in
-            self.heading = value
+        // CLLocationManager delegate callback'leri her zaman main thread'de çağrılır,
+        // ama defensive: DispatchQueue.main.async ile UI state güncellemesini garantile.
+        DispatchQueue.main.async { [weak self] in
+            self?.heading = value
         }
     }
 }

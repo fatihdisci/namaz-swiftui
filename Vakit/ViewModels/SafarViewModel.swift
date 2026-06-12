@@ -30,6 +30,7 @@ final class SafarViewModel {
     }
 
     /// Tek seferlik konum alır, ev şehrine mesafeyi hesaplar.
+    @MainActor
     func checkDistance() async {
         guard let home = homeCity else {
             state = .error("safar.noHomeCity")
@@ -39,10 +40,8 @@ final class SafarViewModel {
         state = .locating
         do {
             let location = try await locationService.requestOneShotLocation()
-            let distance = SafarService.distanceKm(
-                from: CLLocationCoordinate2D(latitude: home.latitude, longitude: home.longitude),
-                to: location.coordinate
-            )
+            let homeCoord = CLLocationCoordinate2D(latitude: home.latitude, longitude: home.longitude)
+            let distance = SafarService.distanceKm(from: homeCoord, to: location.coordinate)
             state = .result(distanceKm: distance, isSafar: SafarService.isSafar(distanceKm: distance))
         } catch LocationService.LocationError.denied {
             state = .denied

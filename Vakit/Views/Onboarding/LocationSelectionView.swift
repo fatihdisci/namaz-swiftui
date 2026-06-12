@@ -203,65 +203,25 @@ struct LocationSelectionView: View {
     // MARK: - Admin1 selection sheet
 
     private var admin1SelectionSheet: some View {
-        ZStack {
-            Color.vakitBg.ignoresSafeArea()
-            List(viewModel.admin1List) { admin in
-                Button {
-                    viewModel.selectAdmin1(admin)
-                } label: {
-                    HStack {
-                        Text(admin.name)
-                            .font(.system(.body, weight: .medium))
-                            .foregroundStyle(Color.vakitText)
-                        Spacer()
-                        if viewModel.selectedAdmin1?.id == admin.id {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundStyle(Color.vakitAccent)
-                        }
-                    }
-                    .padding(.vertical, 6)
-                    .contentShape(Rectangle())
-                }
-                .listRowBackground(Color.vakitSurface)
-                .listRowSeparatorTint(Color.vakitBorder)
-            }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
+        AdminSelectionList(
+            title: viewModel.admin1Label,
+            items: viewModel.admin1List,
+            selectedID: viewModel.selectedAdmin1?.id
+        ) { admin in
+            viewModel.selectAdmin1(admin)
         }
-        .navigationTitle(viewModel.admin1Label)
-        .navigationBarTitleDisplayMode(.inline)
     }
 
     // MARK: - Admin2 selection sheet
 
     private var admin2SelectionSheet: some View {
-        ZStack {
-            Color.vakitBg.ignoresSafeArea()
-            List(viewModel.admin2List) { admin in
-                Button {
-                    viewModel.selectAdmin2(admin)
-                } label: {
-                    HStack {
-                        Text(admin.name)
-                            .font(.system(.body, weight: .medium))
-                            .foregroundStyle(Color.vakitText)
-                        Spacer()
-                        if viewModel.selectedAdmin2?.id == admin.id {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundStyle(Color.vakitAccent)
-                        }
-                    }
-                    .padding(.vertical, 6)
-                    .contentShape(Rectangle())
-                }
-                .listRowBackground(Color.vakitSurface)
-                .listRowSeparatorTint(Color.vakitBorder)
-            }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
+        AdminSelectionList(
+            title: viewModel.admin2Label,
+            items: viewModel.admin2List,
+            selectedID: viewModel.selectedAdmin2?.id
+        ) { admin in
+            viewModel.selectAdmin2(admin)
         }
-        .navigationTitle(viewModel.admin2Label)
-        .navigationBarTitleDisplayMode(.inline)
     }
 
     // MARK: - Manual search (non-Turkey)
@@ -361,6 +321,50 @@ struct LocationSelectionView: View {
 
     private var divider: some View {
         Divider().overlay(Color.vakitBorder)
+    }
+}
+
+// MARK: - Admin selection helper
+
+/// Admin birimi (İl/İlçe/State/City) seçim listesi.
+/// Seçim yapıldığında otomatik dismiss olur.
+private struct AdminSelectionList: View {
+    let title: String
+    let items: [AdminUnit]
+    let selectedID: UUID?
+    let onSelect: (AdminUnit) -> Void
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ZStack {
+            Color.vakitBg.ignoresSafeArea()
+            List(items) { item in
+                Button {
+                    onSelect(item)
+                    dismiss()
+                } label: {
+                    HStack {
+                        Text(item.name)
+                            .font(.system(.body, weight: .medium))
+                            .foregroundStyle(Color.vakitText)
+                        Spacer()
+                        if selectedID == item.id {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(Color.vakitAccent)
+                        }
+                    }
+                    .padding(.vertical, 6)
+                    .contentShape(Rectangle())
+                }
+                .listRowBackground(Color.vakitSurface)
+                .listRowSeparatorTint(Color.vakitBorder)
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -42,9 +42,11 @@ struct ProGateView: View {
         .preferredColorScheme(.dark)
         .task {
             await purchaseService.refresh()
+            #if !DEBUG
             if purchaseService.hasProAccess {
                 dismiss()
             }
+            #endif
         }
         .alert(lang.t("pro.error.title"), isPresented: errorBinding) {
             Button(lang.t("pro.error.ok"), role: .cancel) {}

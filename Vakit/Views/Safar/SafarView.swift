@@ -176,7 +176,18 @@ struct SafarView: View {
                 .foregroundStyle(Color.maghrib)
                 .frame(maxWidth: .infinity)
 
-        case .idle, .locating:
+        case .locating:
+            HStack(spacing: 12) {
+                ProgressView()
+                    .tint(Color.vakitAccent)
+                Text(lang.t("safar.checkLocation"))
+                    .font(.subheadline)
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(20)
+
+        case .idle:
             EmptyView()
         }
     }

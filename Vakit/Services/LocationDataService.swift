@@ -69,7 +69,7 @@ final class LocationDataService {
         if let data = turkeyData {
             let name = language == "tr" ? data.countryNameTR : data.countryNameEN
             countries.append(CountryOption(
-                code: data.countryCode,
+                id: data.countryCode,
                 name: name,
                 hasCascadingData: true
             ))
@@ -102,7 +102,7 @@ final class LocationDataService {
         for code in otherCodes where !countries.contains(where: { $0.code == code }) {
             if let names = allCountryNames[code] {
                 countries.append(CountryOption(
-                    code: code,
+                    id: code,
                     name: language == "tr" ? names.tr : names.en,
                     hasCascadingData: false
                 ))

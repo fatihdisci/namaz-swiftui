@@ -26,7 +26,12 @@ final class PurchaseService {
         case entitlementNotActive
     }
 
+    #if DEBUG
+    /// DEBUG: her zaman Pro aktif (test kolaylığı).
+    private(set) var hasProAccess = true
+    #else
     private(set) var hasProAccess = false
+    #endif
     private(set) var products: [Product] = []
     private(set) var isLoading = false
 
@@ -69,7 +74,9 @@ final class PurchaseService {
             let customerInfo = try await customerInfoTask
             updateAccess(from: customerInfo)
         } catch {
+            #if !DEBUG
             hasProAccess = false
+            #endif
         }
 
         let fetchedProducts = await productsTask
@@ -113,7 +120,9 @@ final class PurchaseService {
     }
 
     private func updateAccess(from customerInfo: CustomerInfo) {
+        #if !DEBUG
         hasProAccess = customerInfo.entitlements[Self.entitlementIdentifier]?.isActive == true
+        #endif
     }
 
     private func observeCustomerInfo() {
