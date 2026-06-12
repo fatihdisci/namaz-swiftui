@@ -170,7 +170,7 @@ struct DiscoverView: View {
     // MARK: - Paylaşım
 
     private func generateAndShare() {
-        guard var state = shareState, let size = state.selectedSize else { return }
+        guard let state = shareState, let size = state.selectedSize else { return }
         state.isGenerating = true
         shareState = state
 
