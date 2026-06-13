@@ -59,7 +59,9 @@ final class PurchaseService {
 
     func refresh() async {
         guard Purchases.isConfigured else {
+            #if !DEBUG
             hasProAccess = false
+            #endif
             products = []
             return
         }

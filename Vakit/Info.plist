@@ -19,13 +19,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>REVENUECAT_API_KEY</key>
-	<string>$(REVENUECAT_API_KEY)</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Namaz vakitleri ve kıble yönü için konumunuz kullanılır.</string>
+	<string>5</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Namaz vakitleri ve kıble yönü için konumunuz kullanılır.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Namaz vakitleri ve kıble yönü için konumunuz kullanılır.</string>
+	<key>REVENUECAT_API_KEY</key>
+	<string>$(REVENUECAT_API_KEY)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
