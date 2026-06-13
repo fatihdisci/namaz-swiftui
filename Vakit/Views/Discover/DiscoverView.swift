@@ -160,10 +160,8 @@ struct DiscoverView: View {
         let langCode = lang.currentLanguage
 
         Task {
-            let image = await Task.detached(priority: .userInitiated) {
-                await makeVerseShareImage(verse: v, language: langCode)
-            }.value
-            await presentShare(image)
+            let image = makeVerseShareImage(verse: v, language: langCode)
+            presentShare(image)
         }
     }
 
@@ -174,10 +172,8 @@ struct DiscoverView: View {
         let langCode = lang.currentLanguage
 
         Task {
-            let image = await Task.detached(priority: .userInitiated) {
-                await makeHadithShareImage(hadith: h, language: langCode)
-            }.value
-            await presentShare(image)
+            let image = makeHadithShareImage(hadith: h, language: langCode)
+            presentShare(image)
         }
     }
 
@@ -188,10 +184,8 @@ struct DiscoverView: View {
         let langCode = lang.currentLanguage
 
         Task {
-            let image = await Task.detached(priority: .userInitiated) {
-                await makeDuaShareImage(dua: d, language: langCode)
-            }.value
-            await presentShare(image)
+            let image = makeDuaShareImage(dua: d, language: langCode)
+            presentShare(image)
         }
     }
 
