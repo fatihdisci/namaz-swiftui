@@ -32,19 +32,19 @@ private struct SingleShareView<Content: View>: View {
     }
 }
 
-// MARK: - Açık arka plan renkleri (hadis)
+// MARK: - Açık arka plan renkleri (hadis, dua)
 
 private let darkText = Color(hex: "1e1a14")
 private let darkMuted = Color(hex: "4a4438")
 private let darkGold = Color(hex: "7a5c10")
 
-// MARK: - Koyu arka plan renkleri (ayet, dua)
+// MARK: - Koyu arka plan renkleri (ayet)
 
 private let lightText = Color(hex: "f0ede5")
 private let lightMuted = Color(hex: "b8b2a4")
 private let lightGold = Color(hex: "c9a44b")
 
-// MARK: - Verse (Ayet) paylaşım — koyu arka plan
+// MARK: - Verse (Ayet) — koyu arka plan, açık yazı
 
 @MainActor
 func makeVerseShareImage(verse: Verse?, language: String) -> UIImage? {
@@ -53,27 +53,27 @@ func makeVerseShareImage(verse: Verse?, language: String) -> UIImage? {
         VStack(spacing: 0) {
             Spacer()
 
-            VStack(spacing: 42) {
+            VStack(spacing: 48) {
                 sectionLabel("Günün Ayeti", color: lightGold)
 
                 if let arabic = verse.arabic, !arabic.isEmpty {
                     Text(arabic)
-                        .font(.system(size: 66, weight: .medium))
+                        .font(.system(size: 72, weight: .medium))
                         .foregroundStyle(lightText)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(18)
+                        .lineSpacing(20)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Text(verse.text(language: language))
-                    .font(.system(size: 46, weight: .regular))
+                    .font(.system(size: 50, weight: .regular, design: .serif))
                     .foregroundStyle(lightMuted)
                     .multilineTextAlignment(.center)
-                    .lineSpacing(16)
+                    .lineSpacing(18)
                     .fixedSize(horizontal: false, vertical: true)
 
                 Text("\(verse.surahName) · \(verse.verseNumber)")
-                    .font(.system(size: 26, weight: .medium))
+                    .font(.system(size: 28, weight: .medium, design: .serif))
                     .foregroundStyle(lightGold)
             }
 
@@ -87,7 +87,7 @@ func makeVerseShareImage(verse: Verse?, language: String) -> UIImage? {
     return renderer.uiImage
 }
 
-// MARK: - Hadith (Hadis) paylaşım — açık arka plan
+// MARK: - Hadith (Hadis) — açık arka plan, koyu yazı
 
 @MainActor
 func makeHadithShareImage(hadith: Hadith?, language: String) -> UIImage? {
@@ -96,25 +96,25 @@ func makeHadithShareImage(hadith: Hadith?, language: String) -> UIImage? {
         VStack(spacing: 0) {
             Spacer()
 
-            VStack(spacing: 42) {
+            VStack(spacing: 48) {
                 sectionLabel("Günün Hadisi", color: darkGold)
 
                 Text(hadith.text(language: language))
-                    .font(.system(size: 46, weight: .regular))
+                    .font(.system(size: 50, weight: .regular, design: .serif))
                     .foregroundStyle(darkText)
                     .multilineTextAlignment(.center)
-                    .lineSpacing(16)
+                    .lineSpacing(18)
                     .fixedSize(horizontal: false, vertical: true)
 
                 HStack(spacing: 8) {
                     Text(hadith.source)
-                        .font(.system(size: 26, weight: .medium))
+                        .font(.system(size: 28, weight: .medium, design: .serif))
                         .foregroundStyle(darkGold)
                     if !hadith.grade.isEmpty {
                         Text("·")
                             .foregroundStyle(darkMuted)
                         Text(hadith.grade)
-                            .font(.system(size: 24, weight: .semibold))
+                            .font(.system(size: 26, weight: .semibold, design: .serif))
                             .foregroundStyle(darkGold.opacity(0.8))
                     }
                 }
@@ -130,38 +130,38 @@ func makeHadithShareImage(hadith: Hadith?, language: String) -> UIImage? {
     return renderer.uiImage
 }
 
-// MARK: - Dua paylaşım — koyu arka plan
+// MARK: - Dua — açık arka plan, koyu yazı
 
 @MainActor
 func makeDuaShareImage(dua: Dua?, language: String) -> UIImage? {
     guard let dua else { return nil }
-    let view = SingleShareView(imageName: "dua") {
+    let view = SingleShareView(imageName: "dua", darkOverlay: 0) {
         VStack(spacing: 0) {
             Spacer()
 
-            VStack(spacing: 42) {
-                sectionLabel("Günün Duası", color: lightGold)
+            VStack(spacing: 48) {
+                sectionLabel("Günün Duası", color: darkGold)
 
                 if let arabic = dua.arabic, !arabic.isEmpty {
                     Text(arabic)
-                        .font(.system(size: 50, weight: .medium))
-                        .foregroundStyle(lightText)
+                        .font(.system(size: 54, weight: .medium))
+                        .foregroundStyle(darkText)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(14)
+                        .lineSpacing(16)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Text(dua.text(language: language))
-                    .font(.system(size: 44, weight: .regular))
-                    .foregroundStyle(lightMuted)
+                    .font(.system(size: 48, weight: .regular, design: .serif))
+                    .foregroundStyle(darkMuted)
                     .multilineTextAlignment(.center)
-                    .lineSpacing(14)
+                    .lineSpacing(16)
                     .fixedSize(horizontal: false, vertical: true)
 
                 if !dua.source.isEmpty {
                     Text(dua.source)
-                        .font(.system(size: 26, weight: .medium))
-                        .foregroundStyle(lightGold)
+                        .font(.system(size: 28, weight: .medium, design: .serif))
+                        .foregroundStyle(darkGold)
                         .multilineTextAlignment(.center)
                 }
             }
@@ -180,7 +180,7 @@ func makeDuaShareImage(dua: Dua?, language: String) -> UIImage? {
 
 private func sectionLabel(_ title: String, color: Color) -> some View {
     Text(title)
-        .font(.system(size: 40, weight: .semibold, design: .serif))
+        .font(.system(size: 44, weight: .semibold, design: .serif))
         .foregroundStyle(color)
         .tracking(2)
 }
