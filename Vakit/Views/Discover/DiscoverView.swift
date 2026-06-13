@@ -174,11 +174,12 @@ struct DiscoverView: View {
         let v = verse
         let h = hadith
         let d = dua
+        let e = dailyEsma
         let langCode = lang.currentLanguage
 
         Task {
             let image = await Task.detached(priority: .userInitiated) {
-                await makeShareImage(verse: v, hadith: h, dua: d, language: langCode)
+                await makeShareImage(verse: v, hadith: h, dua: d, esma: e, language: langCode)
             }.value
 
             await MainActor.run {
