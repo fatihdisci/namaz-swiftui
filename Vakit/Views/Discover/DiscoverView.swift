@@ -2,11 +2,12 @@ import SwiftUI
 
 /// Keşfet: Günün Ayeti + Hadisi + Duası + Esmaül Hüsna.
 /// İçerik tamamen offline (bundle JSON); gün seed'i: yılın günü mod içerik sayısı.
-/// Sağ üstte tek paylaş butonu: tüm içeriği Story görseli olarak üretir.
+/// Her başlığın yanında kendi PNG arka planlı paylaş butonu bulunur.
 struct DiscoverView: View {
     @Environment(LanguageService.self) private var lang
 
-    @State private var isGeneratingImage = false
+    enum GeneratingType { case verse, hadith, dua }
+    @State private var generating: GeneratingType?
 
     private let verse = DailyContent.dailyVerse()
     private let hadith = DailyContent.dailyHadith()
@@ -39,9 +40,20 @@ struct DiscoverView: View {
                 .padding(.bottom, 32)
             }
         }
-        .overlay(alignment: .topTrailing) {
-            if isGeneratingImage {
-                generatingOverlay
+        .overlay(alignment: .top) {
+            if generating != nil {
+                HStack(spacing: 10) {
+                    ProgressView()
+                        .tint(Color.vakitAccent)
+                    Text("Görsel hazırlanıyor...")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(.ultraThinMaterial)
+                .clipShape(Capsule())
+                .padding(.top, 100)
             }
         }
     }
@@ -58,47 +70,16 @@ struct DiscoverView: View {
                     .font(.subheadline)
                     .foregroundStyle(Color.vakitTextDim)
             }
-
             Spacer()
-
-            Button {
-                generateAndShare()
-            } label: {
-                Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(Color.vakitAccent)
-                    .frame(width: 40, height: 40)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color.vakitAccent.opacity(0.12))
-                    )
-            }
-            .disabled(isGeneratingImage)
         }
-    }
-
-    // MARK: - Generating overlay
-
-    private var generatingOverlay: some View {
-        HStack(spacing: 10) {
-            ProgressView()
-                .tint(Color.vakitAccent)
-            Text("Görsel hazırlanıyor...")
-                .font(.subheadline)
-                .foregroundStyle(Color.vakitTextDim)
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
-        .background(.ultraThinMaterial)
-        .clipShape(Capsule())
-        .padding(.top, 100)
-        .padding(.trailing, 20)
     }
 
     // MARK: - Kartlar
 
     private func verseCard(_ verse: Verse) -> some View {
-        section(titleKey: "discover.verse", icon: "book.fill", tint: .vakitAccent) {
+        section(titleKey: "discover.verse", icon: "book.fill", tint: .vakitAccent,
+                onShare: { generateVerseShare() })
+        {
             VStack(alignment: .leading, spacing: 12) {
                 if let arabic = verse.arabic, !arabic.isEmpty {
                     Text(arabic)
@@ -118,7 +99,9 @@ struct DiscoverView: View {
     }
 
     private func hadithCard(_ hadith: Hadith) -> some View {
-        section(titleKey: "discover.hadith", icon: "text.quote", tint: .sunrise) {
+        section(titleKey: "discover.hadith", icon: "text.quote", tint: .sunrise,
+                onShare: { generateHadithShare() })
+        {
             VStack(alignment: .leading, spacing: 12) {
                 Text(hadith.text(language: lang.currentLanguage))
                     .font(.system(.body, design: .default))
@@ -131,7 +114,9 @@ struct DiscoverView: View {
     }
 
     private func duaCard(_ dua: Dua) -> some View {
-        section(titleKey: "discover.dua", icon: "hands.and.sparkles.fill", tint: .isha) {
+        section(titleKey: "discover.dua", icon: "hands.and.sparkles.fill", tint: .isha,
+                onShare: { generateDuaShare() })
+        {
             VStack(alignment: .leading, spacing: 12) {
                 if let arabic = dua.arabic, !arabic.isEmpty {
                     Text(arabic)
@@ -166,35 +151,61 @@ struct DiscoverView: View {
         }
     }
 
-    // MARK: - Paylaşım
+    // MARK: - Paylaşım (3 ayrı buton)
 
-    private func generateAndShare() {
-        isGeneratingImage = true
-
+    private func generateVerseShare() {
+        guard generating == nil else { return }
+        generating = .verse
         let v = verse
-        let h = hadith
-        let d = dua
-        let e = dailyEsma
         let langCode = lang.currentLanguage
 
         Task {
             let image = await Task.detached(priority: .userInitiated) {
-                await makeShareImage(verse: v, hadith: h, dua: d, esma: e, language: langCode)
+                await makeVerseShareImage(verse: v, language: langCode)
             }.value
+            await presentShare(image)
+        }
+    }
 
-            await MainActor.run {
-                isGeneratingImage = false
-                if let image {
-                    let av = UIActivityViewController(
-                        activityItems: [image],
-                        applicationActivities: nil
-                    )
-                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let root = scene.windows.first?.rootViewController {
-                        root.present(av, animated: true)
-                    }
-                }
-            }
+    private func generateHadithShare() {
+        guard generating == nil else { return }
+        generating = .hadith
+        let h = hadith
+        let langCode = lang.currentLanguage
+
+        Task {
+            let image = await Task.detached(priority: .userInitiated) {
+                await makeHadithShareImage(hadith: h, language: langCode)
+            }.value
+            await presentShare(image)
+        }
+    }
+
+    private func generateDuaShare() {
+        guard generating == nil else { return }
+        generating = .dua
+        let d = dua
+        let langCode = lang.currentLanguage
+
+        Task {
+            let image = await Task.detached(priority: .userInitiated) {
+                await makeDuaShareImage(dua: d, language: langCode)
+            }.value
+            await presentShare(image)
+        }
+    }
+
+    @MainActor
+    private func presentShare(_ image: UIImage?) {
+        generating = nil
+        guard let image else { return }
+        let av = UIActivityViewController(
+            activityItems: [image],
+            applicationActivities: nil
+        )
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let root = scene.windows.first?.rootViewController {
+            root.present(av, animated: true)
         }
     }
 
@@ -204,6 +215,7 @@ struct DiscoverView: View {
         titleKey: String,
         icon: String,
         tint: Color,
+        onShare: (() -> Void)? = nil,
         @ViewBuilder content: () -> some View
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -219,6 +231,22 @@ struct DiscoverView: View {
                 Text(lang.t(titleKey))
                     .font(.system(.headline, design: .default, weight: .semibold))
                     .foregroundStyle(Color.vakitText)
+
+                Spacer()
+
+                if let onShare {
+                    Button(action: onShare) {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(tint)
+                            .frame(width: 32, height: 32)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(tint.opacity(0.12))
+                            )
+                    }
+                    .disabled(generating != nil)
+                }
             }
             content()
                 .padding(18)
