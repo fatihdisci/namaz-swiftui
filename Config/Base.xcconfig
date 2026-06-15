@@ -1,0 +1,3 @@
+# Xcode Cloud ci_post_clone.sh tarafından doldurulur.
+# Lokal geliştirmede doğrudan Secrets.xcconfig dosyasını el ile oluşturun.
+#include? "Secrets.xcconfig"

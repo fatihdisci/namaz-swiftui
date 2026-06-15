@@ -28,6 +28,7 @@ Pods/
 
 # Secrets / local config
 *.xcconfig.local
+Config/Secrets.xcconfig
 Secrets.swift
 RevenueCatAPIKeys.swift
 .env
