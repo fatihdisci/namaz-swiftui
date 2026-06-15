@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ProGateView: View {
+    var isPreview = false
+
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
     @Environment(\.dismiss) private var dismiss
@@ -42,11 +44,9 @@ struct ProGateView: View {
         .preferredColorScheme(.dark)
         .task {
             await purchaseService.refresh()
-            #if !DEBUG
-            if purchaseService.hasProAccess {
+            if purchaseService.hasProAccess && !isPreview {
                 dismiss()
             }
-            #endif
         }
         .alert(lang.t("pro.error.title"), isPresented: errorBinding) {
             Button(lang.t("pro.error.ok"), role: .cancel) {}
@@ -216,7 +216,7 @@ struct ProGateView: View {
 
         do {
             try await purchaseService.purchase(product: product)
-            if purchaseService.hasProAccess {
+            if purchaseService.hasProAccess && !isPreview {
                 dismiss()
             }
         } catch PurchaseService.ServiceError.entitlementNotActive {
@@ -233,7 +233,9 @@ struct ProGateView: View {
         do {
             try await purchaseService.restorePurchases()
             if purchaseService.hasProAccess {
-                dismiss()
+                if !isPreview {
+                    dismiss()
+                }
             } else {
                 errorMessage = lang.t("pro.restore.none")
             }

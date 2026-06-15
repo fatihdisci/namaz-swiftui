@@ -8,6 +8,21 @@ final class PurchaseService {
     static let shared = PurchaseService()
 
     static let entitlementIdentifier = "pro"
+    static var isInternalTestingBuild: Bool {
+        #if DEBUG
+        true
+        #else
+        Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        #endif
+    }
+
+    enum TestingAccessMode: String, CaseIterable, Identifiable {
+        case automatic
+        case unlocked
+        case locked
+
+        var id: Self { self }
+    }
 
     enum ProductID: String, CaseIterable {
         case monthly = "vakit_pro_monthly"
@@ -26,19 +41,39 @@ final class PurchaseService {
         case entitlementNotActive
     }
 
-    #if DEBUG
-    /// DEBUG: her zaman Pro aktif (test kolaylığı).
-    private(set) var hasProAccess = true
-    #else
-    private(set) var hasProAccess = false
-    #endif
+    private static let testingAccessModeKey = "pro.testingAccessMode"
+
+    private(set) var entitlementHasProAccess = false
+    private(set) var testingAccessMode: TestingAccessMode
     private(set) var products: [Product] = []
     private(set) var isLoading = false
+
+    var hasProAccess: Bool {
+        guard Self.isInternalTestingBuild else { return entitlementHasProAccess }
+
+        switch testingAccessMode {
+        case .automatic:
+            return entitlementHasProAccess
+        case .unlocked:
+            return true
+        case .locked:
+            return false
+        }
+    }
 
     @ObservationIgnored private var storeProducts: [ProductID: StoreProduct] = [:]
     @ObservationIgnored private var customerInfoTask: Task<Void, Never>?
 
-    private init() {}
+    private init() {
+        if
+            let storedValue = UserDefaults.standard.string(forKey: Self.testingAccessModeKey),
+            let storedMode = TestingAccessMode(rawValue: storedValue)
+        {
+            testingAccessMode = storedMode
+        } else {
+            testingAccessMode = Self.isInternalTestingBuild ? .unlocked : .automatic
+        }
+    }
 
     func configure() {
         if !Purchases.isConfigured {
@@ -59,9 +94,7 @@ final class PurchaseService {
 
     func refresh() async {
         guard Purchases.isConfigured else {
-            #if !DEBUG
-            hasProAccess = false
-            #endif
+            entitlementHasProAccess = false
             products = []
             return
         }
@@ -76,9 +109,7 @@ final class PurchaseService {
             let customerInfo = try await customerInfoTask
             updateAccess(from: customerInfo)
         } catch {
-            #if !DEBUG
-            hasProAccess = false
-            #endif
+            entitlementHasProAccess = false
         }
 
         let fetchedProducts = await productsTask
@@ -121,10 +152,15 @@ final class PurchaseService {
         products.first { $0.id == id }
     }
 
+    func setTestingAccessMode(_ mode: TestingAccessMode) {
+        guard Self.isInternalTestingBuild else { return }
+        testingAccessMode = mode
+        UserDefaults.standard.set(mode.rawValue, forKey: Self.testingAccessModeKey)
+    }
+
     private func updateAccess(from customerInfo: CustomerInfo) {
-        #if !DEBUG
-        hasProAccess = customerInfo.entitlements[Self.entitlementIdentifier]?.isActive == true
-        #endif
+        entitlementHasProAccess =
+            customerInfo.entitlements[Self.entitlementIdentifier]?.isActive == true
     }
 
     private func observeCustomerInfo() {

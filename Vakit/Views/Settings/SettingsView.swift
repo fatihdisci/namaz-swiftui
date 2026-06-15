@@ -30,9 +30,9 @@ struct SettingsView: View {
                         notificationsSection
                         proSection
                         aboutSection
-                        #if DEBUG
-                        developerSection
-                        #endif
+                        if PurchaseService.isInternalTestingBuild {
+                            developerSection
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -53,7 +53,7 @@ struct SettingsView: View {
                 .environment(purchaseService)
         }
         .sheet(isPresented: $showPaywall) {
-            ProGateView()
+            ProGateView(isPreview: true)
                 .environment(lang)
                 .environment(purchaseService)
         }
@@ -222,9 +222,8 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Geliştirici (sadece DEBUG)
+    // MARK: - Geliştirici (Debug ve TestFlight)
 
-    #if DEBUG
     private var developerSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Geliştirici")
@@ -233,6 +232,26 @@ struct SettingsView: View {
                 .textCase(.uppercase)
 
             VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 10) {
+                    rowLabel(icon: "lock.open.fill", title: "Pro Test Modu")
+
+                    Picker(
+                        "Pro Test Modu",
+                        selection: Binding(
+                            get: { purchaseService.testingAccessMode },
+                            set: { purchaseService.setTestingAccessMode($0) }
+                        )
+                    ) {
+                        Text("Gerçek").tag(PurchaseService.TestingAccessMode.automatic)
+                        Text("Açık").tag(PurchaseService.TestingAccessMode.unlocked)
+                        Text("Kilitli").tag(PurchaseService.TestingAccessMode.locked)
+                    }
+                    .pickerStyle(.segmented)
+                }
+                .padding(.vertical, 10)
+
+                divider
+
                 Button {
                     showPaywall = true
                 } label: {
@@ -256,7 +275,6 @@ struct SettingsView: View {
             )
         }
     }
-    #endif
 
     // MARK: - Location picker sheet (new cascading flow)
 
