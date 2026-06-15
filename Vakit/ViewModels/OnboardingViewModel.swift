@@ -25,18 +25,31 @@ final class OnboardingViewModel {
     @ObservationIgnored private let storage: StorageService
     @ObservationIgnored private let locationService = LocationService()
 
-    private static let searchDebounce: Duration = .milliseconds(400)
+    /// iller.json'dan yüklenen tüm Türkiye ilçeleri.
+    @ObservationIgnored private static var ilceler: [Ilce] = {
+        guard let url = Bundle.main.url(forResource: "iller", withExtension: "json") else {
+            return []
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode([Ilce].self, from: data)
+        } catch {
+            return []
+        }
+    }()
+
+    private static let searchDebounce: Duration = .milliseconds(200)
 
     init(storage: StorageService = .shared) {
         self.storage = storage
     }
 
-    // MARK: - Şehir arama (Aladhan /cityInfo)
+    // MARK: - Şehir arama (iller.json yerel veri)
 
     private func scheduleSearch() {
         searchTask?.cancel()
         let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard query.count >= 2 else {
+        guard !query.isEmpty else {
             results = []
             isSearching = false
             return
@@ -49,62 +62,41 @@ final class OnboardingViewModel {
         }
     }
 
-    /// Aladhan /cityInfo tek şehir doğrular (liste API'si yok).
-    /// "Şehir, Ülke" yazılırsa ikisi ayrılır; ülke yoksa dile göre varsayılan kullanılır.
-    private func search(query: String) async {
+    /// iller.json içinde il veya ilçe adına göre filtrele.
+    /// Türkçe karakter duyarsız (İ↔i, ı↔i, ş↔s, ğ↔g, ü↔u, ö↔o, ç↔c).
+    private func search(query: String) {
         isSearching = true
         errorKey = nil
         defer { isSearching = false }
 
-        let parts = query.split(separator: ",", maxSplits: 1).map {
-            $0.trimmingCharacters(in: .whitespaces)
+        let normalizedQuery = query
+            .lowercased()
+            .replacingOccurrences(of: "i̇", with: "i")
+            .replacingOccurrences(of: "ç", with: "c")
+            .replacingOccurrences(of: "ş", with: "s")
+            .replacingOccurrences(of: "ğ", with: "g")
+            .replacingOccurrences(of: "ü", with: "u")
+            .replacingOccurrences(of: "ö", with: "o")
+            .replacingOccurrences(of: "ı", with: "i")
+            .replacingOccurrences(of: "i\u{0307}", with: "i")
+
+        let matches = Self.ilceler.filter { ilce in
+            ilce.normalizedSearch.contains(normalizedQuery)
         }
-        let cityName = parts.first ?? query
-        let country = parts.count > 1
-            ? parts[1]
-            : (storage.language == "tr" ? "Turkey" : "")
 
-        var components = URLComponents(string: "https://api.aladhan.com/v1/cityInfo")
-        components?.queryItems = [
-            URLQueryItem(name: "city", value: cityName),
-            URLQueryItem(name: "country", value: country),
-        ]
-        guard let url = components?.url else { return }
+        results = matches.prefix(30).map { ilce in
+            CitySnapshot(
+                name: ilce.displayName,      // "Konak, İzmir"
+                latitude: ilce.lat,
+                longitude: ilce.lng,
+                country: "Turkey",
+                timezone: "Europe/Istanbul",
+                method: method
+            )
+        }
 
-        do {
-            var request = URLRequest(url: url)
-            request.timeoutInterval = 10
-            let (data, _) = try await URLSession.shared.data(for: request)
-            guard !Task.isCancelled else { return }
-
-            let payload = try JSONDecoder().decode(AladhanCityInfoResponse.self, from: data)
-            guard
-                payload.code == 200,
-                let info = payload.data,
-                let latitude = info.latitude?.value,
-                let longitude = info.longitude?.value
-            else {
-                results = []
-                errorKey = "onboarding.city.noResults"
-                return
-            }
-
-            results = [
-                CitySnapshot(
-                    name: cityName,
-                    latitude: latitude,
-                    longitude: longitude,
-                    country: country,
-                    timezone: info.timezone ?? TimeZone.current.identifier,
-                    method: method
-                )
-            ]
-        } catch is CancellationError {
-            // Yeni arama başladı; sessiz geç.
-        } catch {
-            guard !Task.isCancelled else { return }
-            results = []
-            errorKey = "error.noInternet"
+        if results.isEmpty {
+            errorKey = "onboarding.city.noResults"
         }
     }
 
@@ -187,7 +179,7 @@ final class OnboardingViewModel {
     }
 }
 
-// MARK: - Aladhan /cityInfo yanıt modelleri
+// MARK: - Aladhan /cityInfo yanıt modelleri (LocationSelectionViewModel tarafından kullanılır)
 
 struct AladhanCityInfoResponse: Decodable {
     let code: Int

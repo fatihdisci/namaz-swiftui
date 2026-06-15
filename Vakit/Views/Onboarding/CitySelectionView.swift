@@ -108,11 +108,6 @@ struct CitySelectionView: View {
                             Text(city.name)
                                 .font(.system(.body, weight: .medium))
                                 .foregroundStyle(Color.vakitText)
-                            if !city.country.isEmpty {
-                                Text(city.country)
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.vakitTextDim)
-                            }
                         }
                         Spacer()
                         if viewModel.selectedCity?.id == city.id {

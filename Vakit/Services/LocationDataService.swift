@@ -153,15 +153,44 @@ final class LocationDataService {
         turkeyDistricts(for: provinceName).first { $0.name == districtName }
     }
 
-    // MARK: - Load
+    // MARK: - Load (iller.json → yapısal province/district)
 
     private func loadTurkeyData() -> TurkeyData? {
-        guard let url = Bundle.main.url(forResource: "turkey_locations", withExtension: "json") else {
+        guard let url = Bundle.main.url(forResource: "iller", withExtension: "json") else {
             return nil
         }
         do {
             let data = try Data(contentsOf: url)
-            return try JSONDecoder().decode(TurkeyData.self, from: data)
+            let ilceler = try JSONDecoder().decode([Ilce].self, from: data)
+
+            // Grupla: il → [ilce]
+            var ilMap: [String: [Ilce]] = [:]
+            for ilce in ilceler {
+                ilMap[ilce.il, default: []].append(ilce)
+            }
+
+            let provinces: [ProvinceData] = ilMap.map { (ilAdi, ilceler) in
+                let districts = ilceler.map { ilce in
+                    DistrictData(name: ilce.ilce, latitude: ilce.lat, longitude: ilce.lng)
+                }
+                // İl merkezi: ilçelerin ortalama koordinatı
+                let avgLat = ilceler.map(\.lat).reduce(0, +) / Double(ilceler.count)
+                let avgLng = ilceler.map(\.lng).reduce(0, +) / Double(ilceler.count)
+                return ProvinceData(
+                    name: ilAdi,
+                    latitude: avgLat,
+                    longitude: avgLng,
+                    timezone: "Europe/Istanbul",
+                    districts: districts
+                )
+            }.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+
+            return TurkeyData(
+                countryCode: "TR",
+                countryNameTR: "Türkiye",
+                countryNameEN: "Turkey",
+                provinces: provinces
+            )
         } catch {
             return nil
         }
