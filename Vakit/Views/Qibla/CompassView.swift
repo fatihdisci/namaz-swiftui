@@ -9,10 +9,14 @@ struct CompassView: View {
     var body: some View {
         VStack(spacing: 28) {
             ZStack {
+                // Pusula yüzü heading ile döner → N her zaman gerçek kuzeyi gösterir.
                 compassFace
+                    .rotationEffect(.degrees(-viewModel.heading))
+                    .animation(.interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.heading)
+
+                // İğne sabit: her zaman Kabe yönünü gösterir.
                 needle
-                    .rotationEffect(.degrees(viewModel.needleRotation))
-                    .animation(.interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.needleRotation)
+                    .rotationEffect(.degrees(viewModel.qiblaAngle))
             }
             .frame(width: 260, height: 260)
 
