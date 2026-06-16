@@ -24,9 +24,12 @@ final class SafarViewModel {
     @ObservationIgnored private let storage: StorageService
     @ObservationIgnored private let locationService: LocationService
 
-    init(storage: StorageService = .shared, locationService: LocationService = LocationService()) {
+    // locationService default'u init gövdesinde (MainActor) oluşturulur:
+    // LocationService @MainActor olduğundan nonisolated default-argument
+    // ifadesinde `= LocationService()` yazılamaz.
+    init(storage: StorageService = .shared, locationService: LocationService? = nil) {
         self.storage = storage
-        self.locationService = locationService
+        self.locationService = locationService ?? LocationService()
     }
 
     /// Tek seferlik konum alır, ev şehrine mesafeyi hesaplar.

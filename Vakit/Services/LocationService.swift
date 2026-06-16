@@ -4,7 +4,21 @@ import CoreLocation
 /// Tek seferlik konum servisi.
 /// ANAYASA KURALI: Konum asla kalıcı saklanmaz — istek biter bitmez
 /// manager ve konum referansı bırakılır.
-final class LocationService: NSObject, CLLocationManagerDelegate {
+///
+/// ⚠️ Bu sınıfın `@MainActor` olması ZORUNLUDUR — kaldırma.
+/// CLLocationManager, delegate callback'lerini *kendisinin başlatıldığı
+/// thread'in run loop'unda* iletir (Apple dokümantasyonu). Swift Concurrency'nin
+/// arka plan (cooperative pool) thread'lerinin aktif run loop'u YOKTUR. Manager
+/// orada oluşturulup başlatılırsa `didUpdateLocations`/`didFailWithError` HİÇ
+/// tetiklenmez; sadece timeout devreye girer.
+///
+/// `requestOneShotLocation()` `nonisolated async` olsaydı (sınıf MainActor
+/// değilken olduğu gibi), `@MainActor` bir çağırandan bile arka plan thread'ine
+/// "hop" ederdi (SE-0338) ve manager run loop'suz bir thread'de doğardı.
+/// Sınıfı MainActor'a sabitleyerek manager'ın daima main thread'de (aktif run
+/// loop'lu) oluşturulmasını garanti ediyoruz.
+@MainActor
+final class LocationService: NSObject {
     enum LocationError: Error, LocalizedError {
         case denied
         case unavailable
@@ -28,43 +42,56 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     private var timeoutTask: Task<Void, Never>?
 
     /// İzin ister (gerekirse) ve tek bir konum okuması döner.
-    /// `startUpdatingLocation()` + ilk sonuçta durdurma kullanır — `requestLocation()`
-    /// bazı cihazlarda / iOS sürümlerinde delegate'i hiç tetiklemeyebiliyor.
+    /// `startUpdatingLocation()` + ilk sonuçta durdurma kullanır.
     /// 25 saniye timeout ile korunur (soğuk GPS ilk fix ~15-20 sn sürebilir).
     func requestOneShotLocation() async throws -> CLLocation {
-        // Sistem konum servisleri kapalıysa hemen hata dön.
-        guard CLLocationManager.locationServicesEnabled() else {
+        // `locationServicesEnabled()` senkrondur ve main thread'i uzun süre
+        // bloke edebilir (Apple runtime uyarısı verir) → arka planda kontrol et.
+        guard await Self.servicesEnabled() else {
             throw LocationError.servicesDisabled
         }
 
+        // Bu closure MainActor'da (sınıf @MainActor) senkron çalışır → manager
+        // main thread'in aktif run loop'unda oluşturulur. Delegate callback'leri
+        // de bu run loop'ta teslim edilir.
         return try await withCheckedThrowingContinuation { continuation in
+            // Askıda kalmış önceki bir istek varsa sızıntıyı önlemek için bitir.
+            if self.continuation != nil {
+                finish(.failure(LocationError.unavailable))
+            }
+
             let manager = CLLocationManager()
             manager.delegate = self
             manager.desiredAccuracy = kCLLocationAccuracyKilometer
             self.manager = manager
             self.continuation = continuation
 
-            // Timeout: 25 saniye sonra otomatik iptal (soğuk GPS toleransı).
+            // Timeout: bu Task @MainActor context'ini miras alır (kapsayan metot
+            // MainActor), sleep sonrası main'de devam eder.
             timeoutTask = Task { [weak self] in
                 try? await Task.sleep(for: .seconds(Self.timeoutSeconds))
                 guard let self, self.continuation != nil else { return }
-                await MainActor.run {
-                    self.finish(.failure(LocationError.timeout))
-                }
+                self.finish(.failure(LocationError.timeout))
             }
 
-            let status = manager.authorizationStatus
-            switch status {
+            switch manager.authorizationStatus {
             case .denied, .restricted:
                 finish(.failure(LocationError.denied))
             case .notDetermined:
                 manager.requestWhenInUseAuthorization()
             default:
-                // startUpdatingLocation: requestLocation'dan daha agresif,
-                // delegate'i garantili tetikler. İlk konum gelince stop.
+                // İzin zaten varsa doğrudan başlat. İlk konum gelince stop.
                 manager.startUpdatingLocation()
             }
         }
+    }
+
+    /// `CLLocationManager.locationServicesEnabled()` main thread'i bloke
+    /// edebileceğinden arka plan thread'inde çağrılır.
+    private static func servicesEnabled() async -> Bool {
+        await Task.detached(priority: .userInitiated) {
+            CLLocationManager.locationServicesEnabled()
+        }.value
     }
 
     private func finish(_ result: Result<CLLocation, Error>) {
@@ -72,47 +99,56 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         timeoutTask?.cancel()
         timeoutTask = nil
         self.continuation = nil
+        manager?.stopUpdatingLocation()
         manager?.delegate = nil
         manager = nil
-        // CLLocationManager delegate callback'leri dökümante olarak main thread'de
-        // çağrılır. DispatchQueue.main.async KULLANMA — Swift concurrency
-        // runtime'ının @MainActor context'ini kuramamasına sebep olur.
         continuation.resume(with: result)
     }
+}
 
-    // MARK: - CLLocationManagerDelegate
-
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        guard continuation != nil else { return }
-        switch manager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
-            // startUpdatingLocation kullan — requestLocation'dan daha güvenilir.
-            manager.startUpdatingLocation()
-        case .denied, .restricted:
-            finish(.failure(LocationError.denied))
-        case .notDetermined:
-            break // Kullanıcı henüz seçim yapmadı.
-        @unknown default:
-            break
+// MARK: - CLLocationManagerDelegate
+//
+// Sınıf @MainActor ve manager main thread'de oluşturulduğu için Core Location
+// bu callback'leri main run loop'ta iletir. Bu yüzden metotlar `nonisolated` +
+// `MainActor.assumeIsolated` ile yazılır (projedeki QiblaViewModel heading
+// pattern'iyle aynı): protokol uyumu sağlanır ve @MainActor state'ine
+// (continuation, manager) güvenle erişilir.
+extension LocationService: CLLocationManagerDelegate {
+    nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        MainActor.assumeIsolated {
+            guard continuation != nil else { return }
+            switch manager.authorizationStatus {
+            case .authorizedWhenInUse, .authorizedAlways:
+                manager.startUpdatingLocation()
+            case .denied, .restricted:
+                finish(.failure(LocationError.denied))
+            case .notDetermined:
+                break // Kullanıcı henüz seçim yapmadı.
+            @unknown default:
+                break
+            }
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else {
-            finish(.failure(LocationError.unavailable))
-            return
+    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        MainActor.assumeIsolated {
+            guard let location = locations.first else {
+                finish(.failure(LocationError.unavailable))
+                return
+            }
+            // İlk konum alındı — finish() stopUpdatingLocation çağırıp bitirir.
+            finish(.success(location))
         }
-        // İlk konum alındı — güncellemeyi durdur ve başarıyla bitir.
-        manager.stopUpdatingLocation()
-        finish(.success(location))
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // kCLError.locationUnknown: geçici hata, konum henüz mevcut değil.
-        // startUpdatingLocation otomatik tekrar deneyecek — hemen fail etme.
-        if let clError = error as? CLError, clError.code == .locationUnknown {
-            return
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        MainActor.assumeIsolated {
+            // kCLError.locationUnknown: geçici hata, konum henüz mevcut değil.
+            // startUpdatingLocation otomatik tekrar deneyecek — hemen fail etme.
+            if let clError = error as? CLError, clError.code == .locationUnknown {
+                return
+            }
+            finish(.failure(error))
         }
-        finish(.failure(error))
     }
 }

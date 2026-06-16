@@ -1,5 +1,26 @@
 # Vakit App - Konum (Location) Debug Raporu
 
+## ✅ ÇÖZÜLDÜ — 2026-06-16
+
+**Kök neden:** `LocationService`, `@MainActor` olmayan bir sınıf olduğu için
+`requestOneShotLocation()` fonksiyonu nonisolated-async olarak değerlendiriliyordu.
+`@MainActor` çağırandan (`QiblaViewModel`) `await` ile çağrıldığında Swift runtime,
+SE-0338 kuralı gereği main actor'dan arka plan cooperative thread'ine "hop" ediyordu.
+`CLLocationManager`, **run loop'u olmayan** bu arka plan thread'inde oluşturulduğu için
+Core Location delegate callback'leri (`didUpdateLocations`, `didFailWithError`) hiç
+teslim edilmiyordu — sadece 25 sn timeout devreye giriyordu.
+
+**Düzeltme:** `LocationService` sınıfına `@MainActor` eklendi. Manager artık
+daima aktif run loop'lu main thread'de oluşturuluyor. Delegate metotları
+`nonisolated` + `MainActor.assumeIsolated` pattern'iyle yazıldı.
+
+**Etkilenen dosyalar:**
+- `Vakit/Services/LocationService.swift` — `@MainActor` eklendi, delegate metotları yeniden yazıldı
+- `Vakit/ViewModels/QiblaViewModel.swift` — init default argümanı düzeltildi
+- `Vakit/ViewModels/SafarViewModel.swift` — init default argümanı düzeltildi
+
+---
+
 ## Sorun
 
 Kıble Pusulası ve Seferi Hesabı özellikleri için konum izni isteniyor, kullanıcı izin veriyor, ancak **konum hiç gelmiyor** — 25 saniye sonra timeout'a düşüyor.

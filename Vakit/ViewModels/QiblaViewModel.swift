@@ -44,8 +44,11 @@ final class QiblaViewModel: NSObject {
     @ObservationIgnored private let locationService: LocationService
     @ObservationIgnored private var headingManager: CLLocationManager?
 
-    init(locationService: LocationService = LocationService()) {
-        self.locationService = locationService
+    // locationService default'u init gövdesinde (MainActor) oluşturulur:
+    // LocationService @MainActor olduğundan nonisolated default-argument
+    // ifadesinde `= LocationService()` yazılamaz.
+    init(locationService: LocationService? = nil) {
+        self.locationService = locationService ?? LocationService()
         super.init()
     }
 
