@@ -5,24 +5,54 @@ import CoreLocation
 /// ANAYASA KURALI: Konum asla kalıcı saklanmaz — istek biter bitmez
 /// manager ve konum referansı bırakılır.
 final class LocationService: NSObject, CLLocationManagerDelegate {
-    enum LocationError: Error {
+    enum LocationError: Error, LocalizedError {
         case denied
         case unavailable
+        case timeout
+        case servicesDisabled
+
+        var errorDescription: String? {
+            switch self {
+            case .denied: "Location permission denied"
+            case .unavailable: "Location unavailable"
+            case .timeout: "Location request timed out"
+            case .servicesDisabled: "Location services are disabled"
+            }
+        }
     }
+
+    private static let timeoutSeconds: TimeInterval = 15
 
     private var manager: CLLocationManager?
     private var continuation: CheckedContinuation<CLLocation, Error>?
+    private var timeoutTask: Task<Void, Never>?
 
     /// İzin ister (gerekirse) ve tek bir konum okuması döner.
+    /// 15 saniye timeout ile korunur — bu sürede yanıt gelmezse `.timeout` hatası döner.
     func requestOneShotLocation() async throws -> CLLocation {
-        try await withCheckedThrowingContinuation { continuation in
+        // Sistem konum servisleri kapalıysa hemen hata dön.
+        guard CLLocationManager.locationServicesEnabled() else {
+            throw LocationError.servicesDisabled
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
             let manager = CLLocationManager()
             manager.delegate = self
             manager.desiredAccuracy = kCLLocationAccuracyKilometer
             self.manager = manager
             self.continuation = continuation
 
-            switch manager.authorizationStatus {
+            // Timeout: 15 saniye sonra otomatik iptal.
+            timeoutTask = Task { [weak self] in
+                try? await Task.sleep(for: .seconds(Self.timeoutSeconds))
+                guard let self, self.continuation != nil else { return }
+                await MainActor.run {
+                    self.finish(.failure(LocationError.timeout))
+                }
+            }
+
+            let status = manager.authorizationStatus
+            switch status {
             case .denied, .restricted:
                 finish(.failure(LocationError.denied))
             case .notDetermined:
@@ -35,6 +65,8 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
 
     private func finish(_ result: Result<CLLocation, Error>) {
         guard let continuation else { return }
+        timeoutTask?.cancel()
+        timeoutTask = nil
         self.continuation = nil
         manager?.delegate = nil
         manager = nil

@@ -45,6 +45,10 @@ final class SafarViewModel {
             state = .result(distanceKm: distance, isSafar: SafarService.isSafar(distanceKm: distance))
         } catch LocationService.LocationError.denied {
             state = .denied
+        } catch LocationService.LocationError.servicesDisabled {
+            state = .error("error.locationServicesDisabled")
+        } catch LocationService.LocationError.timeout {
+            state = .error("error.locationTimeout")
         } catch {
             state = .error("error.location")
         }

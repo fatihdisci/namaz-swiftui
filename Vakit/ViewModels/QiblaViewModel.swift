@@ -59,6 +59,10 @@ final class QiblaViewModel: NSObject {
             startHeadingUpdates()
         } catch LocationService.LocationError.denied {
             locationState = .denied
+        } catch LocationService.LocationError.servicesDisabled {
+            locationState = .error("error.locationServicesDisabled")
+        } catch LocationService.LocationError.timeout {
+            locationState = .error("error.locationTimeout")
         } catch {
             locationState = .error("error.location")
         }
