@@ -21,14 +21,16 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    private static let timeoutSeconds: TimeInterval = 15
+    private static let timeoutSeconds: TimeInterval = 25
 
     private var manager: CLLocationManager?
     private var continuation: CheckedContinuation<CLLocation, Error>?
     private var timeoutTask: Task<Void, Never>?
 
     /// İzin ister (gerekirse) ve tek bir konum okuması döner.
-    /// 15 saniye timeout ile korunur — bu sürede yanıt gelmezse `.timeout` hatası döner.
+    /// `startUpdatingLocation()` + ilk sonuçta durdurma kullanır — `requestLocation()`
+    /// bazı cihazlarda / iOS sürümlerinde delegate'i hiç tetiklemeyebiliyor.
+    /// 25 saniye timeout ile korunur (soğuk GPS ilk fix ~15-20 sn sürebilir).
     func requestOneShotLocation() async throws -> CLLocation {
         // Sistem konum servisleri kapalıysa hemen hata dön.
         guard CLLocationManager.locationServicesEnabled() else {
@@ -42,7 +44,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
             self.manager = manager
             self.continuation = continuation
 
-            // Timeout: 15 saniye sonra otomatik iptal.
+            // Timeout: 25 saniye sonra otomatik iptal (soğuk GPS toleransı).
             timeoutTask = Task { [weak self] in
                 try? await Task.sleep(for: .seconds(Self.timeoutSeconds))
                 guard let self, self.continuation != nil else { return }
@@ -58,7 +60,9 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
             case .notDetermined:
                 manager.requestWhenInUseAuthorization()
             default:
-                manager.requestLocation()
+                // startUpdatingLocation: requestLocation'dan daha agresif,
+                // delegate'i garantili tetikler. İlk konum gelince stop.
+                manager.startUpdatingLocation()
             }
         }
     }
@@ -82,7 +86,8 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         guard continuation != nil else { return }
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
-            manager.requestLocation()
+            // startUpdatingLocation kullan — requestLocation'dan daha güvenilir.
+            manager.startUpdatingLocation()
         case .denied, .restricted:
             finish(.failure(LocationError.denied))
         case .notDetermined:
@@ -93,14 +98,21 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            finish(.success(location))
-        } else {
+        guard let location = locations.first else {
             finish(.failure(LocationError.unavailable))
+            return
         }
+        // İlk konum alındı — güncellemeyi durdur ve başarıyla bitir.
+        manager.stopUpdatingLocation()
+        finish(.success(location))
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // kCLError.locationUnknown: geçici hata, konum henüz mevcut değil.
+        // startUpdatingLocation otomatik tekrar deneyecek — hemen fail etme.
+        if let clError = error as? CLError, clError.code == .locationUnknown {
+            return
+        }
         finish(.failure(error))
     }
 }
