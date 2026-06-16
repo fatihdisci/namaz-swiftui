@@ -38,6 +38,19 @@ final class OnboardingViewModel {
         }
     }()
 
+    /// dunya_sehirleri.json'dan yüklenen 60 dünya şehri.
+    @ObservationIgnored private static var dunyaSehirleri: [DunyaSehri] = {
+        guard let url = Bundle.main.url(forResource: "dunya_sehirleri", withExtension: "json") else {
+            return []
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode([DunyaSehri].self, from: data)
+        } catch {
+            return []
+        }
+    }()
+
     private static let searchDebounce: Duration = .milliseconds(200)
 
     init(storage: StorageService = .shared) {
@@ -62,8 +75,8 @@ final class OnboardingViewModel {
         }
     }
 
-    /// iller.json içinde il veya ilçe adına göre filtrele.
-    /// Türkçe karakter duyarsız (İ↔i, ı↔i, ş↔s, ğ↔g, ü↔u, ö↔o, ç↔c).
+    /// iller.json + dunya_sehirleri.json içinde il/ilçe veya ülke/şehir adına filtrele.
+    /// Türkçe karakter duyarsız. TR sonuçları önce, dünya sonuçları sonra.
     private func search(query: String) {
         isSearching = true
         errorKey = nil
@@ -80,13 +93,14 @@ final class OnboardingViewModel {
             .replacingOccurrences(of: "ı", with: "i")
             .replacingOccurrences(of: "i\u{0307}", with: "i")
 
-        let matches = Self.ilceler.filter { ilce in
+        // Türkiye ilçeleri
+        let trMatches = Self.ilceler.filter { ilce in
             ilce.normalizedSearch.contains(normalizedQuery)
         }
 
-        results = matches.prefix(30).map { ilce in
+        let trResults = trMatches.prefix(20).map { ilce in
             CitySnapshot(
-                name: ilce.displayName,      // "Konak, İzmir"
+                name: ilce.displayName,
                 latitude: ilce.lat,
                 longitude: ilce.lng,
                 country: "Turkey",
@@ -94,6 +108,24 @@ final class OnboardingViewModel {
                 method: method
             )
         }
+
+        // Dünya şehirleri
+        let worldMatches = Self.dunyaSehirleri.filter { sehir in
+            sehir.normalizedSearch.contains(normalizedQuery)
+        }
+
+        let worldResults = worldMatches.prefix(15).map { sehir in
+            CitySnapshot(
+                name: sehir.displayName,
+                latitude: sehir.lat,
+                longitude: sehir.lng,
+                country: sehir.ulke,
+                timezone: TimeZone.current.identifier,
+                method: method
+            )
+        }
+
+        results = Array((trResults + worldResults).prefix(30))
 
         if results.isEmpty {
             errorKey = "onboarding.city.noResults"
