@@ -82,8 +82,6 @@ struct SettingsView: View {
             divider
             cityRow
             divider
-            homeCityRow
-            divider
             methodRow
         }
     }
@@ -113,24 +111,6 @@ struct SettingsView: View {
                 rowLabel(icon: "building.2", titleKey: "settings.city")
                 Spacer()
                 Text(viewModel.locationDisplayName)
-                    .font(.subheadline)
-                    .foregroundStyle(Color.vakitTextDim)
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(Color.vakitTextDim)
-            }
-            .padding(.vertical, 10)
-        }
-    }
-
-    private var homeCityRow: some View {
-        Button {
-            activeLocationPicker = .home
-        } label: {
-            HStack {
-                rowLabel(icon: "house.fill", titleKey: "settings.homeCity")
-                Spacer()
-                Text(viewModel.homeLocationDisplayName)
                     .font(.subheadline)
                     .foregroundStyle(Color.vakitTextDim)
                 Image(systemName: "chevron.right")
@@ -355,7 +335,7 @@ enum LocationPickerPurpose: Identifiable {
 /// `.sheet(item:)` her açılışta içeriği yeniden kurduğundan model daima TAZE olur
 /// (eski seçim state'i taşınmaz) ve seçilen konum aynı instance'tan üretilip
 /// `onSave` ile geri verilir.
-private struct LocationPickerSheet: View {
+struct LocationPickerSheet: View {
     let purpose: LocationPickerPurpose
     let lang: LanguageService
     let onSave: (PrayerLocation) -> Void
@@ -363,6 +343,7 @@ private struct LocationPickerSheet: View {
     @State private var model = LocationSelectionViewModel()
     @State private var savedLocations: [PrayerLocation] = []
     @State private var showCityLimitAlert = false
+    @State private var showCityDuplicateAlert = false
     @State private var isAutoLocating = false
     @State private var autoLocateError: String?
     @Environment(\.dismiss) private var dismiss
@@ -417,6 +398,11 @@ private struct LocationPickerSheet: View {
             Button(lang.t("cityLimit.ok"), role: .cancel) {}
         } message: {
             Text(lang.t("cityLimit.message"))
+        }
+        .alert(lang.t("cityDuplicate.title"), isPresented: $showCityDuplicateAlert) {
+            Button(lang.t("cityDuplicate.ok"), role: .cancel) {}
+        } message: {
+            Text(lang.t("cityDuplicate.message"))
         }
     }
 
@@ -490,7 +476,13 @@ private struct LocationPickerSheet: View {
 
     private func handleCitySelection(_ location: PrayerLocation) {
         let isNew = !storage.savedPrayerLocations.contains(where: { $0.id == location.id })
-        if isNew && storage.savedPrayerLocations.count >= maxSavedCities {
+        let isDuplicate = storage.savedPrayerLocations.contains(where: {
+            $0.shortName == location.shortName && $0.countryName == location.countryName && $0.id != location.id
+        })
+
+        if isDuplicate {
+            showCityDuplicateAlert = true
+        } else if isNew && storage.savedPrayerLocations.count >= maxSavedCities {
             showCityLimitAlert = true
         } else {
             onSave(location)
@@ -516,6 +508,18 @@ private struct LocationPickerSheet: View {
                                 .foregroundStyle(Color.vakitTextDim)
                         }
                         Spacer()
+                        Button {
+                            withAnimation {
+                                storage.removeSavedPrayerLocation(id: location.id)
+                                savedLocations = storage.savedPrayerLocations
+                            }
+                        } label: {
+                            Image(systemName: "trash")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(Color.maghrib.opacity(0.7))
+                                .frame(width: 32, height: 32)
+                        }
+                        .buttonStyle(.plain)
                         Image(systemName: "chevron.right")
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(Color.vakitTextDim)
@@ -524,16 +528,6 @@ private struct LocationPickerSheet: View {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         handleCitySelection(location)
-                    }
-                    .contextMenu {
-                        Button(role: .destructive) {
-                            withAnimation {
-                                storage.removeSavedPrayerLocation(id: location.id)
-                                savedLocations = storage.savedPrayerLocations
-                            }
-                        } label: {
-                            Label(lang.t("common.delete"), systemImage: "trash")
-                        }
                     }
 
                     if location.id != savedLocations.last?.id {

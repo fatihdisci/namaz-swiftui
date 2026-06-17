@@ -6,6 +6,7 @@ import UIKit
 struct SafarView: View {
     @State private var viewModel = SafarViewModel()
     @State private var showProGate = false
+    @State private var showHomeCityPicker = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -57,6 +58,13 @@ struct SafarView: View {
                 .environment(lang)
                 .environment(purchaseService)
         }
+        .sheet(isPresented: $showHomeCityPicker) {
+            LocationPickerSheet(purpose: .home, lang: lang) { location in
+                StorageService.shared.homePrayerLocation = location
+                viewModel.refreshHomeLocation()
+                showHomeCityPicker = false
+            }
+        }
     }
 
     private var header: some View {
@@ -71,31 +79,40 @@ struct SafarView: View {
     }
 
     private var homeCityCard: some View {
-        HStack(spacing: 14) {
-            Image(systemName: "house.fill")
-                .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(Color.vakitAccent)
-                .frame(width: 40, height: 40)
-                .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
+        Button {
+            showHomeCityPicker = true
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "house.fill")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(Color.vakitAccent)
+                    .frame(width: 40, height: 40)
+                    .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(lang.t("safar.homeCity"))
-                    .font(.caption)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(lang.t("safar.homeCity"))
+                        .font(.caption)
+                        .foregroundStyle(Color.vakitTextDim)
+                    Text(homeCityLabel)
+                        .font(.system(.body, design: .default, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(Color.vakitTextDim)
-                Text(homeCityLabel)
-                    .font(.system(.body, design: .default, weight: .semibold))
-                    .foregroundStyle(Color.vakitText)
             }
-
-            Spacer()
+            .padding(16)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
+            )
         }
-        .padding(16)
-        .background(Color.vakitSurface)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(Color.vakitBorder, lineWidth: 1)
-        )
+        .buttonStyle(.plain)
     }
 
     private var homeCityLabel: String {

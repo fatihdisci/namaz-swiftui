@@ -1377,7 +1377,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "İmsak"
+            "value": "Sabah"
           }
         }
       }
@@ -3163,6 +3163,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "Yasal"
+          }
+        }
+      }
+    },
+    "cityDuplicate.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This city is already in your saved list."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu şehir zaten kayıtlı listede mevcut."
+          }
+        }
+      }
+    },
+    "cityDuplicate.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamam"
+          }
+        }
+      }
+    },
+    "cityDuplicate.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already Saved"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaten Kayıtlı"
           }
         }
       }

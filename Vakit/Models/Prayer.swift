@@ -34,7 +34,7 @@ enum Prayer: String, CaseIterable, Identifiable, Codable {
 
     var systemImage: String {
         switch self {
-        case .fajr: return "moon.stars.fill"
+        case .fajr: return "sunrise.fill"
         case .sunrise: return "sunrise.fill"
         case .dhuhr: return "sun.max.fill"
         case .asr: return "sun.min.fill"
