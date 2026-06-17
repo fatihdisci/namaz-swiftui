@@ -77,12 +77,12 @@ final class PrayerTimeService {
         let hijriYear: String
         if let hijri = payload.data.date?.hijri {
             hijriDay = hijri.day
-            hijriMonthName = hijri.month.en
+            hijriMonthName = Self.displayHijriMonthName(hijri.month.en)
             hijriYear = hijri.year
         } else {
             let offline = storage.offlineHijri(for: date)
             hijriDay = offline.day
-            hijriMonthName = offline.monthName
+            hijriMonthName = Self.displayHijriMonthName(offline.monthName)
             hijriYear = offline.year
         }
 
@@ -176,6 +176,10 @@ final class PrayerTimeService {
             hijriMonthName: hijri.monthName,
             hijriYear: hijri.year
         )
+    }
+
+    static func displayHijriMonthName(_ name: String) -> String {
+        name.folding(options: [.diacriticInsensitive], locale: Locale(identifier: "en"))
     }
 
     // MARK: - Birleşik akış

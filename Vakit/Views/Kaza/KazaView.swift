@@ -51,7 +51,7 @@ struct KazaView: View {
             showProGate = !purchaseService.hasProAccess
         }
         .sheet(isPresented: $showProGate) {
-            ProGateView()
+            ProGateView(context: .kaza)
                 .environment(lang)
                 .environment(purchaseService)
         }

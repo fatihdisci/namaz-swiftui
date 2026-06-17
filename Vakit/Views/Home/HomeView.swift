@@ -6,6 +6,7 @@ struct HomeView: View {
     @State private var locationPickerModel = LocationSelectionViewModel()
     @State private var showLocationPicker = false
     @State private var showProGate = false
+    @State private var proGateContext: ProGateContext = .general
     private let onOpenDiscover: () -> Void
 
     @Environment(LanguageService.self) private var lang
@@ -65,7 +66,7 @@ struct HomeView: View {
             .preferredColorScheme(.dark)
         }
         .sheet(isPresented: $showProGate) {
-            ProGateView()
+            ProGateView(context: proGateContext)
                 .environment(lang)
                 .environment(purchaseService)
         }
@@ -98,14 +99,6 @@ struct HomeView: View {
                             )
                         }
                     }
-
-                    if let verse = viewModel.dailyVerse {
-                        DailyContentCard(
-                            verse: verse,
-                            language: lang.currentLanguage,
-                            onOpenDiscover: onOpenDiscover
-                        )
-                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -115,19 +108,60 @@ struct HomeView: View {
     }
 
     private var topBar: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(viewModel.currentCity?.name ?? "-")
-                    .font(.system(.title3, design: .rounded, weight: .semibold))
-                    .foregroundStyle(Color.vakitText)
-                Text(viewModel.hijriDate)
-                    .font(.footnote)
-                    .foregroundStyle(Color.vakitTextDim)
-            }
+        HStack(spacing: 12) {
+            HStack(spacing: 10) {
+                Image(systemName: "location.fill")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(Color.vakitAccent)
+                    .frame(width: 30, height: 30)
+                    .background(Circle().fill(Color.vakitAccent.opacity(0.14)))
 
-            Spacer()
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(viewModel.currentCity?.name ?? "-")
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .foregroundStyle(Color.vakitText)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.82)
+
+                    Text(viewModel.currentCity?.country ?? "")
+                        .font(.caption)
+                        .foregroundStyle(Color.vakitTextDim)
+                        .lineLimit(1)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing: 8) {
+                Image(systemName: "calendar")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Color.vakitAccent)
+
+                VStack(alignment: .trailing, spacing: 1) {
+                    Text("Hicri")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+
+                    Text(viewModel.hijriDate)
+                        .font(.system(.caption, design: .default, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                        .lineLimit(1)
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
+        .padding(10)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .strokeBorder(Color.vakitBorder, lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(0.12), radius: 18, y: 10)
     }
+
 
     private var citySelector: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -135,6 +169,7 @@ struct HomeView: View {
                 ForEach(viewModel.savedLocations) { location in
                     Button {
                         guard purchaseService.hasProAccess || location.id == viewModel.currentCity?.id else {
+                            proGateContext = .cities
                             showProGate = true
                             return
                         }
@@ -157,6 +192,7 @@ struct HomeView: View {
 
                 Button {
                     guard purchaseService.hasProAccess else {
+                        proGateContext = .cities
                         showProGate = true
                         return
                     }

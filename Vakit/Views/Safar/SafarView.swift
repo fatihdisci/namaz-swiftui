@@ -53,7 +53,7 @@ struct SafarView: View {
             viewModel.refreshHomeLocation()
         }
         .sheet(isPresented: $showProGate) {
-            ProGateView()
+            ProGateView(context: .safar)
                 .environment(lang)
                 .environment(purchaseService)
         }

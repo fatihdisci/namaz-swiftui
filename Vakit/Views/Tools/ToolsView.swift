@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ToolsView: View {
     @State private var showProGate = false
+    @State private var proGateContext: ProGateContext = .general
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -21,7 +22,8 @@ struct ToolsView: View {
                             proTool(
                                 icon: "airplane",
                                 titleKey: "safar.title",
-                                subtitleKey: "safar.description"
+                                subtitleKey: "safar.description",
+                                context: .safar
                             ) {
                                 SafarView()
                             }
@@ -29,7 +31,8 @@ struct ToolsView: View {
                             proTool(
                                 icon: "checklist",
                                 titleKey: "kaza.title",
-                                subtitleKey: "kaza.subtitle"
+                                subtitleKey: "kaza.subtitle",
+                                context: .kaza
                             ) {
                                 KazaView()
                             }
@@ -54,7 +57,7 @@ struct ToolsView: View {
             .toolbar(.hidden, for: .navigationBar)
         }
         .sheet(isPresented: $showProGate) {
-            ProGateView()
+            ProGateView(context: proGateContext)
                 .environment(lang)
                 .environment(purchaseService)
         }
@@ -64,6 +67,7 @@ struct ToolsView: View {
         icon: String,
         titleKey: String,
         subtitleKey: String,
+        context: ProGateContext,
         @ViewBuilder destination: @escaping () -> Destination
     ) -> some View {
         Group {
@@ -75,6 +79,7 @@ struct ToolsView: View {
                 }
             } else {
                 Button {
+                    proGateContext = context
                     showProGate = true
                 } label: {
                     toolRow(icon: icon, titleKey: titleKey, subtitleKey: subtitleKey, isLocked: true)

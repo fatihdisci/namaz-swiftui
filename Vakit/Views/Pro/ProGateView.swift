@@ -1,8 +1,79 @@
 import SwiftUI
 import AuthenticationServices
 
+enum ProGateContext {
+    case general
+    case safar
+    case kaza
+    case cities
+
+    var titleKey: String {
+        switch self {
+        case .general: return "settings.pro"
+        case .safar: return "safar.title"
+        case .kaza: return "kaza.title"
+        case .cities: return "pro.context.cities.title"
+        }
+    }
+
+    var subtitleKey: String {
+        switch self {
+        case .general: return "pro.subtitle"
+        case .safar: return "pro.context.safar.subtitle"
+        case .kaza: return "pro.context.kaza.subtitle"
+        case .cities: return "pro.context.cities.subtitle"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .general: return "sparkles"
+        case .safar: return "airplane"
+        case .kaza: return "checklist"
+        case .cities: return "building.2"
+        }
+    }
+
+    var featureRows: [ProFeatureRow] {
+        switch self {
+        case .general:
+            return [
+                ProFeatureRow(icon: "airplane", titleKey: "pro.feature.safar"),
+                ProFeatureRow(icon: "checklist", titleKey: "pro.feature.kaza"),
+                ProFeatureRow(icon: "building.2", titleKey: "pro.feature.cities")
+            ]
+        case .safar:
+            return [
+                ProFeatureRow(icon: "airplane", titleKey: "pro.feature.safar"),
+                ProFeatureRow(icon: "house.fill", titleKey: "pro.context.safar.feature.home"),
+                ProFeatureRow(icon: "location.fill", titleKey: "pro.context.safar.feature.distance")
+            ]
+        case .kaza:
+            return [
+                ProFeatureRow(icon: "checklist", titleKey: "pro.feature.kaza"),
+                ProFeatureRow(icon: "plus.forwardslash.minus", titleKey: "pro.context.kaza.feature.counters"),
+                ProFeatureRow(icon: "lock.doc", titleKey: "pro.context.kaza.feature.local")
+            ]
+        case .cities:
+            return [
+                ProFeatureRow(icon: "building.2", titleKey: "pro.feature.cities"),
+                ProFeatureRow(icon: "plus.circle", titleKey: "pro.context.cities.feature.add"),
+                ProFeatureRow(icon: "arrow.left.arrow.right", titleKey: "pro.context.cities.feature.switch")
+            ]
+        }
+    }
+}
+
+struct ProFeatureRow: Identifiable {
+    let icon: String
+    let titleKey: String
+
+    var id: String { titleKey }
+}
+
 struct ProGateView: View {
     var isPreview = false
+    var context: ProGateContext = .general
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -22,19 +93,18 @@ struct ProGateView: View {
                 AuroraBackground(accentColor: .fajr)
 
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 16) {
                         header
-                        primaryActionPanel
-                        purchaseButton
-                        restoreButton
-                        legalLinks
-                        features
                         productCards
+                        features
                     }
                     .padding(.horizontal, 20)
-                    .padding(.top, 24)
-                    .padding(.bottom, 32)
+                    .padding(.top, 8)
+                    .padding(.bottom, 180)
                 }
+            }
+            .safeAreaInset(edge: .bottom) {
+                checkoutBar
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -62,61 +132,28 @@ struct ProGateView: View {
     }
 
     private var header: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "sparkles")
-                .font(.system(size: 42, weight: .semibold))
+        VStack(spacing: 8) {
+            Image(systemName: context.icon)
+                .font(.system(size: 32, weight: .semibold))
                 .foregroundStyle(Color.vakitAccent)
 
-            Text(lang.t("settings.pro"))
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+            Text(lang.t(context.titleKey))
+                .font(.system(.title, design: .rounded, weight: .bold))
                 .foregroundStyle(Color.vakitText)
 
-            Text(lang.t("pro.subtitle"))
+            Text(lang.t(context.subtitleKey))
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color.vakitTextDim)
         }
-        .padding(.top, 4)
-    }
-
-    private var primaryActionPanel: some View {
-        VStack(spacing: 10) {
-            Text(lang.t("pro.selectedPlan"))
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(Color.vakitTextDim)
-                .textCase(.uppercase)
-
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(productTitle(for: selectedProductID))
-                        .font(.system(.headline, design: .rounded, weight: .bold))
-                        .foregroundStyle(Color.vakitText)
-                    Text(authService.isGuest ? lang.t("pro.signInRequired") : lang.t("pro.readyToPurchase"))
-                        .font(.footnote)
-                        .foregroundStyle(Color.vakitTextDim)
-                }
-
-                Spacer()
-
-                Text(price(for: selectedProductID))
-                    .font(.system(.title3, design: .rounded, weight: .bold))
-                    .foregroundStyle(Color.vakitAccent)
-            }
-        }
-        .padding(16)
-        .background(Color.vakitSurface)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(Color.vakitBorder, lineWidth: 1)
-        )
+        .padding(.bottom, 4)
     }
 
     private var features: some View {
         VStack(spacing: 14) {
-            featureRow(icon: "airplane", titleKey: "pro.feature.safar")
-            featureRow(icon: "checklist", titleKey: "pro.feature.kaza")
-            featureRow(icon: "building.2", titleKey: "pro.feature.cities")
+            ForEach(context.featureRows) { row in
+                featureRow(icon: row.icon, titleKey: row.titleKey)
+            }
         }
         .padding(18)
         .background(Color.vakitSurface)
@@ -201,6 +238,47 @@ struct ProGateView: View {
         .buttonStyle(.plain)
     }
 
+    private var checkoutBar: some View {
+        VStack(spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(lang.t("pro.selectedPlan"))
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(Color.vakitTextDim)
+                        .textCase(.uppercase)
+
+                    Text(productTitle(for: selectedProductID))
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .foregroundStyle(Color.vakitText)
+                }
+
+                Spacer()
+
+                Text(price(for: selectedProductID))
+                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .foregroundStyle(Color.vakitAccent)
+            }
+
+            purchaseButton
+
+            HStack(spacing: 12) {
+                restoreButton
+                Text("·")
+                    .foregroundStyle(Color.vakitTextDim)
+                legalLinks
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 14)
+        .padding(.bottom, 10)
+        .background(.ultraThinMaterial)
+        .overlay(alignment: .top) {
+            Rectangle()
+                .fill(Color.vakitBorder)
+                .frame(height: 1)
+        }
+    }
+
     private var purchaseButton: some View {
         Group {
             if authService.isGuest {
@@ -248,13 +326,13 @@ struct ProGateView: View {
         Button(lang.t("pro.restore")) {
             Task { await restorePurchases() }
         }
-        .font(.subheadline.weight(.semibold))
+        .font(.caption.weight(.semibold))
         .foregroundStyle(Color.vakitAccent)
         .disabled(isProcessing)
     }
 
     private var legalLinks: some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 10) {
             Link(lang.t("pro.terms"), destination: termsURL)
             Text("·")
             Link(lang.t("pro.privacy"), destination: privacyURL)

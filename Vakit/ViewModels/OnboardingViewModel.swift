@@ -71,7 +71,7 @@ final class OnboardingViewModel {
         searchTask = Task { [weak self] in
             try? await Task.sleep(for: Self.searchDebounce)
             guard !Task.isCancelled else { return }
-            await self?.search(query: query)
+            self?.search(query: query)
         }
     }
 

@@ -54,7 +54,7 @@ func makeVerseShareImage(verse: Verse?, language: String) -> UIImage? {
             Spacer()
 
             VStack(spacing: 48) {
-                sectionLabel("Günün Ayeti", color: lightGold)
+                sectionLabel(shareTitle(for: .verse, language: language), color: lightGold)
 
                 if let arabic = verse.arabic, !arabic.isEmpty {
                     Text(arabic)
@@ -97,7 +97,7 @@ func makeHadithShareImage(hadith: Hadith?, language: String) -> UIImage? {
             Spacer()
 
             VStack(spacing: 48) {
-                sectionLabel("Günün Hadisi", color: darkGold)
+                sectionLabel(shareTitle(for: .hadith, language: language), color: darkGold)
 
                 Text(hadith.text(language: language))
                     .font(.system(size: 50, weight: .regular, design: .serif))
@@ -140,7 +140,7 @@ func makeDuaShareImage(dua: Dua?, language: String) -> UIImage? {
             Spacer()
 
             VStack(spacing: 48) {
-                sectionLabel("Günün Duası", color: darkGold)
+                sectionLabel(shareTitle(for: .dua, language: language), color: darkGold)
 
                 if let arabic = dua.arabic, !arabic.isEmpty {
                     Text(arabic)
@@ -177,6 +177,25 @@ func makeDuaShareImage(dua: Dua?, language: String) -> UIImage? {
 }
 
 // MARK: - Ortak bölüm başlığı
+
+private enum ShareContentKind {
+    case verse
+    case hadith
+    case dua
+}
+
+private func shareTitle(for kind: ShareContentKind, language: String) -> String {
+    let isTurkish = language == "tr"
+
+    switch kind {
+    case .verse:
+        return isTurkish ? "Günün Ayeti" : "Verse of the Day"
+    case .hadith:
+        return isTurkish ? "Günün Hadisi" : "Hadith of the Day"
+    case .dua:
+        return isTurkish ? "Günün Duası" : "Daily Supplication"
+    }
+}
 
 private func sectionLabel(_ title: String, color: Color) -> some View {
     Text(title)
