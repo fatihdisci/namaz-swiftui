@@ -32,6 +32,7 @@ struct SettingsView: View {
                             accountSection
                         }
                         aboutSection
+                        legalSection
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -214,12 +215,15 @@ struct SettingsView: View {
                         .foregroundStyle(
                             purchaseService.hasProAccess ? Color.vakitAccent : Color.vakitTextDim
                         )
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.vakitTextDim)
+                    if !purchaseService.hasProAccess {
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Color.vakitTextDim)
+                    }
                 }
                 .padding(.vertical, 10)
             }
+            .disabled(purchaseService.hasProAccess)
         }
     }
 
@@ -274,6 +278,44 @@ struct SettingsView: View {
             }
             .padding(.vertical, 10)
         }
+    }
+
+    // MARK: - Yasal
+
+    private var legalSection: some View {
+        section(titleKey: "settings.legal") {
+            Link(destination: legalURL(for: lang.currentLanguage == "tr"
+                                       ? "gizlilik-politikasi.html"
+                                       : "privacy-policy.html")) {
+                HStack {
+                    rowLabel(icon: "lock.shield", titleKey: "settings.privacyPolicy")
+                    Spacer()
+                    Image(systemName: "arrow.up.forward.app")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                .padding(.vertical, 10)
+            }
+
+            divider
+
+            Link(destination: legalURL(for: lang.currentLanguage == "tr"
+                                       ? "kullanim-kosullari.html"
+                                       : "terms-of-service.html")) {
+                HStack {
+                    rowLabel(icon: "doc.text", titleKey: "settings.termsOfService")
+                    Spacer()
+                    Image(systemName: "arrow.up.forward.app")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                .padding(.vertical, 10)
+            }
+        }
+    }
+
+    private func legalURL(for page: String) -> URL {
+        URL(string: "https://namaz-swiftui.vercel.app/\\(page)")!
     }
 
     // MARK: - Yardımcılar
@@ -341,18 +383,100 @@ private struct LocationPickerSheet: View {
     let onSave: (PrayerLocation) -> Void
 
     @State private var model = LocationSelectionViewModel()
+    @State private var savedLocations: [PrayerLocation] = []
+    @Environment(\.dismiss) private var dismiss
+
+    private let storage = StorageService.shared
 
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.vakitBg.ignoresSafeArea()
-                LocationSelectionView(viewModel: model) { location in
-                    onSave(location)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        LocationSelectionView(viewModel: model) { location in
+                            onSave(location)
+                        }
+
+                        if !savedLocations.isEmpty {
+                            savedCitiesSection
+                        }
+                    }
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 20))
+                            .foregroundStyle(Color.vakitTextDim)
+                    }
                 }
             }
         }
         .environment(lang)
         .preferredColorScheme(.dark)
+        .onAppear {
+            savedLocations = storage.savedPrayerLocations
+        }
+    }
+
+    // MARK: - Saved Cities
+
+    private var savedCitiesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(lang.t("settings.savedCities"))
+                .font(.system(.footnote, design: .default, weight: .semibold))
+                .foregroundStyle(Color.vakitTextDim)
+                .textCase(.uppercase)
+
+            VStack(spacing: 0) {
+                ForEach(savedLocations) { location in
+                    Button {
+                        onSave(location)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(location.shortName)
+                                    .font(.system(.body, weight: .medium))
+                                    .foregroundStyle(Color.vakitText)
+                                Text(location.subtitle)
+                                    .font(.system(.caption))
+                                    .foregroundStyle(Color.vakitTextDim)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(Color.vakitTextDim)
+                        }
+                        .padding(.vertical, 10)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            storage.removeSavedPrayerLocation(id: location.id)
+                            savedLocations = storage.savedPrayerLocations
+                        } label: {
+                            Label(lang.t("common.delete"), systemImage: "trash")
+                        }
+                    }
+
+                    if location.id != savedLocations.last?.id {
+                        Divider().overlay(Color.vakitBorder)
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 6)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
+            )
+        }
+        .padding(.horizontal, 20)
     }
 }
 
