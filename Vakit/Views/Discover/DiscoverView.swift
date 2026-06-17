@@ -45,7 +45,7 @@ struct DiscoverView: View {
                 HStack(spacing: 10) {
                     ProgressView()
                         .tint(Color.vakitAccent)
-                    Text("Görsel hazırlanıyor...")
+                    Text(lang.t("discover.generatingImage"))
                         .font(.subheadline)
                         .foregroundStyle(Color.vakitTextDim)
                 }
