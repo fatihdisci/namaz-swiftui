@@ -736,6 +736,23 @@
         }
       }
     },
+    "location.manualFallback": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "City could not be verified — approximate coordinates may be used. Use auto-locate for accuracy."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şehir doğrulanamadı — yaklaşık koordinatlar kullanılabilir. Kesin sonuç için konumla otomatik bul'u kullanın."
+          }
+        }
+      }
+    },
     "location.autoFind": {
       "extractionState": "manual",
       "localizations": {
@@ -970,6 +987,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ vakti başladı."
+          }
+        }
+      }
+    },
+    "notification.option.atTimeShort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On time"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vaktinde"
+          }
+        }
+      }
+    },
+    "notification.option.minutesBeforeShort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d min"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d dk"
           }
         }
       }
@@ -3112,6 +3163,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "Yasal"
+          }
+        }
+      }
+    },
+    "cityLimit.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can save up to 10 cities. Please delete one before adding a new one."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En fazla 10 şehir ekleyebilirsiniz. Yeni bir şehir eklemek için bir tanesini silmeniz gerekmektedir."
+          }
+        }
+      }
+    },
+    "cityLimit.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamam"
+          }
+        }
+      }
+    },
+    "cityLimit.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "City Limit Reached"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şehir Sınırı"
           }
         }
       }

@@ -200,8 +200,18 @@ final class LocationSelectionViewModel {
                 let latitude = info.latitude?.value,
                 let longitude = info.longitude?.value
             else {
-                manualCityResults = []
-                errorKey = "onboarding.city.noResults"
+                // API bulamadıysa manuel olarak query'den CitySnapshot oluştur
+                manualCityResults = [
+                    CitySnapshot(
+                        name: query,
+                        latitude: 0,
+                        longitude: 0,
+                        country: selectedCountryName,
+                        timezone: TimeZone.current.identifier,
+                        method: method
+                    )
+                ]
+                errorKey = "location.manualFallback"
                 return
             }
 
@@ -219,8 +229,18 @@ final class LocationSelectionViewModel {
             // yeni arama başladı
         } catch {
             guard !Task.isCancelled else { return }
-            manualCityResults = []
-            errorKey = "error.noInternet"
+            // Ağ hatasında da manuel fallback
+            manualCityResults = [
+                CitySnapshot(
+                    name: query,
+                    latitude: 0,
+                    longitude: 0,
+                    country: selectedCountryName,
+                    timezone: TimeZone.current.identifier,
+                    method: method
+                )
+            ]
+            errorKey = "location.manualFallback"
         }
     }
 

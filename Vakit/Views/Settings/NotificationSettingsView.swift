@@ -83,8 +83,8 @@ struct NotificationSettingsView: View {
 
     private func minuteLabel(_ minutes: Int) -> String {
         minutes == 0
-            ? lang.t("notification.option.atTime")
-            : lang.t("notification.option.minutesBefore", minutes)
+            ? lang.t("notification.option.atTimeShort")
+            : String(format: lang.t("notification.option.minutesBeforeShort"), minutes)
     }
 
     private func update(prayer: Prayer, enabled: Bool, minutesBefore: Int) {

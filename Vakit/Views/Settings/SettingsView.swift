@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import CoreLocation
 
 /// Sade ayarlar: dil, şehir, ev şehri, hesaplama metodu, bildirimler, Pro, Hakkında.
 struct SettingsView: View {
@@ -83,8 +84,6 @@ struct SettingsView: View {
             divider
             homeCityRow
             divider
-            autoLocationRow
-            divider
             methodRow
         }
     }
@@ -140,27 +139,6 @@ struct SettingsView: View {
             }
             .padding(.vertical, 10)
         }
-    }
-
-    /// Opsiyonel konumla otomatik bul butonu (izin ister).
-    private var autoLocationRow: some View {
-        Button {
-            Task { await viewModel.useAutomaticLocation(context: modelContext) }
-        } label: {
-            HStack {
-                rowLabel(icon: "location.fill", titleKey: "location.autoFind")
-                Spacer()
-                if viewModel.isLocating {
-                    ProgressView().tint(Color.vakitAccent)
-                } else {
-                    Image(systemName: "location.fill")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.vakitTextDim)
-                }
-            }
-            .padding(.vertical, 10)
-        }
-        .disabled(viewModel.isLocating)
     }
 
     private var methodRow: some View {
@@ -384,9 +362,14 @@ private struct LocationPickerSheet: View {
 
     @State private var model = LocationSelectionViewModel()
     @State private var savedLocations: [PrayerLocation] = []
+    @State private var showCityLimitAlert = false
+    @State private var isAutoLocating = false
+    @State private var autoLocateError: String?
     @Environment(\.dismiss) private var dismiss
 
     private let storage = StorageService.shared
+    private let maxSavedCities = 10
+    private let locationService = LocationService()
 
     var body: some View {
         NavigationStack {
@@ -394,8 +377,17 @@ private struct LocationPickerSheet: View {
                 Color.vakitBg.ignoresSafeArea()
                 ScrollView {
                     VStack(alignment: .leading, spacing: 8) {
+                        autoLocateButton
+
+                        if let error = autoLocateError {
+                            Text(error)
+                                .font(.footnote)
+                                .foregroundStyle(Color.maghrib)
+                                .padding(.horizontal, 24)
+                        }
+
                         LocationSelectionView(viewModel: model) { location in
-                            onSave(location)
+                            handleCitySelection(location)
                         }
 
                         if !savedLocations.isEmpty {
@@ -421,9 +413,89 @@ private struct LocationPickerSheet: View {
         .onAppear {
             savedLocations = storage.savedPrayerLocations
         }
+        .alert(lang.t("cityLimit.title"), isPresented: $showCityLimitAlert) {
+            Button(lang.t("cityLimit.ok"), role: .cancel) {}
+        } message: {
+            Text(lang.t("cityLimit.message"))
+        }
     }
 
-    // MARK: - Saved Cities
+    // MARK: - Auto Locate
+
+    private var autoLocateButton: some View {
+        Button {
+            Task { await performAutoLocate() }
+        } label: {
+            HStack(spacing: 10) {
+                if isAutoLocating {
+                    ProgressView()
+                        .tint(Color.vakitAccent)
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: "location.fill")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundStyle(Color.vakitAccent)
+                }
+                Text(lang.t("location.autoFind"))
+                    .font(.system(.subheadline, weight: .medium))
+                    .foregroundStyle(Color.vakitAccent)
+                Spacer()
+            }
+            .padding(14)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
+            )
+        }
+        .disabled(isAutoLocating)
+        .padding(.horizontal, 20)
+    }
+
+    private func performAutoLocate() async {
+        isAutoLocating = true
+        autoLocateError = nil
+        defer { isAutoLocating = false }
+
+        do {
+            let location = try await locationService.requestOneShotLocation()
+            let placemarks = try await CLGeocoder().reverseGeocodeLocation(location)
+            guard let placemark = placemarks.first else {
+                autoLocateError = lang.t("error.location")
+                return
+            }
+
+            let prayerLocation = PrayerLocation(
+                countryCode: placemark.isoCountryCode ?? "",
+                countryName: placemark.country ?? "",
+                admin1Name: placemark.administrativeArea ?? "",
+                admin1Type: PrayerLocation.admin1Label(for: placemark.isoCountryCode ?? ""),
+                admin2Name: placemark.locality ?? placemark.subAdministrativeArea ?? "",
+                admin2Type: PrayerLocation.admin2Label(for: placemark.isoCountryCode ?? ""),
+                cityName: placemark.locality ?? placemark.administrativeArea ?? "",
+                districtName: placemark.subLocality ?? "",
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude,
+                timeZoneIdentifier: placemark.timeZone?.identifier ?? TimeZone.current.identifier,
+                calculationMethod: PrayerLocation.defaultMethod(for: placemark.isoCountryCode ?? "")
+            )
+            handleCitySelection(prayerLocation)
+        } catch LocationService.LocationError.denied {
+            autoLocateError = lang.t("qibla.permissionDenied")
+        } catch {
+            autoLocateError = lang.t("error.location")
+        }
+    }
+
+    private func handleCitySelection(_ location: PrayerLocation) {
+        let isNew = !storage.savedPrayerLocations.contains(where: { $0.id == location.id })
+        if isNew && storage.savedPrayerLocations.count >= maxSavedCities {
+            showCityLimitAlert = true
+        } else {
+            onSave(location)
+        }
+    }
 
     private var savedCitiesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -434,29 +506,31 @@ private struct LocationPickerSheet: View {
 
             VStack(spacing: 0) {
                 ForEach(savedLocations) { location in
-                    Button {
-                        onSave(location)
-                    } label: {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(location.shortName)
-                                    .font(.system(.body, weight: .medium))
-                                    .foregroundStyle(Color.vakitText)
-                                Text(location.subtitle)
-                                    .font(.system(.caption))
-                                    .foregroundStyle(Color.vakitTextDim)
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 12, weight: .semibold))
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(location.shortName)
+                                .font(.system(.body, weight: .medium))
+                                .foregroundStyle(Color.vakitText)
+                            Text(location.subtitle)
+                                .font(.system(.caption))
                                 .foregroundStyle(Color.vakitTextDim)
                         }
-                        .padding(.vertical, 10)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(Color.vakitTextDim)
                     }
-                    .swipeActions(edge: .trailing) {
+                    .padding(.vertical, 10)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        handleCitySelection(location)
+                    }
+                    .contextMenu {
                         Button(role: .destructive) {
-                            storage.removeSavedPrayerLocation(id: location.id)
-                            savedLocations = storage.savedPrayerLocations
+                            withAnimation {
+                                storage.removeSavedPrayerLocation(id: location.id)
+                                savedLocations = storage.savedPrayerLocations
+                            }
                         } label: {
                             Label(lang.t("common.delete"), systemImage: "trash")
                         }
