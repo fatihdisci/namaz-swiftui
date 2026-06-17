@@ -14,9 +14,11 @@ struct CompassView: View {
                     .rotationEffect(.degrees(-viewModel.heading))
                     .animation(.interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.heading)
 
-                // İğne sabit: her zaman Kabe yönünü gösterir.
+                // İğne Kabe'yi gösterir: kıble açısı cihaz yönüne (heading) göre düzeltilir,
+                // böylece pusula yüzü ile aynı dünya çerçevesinde kalır.
                 needle
-                    .rotationEffect(.degrees(viewModel.qiblaAngle))
+                    .rotationEffect(.degrees(viewModel.needleRotation))
+                    .animation(.interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.needleRotation)
             }
             .frame(width: 260, height: 260)
 

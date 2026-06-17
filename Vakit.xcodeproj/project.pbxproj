@@ -12,9 +12,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C000000000000000000002 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
 		C3239F2272834908A926EE60 /* Vakit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vakit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-C000000000000000000002 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
-C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -167,6 +167,7 @@ C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference;
 /* Begin XCBuildConfiguration section */
 		1FC16D5184A848318E65D37E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -230,7 +231,6 @@ C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
-			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
 			name = Debug;
 		};
 		6B0D3B50A0FE4C26B786E000 /* Release */ = {
@@ -299,6 +299,7 @@ C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference;
 		};
 		E5C7CF0982604265920835C2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -355,7 +356,6 @@ C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
-			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
