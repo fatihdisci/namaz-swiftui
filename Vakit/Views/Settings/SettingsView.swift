@@ -3,15 +3,8 @@ import SwiftData
 
 /// Sade ayarlar: dil, şehir, ev şehri, hesaplama metodu, bildirimler, Pro, Hakkında.
 struct SettingsView: View {
-    private enum LocationPickerPurpose {
-        case prayer
-        case home
-    }
-
     @State private var viewModel = SettingsViewModel()
-    @State private var locationPickerModel = LocationSelectionViewModel()
-    @State private var showLocationPicker = false
-    @State private var locationPickerPurpose: LocationPickerPurpose = .prayer
+    @State private var activeLocationPicker: LocationPickerPurpose?
     @State private var showProGate = false
 
     @Environment(LanguageService.self) private var lang
@@ -41,8 +34,18 @@ struct SettingsView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
         }
-        .sheet(isPresented: $showLocationPicker) {
-            locationPickerSheet
+        .sheet(item: $activeLocationPicker) { purpose in
+            // Her açılışta TAZE bir LocationSelectionViewModel sahiplenen alt view;
+            // konum, view'ın kendi instance'ından üretilip geri verilir.
+            LocationPickerSheet(purpose: purpose, lang: lang) { location in
+                switch purpose {
+                case .prayer:
+                    viewModel.saveLocation(location, context: modelContext)
+                case .home:
+                    viewModel.saveHomeLocation(location)
+                }
+                activeLocationPicker = nil
+            }
         }
         .sheet(isPresented: $showProGate) {
             ProGateView()
@@ -86,9 +89,7 @@ struct SettingsView: View {
 
     private var cityRow: some View {
         Button {
-            locationPickerModel = LocationSelectionViewModel()
-            locationPickerPurpose = .prayer
-            showLocationPicker = true
+            activeLocationPicker = .prayer
         } label: {
             HStack {
                 rowLabel(icon: "building.2", titleKey: "settings.city")
@@ -106,9 +107,7 @@ struct SettingsView: View {
 
     private var homeCityRow: some View {
         Button {
-            locationPickerModel = LocationSelectionViewModel()
-            locationPickerPurpose = .home
-            showLocationPicker = true
+            activeLocationPicker = .home
         } label: {
             HStack {
                 rowLabel(icon: "house.fill", titleKey: "settings.homeCity")
@@ -221,30 +220,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Location picker sheet (new cascading flow)
-
-    private var locationPickerSheet: some View {
-        NavigationStack {
-            ZStack {
-                Color.vakitBg.ignoresSafeArea()
-                LocationSelectionView(viewModel: locationPickerModel) {
-                    guard let location = locationPickerModel.buildPrayerLocation() else { return }
-                    var loc = location
-                    loc.calculationMethod = locationPickerModel.method
-                    switch locationPickerPurpose {
-                    case .prayer:
-                        viewModel.saveLocation(loc, context: modelContext)
-                    case .home:
-                        viewModel.saveHomeLocation(loc)
-                    }
-                    showLocationPicker = false
-                }
-            }
-        }
-        .environment(lang)
-        .preferredColorScheme(.dark)
-    }
-
     // MARK: - Yardımcılar
 
     private func section(titleKey: String, @ViewBuilder content: () -> some View) -> some View {
@@ -287,6 +262,41 @@ struct SettingsView: View {
 
     private var divider: some View {
         Divider().overlay(Color.vakitBorder)
+    }
+}
+
+// MARK: - Location picker sheet
+
+/// Konum seçim sheet'inin amacı. `.sheet(item:)` ile kullanıldığı için Identifiable.
+enum LocationPickerPurpose: Identifiable {
+    case prayer
+    case home
+
+    var id: Self { self }
+}
+
+/// Konum seçim sheet'i. KENDİ `LocationSelectionViewModel`'ini sahiplenir;
+/// `.sheet(item:)` her açılışta içeriği yeniden kurduğundan model daima TAZE olur
+/// (eski seçim state'i taşınmaz) ve seçilen konum aynı instance'tan üretilip
+/// `onSave` ile geri verilir.
+private struct LocationPickerSheet: View {
+    let purpose: LocationPickerPurpose
+    let lang: LanguageService
+    let onSave: (PrayerLocation) -> Void
+
+    @State private var model = LocationSelectionViewModel()
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color.vakitBg.ignoresSafeArea()
+                LocationSelectionView(viewModel: model) { location in
+                    onSave(location)
+                }
+            }
+        }
+        .environment(lang)
+        .preferredColorScheme(.dark)
     }
 }
 

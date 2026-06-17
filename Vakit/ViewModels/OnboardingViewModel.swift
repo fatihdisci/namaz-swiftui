@@ -191,12 +191,10 @@ final class OnboardingViewModel {
         storage.school = 0
     }
 
-    /// Yeni cascading konum seçiminden `PrayerLocation` kaydeder.
-    func saveSelectedLocation(from locationVM: LocationSelectionViewModel, context: ModelContext) {
-        guard var location = locationVM.buildPrayerLocation() else { return }
-        location.calculationMethod = locationVM.method
+    /// Seçilen `PrayerLocation`'ı kaydeder (cascading konum seçiminden gelir).
+    func saveSelectedLocation(_ location: PrayerLocation, context: ModelContext) {
         storage.selectedPrayerLocation = location
-        storage.method = locationVM.method
+        storage.method = location.calculationMethod
 
         // SwiftData'ya da yaz (geriye uyumluluk).
         let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []

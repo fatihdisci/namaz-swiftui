@@ -3,7 +3,6 @@ import SwiftData
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModel
-    @State private var locationPickerModel = LocationSelectionViewModel()
     @State private var showLocationPicker = false
     @State private var showProGate = false
     @State private var proGateContext: ProGateContext = .general
@@ -54,16 +53,12 @@ struct HomeView: View {
             Task { await viewModel.load() }
         }
         .sheet(isPresented: $showLocationPicker) {
-            NavigationStack {
-                ZStack {
-                    Color.vakitBg.ignoresSafeArea()
-                    LocationSelectionView(viewModel: locationPickerModel) {
-                        saveNewLocation()
-                    }
-                }
+            // Her açılışta TAZE model sahiplenen alt view; konum aynı instance'tan
+            // üretilip geri verilir (ilk açılışta kaydetme sorunu çözülür).
+            NewLocationSheet(lang: lang) { location in
+                saveNewLocation(location)
+                showLocationPicker = false
             }
-            .environment(lang)
-            .preferredColorScheme(.dark)
         }
         .sheet(isPresented: $showProGate) {
             ProGateView(context: proGateContext)
@@ -196,7 +191,6 @@ struct HomeView: View {
                         showProGate = true
                         return
                     }
-                    locationPickerModel = LocationSelectionViewModel()
                     showLocationPicker = true
                 } label: {
                     Image(systemName: purchaseService.hasProAccess ? "plus" : "lock.fill")
@@ -211,26 +205,48 @@ struct HomeView: View {
         }
     }
 
-    private func saveNewLocation() {
-        guard let location = locationPickerModel.buildPrayerLocation() else { return }
-        var loc = location
-        loc.calculationMethod = locationPickerModel.method
-
+    private func saveNewLocation(_ location: PrayerLocation) {
         let existing = (try? modelContext.fetch(FetchDescriptor<City>())) ?? []
         existing.forEach { $0.isPrimary = false }
-        let city = loc.makeCity()
+        let city = location.makeCity()
         city.isPrimary = true
         modelContext.insert(city)
         try? modelContext.save()
 
-        StorageService.shared.selectedPrayerLocation = loc
-        showLocationPicker = false
+        StorageService.shared.selectedPrayerLocation = location
+        // Vakitleri yeniden yükle + bildirim/widget snapshot'ını tazele.
+        Task { await reloadAndReschedule() }
     }
 
     private func reloadAndReschedule() async {
         await viewModel.reloadForLocationChange()
         guard let city = StorageService.shared.resolvedCity else { return }
         await notificationService.reschedule(city: city)
+    }
+}
+
+// MARK: - New location sheet
+
+/// Yeni konum ekleme sheet'i. KENDİ `LocationSelectionViewModel`'ini sahiplenir;
+/// sheet her açıldığında taze model kurulur, seçilen konum aynı instance'tan
+/// üretilip `onSave` ile geri verilir.
+private struct NewLocationSheet: View {
+    let lang: LanguageService
+    let onSave: (PrayerLocation) -> Void
+
+    @State private var model = LocationSelectionViewModel()
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color.vakitBg.ignoresSafeArea()
+                LocationSelectionView(viewModel: model) { location in
+                    onSave(location)
+                }
+            }
+        }
+        .environment(lang)
+        .preferredColorScheme(.dark)
     }
 }
 

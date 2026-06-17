@@ -4,7 +4,10 @@ import SwiftUI
 /// Onboarding akışında CitySelectionView yerine kullanılır.
 struct LocationSelectionView: View {
     @Bindable var viewModel: LocationSelectionViewModel
-    let onContinue: () -> Void
+    /// Geçerli seçim hazır olduğunda, üretilmiş `PrayerLocation` ile çağrılır.
+    /// Konum DAİMA bu view'ın kendi viewModel'inden üretilir → çağıran taraf
+    /// ayrı bir instance okuyup nil ile karşılaşmaz.
+    let onContinue: (PrayerLocation) -> Void
 
     @Environment(LanguageService.self) private var lang
 
@@ -304,7 +307,15 @@ struct LocationSelectionView: View {
     // MARK: - Continue
 
     private var continueButton: some View {
-        Button(action: onContinue) {
+        Button {
+            // Konumu, kullanıcının etkileşim kurduğu instance'tan üret.
+            if let location = viewModel.buildPrayerLocation() {
+                onContinue(location)
+            } else {
+                // canContinue true iken buraya düşülmemeli; yine de sessiz kalma.
+                viewModel.errorKey = "onboarding.city.noResults"
+            }
+        } label: {
             Text(lang.t("onboarding.city.continue"))
                 .font(.system(.headline, design: .rounded, weight: .semibold))
                 .foregroundStyle(Color.vakitText)
@@ -372,7 +383,7 @@ private struct AdminSelectionList: View {
     NavigationStack {
         ZStack {
             Color.vakitBg.ignoresSafeArea()
-            LocationSelectionView(viewModel: LocationSelectionViewModel()) {}
+            LocationSelectionView(viewModel: LocationSelectionViewModel()) { _ in }
         }
     }
     .environment(LanguageService.shared)
