@@ -7,7 +7,7 @@ extension Color {
     static let vakitBorder  = Color.white.opacity(0.08)
 
     // Vakit aksan renkleri
-    static let fajr     = Color(hex: "2dd4bf")  // Turkuaz — Sabah/fecr
+    static let fajr     = Color(hex: "2dd4bf")  // Turkuaz — İmsak/fecr
     static let sunrise  = Color(hex: "d97706")  // Amber — Güneş
     static let dhuhr    = Color(hex: "ca8a04")  // Altın — Öğle
     static let asr      = Color(hex: "b45309")  // Bronz — İkindi
