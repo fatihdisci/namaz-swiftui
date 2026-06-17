@@ -22,12 +22,16 @@ struct NotificationSettingsView: View {
         ZStack {
             Color.vakitBg.ignoresSafeArea()
 
-            List {
-                ForEach(Prayer.allCases) { prayer in
-                    row(for: prayer)
+            ScrollView {
+                VStack(spacing: 12) {
+                    ForEach(Prayer.allCases) { prayer in
+                        card(for: prayer)
+                    }
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 16)
+                .padding(.bottom, 32)
             }
-            .scrollContentBackground(.hidden)
         }
         .navigationTitle(lang.t("settings.notifications"))
         .navigationBarTitleDisplayMode(.inline)
@@ -36,17 +40,22 @@ struct NotificationSettingsView: View {
         }
     }
 
-    private func row(for prayer: Prayer) -> some View {
+    // MARK: - Card
+
+    private func card(for prayer: Prayer) -> some View {
         let setting = settings.setting(for: prayer)
 
-        return VStack(alignment: .leading, spacing: 12) {
+        return VStack(spacing: 0) {
+            // Header row
             HStack(spacing: 12) {
                 Image(systemName: prayer.systemImage)
-                    .font(.system(size: 16, weight: .medium))
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundStyle(prayer.accentColor)
-                    .frame(width: 24)
+                    .frame(width: 40, height: 40)
+                    .background(Circle().fill(prayer.accentColor.opacity(0.12)))
 
                 Text(lang.t(prayer.localizationKey))
+                    .font(.system(.body, weight: .medium))
                     .foregroundStyle(Color.vakitText)
 
                 Spacer()
@@ -59,10 +68,17 @@ struct NotificationSettingsView: View {
                     )
                 )
                 .labelsHidden()
-                .tint(.vakitAccent)
+                .tint(prayer.accentColor)
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
 
+            // Picker (shown when enabled)
             if setting.enabled {
+                Divider()
+                    .overlay(Color.vakitBorder)
+                    .padding(.horizontal, 16)
+
                 Picker(
                     lang.t("settings.notifications"),
                     selection: Binding(
@@ -71,15 +87,24 @@ struct NotificationSettingsView: View {
                     )
                 ) {
                     ForEach(Self.minuteOptions, id: \.self) { minutes in
-                        Text(minuteLabel(minutes)).tag(minutes)
+                        Text(minuteLabel(minutes))
+                            .tag(minutes)
                     }
                 }
                 .pickerStyle(.segmented)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 12)
             }
         }
-        .padding(.vertical, 4)
-        .listRowBackground(Color.vakitSurface)
+        .background(Color.vakitSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(Color.vakitBorder, lineWidth: 1)
+        )
     }
+
+    // MARK: - Helpers
 
     private func minuteLabel(_ minutes: Int) -> String {
         minutes == 0
