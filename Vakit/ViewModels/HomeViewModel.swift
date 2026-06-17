@@ -14,6 +14,7 @@ final class HomeViewModel {
     var dailyVerse: Verse?
     var isLoading: Bool = false
     var currentCity: City?
+    var savedLocations: [PrayerLocation] = []
     var needsOnboarding: Bool = false
 
     private let storage: StorageService
@@ -31,6 +32,7 @@ final class HomeViewModel {
         self.dailyVerse = DailyContent.dailyVerse()
 
         currentCity = storage.resolvedCity
+        savedLocations = storage.savedPrayerLocations
 
         if currentCity == nil {
             needsOnboarding = true
@@ -40,6 +42,7 @@ final class HomeViewModel {
     /// Bugün + yarın vakitlerini yükler, sonraki 7 günü cache'e doldurur.
     func load() async {
         dailyVerse = DailyContent.dailyVerse()
+        savedLocations = storage.savedPrayerLocations
 
         guard let city = currentCity ?? storage.resolvedCity else {
             needsOnboarding = true
@@ -66,21 +69,25 @@ final class HomeViewModel {
         Task { await prayerService.prefetch(city: city) }
     }
 
+    func reloadForLocationChange() async {
+        currentCity = storage.resolvedCity
+        savedLocations = storage.savedPrayerLocations
+        todaysTimes = nil
+        tomorrowsTimes = nil
+        await load()
+    }
+
+    func selectLocation(_ location: PrayerLocation) async {
+        storage.selectedPrayerLocation = location
+        await reloadForLocationChange()
+    }
+
+    func refreshSavedLocations() {
+        savedLocations = storage.savedPrayerLocations
+    }
+
     /// Her saniye View'dan (TimelineView) çağrılır: geri sayımı ve sıradaki vakti günceller.
     func tick(date: Date) {
-        // Ayarlar'dan şehir/metod/mezhep değiştiyse yeniden yükle
-        // (ucuz kontrol: JSON decode yok, sadece ID + iki Int okunur).
-        if !isLoading, let city = currentCity,
-           storage.selectedCityID != city.id
-               || storage.method != city.method
-               || storage.school != city.school {
-            currentCity = storage.resolvedCity
-            todaysTimes = nil
-            tomorrowsTimes = nil
-            Task { await load() }
-            return
-        }
-
         guard let today = todaysTimes else {
             // Onboarding az önce bitmiş olabilir: şehir geldiyse veriyi yükle.
             if !isLoading, storage.resolvedCity != nil {

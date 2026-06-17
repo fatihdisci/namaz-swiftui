@@ -1,15 +1,18 @@
 import SwiftUI
 import SwiftData
 
-/// Sade ayarlar: dil, şehir, hesaplama metodu, mezhep, bildirimler, Pro, Hakkında.
+/// Sade ayarlar: dil, şehir, ev şehri, hesaplama metodu, bildirimler, Pro, Hakkında.
 struct SettingsView: View {
+    private enum LocationPickerPurpose {
+        case prayer
+        case home
+    }
+
     @State private var viewModel = SettingsViewModel()
-    @State private var cityPickerModel = OnboardingViewModel()
     @State private var locationPickerModel = LocationSelectionViewModel()
-    @State private var showCityPicker = false
     @State private var showLocationPicker = false
+    @State private var locationPickerPurpose: LocationPickerPurpose = .prayer
     @State private var showProGate = false
-    @State private var showPaywall = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -30,9 +33,6 @@ struct SettingsView: View {
                         notificationsSection
                         proSection
                         aboutSection
-                        if PurchaseService.isInternalTestingBuild {
-                            developerSection
-                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 16)
@@ -41,19 +41,11 @@ struct SettingsView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
         }
-        .sheet(isPresented: $showCityPicker) {
-            cityPickerSheet
-        }
         .sheet(isPresented: $showLocationPicker) {
             locationPickerSheet
         }
         .sheet(isPresented: $showProGate) {
             ProGateView()
-                .environment(lang)
-                .environment(purchaseService)
-        }
-        .sheet(isPresented: $showPaywall) {
-            ProGateView(isPreview: true)
                 .environment(lang)
                 .environment(purchaseService)
         }
@@ -67,11 +59,11 @@ struct SettingsView: View {
             divider
             cityRow
             divider
+            homeCityRow
+            divider
             autoLocationRow
             divider
             methodRow
-            divider
-            schoolRow
         }
     }
 
@@ -95,6 +87,7 @@ struct SettingsView: View {
     private var cityRow: some View {
         Button {
             locationPickerModel = LocationSelectionViewModel()
+            locationPickerPurpose = .prayer
             showLocationPicker = true
         } label: {
             HStack {
@@ -111,23 +104,45 @@ struct SettingsView: View {
         }
     }
 
-    /// Opsiyonel konumla otomatik bul butonu (izin ister).
-    private var autoLocationRow: some View {
+    private var homeCityRow: some View {
         Button {
-            let model = OnboardingViewModel()
-            model.method = viewModel.method
-            cityPickerModel = model
-            showCityPicker = true
+            locationPickerModel = LocationSelectionViewModel()
+            locationPickerPurpose = .home
+            showLocationPicker = true
         } label: {
             HStack {
-                rowLabel(icon: "location.fill", titleKey: "location.autoFind")
+                rowLabel(icon: "house.fill", titleKey: "settings.homeCity")
                 Spacer()
+                Text(viewModel.homeLocationDisplayName)
+                    .font(.subheadline)
+                    .foregroundStyle(Color.vakitTextDim)
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(Color.vakitTextDim)
             }
             .padding(.vertical, 10)
         }
+    }
+
+    /// Opsiyonel konumla otomatik bul butonu (izin ister).
+    private var autoLocationRow: some View {
+        Button {
+            Task { await viewModel.useAutomaticLocation(context: modelContext) }
+        } label: {
+            HStack {
+                rowLabel(icon: "location.fill", titleKey: "location.autoFind")
+                Spacer()
+                if viewModel.isLocating {
+                    ProgressView().tint(Color.vakitAccent)
+                } else {
+                    Image(systemName: "location.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+            }
+            .padding(.vertical, 10)
+        }
+        .disabled(viewModel.isLocating)
     }
 
     private var methodRow: some View {
@@ -146,22 +161,6 @@ struct SettingsView: View {
             .tint(Color.vakitAccent)
         }
         .padding(.vertical, 6)
-    }
-
-    private var schoolRow: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            rowLabel(icon: "sun.haze", titleKey: "settings.asrSchool")
-
-            Picker("", selection: Binding(
-                get: { viewModel.school },
-                set: { viewModel.setSchool($0, context: modelContext) }
-            )) {
-                Text(lang.t("settings.asrStandard")).tag(0)
-                Text(lang.t("settings.asrHanafi")).tag(1)
-            }
-            .pickerStyle(.segmented)
-        }
-        .padding(.vertical, 10)
     }
 
     // MARK: - Bildirimler
@@ -222,60 +221,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Geliştirici (Debug ve TestFlight)
-
-    private var developerSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Geliştirici")
-                .font(.system(.footnote, design: .default, weight: .semibold))
-                .foregroundStyle(Color.sunrise)
-                .textCase(.uppercase)
-
-            VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 10) {
-                    rowLabel(icon: "lock.open.fill", title: "Pro Test Modu")
-
-                    Picker(
-                        "Pro Test Modu",
-                        selection: Binding(
-                            get: { purchaseService.testingAccessMode },
-                            set: { purchaseService.setTestingAccessMode($0) }
-                        )
-                    ) {
-                        Text("Gerçek").tag(PurchaseService.TestingAccessMode.automatic)
-                        Text("Açık").tag(PurchaseService.TestingAccessMode.unlocked)
-                        Text("Kilitli").tag(PurchaseService.TestingAccessMode.locked)
-                    }
-                    .pickerStyle(.segmented)
-                }
-                .padding(.vertical, 10)
-
-                divider
-
-                Button {
-                    showPaywall = true
-                } label: {
-                    HStack {
-                        rowLabel(icon: "eyes", title: "Paywall'ı Önizle")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(Color.vakitTextDim)
-                    }
-                    .padding(.vertical, 10)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 6)
-            .background(Color.vakitSurface)
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .strokeBorder(Color.sunrise.opacity(0.3), lineWidth: 1)
-            )
-        }
-    }
-
     // MARK: - Location picker sheet (new cascading flow)
 
     private var locationPickerSheet: some View {
@@ -286,23 +231,14 @@ struct SettingsView: View {
                     guard let location = locationPickerModel.buildPrayerLocation() else { return }
                     var loc = location
                     loc.calculationMethod = locationPickerModel.method
-                    viewModel.saveLocation(loc, context: modelContext)
+                    switch locationPickerPurpose {
+                    case .prayer:
+                        viewModel.saveLocation(loc, context: modelContext)
+                    case .home:
+                        viewModel.saveHomeLocation(loc)
+                    }
                     showLocationPicker = false
                 }
-            }
-        }
-        .environment(lang)
-        .preferredColorScheme(.dark)
-    }
-
-    // MARK: - City picker sheet (eski: konumla otomatik bul)
-
-    private var cityPickerSheet: some View {
-        ZStack {
-            Color.vakitBg.ignoresSafeArea()
-            CitySelectionView(viewModel: cityPickerModel) {
-                showCityPicker = false
-                viewModel.refreshCity()
             }
         }
         .environment(lang)

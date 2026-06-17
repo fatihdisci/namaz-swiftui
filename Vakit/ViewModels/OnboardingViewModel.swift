@@ -188,7 +188,7 @@ final class OnboardingViewModel {
         storage.selectedCity = snapshot
         storage.selectedCityID = snapshot.id
         storage.method = method
-        storage.school = snapshot.school
+        storage.school = 0
     }
 
     /// Yeni cascading konum seçiminden `PrayerLocation` kaydeder.
@@ -202,7 +202,7 @@ final class OnboardingViewModel {
         let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
         existing.forEach { $0.isPrimary = false }
 
-        let city = location.makeCity(school: storage.school)
+        let city = location.makeCity(school: 0)
         city.isPrimary = true
         context.insert(city)
         try? context.save()

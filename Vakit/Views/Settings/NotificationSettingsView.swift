@@ -10,7 +10,7 @@ struct NotificationSettingsView: View {
     private let storage: StorageService
     private let notificationService: NotificationService
 
-    private static let minuteOptions = [0, 10, 20, 30]
+    private static let minuteOptions = [0, 5, 10, 20, 30]
 
     init(storage: StorageService = .shared, notificationService: NotificationService = .shared) {
         self.storage = storage
@@ -91,7 +91,7 @@ struct NotificationSettingsView: View {
         settings.update(prayer: prayer, enabled: enabled, minutesBefore: minutesBefore)
         storage.notificationSettings = settings
 
-        guard let city = storage.selectedCity?.makeCity() else { return }
+        guard let city = storage.resolvedCity else { return }
         Task {
             await notificationService.reschedule(city: city)
         }

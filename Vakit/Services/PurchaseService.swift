@@ -8,22 +8,6 @@ final class PurchaseService {
     static let shared = PurchaseService()
 
     static let entitlementIdentifier = "pro"
-    static var isInternalTestingBuild: Bool {
-        #if DEBUG
-        true
-        #else
-        Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
-        #endif
-    }
-
-    enum TestingAccessMode: String, CaseIterable, Identifiable {
-        case automatic
-        case unlocked
-        case locked
-
-        var id: Self { self }
-    }
-
     enum ProductID: String, CaseIterable {
         case monthly = "vakit_pro_monthly"
         case yearly = "vakit_pro_yearly"
@@ -41,39 +25,18 @@ final class PurchaseService {
         case entitlementNotActive
     }
 
-    private static let testingAccessModeKey = "pro.testingAccessMode"
-
     private(set) var entitlementHasProAccess = false
-    private(set) var testingAccessMode: TestingAccessMode
     private(set) var products: [Product] = []
     private(set) var isLoading = false
 
     var hasProAccess: Bool {
-        guard Self.isInternalTestingBuild else { return entitlementHasProAccess }
-
-        switch testingAccessMode {
-        case .automatic:
-            return entitlementHasProAccess
-        case .unlocked:
-            return true
-        case .locked:
-            return false
-        }
+        entitlementHasProAccess
     }
 
     @ObservationIgnored private var storeProducts: [ProductID: StoreProduct] = [:]
     @ObservationIgnored private var customerInfoTask: Task<Void, Never>?
 
-    private init() {
-        if
-            let storedValue = UserDefaults.standard.string(forKey: Self.testingAccessModeKey),
-            let storedMode = TestingAccessMode(rawValue: storedValue)
-        {
-            testingAccessMode = storedMode
-        } else {
-            testingAccessMode = Self.isInternalTestingBuild ? .unlocked : .automatic
-        }
-    }
+    private init() {}
 
     func configure() {
         if !Purchases.isConfigured {
@@ -148,14 +111,20 @@ final class PurchaseService {
         updateAccess(from: customerInfo)
     }
 
-    func product(for id: ProductID) -> Product? {
-        products.first { $0.id == id }
+    func logIn(appUserID: String) async throws {
+        guard Purchases.isConfigured else { return }
+        let result = try await Purchases.shared.logIn(appUserID)
+        updateAccess(from: result.customerInfo)
     }
 
-    func setTestingAccessMode(_ mode: TestingAccessMode) {
-        guard Self.isInternalTestingBuild else { return }
-        testingAccessMode = mode
-        UserDefaults.standard.set(mode.rawValue, forKey: Self.testingAccessModeKey)
+    func logOut() async throws {
+        guard Purchases.isConfigured else { return }
+        let customerInfo = try await Purchases.shared.logOut()
+        updateAccess(from: customerInfo)
+    }
+
+    func product(for id: ProductID) -> Product? {
+        products.first { $0.id == id }
     }
 
     private func updateAccess(from customerInfo: CustomerInfo) {

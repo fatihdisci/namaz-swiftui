@@ -15,6 +15,8 @@ final class StorageService {
         static let selectedCityID = "selected_city_id"
         static let selectedCity = "selected_city"
         static let prayerLocation = "prayer_location"
+        static let savedPrayerLocations = "saved_prayer_locations"
+        static let homePrayerLocation = "home_prayer_location"
         static let method = "method"
         static let school = "school"
         static let language = "language"
@@ -91,7 +93,7 @@ final class StorageService {
     /// Yeni veya eski modelden `City` üretir (HomeViewModel, bildirimler vs. için).
     var resolvedCity: City? {
         if let location = selectedPrayerLocation {
-            return location.makeCity(school: school)
+            return location.makeCity(school: 0)
         }
         return selectedCity?.makeCity()
     }
@@ -107,10 +109,9 @@ final class StorageService {
         get {
             // Önce yeni PrayerLocation modelini dene, yoksa eski snapshot'a düş.
             if let prayerLoc = selectedPrayerLocation {
-                return prayerLoc.toSnapshot(school: school)
+                return prayerLoc.toSnapshot(school: 0)
             }
-            guard let data = defaults.data(forKey: Key.selectedCity) else { return nil }
-            return try? decoder.decode(CitySnapshot.self, from: data)
+            return legacySelectedCitySnapshot
         }
         set {
             if let newValue, let data = try? encoder.encode(newValue) {
@@ -125,24 +126,98 @@ final class StorageService {
     /// Kaydedildiğinde eski `selectedCity` ile senkronize edilir.
     var selectedPrayerLocation: PrayerLocation? {
         get {
-            guard let data = defaults.data(forKey: Key.prayerLocation) else { return nil }
-            return try? decoder.decode(PrayerLocation.self, from: data)
+            if let data = defaults.data(forKey: Key.prayerLocation) {
+                return try? decoder.decode(PrayerLocation.self, from: data)
+            }
+            return legacySelectedCitySnapshot.map { snapshot in
+                PrayerLocation(
+                    id: snapshot.id,
+                    countryCode: "",
+                    countryName: snapshot.country,
+                    admin1Name: snapshot.name,
+                    admin1Type: "",
+                    admin2Name: "",
+                    admin2Type: "",
+                    cityName: snapshot.name,
+                    districtName: "",
+                    latitude: snapshot.latitude,
+                    longitude: snapshot.longitude,
+                    timeZoneIdentifier: snapshot.timezone,
+                    calculationMethod: snapshot.method
+                )
+            }
         }
         set {
             if let newValue, let data = try? encoder.encode(newValue) {
                 defaults.set(data, forKey: Key.prayerLocation)
                 // Eski selectedCity ve selectedCityID'yi de güncelle (geriye uyumluluk).
-                let snapshot = newValue.toSnapshot(school: school)
+                let snapshot = newValue.toSnapshot(school: 0)
                 if let snapData = try? encoder.encode(snapshot) {
                     defaults.set(snapData, forKey: Key.selectedCity)
                 }
                 defaults.set(newValue.id.uuidString, forKey: Key.selectedCityID)
+                method = newValue.calculationMethod
+                addOrUpdateSavedPrayerLocation(newValue)
+                if homePrayerLocation == nil {
+                    homePrayerLocation = newValue
+                }
             } else {
                 defaults.removeObject(forKey: Key.prayerLocation)
                 defaults.removeObject(forKey: Key.selectedCity)
                 defaults.removeObject(forKey: Key.selectedCityID)
             }
+            notifyPrayerLocationChanged()
         }
+    }
+
+    var savedPrayerLocations: [PrayerLocation] {
+        get {
+            guard let data = defaults.data(forKey: Key.savedPrayerLocations) else {
+                if let selectedPrayerLocation { return [selectedPrayerLocation] }
+                return []
+            }
+            return (try? decoder.decode([PrayerLocation].self, from: data)) ?? []
+        }
+        set {
+            guard let data = try? encoder.encode(Self.uniqueLocations(newValue)) else { return }
+            defaults.set(data, forKey: Key.savedPrayerLocations)
+            notifySavedPrayerLocationsChanged()
+        }
+    }
+
+    var homePrayerLocation: PrayerLocation? {
+        get {
+            guard let data = defaults.data(forKey: Key.homePrayerLocation) else { return nil }
+            return try? decoder.decode(PrayerLocation.self, from: data)
+        }
+        set {
+            if let newValue, let data = try? encoder.encode(newValue) {
+                defaults.set(data, forKey: Key.homePrayerLocation)
+            } else {
+                defaults.removeObject(forKey: Key.homePrayerLocation)
+            }
+            notifyHomePrayerLocationChanged()
+        }
+    }
+
+    func addOrUpdateSavedPrayerLocation(_ location: PrayerLocation) {
+        var locations = savedPrayerLocations
+        if let index = locations.firstIndex(where: { $0.id == location.id }) {
+            locations[index] = location
+        } else {
+            locations.append(location)
+        }
+        guard let data = try? encoder.encode(Self.uniqueLocations(locations)) else { return }
+        defaults.set(data, forKey: Key.savedPrayerLocations)
+        notifySavedPrayerLocationsChanged()
+    }
+
+    func removeSavedPrayerLocation(id: UUID) {
+        var locations = savedPrayerLocations.filter { $0.id != id }
+        if locations.isEmpty, let selectedPrayerLocation {
+            locations = [selectedPrayerLocation]
+        }
+        savedPrayerLocations = locations
     }
 
     var method: CalculationMethod {
@@ -155,8 +230,13 @@ final class StorageService {
 
     /// Asr mezhebi: 0 = Standart (Şafi, varsayılan), 1 = Hanefi.
     var school: Int {
-        get { defaults.integer(forKey: Key.school) }
-        set { defaults.set(newValue, forKey: Key.school) }
+        get {
+            if defaults.integer(forKey: Key.school) != 0 {
+                defaults.set(0, forKey: Key.school)
+            }
+            return 0
+        }
+        set { defaults.set(0, forKey: Key.school) }
     }
 
     /// "tr" veya "en"
@@ -223,6 +303,38 @@ final class StorageService {
             year: String(components.year ?? 1)
         )
     }
+
+    private static func uniqueLocations(_ locations: [PrayerLocation]) -> [PrayerLocation] {
+        var seen: Set<UUID> = []
+        return locations.filter { location in
+            if seen.contains(location.id) { return false }
+            seen.insert(location.id)
+            return true
+        }
+    }
+
+    private var legacySelectedCitySnapshot: CitySnapshot? {
+        guard let data = defaults.data(forKey: Key.selectedCity) else { return nil }
+        return try? decoder.decode(CitySnapshot.self, from: data)
+    }
+
+    private func notifyPrayerLocationChanged() {
+        NotificationCenter.default.post(name: .vakitPrayerLocationChanged, object: nil)
+    }
+
+    private func notifySavedPrayerLocationsChanged() {
+        NotificationCenter.default.post(name: .vakitSavedPrayerLocationsChanged, object: nil)
+    }
+
+    private func notifyHomePrayerLocationChanged() {
+        NotificationCenter.default.post(name: .vakitHomePrayerLocationChanged, object: nil)
+    }
+}
+
+extension Notification.Name {
+    static let vakitPrayerLocationChanged = Notification.Name("vakitPrayerLocationChanged")
+    static let vakitSavedPrayerLocationsChanged = Notification.Name("vakitSavedPrayerLocationsChanged")
+    static let vakitHomePrayerLocationChanged = Notification.Name("vakitHomePrayerLocationChanged")
 }
 
 struct KazaCounts: Codable, Equatable {
@@ -317,7 +429,7 @@ struct CitySnapshot: Codable, Equatable {
             country: country,
             timezone: timezone,
             method: method,
-            school: school
+            school: 0
         )
     }
 }

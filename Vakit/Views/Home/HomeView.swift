@@ -1,11 +1,18 @@
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     @State private var viewModel: HomeViewModel
+    @State private var locationPickerModel = LocationSelectionViewModel()
+    @State private var showLocationPicker = false
+    @State private var showProGate = false
     private let onOpenDiscover: () -> Void
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
+    @Environment(NotificationService.self) private var notificationService
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
 
     @MainActor
     init(viewModel: HomeViewModel, onOpenDiscover: @escaping () -> Void = {}) {
@@ -35,6 +42,33 @@ struct HomeView: View {
         .task {
             await viewModel.load()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .vakitPrayerLocationChanged)) { _ in
+            Task { await reloadAndReschedule() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .vakitSavedPrayerLocationsChanged)) { _ in
+            viewModel.refreshSavedLocations()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .active else { return }
+            Task { await viewModel.load() }
+        }
+        .sheet(isPresented: $showLocationPicker) {
+            NavigationStack {
+                ZStack {
+                    Color.vakitBg.ignoresSafeArea()
+                    LocationSelectionView(viewModel: locationPickerModel) {
+                        saveNewLocation()
+                    }
+                }
+            }
+            .environment(lang)
+            .preferredColorScheme(.dark)
+        }
+        .sheet(isPresented: $showProGate) {
+            ProGateView()
+                .environment(lang)
+                .environment(purchaseService)
+        }
     }
 
     private var content: some View {
@@ -51,6 +85,8 @@ struct HomeView: View {
                         countdown: viewModel.countdownString
                     )
 
+                    citySelector
+
                     VStack(spacing: 4) {
                         ForEach(Prayer.allCases) { prayer in
                             let state = viewModel.rowState(for: prayer)
@@ -62,9 +98,6 @@ struct HomeView: View {
                             )
                         }
                     }
-
-                    qiblaCard
-                    kazaCard
 
                     if let verse = viewModel.dailyVerse {
                         DailyContentCard(
@@ -84,7 +117,7 @@ struct HomeView: View {
     private var topBar: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(viewModel.currentCity?.name ?? "—")
+                Text(viewModel.currentCity?.name ?? "-")
                     .font(.system(.title3, design: .rounded, weight: .semibold))
                     .foregroundStyle(Color.vakitText)
                 Text(viewModel.hijriDate)
@@ -96,90 +129,78 @@ struct HomeView: View {
         }
     }
 
-    /// Kıble artık sekme değil: ana ekrandan push ile açılır.
-    private var qiblaCard: some View {
-        NavigationLink {
-            QiblaView()
-        } label: {
-            HStack(spacing: 14) {
-                Image(systemName: "safari.fill")
-                    .font(.system(size: 22, weight: .medium))
-                    .foregroundStyle(Color.vakitAccent)
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(lang.t("qibla.title"))
-                        .font(.system(.body, design: .default, weight: .semibold))
-                        .foregroundStyle(Color.vakitText)
-                    Text(lang.t("qibla.subtitle"))
-                        .font(.footnote)
-                        .foregroundStyle(Color.vakitTextDim)
-                        .multilineTextAlignment(.leading)
+    private var citySelector: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(viewModel.savedLocations) { location in
+                    Button {
+                        guard purchaseService.hasProAccess || location.id == viewModel.currentCity?.id else {
+                            showProGate = true
+                            return
+                        }
+                        StorageService.shared.selectedPrayerLocation = location
+                    } label: {
+                        Text(location.shortName)
+                            .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                            .foregroundStyle(location.id == viewModel.currentCity?.id ? Color.vakitBg : Color.vakitText)
+                            .lineLimit(1)
+                            .padding(.horizontal, 14)
+                            .frame(height: 36)
+                            .background(
+                                Capsule().fill(
+                                    location.id == viewModel.currentCity?.id ? Color.vakitAccent : Color.vakitSurface
+                                )
+                            )
+                            .overlay(Capsule().strokeBorder(Color.vakitBorder, lineWidth: 1))
+                    }
                 }
 
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.vakitTextDim)
+                Button {
+                    guard purchaseService.hasProAccess else {
+                        showProGate = true
+                        return
+                    }
+                    locationPickerModel = LocationSelectionViewModel()
+                    showLocationPicker = true
+                } label: {
+                    Image(systemName: purchaseService.hasProAccess ? "plus" : "lock.fill")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(Color.vakitAccent)
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(Color.vakitSurface))
+                        .overlay(Circle().strokeBorder(Color.vakitBorder, lineWidth: 1))
+                }
             }
-            .padding(16)
-            .background(Color.vakitSurface)
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
-            )
+            .padding(.vertical, 2)
         }
     }
 
-    private var kazaCard: some View {
-        NavigationLink {
-            KazaView()
-        } label: {
-            HStack(spacing: 14) {
-                Image(systemName: "checklist")
-                    .font(.system(size: 22, weight: .medium))
-                    .foregroundStyle(Color.vakitAccent)
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
+    private func saveNewLocation() {
+        guard let location = locationPickerModel.buildPrayerLocation() else { return }
+        var loc = location
+        loc.calculationMethod = locationPickerModel.method
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(lang.t("kaza.title"))
-                        .font(.system(.body, design: .default, weight: .semibold))
-                        .foregroundStyle(Color.vakitText)
-                    Text(lang.t("kaza.subtitle"))
-                        .font(.footnote)
-                        .foregroundStyle(Color.vakitTextDim)
-                        .multilineTextAlignment(.leading)
-                }
+        let existing = (try? modelContext.fetch(FetchDescriptor<City>())) ?? []
+        existing.forEach { $0.isPrimary = false }
+        let city = loc.makeCity()
+        city.isPrimary = true
+        modelContext.insert(city)
+        try? modelContext.save()
 
-                Spacer()
+        StorageService.shared.selectedPrayerLocation = loc
+        showLocationPicker = false
+    }
 
-                if !purchaseService.hasProAccess {
-                    Image(systemName: "lock.fill")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.vakitAccent)
-                }
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.vakitTextDim)
-            }
-            .padding(16)
-            .background(Color.vakitSurface)
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .strokeBorder(Color.vakitBorder, lineWidth: 1)
-            )
-        }
+    private func reloadAndReschedule() async {
+        await viewModel.reloadForLocationChange()
+        guard let city = StorageService.shared.resolvedCity else { return }
+        await notificationService.reschedule(city: city)
     }
 }
 
 #Preview {
     HomeView()
         .environment(LanguageService.shared)
+        .environment(NotificationService.shared)
         .environment(PurchaseService.shared)
 }

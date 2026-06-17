@@ -6,6 +6,7 @@ struct VakitApp: App {
     @State private var languageService = LanguageService.shared
     @State private var notificationService = NotificationService.shared
     @State private var purchaseService = PurchaseService.shared
+    @State private var authService = AuthService.shared
     @State private var showOnboarding = !StorageService.shared.onboardingDone
 
     init() {
@@ -19,6 +20,7 @@ struct VakitApp: App {
                 .environment(languageService)
                 .environment(notificationService)
                 .environment(purchaseService)
+                .environment(authService)
                 .fullScreenCover(isPresented: $showOnboarding) {
                     OnboardingView {
                         showOnboarding = false
@@ -33,6 +35,7 @@ struct VakitApp: App {
                         await rescheduleNotifications()
                     }
                     await purchaseService.refresh()
+                    await authService.refreshCredentialState()
                 }
         }
         .modelContainer(for: [City.self, KazaEntry.self])
@@ -42,7 +45,7 @@ struct VakitApp: App {
     private func rescheduleNotifications() async {
         // Yeni PrayerLocation veya eski CitySnapshot üzerinden City oluştur.
         if let location = StorageService.shared.selectedPrayerLocation {
-            await notificationService.reschedule(city: location.makeCity())
+            await notificationService.reschedule(city: location.makeCity(school: 0))
         } else if let city = StorageService.shared.selectedCity?.makeCity() {
             await notificationService.reschedule(city: city)
         }

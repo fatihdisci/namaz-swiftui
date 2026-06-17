@@ -116,6 +116,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.SignInWithApple = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -244,6 +247,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Vakit/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
 				INFOPLIST_KEY_REVENUECAT_API_KEY = "$(REVENUECAT_API_KEY)";
@@ -276,6 +280,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Vakit/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
 				INFOPLIST_KEY_REVENUECAT_API_KEY = "$(REVENUECAT_API_KEY)";

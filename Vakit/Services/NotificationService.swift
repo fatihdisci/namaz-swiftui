@@ -95,10 +95,11 @@ final class NotificationService {
                 let identifier = "\(prayer.rawValue)_\(StorageService.dateKey(for: date))"
 
                 let content = UNMutableNotificationContent()
-                content.title = languageService.t(prayer.localizationKey)
+                let prayerName = languageService.t(prayer.localizationKey)
+                content.title = prayerName
                 content.body = setting.minutesBefore > 0
-                    ? languageService.t("notification.body.remaining", setting.minutesBefore)
-                    : languageService.t("notification.body.started")
+                    ? languageService.t("notification.body.remaining", prayerName, setting.minutesBefore)
+                    : languageService.t("notification.body.started", prayerName)
                 content.sound = .default
 
                 let components = calendar.dateComponents(

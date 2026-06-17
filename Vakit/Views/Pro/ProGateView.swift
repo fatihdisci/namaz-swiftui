@@ -1,15 +1,20 @@
 import SwiftUI
+import AuthenticationServices
 
 struct ProGateView: View {
     var isPreview = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
+    @Environment(AuthService.self) private var authService
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedProductID: PurchaseService.ProductID = .yearly
     @State private var isProcessing = false
     @State private var errorMessage: String?
+
+    private let termsURL = URL(string: "https://example.com/ufuk/terms")!
+    private let privacyURL = URL(string: "https://example.com/ufuk/privacy")!
 
     var body: some View {
         NavigationStack {
@@ -19,11 +24,12 @@ struct ProGateView: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         header
-                        features
-                        productCards
+                        primaryActionPanel
                         purchaseButton
                         restoreButton
-                        policyText
+                        legalLinks
+                        features
+                        productCards
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 24)
@@ -70,6 +76,40 @@ struct ProGateView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color.vakitTextDim)
         }
+        .padding(.top, 4)
+    }
+
+    private var primaryActionPanel: some View {
+        VStack(spacing: 10) {
+            Text(lang.t("pro.selectedPlan"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Color.vakitTextDim)
+                .textCase(.uppercase)
+
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(productTitle(for: selectedProductID))
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .foregroundStyle(Color.vakitText)
+                    Text(authService.isGuest ? lang.t("pro.signInRequired") : lang.t("pro.readyToPurchase"))
+                        .font(.footnote)
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+
+                Spacer()
+
+                Text(price(for: selectedProductID))
+                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .foregroundStyle(Color.vakitAccent)
+            }
+        }
+        .padding(16)
+        .background(Color.vakitSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(Color.vakitBorder, lineWidth: 1)
+        )
     }
 
     private var features: some View {
@@ -162,24 +202,46 @@ struct ProGateView: View {
     }
 
     private var purchaseButton: some View {
-        Button {
-            Task { await purchaseSelectedProduct() }
-        } label: {
-            HStack(spacing: 10) {
-                if isProcessing {
-                    ProgressView().tint(Color.vakitText)
+        Group {
+            if authService.isGuest {
+                VStack(spacing: 8) {
+                    SignInWithAppleButton(.continue) { request in
+                        request.requestedScopes = []
+                    } onCompletion: { result in
+                        Task { await authService.handleSignInResult(result) }
+                    }
+                    .signInWithAppleButtonStyle(.white)
+                    .frame(height: 52)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .disabled(authService.isSigningIn)
+
+                    if let error = authService.errorMessage {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundStyle(Color.maghrib)
+                    }
                 }
-                Text(lang.t("pro.purchase"))
-                    .font(.system(.headline, design: .rounded, weight: .bold))
+            } else {
+                Button {
+                    Task { await purchaseSelectedProduct() }
+                } label: {
+                    HStack(spacing: 10) {
+                        if isProcessing {
+                            ProgressView().tint(Color.vakitText)
+                        }
+                        Text(lang.t("pro.purchase"))
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                    }
+                    .foregroundStyle(Color.vakitBg)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.vakitAccent)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
+                .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
             }
-            .foregroundStyle(Color.vakitText)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.vakitAccent)
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
-        .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
-        .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
     }
 
     private var restoreButton: some View {
@@ -191,11 +253,14 @@ struct ProGateView: View {
         .disabled(isProcessing)
     }
 
-    private var policyText: some View {
-        Text(lang.t("pro.cancellationPolicy"))
-            .font(.caption)
-            .multilineTextAlignment(.center)
-            .foregroundStyle(Color.vakitTextDim)
+    private var legalLinks: some View {
+        HStack(spacing: 14) {
+            Link(lang.t("pro.terms"), destination: termsURL)
+            Text("·")
+            Link(lang.t("pro.privacy"), destination: privacyURL)
+        }
+        .font(.caption.weight(.semibold))
+        .foregroundStyle(Color.vakitTextDim)
     }
 
     private var errorBinding: Binding<Bool> {
@@ -207,6 +272,14 @@ struct ProGateView: View {
 
     private func price(for id: PurchaseService.ProductID) -> String {
         purchaseService.product(for: id)?.localizedPrice ?? lang.t("pro.priceUnavailable")
+    }
+
+    private func productTitle(for id: PurchaseService.ProductID) -> String {
+        switch id {
+        case .monthly: return lang.t("pro.monthly")
+        case .yearly: return lang.t("pro.yearly")
+        case .lifetime: return lang.t("pro.lifetime")
+        }
     }
 
     private func purchaseSelectedProduct() async {
@@ -227,6 +300,10 @@ struct ProGateView: View {
     }
 
     private func restorePurchases() async {
+        guard !authService.isGuest else {
+            errorMessage = lang.t("pro.signInRequired")
+            return
+        }
         isProcessing = true
         defer { isProcessing = false }
 
@@ -248,5 +325,6 @@ struct ProGateView: View {
 #Preview {
     ProGateView()
         .environment(LanguageService.shared)
+        .environment(AuthService.shared)
         .environment(PurchaseService.shared)
 }

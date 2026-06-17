@@ -10,9 +10,8 @@ final class City {
     var country: String
     var timezone: String
     var method: CalculationMethod
-    /// Aladhan `school` / Asr mezhebi: 0 = Standart (Şafi), 1 = Hanefi.
-    /// Varsayılan 0 — Diyanet'in yayımladığı ikindi vakti standart Asr'dır;
-    /// Hanefi'ye sabitlemek ikindiyi ~70+ dk geç gösterir. Kullanıcı seçimlidir.
+    /// Aladhan `school` / Asr mezhebi. Uygulama kullanıcıya seçenek göstermez
+    /// ve standart/Şafi hesap için her zaman 0 kullanır.
     var school: Int
     var isPrimary: Bool
 
@@ -34,7 +33,7 @@ final class City {
         self.country = country
         self.timezone = timezone
         self.method = method
-        self.school = school
+        self.school = 0
         self.isPrimary = isPrimary
     }
 }

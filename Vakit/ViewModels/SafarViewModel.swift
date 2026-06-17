@@ -2,7 +2,7 @@ import Foundation
 import CoreLocation
 import Observation
 
-/// Seferi ekranı: ev şehri (seçili şehir) ile anlık konum arası mesafe.
+/// Seferi ekranı: ev konumu (yalnızca il/ilçe) ile anlık konum arası mesafe.
 /// ANAYASA KURALI: Konum asla kalıcı saklanmaz — sadece mesafe hesaplanır.
 @Observable
 @MainActor
@@ -18,8 +18,12 @@ final class SafarViewModel {
 
     private(set) var state: CheckState = .idle
 
-    /// Ev şehri = kullanıcının seçili şehri (App Group snapshot'ı).
-    var homeCity: CitySnapshot? { storage.selectedCity }
+    /// Ev konumu ayrı saklanır; canlı GPS ev olarak tutulmaz.
+    var homeLocation: PrayerLocation? { storage.homePrayerLocation ?? storage.selectedPrayerLocation }
+
+    var homeCity: CitySnapshot? {
+        homeLocation?.toSnapshot(school: 0)
+    }
 
     @ObservationIgnored private let storage: StorageService
     @ObservationIgnored private let locationService: LocationService
@@ -32,10 +36,14 @@ final class SafarViewModel {
         self.locationService = locationService ?? LocationService()
     }
 
+    func refreshHomeLocation() {
+        state = .idle
+    }
+
     /// Tek seferlik konum alır, ev şehrine mesafeyi hesaplar.
     @MainActor
     func checkDistance() async {
-        guard let home = homeCity else {
+        guard let home = homeLocation else {
             state = .error("safar.noHomeCity")
             return
         }

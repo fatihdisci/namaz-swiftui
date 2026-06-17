@@ -21,7 +21,7 @@
 
 Uygulama yerel bildirimler kullanır. Kullanıcı bildirim iznini onboarding sırasında veya bildirim ayarları ekranında verir. Namaz vakti hatırlatmaları cihaz üzerinde planlanır.
 
-Vakit Pro satın alımları RevenueCat üzerinden yönetilir. İnceleme öncesinde App Store Connect ürünleri ve RevenueCat entitlement/offerings yapılandırması tamamlanmalıdır.
+Ufuk Pro satın alımları RevenueCat üzerinden yönetilir. İnceleme öncesinde App Store Connect ürünleri ve RevenueCat entitlement/offerings yapılandırması tamamlanmalıdır.
 
 ## App Store Connect Kontrol Listesi
 

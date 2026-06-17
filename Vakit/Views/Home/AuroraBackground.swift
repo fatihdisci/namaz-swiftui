@@ -12,26 +12,28 @@ struct AuroraBackground: View {
             ZStack {
                 Color.vakitBg
 
-                Circle()
-                    .fill(accentColor)
-                    .frame(width: size.width * 0.9, height: size.width * 0.9)
-                    .offset(x: -size.width * 0.3, y: -size.height * 0.25)
-                    .blur(radius: 80)
-                    .opacity(0.15)
+                LinearGradient(
+                    colors: [
+                        accentColor.opacity(0.12),
+                        Color.vakitBg.opacity(0.0),
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
 
                 Circle()
                     .fill(accentColor)
-                    .frame(width: size.width * 0.7, height: size.width * 0.7)
-                    .offset(x: size.width * 0.45, y: size.height * 0.05)
-                    .blur(radius: 80)
-                    .opacity(0.15)
+                    .frame(width: size.width * 0.65, height: size.width * 0.65)
+                    .offset(x: -size.width * 0.35, y: -size.height * 0.22)
+                    .blur(radius: 90)
+                    .opacity(0.09)
 
                 Circle()
-                    .fill(accentColor)
-                    .frame(width: size.width * 0.8, height: size.width * 0.8)
-                    .offset(x: size.width * 0.1, y: size.height * 0.55)
-                    .blur(radius: 80)
-                    .opacity(0.12)
+                    .fill(Color.sunrise)
+                    .frame(width: size.width * 0.55, height: size.width * 0.55)
+                    .offset(x: size.width * 0.42, y: size.height * 0.55)
+                    .blur(radius: 100)
+                    .opacity(0.05)
             }
             .animation(.easeInOut(duration: 1.5), value: accentColor)
         }

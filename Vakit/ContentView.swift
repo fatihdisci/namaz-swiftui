@@ -3,7 +3,7 @@ import SwiftUI
 enum AppTab: Hashable {
     case home
     case discover
-    case safar
+    case tools
     case settings
 }
 
@@ -27,11 +27,11 @@ struct ContentView: View {
                 }
                 .tag(AppTab.discover)
 
-            SafarView()
+            ToolsView()
                 .tabItem {
-                    Label(lang.t("tab.safar"), systemImage: "airplane")
+                    Label(lang.t("tab.tools"), systemImage: "square.grid.2x2.fill")
                 }
-                .tag(AppTab.safar)
+                .tag(AppTab.tools)
 
             SettingsView()
                 .tabItem {

@@ -49,6 +49,9 @@ struct SafarView: View {
             await purchaseService.refresh()
             showProGate = !purchaseService.hasProAccess
         }
+        .onReceive(NotificationCenter.default.publisher(for: .vakitHomePrayerLocationChanged)) { _ in
+            viewModel.refreshHomeLocation()
+        }
         .sheet(isPresented: $showProGate) {
             ProGateView()
                 .environment(lang)
@@ -96,8 +99,8 @@ struct SafarView: View {
     }
 
     private var homeCityLabel: String {
-        guard let home = viewModel.homeCity else { return lang.t("safar.noHomeCity") }
-        return home.country.isEmpty ? home.name : "\(home.name), \(home.country)"
+        guard let home = viewModel.homeLocation else { return lang.t("safar.noHomeCity") }
+        return home.displayName
     }
 
     private var checkButton: some View {
@@ -201,7 +204,7 @@ struct SafarView: View {
             HStack(spacing: 6) {
                 Image(systemName: "checkmark.shield")
                     .font(.caption)
-                Text(lang.t("safar.locationNote"))
+                Text(lang.t("safar.homePrivacyNote"))
                     .font(.caption)
             }
             .foregroundStyle(Color.vakitTextDim)
