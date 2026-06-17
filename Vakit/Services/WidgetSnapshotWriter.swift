@@ -25,7 +25,7 @@ enum WidgetSnapshotWriter {
             shortCityName: Self.shortName(from: city.name),
             countryName: city.country,
             date: today.date,
-            hijriDate: "\(today.hijriDay) \(today.hijriMonthName) \(today.hijriYear)",
+            hijriDate: "\(today.hijriDay) \(today.hijriMonthName.hijriDiacriticStripped) \(today.hijriYear)",
             rows: rows,
             tomorrowFajr: tomorrow?.fajr,
             language: language,

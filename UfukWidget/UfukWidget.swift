@@ -265,7 +265,7 @@ private struct MediumView: View {
 
                 Spacer(minLength: 0)
 
-                Text(snapshot.hijriDate)
+                Text(snapshot.hijriDate.hijriDiacriticStripped)
                     .font(.system(size: 10, weight: .medium))
                     .foregroundStyle(WidgetTheme.dim)
                     .lineLimit(1)

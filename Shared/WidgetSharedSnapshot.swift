@@ -73,6 +73,16 @@ extension WidgetPrayerSnapshot {
     }
 }
 
+// MARK: - Hicri ay adı normalizasyonu
+
+extension String {
+    /// Hicri ay adındaki aksanları temizler: "Muḥarram" -> "Muharram".
+    /// Ana app ile aynı davranış (PrayerTimeService.displayHijriMonthName).
+    var hijriDiacriticStripped: String {
+        folding(options: [.diacriticInsensitive], locale: Locale(identifier: "en"))
+    }
+}
+
 // MARK: - App Group store
 
 /// App Group UserDefaults üzerinde snapshot okuma/yazma.
