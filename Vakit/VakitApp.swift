@@ -48,6 +48,10 @@ struct VakitApp: App {
                         )
                     }
                 }
+                .onReceive(NotificationCenter.default.publisher(for: .vakitAccountDeleted)) { _ in
+                    // Hesap silindi: uygulamayı sıfır onboarding durumuna döndür.
+                    showOnboarding = true
+                }
         }
         .modelContainer(for: [City.self, KazaEntry.self])
     }

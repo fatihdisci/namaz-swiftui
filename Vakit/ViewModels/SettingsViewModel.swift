@@ -2,6 +2,7 @@ import Foundation
 import CoreLocation
 import Observation
 import SwiftData
+import WidgetKit
 
 /// Ayarlar: dil, şehir, ev şehri, hesaplama metodu.
 /// Her değişiklik App Group snapshot'ına + SwiftData'ya yazılır ve bildirimler yeniden planlanır.
@@ -82,6 +83,41 @@ final class SettingsViewModel {
     func saveHomeLocation(_ location: PrayerLocation) {
         storage.homePrayerLocation = location
         homeLocation = location
+    }
+
+    /// Hesabı ve tüm kullanıcı verisini kalıcı olarak siler (App Store 5.1.1(v)).
+    /// Sıra: SwiftData → yerel ayarlar/önbellek → bildirimler → widget → Apple/RevenueCat.
+    func deleteAccount(context: ModelContext) async {
+        // 1. SwiftData: şehirler ve kaza kayıtları.
+        for city in (try? context.fetch(FetchDescriptor<City>())) ?? [] {
+            context.delete(city)
+        }
+        for entry in (try? context.fetch(FetchDescriptor<KazaEntry>())) ?? [] {
+            context.delete(entry)
+        }
+        try? context.save()
+
+        // 2. App Group: konum, kaza sayaçları, bildirim ayarları, önbellek, onboarding.
+        storage.wipeUserData()
+
+        // 3. Bekleyen bildirimleri iptal et.
+        notificationService.cancelAll()
+
+        // 4. Home Screen widget snapshot'ını temizle ve yenile.
+        WidgetSnapshotStore.clear()
+        WidgetCenter.shared.reloadAllTimelines()
+
+        // 5. Apple oturumu + RevenueCat bağlantısını kaldır.
+        await AuthService.shared.deleteAccount()
+
+        // 6. Yerel yayınlanan durumu sıfırla.
+        city = nil
+        location = nil
+        homeLocation = nil
+        method = storage.method
+
+        // 7. Uygulamayı onboarding'e döndür.
+        NotificationCenter.default.post(name: .vakitAccountDeleted, object: nil)
     }
 
     func useAutomaticLocation(context: ModelContext) async {

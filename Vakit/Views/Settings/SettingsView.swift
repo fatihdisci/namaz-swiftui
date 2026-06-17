@@ -6,9 +6,12 @@ struct SettingsView: View {
     @State private var viewModel = SettingsViewModel()
     @State private var activeLocationPicker: LocationPickerPurpose?
     @State private var showProGate = false
+    @State private var showDeleteAccountConfirm = false
+    @State private var isDeletingAccount = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
+    @Environment(AuthService.self) private var authService
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
@@ -25,6 +28,9 @@ struct SettingsView: View {
                         generalSection
                         notificationsSection
                         proSection
+                        if !authService.isGuest {
+                            accountSection
+                        }
                         aboutSection
                     }
                     .padding(.horizontal, 20)
@@ -51,6 +57,18 @@ struct SettingsView: View {
             ProGateView()
                 .environment(lang)
                 .environment(purchaseService)
+        }
+        .alert(lang.t("account.delete.title"), isPresented: $showDeleteAccountConfirm) {
+            Button(lang.t("account.delete.cancel"), role: .cancel) {}
+            Button(lang.t("account.delete.confirm"), role: .destructive) {
+                isDeletingAccount = true
+                Task {
+                    await viewModel.deleteAccount(context: modelContext)
+                    isDeletingAccount = false
+                }
+            }
+        } message: {
+            Text(lang.t("account.delete.message"))
         }
     }
 
@@ -205,6 +223,44 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Hesap
+
+    private var accountSection: some View {
+        section(titleKey: "settings.account") {
+            Button {
+                authService.signOut()
+            } label: {
+                HStack {
+                    rowLabel(icon: "rectangle.portrait.and.arrow.right", titleKey: "settings.signOut")
+                    Spacer()
+                }
+                .padding(.vertical, 10)
+            }
+
+            divider
+
+            Button {
+                showDeleteAccountConfirm = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "trash")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundStyle(Color.maghrib)
+                        .frame(width: 24)
+                    Text(lang.t("settings.deleteAccount"))
+                        .font(.body)
+                        .foregroundStyle(Color.maghrib)
+                    Spacer()
+                    if isDeletingAccount {
+                        ProgressView().tint(Color.maghrib)
+                    }
+                }
+                .padding(.vertical, 10)
+            }
+            .disabled(isDeletingAccount)
+        }
+    }
+
     // MARK: - Hakkında
 
     private var aboutSection: some View {
@@ -304,6 +360,7 @@ private struct LocationPickerSheet: View {
     SettingsView()
         .environment(LanguageService.shared)
         .environment(PurchaseService.shared)
+        .environment(AuthService.shared)
         .modelContainer(for: [City.self, KazaEntry.self], inMemory: true)
         .preferredColorScheme(.dark)
 }

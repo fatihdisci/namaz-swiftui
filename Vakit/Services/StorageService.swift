@@ -331,10 +331,38 @@ final class StorageService {
     }
 }
 
+extension StorageService {
+    /// Hesap silme için: kullanıcıya ait TÜM yerel veriyi App Group'tan temizler.
+    /// Konum, kaza, bildirim ayarları, önbellek ve onboarding sıfırlanır.
+    /// Dil tercihi (cihaz geneli bir tercih) korunur.
+    func wipeUserData() {
+        let keysToRemove = [
+            Key.selectedCityID,
+            Key.selectedCity,
+            Key.prayerLocation,
+            Key.savedPrayerLocations,
+            Key.homePrayerLocation,
+            Key.method,
+            Key.school,
+            Key.onboardingDone,
+            Key.notificationSettings,
+            Key.kazaCounts,
+        ]
+        keysToRemove.forEach { defaults.removeObject(forKey: $0) }
+
+        // Önbelleğe alınmış tüm vakit kayıtlarını (times_*) sil.
+        for key in defaults.dictionaryRepresentation().keys where key.hasPrefix(Key.timesPrefix) {
+            defaults.removeObject(forKey: key)
+        }
+    }
+}
+
 extension Notification.Name {
     static let vakitPrayerLocationChanged = Notification.Name("vakitPrayerLocationChanged")
     static let vakitSavedPrayerLocationsChanged = Notification.Name("vakitSavedPrayerLocationsChanged")
     static let vakitHomePrayerLocationChanged = Notification.Name("vakitHomePrayerLocationChanged")
+    /// Hesap silindiğinde gönderilir; app onboarding'e döner.
+    static let vakitAccountDeleted = Notification.Name("vakitAccountDeleted")
 }
 
 struct KazaCounts: Codable, Equatable {

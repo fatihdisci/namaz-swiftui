@@ -4,105 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ufuk — Namaz Vakitleri</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-            background: #080d0c;
-            color: #f1f0ed;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-        }
-        .container { max-width: 500px; }
-        .icon {
-            width: 80px; height: 80px;
-            background: linear-gradient(135deg, #1a3d32 0%, #2fbf8f 100%);
-            border-radius: 22px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.5rem;
-        }
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
-        }
-        p.sub {
-            color: #8a8f88;
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
-        }
-        .links { display: flex; flex-direction: column; gap: 0.75rem; }
-        .links a {
-            display: flex; align-items: center; justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: #111816;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            color: #f1f0ed;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-        .links a:hover {
-            background: #1a221e;
-            border-color: rgba(47,191,143,0.3);
-        }
-        .links a .badge {
-            font-size: 0.7rem;
-            background: #2fbf8f;
-            color: #080d0c;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-        .lang-toggle {
-            margin-top: 2rem;
-            display: flex; gap: 0.5rem;
-        }
-        .lang-toggle a {
-            padding: 0.4rem 1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: #8a8f88;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.2s;
-        }
-        .lang-toggle a.active {
-            color: #2fbf8f;
-            border-color: #2fbf8f;
-        }
-        .lang-toggle a:hover { color: #f1f0ed; }
-        footer { margin-top: 2.5rem; font-size: 0.8rem; color: #555; }
-    </style>
+    <link rel="stylesheet" href="landing.css">
 </head>
 <body>
-    <div class="container">
+    <header>
         <div class="icon">🌙</div>
         <h1>Ufuk</h1>
-        <p class="sub">Namaz Vakitleri — Prayer Times</p>
+        <p class="sub">Namaz Vakitleri · Prayer Times</p>
+        <div class="lang-row">
+            <a href="index.html" class="active">TÜRKÇE</a>
+            <a href="index-en.html">ENGLISH</a>
+        </div>
+    </header>
 
-        <div class="links">
-            <a href="gizlilik-politikasi.html">🔒 Gizlilik Politikası <span class="badge">TR</span></a>
-            <a href="privacy-policy.html">🔒 Privacy Policy <span class="badge">EN</span></a>
-            <a href="kullanim-kosullari.html">📜 Kullanım Koşulları <span class="badge">TR</span></a>
-            <a href="terms-of-service.html">📜 Terms of Service <span class="badge">EN</span></a>
+    <main>
+        <div class="features">
+            <h2>Öne Çıkanlar</h2>
+            <div class="feature-row">
+                <span class="tag">🕐 Doğru Vakitler</span>
+                <span class="tag">🧭 Kıble Bulucu</span>
+                <span class="tag">📋 Kaza Takibi</span>
+                <span class="tag">✈️ Seferi Modu</span>
+                <span class="tag">📿 Esmaül Hüsna</span>
+                <span class="tag">📖 Günlük Ayet</span>
+            </div>
         </div>
 
-        <div class="lang-toggle">
-            <a href="#" class="active">TR</a>
-            <a href="index-en.html">EN</a>
+        <div class="card">
+            <h3>🔒 Gizlilik Politikası</h3>
+            <p>Verileriniz cihazınızda kalır. Konum bilgisi asla saklanmaz veya paylaşılmaz.</p>
         </div>
 
-        <footer>© 2026 Ufuk — fatihdisci</footer>
-    </div>
+        <div class="card">
+            <h3>📜 Kullanım Koşulları</h3>
+            <p>Uygulamanın kullanım şartları ve abonelik hakkında detaylı bilgi.</p>
+        </div>
+
+        <div class="store-btn">
+            <a href="#">App Store'da Yakında</a>
+            <p class="soon">iOS 17+ · iPhone</p>
+        </div>
+
+        <div class="legal-links">
+            <a href="gizlilik-politikasi.html">Gizlilik Politikası <span class="badge">TR</span></a>
+            <a href="privacy-policy.html">Privacy Policy <span class="badge">EN</span></a>
+            <a href="kullanim-kosullari.html">Kullanım Koşulları <span class="badge">TR</span></a>
+            <a href="terms-of-service.html">Terms of Service <span class="badge">EN</span></a>
+        </div>
+    </main>
+
+    <footer>
+        <a href="mailto:behavest@proton.me">behavest@proton.me</a> · © 2026 Ufuk
+    </footer>
 </body>
 </html>

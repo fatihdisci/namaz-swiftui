@@ -81,4 +81,18 @@ final class AuthService {
         session = .guest
         Task { try? await PurchaseService.shared.logOut() }
     }
+
+    /// Hesabı siler: yerel Apple kimliğini ve RevenueCat bağlantısını kaldırır.
+    ///
+    /// Not: Bu uygulamanın arka uç sunucusu yoktur; Apple kullanıcı kimliği yalnızca
+    /// cihazda saklanır. Sunucu tarafı bir Sign in with Apple token'ı üretilmediği için
+    /// REST "revoke" çağrısı gerekmez/uygulanamaz — hesabın tüm izleri (yerel kimlik +
+    /// RevenueCat kullanıcı bağlantısı + tüm kullanıcı verisi) cihazdan kaldırılır.
+    /// Kullanıcı verisi temizliği çağıran tarafça (SettingsViewModel.deleteAccount) yapılır.
+    func deleteAccount() async {
+        try? await PurchaseService.shared.logOut()
+        defaults.removeObject(forKey: Key.appleUserID)
+        session = .guest
+        errorMessage = nil
+    }
 }
