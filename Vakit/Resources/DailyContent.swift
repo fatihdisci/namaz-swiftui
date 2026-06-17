@@ -119,37 +119,40 @@ struct EsmaName: Codable, Identifiable, Equatable {
 /// Önce RemoteContentService cache'ini dener; yoksa Bundle'daki gömülü JSON'a düşer.
 /// Tamamen offline çalışır (cache yoksa gömülü JSON kullanılır).
 enum DailyContent {
-    static let verses: [Verse] = load("ayetler")
-    static let hadiths: [Hadith] = load("hadisler")
-    static let duas: [Dua] = load("dualar")
-    static let esma: [EsmaName] = load("esma")
+    @MainActor static let verses: [Verse] = load("ayetler")
+    @MainActor static let hadiths: [Hadith] = load("hadisler")
+    @MainActor static let duas: [Dua] = load("dualar")
+    @MainActor static let esma: [EsmaName] = load("esma")
 
     /// Günün seed'i: yılın günü (1-366).
     private static func dayIndex(for date: Date) -> Int {
         Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 1
     }
 
+    @MainActor
     static func dailyVerse(for date: Date = Date()) -> Verse? {
         verses.isEmpty ? nil : verses[dayIndex(for: date) % verses.count]
     }
 
+    @MainActor
     static func dailyHadith(for date: Date = Date()) -> Hadith? {
         hadiths.isEmpty ? nil : hadiths[dayIndex(for: date) % hadiths.count]
     }
 
+    @MainActor
     static func dailyDua(for date: Date = Date()) -> Dua? {
         duas.isEmpty ? nil : duas[dayIndex(for: date) % duas.count]
     }
 
+    @MainActor
     static func dailyEsma(for date: Date = Date()) -> EsmaName? {
         guard !esma.isEmpty else { return nil }
-
-        // Aynı gün boyunca sabit, günler arasında karışık dağılan seçim.
         let seed = dayIndex(for: date)
         let mixedIndex = (seed &* 37 &+ 17) % esma.count
         return esma[mixedIndex]
     }
 
+    @MainActor
     private static func load<T: Decodable>(_ resource: String) -> [T] {
         let fileName = "\(resource).json"
 
