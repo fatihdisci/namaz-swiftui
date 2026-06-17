@@ -7,18 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13A596E6620E927F8E0BDCE6 /* UfukWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		322CC2C3BD4A436E8DC5584A /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = FED66DFEE5424FF389755875 /* RevenueCat */; };
 		3ECEBAA566C74225835CA9ED /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEB944B591481386752953 /* Adhan */; };
+		C791883C9B522D281C7AC072 /* UfukWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */; };
+		D7D177C9F1A85EEDBB060DAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB925CA7726FC375CD6DA19F /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B447D1BDAD1BFD5DE1E8781D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55B61435A08D4CB58053593C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6F86F2213623A35EAAFE064;
+			remoteInfo = UfukWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8BCB5F9ED7EAD80A7DAAD8CE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				13A596E6620E927F8E0BDCE6 /* UfukWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UfukWidget.swift; sourceTree = "<group>"; };
+		1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UfukWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = UfukWidget.entitlements; sourceTree = "<group>"; };
+		BB925CA7726FC375CD6DA19F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C000000000000000000002 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
 		C3239F2272834908A926EE60 /* Vakit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vakit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4A9B6A946A8659B69514805 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AA6067E82FDAAF8800A81432 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		AA6067E82FDAAF8800A81432 /* Exceptions for "Vakit" folder in "Vakit" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -28,11 +60,40 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		92DFE05AD2B0418FBE6F4AF8 /* Vakit */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (AA6067E82FDAAF8800A81432 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Vakit; sourceTree = "<group>"; };
-		EB9174D72115468DA18B6633 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+		92DFE05AD2B0418FBE6F4AF8 /* Vakit */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AA6067E82FDAAF8800A81432 /* Exceptions for "Vakit" folder in "Vakit" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Vakit;
+			sourceTree = "<group>";
+		};
+		EB9174D72115468DA18B6633 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CBF2A86D5907500C0598EAE1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7D177C9F1A85EEDBB060DAE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC75F44D5BDB47908AB8D6F2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,7 +113,28 @@
 				C000000000000000000001 /* Config */,
 				EB9174D72115468DA18B6633 /* Shared */,
 				DC8C9C2517B94A1688293EEB /* Products */,
+				DA2AC121B466F7F82FE1691E /* Frameworks */,
+				1A8C6092B30D23E8F3F8A70F /* UfukWidget */,
 			);
+			sourceTree = "<group>";
+		};
+		1A8C6092B30D23E8F3F8A70F /* UfukWidget */ = {
+			isa = PBXGroup;
+			children = (
+				08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */,
+				C4A9B6A946A8659B69514805 /* Info.plist */,
+				53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */,
+			);
+			name = UfukWidget;
+			path = UfukWidget;
+			sourceTree = "<group>";
+		};
+		3931F68F4F2F36F0C459C851 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				BB925CA7726FC375CD6DA19F /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		C000000000000000000001 /* Config */ = {
@@ -64,10 +146,19 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		DA2AC121B466F7F82FE1691E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3931F68F4F2F36F0C459C851 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DC8C9C2517B94A1688293EEB /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				C3239F2272834908A926EE60 /* Vakit.app */,
+				1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +166,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D6F86F2213623A35EAAFE064 /* UfukWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91BAD9589DCE1F81E1F943FC /* Build configuration list for PBXNativeTarget "UfukWidget" */;
+			buildPhases = (
+				205B498377D03806BC820DE2 /* Sources */,
+				CBF2A86D5907500C0598EAE1 /* Frameworks */,
+				1E622D0C2ADB7C31714B90DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EB9174D72115468DA18B6633 /* Shared */,
+			);
+			name = UfukWidget;
+			productName = UfukWidget;
+			productReference = 1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		E5E10C3EE6FD4F8498190FEE /* Vakit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00710D7578E54B458420A16E /* Build configuration list for PBXNativeTarget "Vakit" */;
@@ -82,10 +193,12 @@
 				21A6F9ECC618455BA0038C08 /* Sources */,
 				DC75F44D5BDB47908AB8D6F2 /* Frameworks */,
 				51ACFFF9EABC4ED7AE369BCA /* Resources */,
+				8BCB5F9ED7EAD80A7DAAD8CE /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				60E48EA2ACD8800B176962EA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				92DFE05AD2B0418FBE6F4AF8 /* Vakit */,
@@ -143,11 +256,19 @@
 			projectRoot = "";
 			targets = (
 				E5E10C3EE6FD4F8498190FEE /* Vakit */,
+				D6F86F2213623A35EAAFE064 /* UfukWidget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1E622D0C2ADB7C31714B90DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51ACFFF9EABC4ED7AE369BCA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,6 +279,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		205B498377D03806BC820DE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C791883C9B522D281C7AC072 /* UfukWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		21A6F9ECC618455BA0038C08 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -166,6 +295,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		60E48EA2ACD8800B176962EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UfukWidget;
+			target = D6F86F2213623A35EAAFE064 /* UfukWidget */;
+			targetProxy = B447D1BDAD1BFD5DE1E8781D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1FC16D5184A848318E65D37E /* Debug */ = {
@@ -302,6 +440,36 @@
 			};
 			name = Debug;
 		};
+		987770D6632A29FE4344FE59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = UfukWidget/UfukWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 8XPP7Z37GF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = UfukWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
 		E5C7CF0982604265920835C2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
@@ -363,6 +531,35 @@
 			};
 			name = Release;
 		};
+		F7BE98581B5C170CA48E26F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = UfukWidget/UfukWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = 8XPP7Z37GF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = UfukWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -380,6 +577,15 @@
 			buildConfigurations = (
 				1FC16D5184A848318E65D37E /* Debug */,
 				E5C7CF0982604265920835C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		91BAD9589DCE1F81E1F943FC /* Build configuration list for PBXNativeTarget "UfukWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7BE98581B5C170CA48E26F3 /* Release */,
+				987770D6632A29FE4344FE59 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

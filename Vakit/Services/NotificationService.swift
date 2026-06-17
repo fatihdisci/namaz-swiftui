@@ -61,6 +61,8 @@ final class NotificationService {
 
         guard authorized else {
             cancelAll()
+            // Bildirim izni olmasa da Home Screen widget'ı güncel kalsın.
+            WidgetSnapshotWriter.refreshFromCache(language: languageService.currentLanguage)
             return
         }
 
@@ -69,6 +71,18 @@ final class NotificationService {
         for offset in 0..<Self.scheduleDays {
             guard let date = Calendar.current.date(byAdding: .day, value: offset, to: today) else { continue }
             times[date] = await prayerService.getPrayerTimes(city: city, date: date)
+        }
+
+        // Taze vakitlerden Home Screen widget snapshot'ını güncelle.
+        if let todayTimes = times[today] {
+            let tomorrowDate = Calendar.current.date(byAdding: .day, value: 1, to: today)
+            let tomorrowTimes = tomorrowDate.flatMap { times[$0] }
+            WidgetSnapshotWriter.update(
+                city: city,
+                today: todayTimes,
+                tomorrow: tomorrowTimes,
+                language: languageService.currentLanguage
+            )
         }
 
         await scheduleNotifications(for: city, times: times)

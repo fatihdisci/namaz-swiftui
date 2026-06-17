@@ -9,6 +9,8 @@ struct VakitApp: App {
     @State private var authService = AuthService.shared
     @State private var showOnboarding = !StorageService.shared.onboardingDone
 
+    @Environment(\.scenePhase) private var scenePhase
+
     init() {
         PurchaseService.shared.configure()
     }
@@ -36,6 +38,14 @@ struct VakitApp: App {
                     }
                     await purchaseService.refresh()
                     await authService.refreshCredentialState()
+                }
+                .onChange(of: scenePhase) { _, newPhase in
+                    // Foreground'a dönünce Home Screen widget'ını tazele.
+                    if newPhase == .active {
+                        WidgetSnapshotWriter.refreshFromCache(
+                            language: languageService.currentLanguage
+                        )
+                    }
                 }
         }
         .modelContainer(for: [City.self, KazaEntry.self])

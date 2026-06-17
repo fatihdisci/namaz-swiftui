@@ -62,8 +62,16 @@ final class HomeViewModel {
 
         todaysTimes = todayTimes
         tomorrowsTimes = tomorrowTimes
-        hijriDate = "\(todayTimes.hijriDay) \(todayTimes.hijriMonthName) \(todayTimes.hijriYear)"
+        hijriDate = Self.hijriDateText(from: todayTimes)
         tick(date: Date())
+
+        // Home Screen widget snapshot'ını güncelle.
+        WidgetSnapshotWriter.update(
+            city: city,
+            today: todayTimes,
+            tomorrow: tomorrowTimes,
+            language: languageService.currentLanguage
+        )
 
         // Kalan günleri arka planda cache'le (UI'ı bekletme).
         Task { await prayerService.prefetch(city: city) }
@@ -84,6 +92,11 @@ final class HomeViewModel {
 
     func refreshSavedLocations() {
         savedLocations = storage.savedPrayerLocations
+    }
+
+    private static func hijriDateText(from times: PrayerTimes) -> String {
+        let monthName = PrayerTimeService.displayHijriMonthName(times.hijriMonthName)
+        return "\(times.hijriDay) \(monthName) \(times.hijriYear)"
     }
 
     /// Her saniye View'dan (TimelineView) çağrılır: geri sayımı ve sıradaki vakti günceller.
