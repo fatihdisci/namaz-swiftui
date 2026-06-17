@@ -116,8 +116,8 @@ struct EsmaName: Codable, Identifiable, Equatable {
 // MARK: - Yükleyici + günlük seçim
 
 /// Doğrulanmış içerik setleri: ayetler, hadisler, dualar, Esmaül Hüsna.
-/// Bundle'daki JSON dosyalarından okunur; tamamen offline, ağ gerektirmez.
-/// Veri setleri büyütüldüğünde (50 ayet / 50 hadis / 40 dua) sadece JSON değişir.
+/// Önce RemoteContentService cache'ini dener; yoksa Bundle'daki gömülü JSON'a düşer.
+/// Tamamen offline çalışır (cache yoksa gömülü JSON kullanılır).
 enum DailyContent {
     static let verses: [Verse] = load("ayetler")
     static let hadiths: [Hadith] = load("hadisler")
@@ -151,6 +151,14 @@ enum DailyContent {
     }
 
     private static func load<T: Decodable>(_ resource: String) -> [T] {
+        let fileName = "\(resource).json"
+
+        // 1. RemoteContentService cache'ini dene
+        if let cached: [T] = RemoteContentService.shared.cachedContent(fileName) {
+            return cached
+        }
+
+        // 2. Bundle fallback (ilk kurulumda her zaman çalışır)
         guard
             let url = Bundle.main.url(forResource: resource, withExtension: "json"),
             let data = try? Data(contentsOf: url),

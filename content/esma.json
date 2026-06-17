@@ -1,0 +1,794 @@
+[
+  {
+    "id": "e001",
+    "number": 1,
+    "tr": "er-Rahmân",
+    "en": "Ar-Rahman",
+    "meaningTr": "Rahmet eden, herkese merhamet eden",
+    "meaningEn": "The Most Merciful"
+  },
+  {
+    "id": "e002",
+    "number": 2,
+    "tr": "er-Rahîm",
+    "en": "Ar-Rahim",
+    "meaningTr": "Merhametli, ahirette müminlere merhamet eden",
+    "meaningEn": "The Especially Merciful"
+  },
+  {
+    "id": "e003",
+    "number": 3,
+    "tr": "el-Melik",
+    "en": "Al-Malik",
+    "meaningTr": "Her şeyin sahibi, mülkün gerçek sahibi",
+    "meaningEn": "The Sovereign Lord"
+  },
+  {
+    "id": "e004",
+    "number": 4,
+    "tr": "el-Kuddûs",
+    "en": "Al-Quddus",
+    "meaningTr": "Her türlü noksandan uzak, tertemiz",
+    "meaningEn": "The Holy, The Pure"
+  },
+  {
+    "id": "e005",
+    "number": 5,
+    "tr": "es-Selâm",
+    "en": "As-Salam",
+    "meaningTr": "Esenlik kaynağı, her türlü tehlikeden koruyan",
+    "meaningEn": "The Source of Peace"
+  },
+  {
+    "id": "e006",
+    "number": 6,
+    "tr": "el-Mü'min",
+    "en": "Al-Mu'min",
+    "meaningTr": "Güven veren, inananları emin kılan",
+    "meaningEn": "The Giver of Security"
+  },
+  {
+    "id": "e007",
+    "number": 7,
+    "tr": "el-Müheymin",
+    "en": "Al-Muhaymin",
+    "meaningTr": "Gözetip koruyan, her şeyi kuşatan",
+    "meaningEn": "The Guardian, The Protector"
+  },
+  {
+    "id": "e008",
+    "number": 8,
+    "tr": "el-Azîz",
+    "en": "Al-Aziz",
+    "meaningTr": "Güçlü, mutlak üstün, her şeye galip",
+    "meaningEn": "The Almighty"
+  },
+  {
+    "id": "e009",
+    "number": 9,
+    "tr": "el-Cebbâr",
+    "en": "Al-Jabbar",
+    "meaningTr": "Kırılanları onaran, dilediğini zorla yaptıran",
+    "meaningEn": "The Compeller"
+  },
+  {
+    "id": "e010",
+    "number": 10,
+    "tr": "el-Mütekebbir",
+    "en": "Al-Mutakabbir",
+    "meaningTr": "Büyüklük ve azamet sahibi",
+    "meaningEn": "The Majestic"
+  },
+  {
+    "id": "e011",
+    "number": 11,
+    "tr": "el-Hâlık",
+    "en": "Al-Khaliq",
+    "meaningTr": "Yaratan, yoktan var eden",
+    "meaningEn": "The Creator"
+  },
+  {
+    "id": "e012",
+    "number": 12,
+    "tr": "el-Bâri'",
+    "en": "Al-Bari'",
+    "meaningTr": "Her şeyi uyum ve düzen içinde yaratan",
+    "meaningEn": "The Maker"
+  },
+  {
+    "id": "e013",
+    "number": 13,
+    "tr": "el-Musavvir",
+    "en": "Al-Musawwir",
+    "meaningTr": "Her varlığa şekil ve özellik veren",
+    "meaningEn": "The Fashioner"
+  },
+  {
+    "id": "e014",
+    "number": 14,
+    "tr": "el-Ğaffâr",
+    "en": "Al-Ghaffar",
+    "meaningTr": "Çok bağışlayan, günahları örten",
+    "meaningEn": "The All-Forgiving"
+  },
+  {
+    "id": "e015",
+    "number": 15,
+    "tr": "el-Kahhâr",
+    "en": "Al-Qahhar",
+    "meaningTr": "Her şeye üstün gelen, mutlak hâkim",
+    "meaningEn": "The Subduer"
+  },
+  {
+    "id": "e016",
+    "number": 16,
+    "tr": "el-Vehhâb",
+    "en": "Al-Wahhab",
+    "meaningTr": "Karşılıksız bol bol veren",
+    "meaningEn": "The Bestower"
+  },
+  {
+    "id": "e017",
+    "number": 17,
+    "tr": "er-Rezzâk",
+    "en": "Ar-Razzaq",
+    "meaningTr": "Rızık veren, her canlının rızkını yaratan",
+    "meaningEn": "The Provider"
+  },
+  {
+    "id": "e018",
+    "number": 18,
+    "tr": "el-Fettâh",
+    "en": "Al-Fattah",
+    "meaningTr": "Kapıları açan, zorlukları kolaylaştıran",
+    "meaningEn": "The Opener"
+  },
+  {
+    "id": "e019",
+    "number": 19,
+    "tr": "el-Alîm",
+    "en": "Al-Alim",
+    "meaningTr": "Her şeyi bilen, ilmi her şeyi kuşatan",
+    "meaningEn": "The All-Knowing"
+  },
+  {
+    "id": "e020",
+    "number": 20,
+    "tr": "el-Kâbıd",
+    "en": "Al-Qabid",
+    "meaningTr": "Dilediğine rızkı daraltan",
+    "meaningEn": "The Withholder"
+  },
+  {
+    "id": "e021",
+    "number": 21,
+    "tr": "el-Bâsıt",
+    "en": "Al-Basit",
+    "meaningTr": "Dilediğine rızkı genişleten",
+    "meaningEn": "The Extender"
+  },
+  {
+    "id": "e022",
+    "number": 22,
+    "tr": "el-Hâfıd",
+    "en": "Al-Khafid",
+    "meaningTr": "Dilediğini alçaltan",
+    "meaningEn": "The Abaser"
+  },
+  {
+    "id": "e023",
+    "number": 23,
+    "tr": "er-Râfi'",
+    "en": "Ar-Rafi'",
+    "meaningTr": "Dilediğini yükselten",
+    "meaningEn": "The Exalter"
+  },
+  {
+    "id": "e024",
+    "number": 24,
+    "tr": "el-Muizz",
+    "en": "Al-Mu'izz",
+    "meaningTr": "Dilediğini aziz eden, izzet veren",
+    "meaningEn": "The Giver of Honor"
+  },
+  {
+    "id": "e025",
+    "number": 25,
+    "tr": "el-Müzill",
+    "en": "Al-Mudhill",
+    "meaningTr": "Dilediğini zillete düşüren",
+    "meaningEn": "The Abaser"
+  },
+  {
+    "id": "e026",
+    "number": 26,
+    "tr": "es-Semî'",
+    "en": "As-Sami'",
+    "meaningTr": "Her şeyi işiten",
+    "meaningEn": "The All-Hearing"
+  },
+  {
+    "id": "e027",
+    "number": 27,
+    "tr": "el-Basîr",
+    "en": "Al-Basir",
+    "meaningTr": "Her şeyi gören",
+    "meaningEn": "The All-Seeing"
+  },
+  {
+    "id": "e028",
+    "number": 28,
+    "tr": "el-Hakem",
+    "en": "Al-Hakam",
+    "meaningTr": "Hükmeden, son kararı veren",
+    "meaningEn": "The Judge"
+  },
+  {
+    "id": "e029",
+    "number": 29,
+    "tr": "el-Adl",
+    "en": "Al-Adl",
+    "meaningTr": "Adaletli, asla zulmetmeyen",
+    "meaningEn": "The Just"
+  },
+  {
+    "id": "e030",
+    "number": 30,
+    "tr": "el-Latîf",
+    "en": "Al-Latif",
+    "meaningTr": "Lütuf sahibi, en ince işleri bilen",
+    "meaningEn": "The Subtle One"
+  },
+  {
+    "id": "e031",
+    "number": 31,
+    "tr": "el-Habîr",
+    "en": "Al-Khabir",
+    "meaningTr": "Her şeyden haberdar olan",
+    "meaningEn": "The All-Aware"
+  },
+  {
+    "id": "e032",
+    "number": 32,
+    "tr": "el-Halîm",
+    "en": "Al-Halim",
+    "meaningTr": "Cezada acele etmeyen, yumuşak davranan",
+    "meaningEn": "The Forbearing"
+  },
+  {
+    "id": "e033",
+    "number": 33,
+    "tr": "el-Azîm",
+    "en": "Al-Azim",
+    "meaningTr": "Büyük, yüce",
+    "meaningEn": "The Magnificent"
+  },
+  {
+    "id": "e034",
+    "number": 34,
+    "tr": "el-Ğafûr",
+    "en": "Al-Ghafur",
+    "meaningTr": "Çok bağışlayan",
+    "meaningEn": "The All-Forgiving"
+  },
+  {
+    "id": "e035",
+    "number": 35,
+    "tr": "eş-Şekûr",
+    "en": "Ash-Shakur",
+    "meaningTr": "Az amele çok karşılık veren",
+    "meaningEn": "The Appreciative"
+  },
+  {
+    "id": "e036",
+    "number": 36,
+    "tr": "el-Aliyy",
+    "en": "Al-Ali",
+    "meaningTr": "Yüce, üstün",
+    "meaningEn": "The Most High"
+  },
+  {
+    "id": "e037",
+    "number": 37,
+    "tr": "el-Kebîr",
+    "en": "Al-Kabir",
+    "meaningTr": "En büyük",
+    "meaningEn": "The Most Great"
+  },
+  {
+    "id": "e038",
+    "number": 38,
+    "tr": "el-Hafîz",
+    "en": "Al-Hafiz",
+    "meaningTr": "Koruyan, muhafaza eden",
+    "meaningEn": "The Preserver"
+  },
+  {
+    "id": "e039",
+    "number": 39,
+    "tr": "el-Mukît",
+    "en": "Al-Muqit",
+    "meaningTr": "Rızıkları yaratan, güç veren",
+    "meaningEn": "The Sustainer"
+  },
+  {
+    "id": "e040",
+    "number": 40,
+    "tr": "el-Hasîb",
+    "en": "Al-Hasib",
+    "meaningTr": "Hesap gören, kullarına yeten",
+    "meaningEn": "The Reckoner"
+  },
+  {
+    "id": "e041",
+    "number": 41,
+    "tr": "el-Celîl",
+    "en": "Al-Jalil",
+    "meaningTr": "Celal ve azamet sahibi",
+    "meaningEn": "The Majestic"
+  },
+  {
+    "id": "e042",
+    "number": 42,
+    "tr": "el-Kerîm",
+    "en": "Al-Karim",
+    "meaningTr": "Cömert, kerem sahibi",
+    "meaningEn": "The Generous"
+  },
+  {
+    "id": "e043",
+    "number": 43,
+    "tr": "er-Rakîb",
+    "en": "Ar-Raqib",
+    "meaningTr": "Gözetleyen, kontrol eden",
+    "meaningEn": "The Watchful"
+  },
+  {
+    "id": "e044",
+    "number": 44,
+    "tr": "el-Mucîb",
+    "en": "Al-Mujib",
+    "meaningTr": "Dualara cevap veren",
+    "meaningEn": "The Responsive"
+  },
+  {
+    "id": "e045",
+    "number": 45,
+    "tr": "el-Vâsi'",
+    "en": "Al-Wasi'",
+    "meaningTr": "Rahmeti ve ilmi her şeyi kuşatan",
+    "meaningEn": "The All-Encompassing"
+  },
+  {
+    "id": "e046",
+    "number": 46,
+    "tr": "el-Hakîm",
+    "en": "Al-Hakim",
+    "meaningTr": "Her işi hikmetli olan",
+    "meaningEn": "The Wise"
+  },
+  {
+    "id": "e047",
+    "number": 47,
+    "tr": "el-Vedûd",
+    "en": "Al-Wadud",
+    "meaningTr": "Seven, sevilmeye en layık olan",
+    "meaningEn": "The Loving"
+  },
+  {
+    "id": "e048",
+    "number": 48,
+    "tr": "el-Mecîd",
+    "en": "Al-Majid",
+    "meaningTr": "Şanı yüce, lütfu bol",
+    "meaningEn": "The Glorious"
+  },
+  {
+    "id": "e049",
+    "number": 49,
+    "tr": "el-Bâis",
+    "en": "Al-Ba'ith",
+    "meaningTr": "Ölüleri dirilten",
+    "meaningEn": "The Resurrector"
+  },
+  {
+    "id": "e050",
+    "number": 50,
+    "tr": "eş-Şehîd",
+    "en": "Ash-Shahid",
+    "meaningTr": "Her şeye şahit olan",
+    "meaningEn": "The Witness"
+  },
+  {
+    "id": "e051",
+    "number": 51,
+    "tr": "el-Hakk",
+    "en": "Al-Haqq",
+    "meaningTr": "Varlığı kesin, mutlak hakikat",
+    "meaningEn": "The Truth"
+  },
+  {
+    "id": "e052",
+    "number": 52,
+    "tr": "el-Vekîl",
+    "en": "Al-Wakil",
+    "meaningTr": "Güvenilip dayanılacak tek varlık",
+    "meaningEn": "The Trustee"
+  },
+  {
+    "id": "e053",
+    "number": 53,
+    "tr": "el-Kaviyy",
+    "en": "Al-Qawiyy",
+    "meaningTr": "Kuvvetli, gücü her şeye yeten",
+    "meaningEn": "The Strong"
+  },
+  {
+    "id": "e054",
+    "number": 54,
+    "tr": "el-Metîn",
+    "en": "Al-Matin",
+    "meaningTr": "Sağlam, metanetli",
+    "meaningEn": "The Firm"
+  },
+  {
+    "id": "e055",
+    "number": 55,
+    "tr": "el-Veliyy",
+    "en": "Al-Waliyy",
+    "meaningTr": "Dost, müminlerin yardımcısı",
+    "meaningEn": "The Protecting Friend"
+  },
+  {
+    "id": "e056",
+    "number": 56,
+    "tr": "el-Hamîd",
+    "en": "Al-Hamid",
+    "meaningTr": "Bütün övgülerin sahibi",
+    "meaningEn": "The Praiseworthy"
+  },
+  {
+    "id": "e057",
+    "number": 57,
+    "tr": "el-Muhsî",
+    "en": "Al-Muhsi",
+    "meaningTr": "Her şeyi sayan, her şeyin hesabını tutan",
+    "meaningEn": "The Reckoner"
+  },
+  {
+    "id": "e058",
+    "number": 58,
+    "tr": "el-Mübdi'",
+    "en": "Al-Mubdi'",
+    "meaningTr": "Başlangıçta yaratan",
+    "meaningEn": "The Originator"
+  },
+  {
+    "id": "e059",
+    "number": 59,
+    "tr": "el-Muîd",
+    "en": "Al-Mu'id",
+    "meaningTr": "Yeniden dirilten",
+    "meaningEn": "The Restorer"
+  },
+  {
+    "id": "e060",
+    "number": 60,
+    "tr": "el-Muhyî",
+    "en": "Al-Muhyi",
+    "meaningTr": "Can veren, dirilten",
+    "meaningEn": "The Giver of Life"
+  },
+  {
+    "id": "e061",
+    "number": 61,
+    "tr": "el-Mümît",
+    "en": "Al-Mumit",
+    "meaningTr": "Ölümü yaratan",
+    "meaningEn": "The Taker of Life"
+  },
+  {
+    "id": "e062",
+    "number": 62,
+    "tr": "el-Hayy",
+    "en": "Al-Hayy",
+    "meaningTr": "Diri, ebedi hayat sahibi",
+    "meaningEn": "The Ever-Living"
+  },
+  {
+    "id": "e063",
+    "number": 63,
+    "tr": "el-Kayyûm",
+    "en": "Al-Qayyum",
+    "meaningTr": "Kendi başına var olan, her şeyi ayakta tutan",
+    "meaningEn": "The Self-Subsisting"
+  },
+  {
+    "id": "e064",
+    "number": 64,
+    "tr": "el-Vâcid",
+    "en": "Al-Wajid",
+    "meaningTr": "Dilediğini bulan, istediğine sahip olan",
+    "meaningEn": "The Finder"
+  },
+  {
+    "id": "e065",
+    "number": 65,
+    "tr": "el-Mâcid",
+    "en": "Al-Majid",
+    "meaningTr": "Şeref ve cömertlik sahibi",
+    "meaningEn": "The Illustrious"
+  },
+  {
+    "id": "e066",
+    "number": 66,
+    "tr": "el-Vâhid",
+    "en": "Al-Wahid",
+    "meaningTr": "Bir, tek",
+    "meaningEn": "The One"
+  },
+  {
+    "id": "e067",
+    "number": 67,
+    "tr": "el-Ahad",
+    "en": "Al-Ahad",
+    "meaningTr": "Tek, eşi benzeri olmayan",
+    "meaningEn": "The Unique"
+  },
+  {
+    "id": "e068",
+    "number": 68,
+    "tr": "es-Samed",
+    "en": "As-Samad",
+    "meaningTr": "Hiçbir şeye ihtiyacı olmayan, her şeyin muhtaç olduğu",
+    "meaningEn": "The Eternal"
+  },
+  {
+    "id": "e069",
+    "number": 69,
+    "tr": "el-Kâdir",
+    "en": "Al-Qadir",
+    "meaningTr": "Her şeye gücü yeten",
+    "meaningEn": "The Capable"
+  },
+  {
+    "id": "e070",
+    "number": 70,
+    "tr": "el-Muktedir",
+    "en": "Al-Muqtadir",
+    "meaningTr": "Tam bir kudret sahibi",
+    "meaningEn": "The Omnipotent"
+  },
+  {
+    "id": "e071",
+    "number": 71,
+    "tr": "el-Mukaddim",
+    "en": "Al-Muqaddim",
+    "meaningTr": "Dilediğini öne alan",
+    "meaningEn": "The Expediter"
+  },
+  {
+    "id": "e072",
+    "number": 72,
+    "tr": "el-Muahhir",
+    "en": "Al-Mu'akhkhir",
+    "meaningTr": "Dilediğini geri bırakan",
+    "meaningEn": "The Delayer"
+  },
+  {
+    "id": "e073",
+    "number": 73,
+    "tr": "el-Evvel",
+    "en": "Al-Awwal",
+    "meaningTr": "Varlığının başlangıcı olmayan",
+    "meaningEn": "The First"
+  },
+  {
+    "id": "e074",
+    "number": 74,
+    "tr": "el-Âhir",
+    "en": "Al-Akhir",
+    "meaningTr": "Varlığının sonu olmayan",
+    "meaningEn": "The Last"
+  },
+  {
+    "id": "e075",
+    "number": 75,
+    "tr": "ez-Zâhir",
+    "en": "Az-Zahir",
+    "meaningTr": "Varlığı açık, apaçık olan",
+    "meaningEn": "The Manifest"
+  },
+  {
+    "id": "e076",
+    "number": 76,
+    "tr": "el-Bâtın",
+    "en": "Al-Batin",
+    "meaningTr": "Zatı gizli olan",
+    "meaningEn": "The Hidden"
+  },
+  {
+    "id": "e077",
+    "number": 77,
+    "tr": "el-Vâlî",
+    "en": "Al-Wali",
+    "meaningTr": "Her şeyi yöneten",
+    "meaningEn": "The Governor"
+  },
+  {
+    "id": "e078",
+    "number": 78,
+    "tr": "el-Müteâlî",
+    "en": "Al-Muta'ali",
+    "meaningTr": "Yüceler yücesi",
+    "meaningEn": "The Most Exalted"
+  },
+  {
+    "id": "e079",
+    "number": 79,
+    "tr": "el-Berr",
+    "en": "Al-Barr",
+    "meaningTr": "İyilik ve ihsan sahibi",
+    "meaningEn": "The Source of Goodness"
+  },
+  {
+    "id": "e080",
+    "number": 80,
+    "tr": "et-Tevvâb",
+    "en": "At-Tawwab",
+    "meaningTr": "Tövbeleri kabul eden",
+    "meaningEn": "The Acceptor of Repentance"
+  },
+  {
+    "id": "e081",
+    "number": 81,
+    "tr": "el-Müntekım",
+    "en": "Al-Muntaqim",
+    "meaningTr": "Suçluları cezalandıran",
+    "meaningEn": "The Avenger"
+  },
+  {
+    "id": "e082",
+    "number": 82,
+    "tr": "el-Afüvv",
+    "en": "Al-Afuw",
+    "meaningTr": "Çok affeden",
+    "meaningEn": "The Pardoner"
+  },
+  {
+    "id": "e083",
+    "number": 83,
+    "tr": "er-Raûf",
+    "en": "Ar-Ra'uf",
+    "meaningTr": "Çok şefkatli",
+    "meaningEn": "The Kind"
+  },
+  {
+    "id": "e084",
+    "number": 84,
+    "tr": "Mâlikü'l-Mülk",
+    "en": "Malik al-Mulk",
+    "meaningTr": "Mülkün gerçek sahibi",
+    "meaningEn": "Master of the Kingdom"
+  },
+  {
+    "id": "e085",
+    "number": 85,
+    "tr": "Zü'l-Celâli ve'l-İkrâm",
+    "en": "Dhul-Jalali wal-Ikram",
+    "meaningTr": "Celal ve ikram sahibi",
+    "meaningEn": "Lord of Majesty and Honor"
+  },
+  {
+    "id": "e086",
+    "number": 86,
+    "tr": "el-Muksit",
+    "en": "Al-Muqsit",
+    "meaningTr": "Adaletle hükmeden",
+    "meaningEn": "The Equitable"
+  },
+  {
+    "id": "e087",
+    "number": 87,
+    "tr": "el-Câmi'",
+    "en": "Al-Jami'",
+    "meaningTr": "Her şeyi toplayan",
+    "meaningEn": "The Gatherer"
+  },
+  {
+    "id": "e088",
+    "number": 88,
+    "tr": "el-Ğaniyy",
+    "en": "Al-Ghaniyy",
+    "meaningTr": "Zengin, hiçbir şeye ihtiyacı olmayan",
+    "meaningEn": "The Self-Sufficient"
+  },
+  {
+    "id": "e089",
+    "number": 89,
+    "tr": "el-Muğnî",
+    "en": "Al-Mughni",
+    "meaningTr": "Dilediğini zengin eden",
+    "meaningEn": "The Enricher"
+  },
+  {
+    "id": "e090",
+    "number": 90,
+    "tr": "el-Mâni'",
+    "en": "Al-Mani'",
+    "meaningTr": "Dilediğine engel olan",
+    "meaningEn": "The Withholder"
+  },
+  {
+    "id": "e091",
+    "number": 91,
+    "tr": "ed-Dârr",
+    "en": "Ad-Darr",
+    "meaningTr": "Elem ve zarar veren",
+    "meaningEn": "The Distressor"
+  },
+  {
+    "id": "e092",
+    "number": 92,
+    "tr": "en-Nâfi'",
+    "en": "An-Nafi'",
+    "meaningTr": "Fayda veren",
+    "meaningEn": "The Benefactor"
+  },
+  {
+    "id": "e093",
+    "number": 93,
+    "tr": "en-Nûr",
+    "en": "An-Nur",
+    "meaningTr": "Alemleri nurlandıran",
+    "meaningEn": "The Light"
+  },
+  {
+    "id": "e094",
+    "number": 94,
+    "tr": "el-Hâdî",
+    "en": "Al-Hadi",
+    "meaningTr": "Doğru yola ileten",
+    "meaningEn": "The Guide"
+  },
+  {
+    "id": "e095",
+    "number": 95,
+    "tr": "el-Bedî'",
+    "en": "Al-Badi'",
+    "meaningTr": "Eşsiz yaratan",
+    "meaningEn": "The Originator"
+  },
+  {
+    "id": "e096",
+    "number": 96,
+    "tr": "el-Bâkî",
+    "en": "Al-Baqi",
+    "meaningTr": "Varlığı sonsuz olan",
+    "meaningEn": "The Everlasting"
+  },
+  {
+    "id": "e097",
+    "number": 97,
+    "tr": "el-Vâris",
+    "en": "Al-Warith",
+    "meaningTr": "Her şeyin asıl varisi",
+    "meaningEn": "The Inheritor"
+  },
+  {
+    "id": "e098",
+    "number": 98,
+    "tr": "er-Reşîd",
+    "en": "Ar-Rashid",
+    "meaningTr": "Doğru yolu gösteren, isabetli karar verdiren",
+    "meaningEn": "The Guide to the Right Path"
+  },
+  {
+    "id": "e099",
+    "number": 99,
+    "tr": "es-Sabûr",
+    "en": "As-Sabur",
+    "meaningTr": "Çok sabırlı, acele etmeyen",
+    "meaningEn": "The Patient"
+  }
+]

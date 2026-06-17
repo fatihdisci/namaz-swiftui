@@ -50,7 +50,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AA6067E82FDAAF8800A81432 /* Exceptions for "Vakit" folder in "Vakit" target */ = {
+		AA6067E82FDAAF8800A81432 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -60,29 +60,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		92DFE05AD2B0418FBE6F4AF8 /* Vakit */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				AA6067E82FDAAF8800A81432 /* Exceptions for "Vakit" folder in "Vakit" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Vakit;
-			sourceTree = "<group>";
-		};
-		EB9174D72115468DA18B6633 /* Shared */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
+		92DFE05AD2B0418FBE6F4AF8 /* Vakit */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (AA6067E82FDAAF8800A81432 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Vakit; sourceTree = "<group>"; };
+		EB9174D72115468DA18B6633 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +104,6 @@
 				C4A9B6A946A8659B69514805 /* Info.plist */,
 				53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */,
 			);
-			name = UfukWidget;
 			path = UfukWidget;
 			sourceTree = "<group>";
 		};

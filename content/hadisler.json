@@ -1,0 +1,504 @@
+[
+  {
+    "id": "h001",
+    "tema": "niyet",
+    "metin_tr": "Ameller niyetlere göredir. Herkese niyet ettiği şey vardır.",
+    "metin_en": "Actions are judged by intentions, and every person will get what he intended.",
+    "kaynak": "Buhârî, Bed'ü'l-Vahy 1; Müslim, İmarat 155",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:1",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h002",
+    "tema": "din",
+    "metin_tr": "Din nasihattir (samimiyettir).",
+    "metin_en": "The religion is sincerity.",
+    "kaynak": "Müslim, Îmân 95",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:181",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h003",
+    "tema": "merhamet",
+    "metin_tr": "İnsanlara merhamet etmeyene Allah da merhamet etmez.",
+    "metin_en": "He who does not show mercy to people, Allah will not show mercy to him.",
+    "kaynak": "Buhârî, Tevhîd 2; Müslim, Fedâil 66",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:7376",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h004",
+    "tema": "kolaylik",
+    "metin_tr": "Kolaylaştırın, zorlaştırmayın; müjdeleyin, nefret ettirmeyin.",
+    "metin_en": "Make things easy and do not make them difficult, and give good tidings and do not make people turn away.",
+    "kaynak": "Buhârî, İlim 11; Müslim, Cihâd 6",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:69",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h005",
+    "tema": "haya",
+    "metin_tr": "Utanmadıktan sonra dilediğini yap!",
+    "metin_en": "If you feel no shame, then do as you wish.",
+    "kaynak": "Buhârî, Enbiyâ 54",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:3483",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h006",
+    "tema": "hayir",
+    "metin_tr": "Hayra vesile olan, hayrı yapan gibidir.",
+    "metin_en": "One who guides to something good has a reward like that of its doer.",
+    "kaynak": "Tirmizî, İlim 14; Müslim, İmâre 133",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:2671",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h007",
+    "tema": "tecrube",
+    "metin_tr": "Mümin, bir delikten iki defa sokulmaz.",
+    "metin_en": "A believer is not stung from the same hole twice.",
+    "kaynak": "Buhârî, Edeb 83; Müslim, Zühd 63",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6133",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h008",
+    "tema": "ahlak",
+    "metin_tr": "Nerede olursan ol Allah'tan kork; kötülüğün arkasından bir iyilik yap ki onu yok etsin. İnsanlara güzel ahlakla davran.",
+    "metin_en": "Fear Allah wherever you are, follow up a bad deed with a good deed which will wipe it out, and behave well towards people.",
+    "kaynak": "Tirmizî, Birr 55",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1987",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h009",
+    "tema": "iman",
+    "metin_tr": "İman yetmiş küsur şubedir. En üstünü 'Lâ ilâhe illallah' demek, en düşüğü yoldan eziyet veren şeyi kaldırmaktır.",
+    "metin_en": "Faith has over seventy branches. The most excellent is 'La ilaha illallah', and the humblest is the removal of a harmful object from the road.",
+    "kaynak": "Buhârî, Îmân 3; Müslim, Îmân 57",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:682",
+    "dogrulandiMi": true,
+    "not": "Haya ifadesi aynı rivayetin farklı kısmıdır; metin sadeleştirildi."
+  },
+  {
+    "id": "h010",
+    "tema": "emir_bil_maruf",
+    "metin_tr": "Sizden kim bir kötülük görürse onu eliyle düzeltsin; gücü yetmezse diliyle, ona da gücü yetmezse kalbiyle buğz etsin. Bu imanın en zayıfıdır.",
+    "metin_en": "Whoever among you sees an evil, let him change it with his hand; if he cannot, then with his tongue; if he cannot, then with his heart, and that is the weakest of faith.",
+    "kaynak": "Müslim, Îmân 78",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:49a",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h011",
+    "tema": "adalet",
+    "metin_tr": "Zarar vermek ve zarara zararla karşılık vermek yoktur.",
+    "metin_en": "There should be neither harming nor reciprocating harm.",
+    "kaynak": "İbn Mâce, Ahkâm 17",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/ibnmajah:2340",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h012",
+    "tema": "kardeslik",
+    "metin_tr": "Sizden biriniz kendisi için istediğini din kardeşi için de istemedikçe gerçek anlamda iman etmiş olamaz.",
+    "metin_en": "None of you will believe until he loves for his brother what he loves for himself.",
+    "kaynak": "Buhârî, Îmân 7; Müslim, Îmân 71",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:236",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h013",
+    "tema": "kardeslik",
+    "metin_tr": "Müslüman müslümanın kardeşidir. Ona zulmetmez, onu düşmana teslim etmez.",
+    "metin_en": "A Muslim is a brother of another Muslim, so he should not oppress him, nor should he hand him over to an oppressor.",
+    "kaynak": "Buhârî, Mezâlim 3; Müslim, Birr 58",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:2442",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h014",
+    "tema": "iman",
+    "metin_tr": "İman etmedikçe cennete giremezsiniz, birbirinizi sevmedikçe de iman etmiş olmazsınız.",
+    "metin_en": "You will not enter Paradise until you believe, and you will not believe until you love one another.",
+    "kaynak": "Müslim, Îmân 93; Tirmizî, Sıfâtu'l-Kıyâme 56",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:2688",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h015",
+    "tema": "ahlak",
+    "metin_tr": "Müslüman, dilinden ve elinden insanların güvende olduğu kimsedir.",
+    "metin_en": "A Muslim is one from whose tongue and hand people are safe.",
+    "kaynak": "Tirmizî, Îmân 12; Nesâî, Îmân 8",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:2627",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h016",
+    "tema": "kardeslik",
+    "metin_tr": "Birbirinize kin beslemeyin, birbirinize haset etmeyin, birbirinize sırt çevirmeyin. Ey Allah'ın kulları, kardeş olun!",
+    "metin_en": "Do not hate one another, do not envy one another, do not turn your backs on one another, and be, O servants of Allah, brothers!",
+    "kaynak": "Buhârî, Edeb 57; Müslim, Birr 23",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6065",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h017",
+    "tema": "dogruluk",
+    "metin_tr": "Şüphesiz doğruluk iyiliğe, iyilik de cennete götürür.",
+    "metin_en": "Truthfulness leads to righteousness, and righteousness leads to Paradise.",
+    "kaynak": "Buhârî, Edeb 69; Müslim, Birr 103",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6094",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h018",
+    "tema": "aile",
+    "metin_tr": "Allah'ın rızası anne babanın rızasında, Allah'ın öfkesi de anne babanın öfkesindedir.",
+    "metin_en": "The pleasure of the Lord is in the pleasure of the parents, and the displeasure of the Lord is in the displeasure of the parents.",
+    "kaynak": "Tirmizî, Birr 3",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:1899",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h019",
+    "tema": "aile",
+    "metin_tr": "Sizin en hayırlınız, ailesine karşı en iyi davrananınızdır.",
+    "metin_en": "The best of you is the one who is best to his wife.",
+    "kaynak": "Tirmizî, Radâ' 11; İbn Mâce, Nikâh 50",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:3895",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h020",
+    "tema": "merhamet",
+    "metin_tr": "Küçüklerimize merhamet etmeyen, büyüklerimizin hakkını tanımayan bizden değildir.",
+    "metin_en": "He is not one of us who does not show mercy to our young ones and respect the rights of our old ones.",
+    "kaynak": "Tirmizî, Birr 15; Ebû Dâvûd, Edeb 66",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:1919",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h021",
+    "tema": "soz",
+    "metin_tr": "Allah'a ve ahiret gününe iman eden kimse ya hayır söylesin ya da sussun.",
+    "metin_en": "He who believes in Allah and the Last Day must either speak good or remain silent.",
+    "kaynak": "Buhârî, Edeb 31; Müslim, Îmân 74",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:1510",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h022",
+    "tema": "komsu",
+    "metin_tr": "Cebrail bana komşu hakkında o kadar çok tavsiyede bulundu ki, komşuyu komşuya mirasçı kılacak zannettim.",
+    "metin_en": "Gabriel kept recommending treating neighbors with kindness until I thought he would assign them a share of inheritance.",
+    "kaynak": "Buhârî, Edeb 28; Müslim, Birr 140",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:303",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h023",
+    "tema": "adalet",
+    "metin_tr": "İşçiye ücretini, alnının teri kurumadan veriniz.",
+    "metin_en": "Give the worker his wages before his sweat dries.",
+    "kaynak": "İbn Mâce, Ruhûn 4",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/ibnmajah:2443",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h024",
+    "tema": "sadaka",
+    "metin_tr": "Bir müslümanın diktiği ağaçtan veya ektiği ekinden insan, hayvan veya kuşun yediği her şey onun için sadakadır.",
+    "metin_en": "There is none amongst the Muslims who plants a tree or sows seeds, and then a bird, or a person or an animal eats from it, but is regarded as a charitable gift for him.",
+    "kaynak": "Buhârî, Müzâra'ah 1; Müslim, Müsâkât 7",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:2320",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h025",
+    "tema": "kalp",
+    "metin_tr": "Bedende bir et parçası vardır; o sağlıklı olduğunda bütün beden sağlıklı olur, bozulduğunda ise bütün beden bozulur. O, kalptir.",
+    "metin_en": "Beware, in the body there is a piece of flesh; if it is sound, the whole body is sound, and if it is corrupt, the whole body is corrupt, and behold, it is the heart.",
+    "kaynak": "Buhârî, Îmân 39; Müslim, Müsâkât 107",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:52",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h026",
+    "tema": "ofke",
+    "metin_tr": "Öfkelenme!",
+    "metin_en": "Do not become angry.",
+    "kaynak": "Buhârî, Edeb 76",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6116",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h027",
+    "tema": "haya",
+    "metin_tr": "Haya, imandan bir şubedir.",
+    "metin_en": "Shyness is a branch of faith.",
+    "kaynak": "Buhârî, Îmân 9; Müslim, Îmân 57",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:9",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h028",
+    "tema": "haya",
+    "metin_tr": "Haya ancak hayır getirir.",
+    "metin_en": "Shyness does not bring anything except good.",
+    "kaynak": "Buhârî, Edeb 77; Müslim, Îmân 60",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:681",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h029",
+    "tema": "temizlik",
+    "metin_tr": "Temizlik imanın yarısıdır.",
+    "metin_en": "Purity is half of faith.",
+    "kaynak": "Müslim, Tahâret 1",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:223",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h030",
+    "tema": "dogruluk",
+    "metin_tr": "Bizi aldatan bizden değildir.",
+    "metin_en": "Whoever cheats us is not one of us.",
+    "kaynak": "Müslim, Îmân 164",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:101a",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h031",
+    "tema": "kuran",
+    "metin_tr": "Sizin en hayırlınız, Kur'an'ı öğrenen ve öğretendir.",
+    "metin_en": "The best among you are those who learn the Qur'an and teach it.",
+    "kaynak": "Buhârî, Fezâilü'l-Kur'ân 21",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:5027",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h032",
+    "tema": "guzellik",
+    "metin_tr": "Şüphesiz Allah güzeldir, güzelliği sever.",
+    "metin_en": "Verily, Allah is beautiful and He loves beauty.",
+    "kaynak": "Müslim, Îmân 147",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:91c",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h033",
+    "tema": "soz",
+    "metin_tr": "Susan kurtuldu.",
+    "metin_en": "He who keeps silent is saved.",
+    "kaynak": "Tirmizî, Kıyâme 50",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:2501",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h034",
+    "tema": "ibadet",
+    "metin_tr": "Amellerin Allah'a en sevimli olanı, az da olsa devamlı olanıdır.",
+    "metin_en": "The most beloved deeds to Allah are those that are most constant, even if they are few.",
+    "kaynak": "Buhârî, Rikâk 18; Müslim, Müsâfirîn 218",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6464",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h035",
+    "tema": "sünnet",
+    "metin_tr": "Her bidat dalalettir (sapıklıktır).",
+    "metin_en": "Every innovation is a misguidance.",
+    "kaynak": "Müslim, Cuma 43",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:867a",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h036",
+    "tema": "sadaka",
+    "metin_tr": "Veren el, alan elden üstündür.",
+    "metin_en": "The upper hand is better than the lower hand.",
+    "kaynak": "Buhârî, Zekât 18; Müslim, Zekât 94",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:1429",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h037",
+    "tema": "sabir",
+    "metin_tr": "Sabır, (müminin yolunu aydınlatan) bir ışıktır.",
+    "metin_en": "Patience is a bright light.",
+    "kaynak": "Müslim, Tahâret 1",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:223",
+    "dogrulandiMi": true,
+    "not": "Müslim 223'teki uzun hadisin bir parçasıdır; aynı rivayet #29 ile aynı kaynakta yer alır."
+  },
+  {
+    "id": "h038",
+    "tema": "selam",
+    "metin_tr": "Yemek yedirin, selamı aranızda yayın.",
+    "metin_en": "Feed people, and spread salam.",
+    "kaynak": "Tirmizî, Et'ime 45; İbn Mâce, Et'ime 1",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:1855",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h039",
+    "tema": "niyet",
+    "metin_tr": "Allah sizin suretlerinize ve mallarınıza bakmaz; fakat O sizin kalplerinize ve amellerinize bakar.",
+    "metin_en": "Allah does not look at your appearance or your wealth, but He looks at your hearts and your deeds.",
+    "kaynak": "Müslim, Birr 33",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:7",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h040",
+    "tema": "istigfar",
+    "metin_tr": "Şüphesiz kalbime bir gaflet perdesi iner de bu yüzden günde yüz defa Allah'tan bağışlanma dilerim.",
+    "metin_en": "Sometimes I perceive a veil over my heart, and I supplicate Allah for forgiveness a hundred times in a day.",
+    "kaynak": "Müslim, Zikir 41",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:1869",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h041",
+    "tema": "ilim",
+    "metin_tr": "Allah kimin için hayır dilerse onu dinde derin bir kavrayış sahibi kılar.",
+    "metin_en": "When Allah wishes good for someone, He bestows upon him the understanding of Deen.",
+    "kaynak": "Buhârî, İlim 10",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:1376",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h042",
+    "tema": "ilim",
+    "metin_tr": "İlim aramak için bir yola koyulan kimseye Allah cennet yolunu kolaylaştırır.",
+    "metin_en": "He who follows a path in quest of knowledge, Allah will make the path of Jannah easy to him.",
+    "kaynak": "Tirmizî, İlim 2",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:1385",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h043",
+    "tema": "kuran",
+    "metin_tr": "Kur'an okuyun! Çünkü o kıyamet günü kendisini okuyanlara şefaatçi olarak gelecektir.",
+    "metin_en": "Read the Qur'an, for it will come as an intercessor for its reciters on the Day of Resurrection.",
+    "kaynak": "Müslim, Müsâfirîn 252",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:991",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h044",
+    "tema": "dua",
+    "metin_tr": "Dua ibadetin ta kendisidir.",
+    "metin_en": "Supplication is the worship itself.",
+    "kaynak": "Tirmizî, Deavât 1; Ebû Dâvûd, Vitir 23",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:2969",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h045",
+    "tema": "sabir",
+    "metin_tr": "Müminin durumu ne şayandır! Eğer bir genişliğe kavuşursa şükreder, bu onun için hayır olur; darlığa uğrarsa sabreder, bu da onun için hayır olur.",
+    "metin_en": "How wonderful is the case of a believer! If prosperity attends him, he expresses gratitude and that is good for him; and if adversity befalls him, he endures it patiently and that is better for him.",
+    "kaynak": "Müslim, Zühd 64",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2999",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h046",
+    "tema": "sadaka",
+    "metin_tr": "Din kardeşine tebessüm etmen senin için bir sadakadır.",
+    "metin_en": "Your smiling in the face of your brother is charity for you.",
+    "kaynak": "Tirmizî, Birr 36",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1956",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h047",
+    "tema": "kardeslik",
+    "metin_tr": "Müminler birbirlerini sevmekte, birbirlerine merhamet ve şefkat göstermekte tek bir beden gibidirler. Bir uzuv rahatsız olduğunda bütün beden uykusuzluk ve ateşle ona ortak olur.",
+    "metin_en": "The believers in their mutual kindness, compassion and sympathy are just like one body. When one of the limbs suffers, the whole body responds to it with wakefulness and fever.",
+    "kaynak": "Buhârî, Edeb 27; Müslim, Birr 66",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/riyadussalihin:224",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h048",
+    "tema": "ahlak",
+    "metin_tr": "Her kim cehennemden uzaklaştırılıp cennete girmeyi isterse, ölümünü Allah'a ve ahirete inanmış olarak karşılasın ve insanlara kendisine davranılmasını istediği gibi davransın.",
+    "metin_en": "Whoever would love to be delivered from Hellfire and admitted into Paradise, let him meet his end with faith in Allah and the Last Day, and let him treat people as he would love to be treated.",
+    "kaynak": "Müslim, İmâre 46",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:1844",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h049",
+    "tema": "tevbe",
+    "metin_tr": "Her insan hata eder. Hata işleyenlerin en hayırlıları ise tövbe edenlerdir.",
+    "metin_en": "Every son of Adam commits sin, and the best of those who commit sin are those who repent.",
+    "kaynak": "Tirmizî, Kıyâme 49; İbn Mâce, Zühd 30",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:2499",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h050",
+    "tema": "korku_ve_umit",
+    "metin_tr": "İki göz vardır ki cehennem ateşi onlara dokunmaz: Allah korkusundan ağlayan göz ve Allah yolunda nöbet tutarak geceleyen göz.",
+    "metin_en": "Two eyes will not be touched by the Fire: an eye that weeps from the fear of Allah, and an eye that spends the night guarding in the cause of Allah.",
+    "kaynak": "Tirmizî, Fedâilü'l-Cihâd 12",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1639",
+    "dogrulandiMi": true
+  }
+]

@@ -38,6 +38,7 @@ struct VakitApp: App {
                     }
                     await purchaseService.refresh()
                     await authService.refreshCredentialState()
+                    await RemoteContentService.shared.refreshIfNeeded()
                 }
                 .onChange(of: scenePhase) { _, newPhase in
                     // Foreground'a dönünce Home Screen widget'ını tazele.
