@@ -8,10 +8,6 @@ final class PurchaseService {
     static let shared = PurchaseService()
 
     static let entitlementIdentifier = "pro"
-    private static let entitlementIdentifierAliases = [
-        entitlementIdentifier,
-        "Ufuk-Namaz Vakitleri Pro"
-    ]
     enum ProductID: String, CaseIterable {
         case monthly = "vakit_pro_monthly"
         case yearly = "vakit_pro_yearly"
@@ -133,9 +129,7 @@ final class PurchaseService {
 
     private func updateAccess(from customerInfo: CustomerInfo) {
         entitlementHasProAccess =
-            Self.entitlementIdentifierAliases.contains { identifier in
-                customerInfo.entitlements[identifier]?.isActive == true
-            }
+            customerInfo.entitlements[Self.entitlementIdentifier]?.isActive == true
     }
 
     private func observeCustomerInfo() {

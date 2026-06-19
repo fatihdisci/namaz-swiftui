@@ -241,12 +241,12 @@ struct SettingsView: View {
     // MARK: - Yasal
 
     private var legalSection: some View {
-        section(titleKey: "settings.legal") {
+        section(titleKey: "legal.title") {
             Link(destination: legalURL(for: lang.currentLanguage == "tr"
                                        ? "gizlilik-politikasi.html"
                                        : "privacy-policy.html")) {
                 HStack {
-                    rowLabel(icon: "lock.shield", titleKey: "settings.privacyPolicy")
+                    rowLabel(icon: "lock.shield", titleKey: "legal.privacy")
                     Spacer()
                     Image(systemName: "arrow.up.forward.app")
                         .font(.system(size: 12, weight: .semibold))
@@ -261,7 +261,7 @@ struct SettingsView: View {
                                        ? "kullanim-kosullari.html"
                                        : "terms-of-service.html")) {
                 HStack {
-                    rowLabel(icon: "doc.text", titleKey: "settings.termsOfService")
+                    rowLabel(icon: "doc.text", titleKey: "legal.terms")
                     Spacer()
                     Image(systemName: "arrow.up.forward.app")
                         .font(.system(size: 12, weight: .semibold))

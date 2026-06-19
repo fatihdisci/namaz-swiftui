@@ -1,4 +1,5 @@
 import SwiftUI
+import AuthenticationServices
 
 enum ProGateContext {
     case general
@@ -290,24 +291,46 @@ struct ProGateView: View {
     }
 
     private var purchaseButton: some View {
-        Button {
-            Task { await purchaseSelectedProduct() }
-        } label: {
-            HStack(spacing: 10) {
-                if isProcessing {
-                    ProgressView().tint(Color.vakitText)
+        Group {
+            if authService.isGuest {
+                VStack(spacing: 8) {
+                    SignInWithAppleButton(.continue) { request in
+                        request.requestedScopes = []
+                    } onCompletion: { result in
+                        Task { await authService.handleSignInResult(result) }
+                    }
+                    .signInWithAppleButtonStyle(.white)
+                    .frame(height: 52)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .disabled(authService.isSigningIn)
+
+                    if let error = authService.errorMessage {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundStyle(Color.maghrib)
+                    }
                 }
-                Text(lang.t("pro.purchase"))
-                    .font(.system(.headline, design: .rounded, weight: .bold))
+            } else {
+                Button {
+                    Task { await purchaseSelectedProduct() }
+                } label: {
+                    HStack(spacing: 10) {
+                        if isProcessing {
+                            ProgressView().tint(Color.vakitText)
+                        }
+                        Text(lang.t("pro.purchase"))
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                    }
+                    .foregroundStyle(Color.vakitBg)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.vakitAccent)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
+                .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
             }
-            .foregroundStyle(Color.vakitBg)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.vakitAccent)
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
-        .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
-        .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
     }
 
     private var restoreButton: some View {
