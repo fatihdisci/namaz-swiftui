@@ -1,5 +1,4 @@
 import SwiftUI
-import AuthenticationServices
 
 enum ProGateContext {
     case general
@@ -84,8 +83,19 @@ struct ProGateView: View {
     @State private var isProcessing = false
     @State private var errorMessage: String?
 
-    private let termsURL = URL(string: "https://example.com/ufuk/terms")!
-    private let privacyURL = URL(string: "https://example.com/ufuk/privacy")!
+    private var termsURL: URL {
+        let isTurkish = lang.currentLanguage == "tr"
+        return URL(string: isTurkish
+            ? "https://namaz-swiftui.vercel.app/kullanim-kosullari.html"
+            : "https://namaz-swiftui.vercel.app/terms-of-service.html")!
+    }
+
+    private var privacyURL: URL {
+        let isTurkish = lang.currentLanguage == "tr"
+        return URL(string: isTurkish
+            ? "https://namaz-swiftui.vercel.app/gizlilik-politikasi.html"
+            : "https://namaz-swiftui.vercel.app/privacy-policy.html")!
+    }
 
     var body: some View {
         NavigationStack {
@@ -280,46 +290,24 @@ struct ProGateView: View {
     }
 
     private var purchaseButton: some View {
-        Group {
-            if authService.isGuest {
-                VStack(spacing: 8) {
-                    SignInWithAppleButton(.continue) { request in
-                        request.requestedScopes = []
-                    } onCompletion: { result in
-                        Task { await authService.handleSignInResult(result) }
-                    }
-                    .signInWithAppleButtonStyle(.white)
-                    .frame(height: 52)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .disabled(authService.isSigningIn)
-
-                    if let error = authService.errorMessage {
-                        Text(error)
-                            .font(.caption)
-                            .foregroundStyle(Color.maghrib)
-                    }
+        Button {
+            Task { await purchaseSelectedProduct() }
+        } label: {
+            HStack(spacing: 10) {
+                if isProcessing {
+                    ProgressView().tint(Color.vakitText)
                 }
-            } else {
-                Button {
-                    Task { await purchaseSelectedProduct() }
-                } label: {
-                    HStack(spacing: 10) {
-                        if isProcessing {
-                            ProgressView().tint(Color.vakitText)
-                        }
-                        Text(lang.t("pro.purchase"))
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                    }
-                    .foregroundStyle(Color.vakitBg)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(Color.vakitAccent)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                }
-                .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
-                .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
+                Text(lang.t("pro.purchase"))
+                    .font(.system(.headline, design: .rounded, weight: .bold))
             }
+            .foregroundStyle(Color.vakitBg)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(Color.vakitAccent)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
+        .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
+        .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
     }
 
     private var restoreButton: some View {
