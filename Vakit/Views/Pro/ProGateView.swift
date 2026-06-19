@@ -87,7 +87,7 @@ struct ProGateView: View {
     private var termsURL: URL {
         let isTurkish = lang.currentLanguage == "tr"
         return URL(string: isTurkish
-            ? "https://namaz-swiftui.vercel.app/kullanim-kosullari.html"
+            ? "https://namaz-swiftui.vercel.app/kullanim-kosullari.html#"
             : "https://namaz-swiftui.vercel.app/terms-of-service.html")!
     }
 

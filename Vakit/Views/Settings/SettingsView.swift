@@ -258,7 +258,7 @@ struct SettingsView: View {
             divider
 
             Link(destination: legalURL(for: lang.currentLanguage == "tr"
-                                       ? "kullanim-kosullari.html"
+                                       ? "kullanim-kosullari.html#"
                                        : "terms-of-service.html")) {
                 HStack {
                     rowLabel(icon: "doc.text", titleKey: "legal.terms")
@@ -273,7 +273,7 @@ struct SettingsView: View {
     }
 
     private func legalURL(for page: String) -> URL {
-        URL(string: "https://namaz-swiftui.vercel.app/\\(page)")!
+        URL(string: "https://namaz-swiftui.vercel.app/\(page)")!
     }
 
     // MARK: - Yardımcılar
