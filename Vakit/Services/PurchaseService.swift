@@ -13,9 +13,9 @@ final class PurchaseService {
         "Ufuk-Namaz Vakitleri Pro"
     ]
     enum ProductID: String, CaseIterable {
-        case monthly = "com.vakit.pro.monthly"
-        case yearly = "com.vakit.pro.yearly"
-        case lifetime = "com.vakit.pro.lifetime"
+        case monthly = "vakit_pro_monthly"
+        case yearly = "vakit_pro_yearly"
+        case lifetime = "vakit_pro_lifetime"
     }
 
     struct Product: Identifiable, Equatable {
