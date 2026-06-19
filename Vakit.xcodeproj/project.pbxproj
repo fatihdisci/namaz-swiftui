@@ -363,6 +363,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Vakit/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ufuk - Namaz Vakitleri";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
@@ -396,6 +397,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Vakit/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ufuk - Namaz Vakitleri";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Namaz vakitleri ve kıble yönü için konumunuz kullanılır.";
