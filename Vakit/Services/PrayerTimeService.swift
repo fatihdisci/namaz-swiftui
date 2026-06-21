@@ -96,7 +96,8 @@ final class PrayerTimeService {
             isha: isha,
             hijriDay: hijriDay,
             hijriMonthName: hijriMonthName,
-            hijriYear: hijriYear
+            hijriYear: hijriYear,
+            source: .aladhan
         )
     }
 
@@ -152,7 +153,8 @@ final class PrayerTimeService {
             isha: adhanTimes.isha,
             hijriDay: hijri.day,
             hijriMonthName: hijri.monthName,
-            hijriYear: hijri.year
+            hijriYear: hijri.year,
+            source: .localCalculation
         )
     }
 
@@ -174,7 +176,8 @@ final class PrayerTimeService {
             isha: approximate(20, 30),
             hijriDay: hijri.day,
             hijriMonthName: hijri.monthName,
-            hijriYear: hijri.year
+            hijriYear: hijri.year,
+            source: .estimated
         )
     }
 

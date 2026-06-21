@@ -793,13 +793,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "City could not be verified — approximate coordinates may be used. Use auto-locate for accuracy."
+            "value": "City could not be verified. Try again or use auto-locate."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Şehir doğrulanamadı — yaklaşık koordinatlar kullanılabilir. Kesin sonuç için konumla otomatik bul'u kullanın."
+            "value": "Şehir doğrulanamadı. Tekrar deneyin veya konumla otomatik bulmayı kullanın."
           }
         }
       }
@@ -1004,6 +1004,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "Umm al-Qura (Mekke)"
+          }
+        }
+      }
+    },
+    "school.hanafi": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hanafi"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hanefi"
+          }
+        }
+      }
+    },
+    "school.standard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standart"
+          }
+        }
+      }
+    },
+    "school.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asr calculation"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İkindi hesabı"
           }
         }
       }

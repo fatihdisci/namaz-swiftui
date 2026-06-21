@@ -22,7 +22,7 @@ final class SafarViewModel {
     var homeLocation: PrayerLocation? { storage.homePrayerLocation ?? storage.selectedPrayerLocation }
 
     var homeCity: CitySnapshot? {
-        homeLocation?.toSnapshot(school: 0)
+        homeLocation?.toSnapshot()
     }
 
     @ObservationIgnored private let storage: StorageService

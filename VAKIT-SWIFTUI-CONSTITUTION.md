@@ -88,7 +88,7 @@ Lokalizasyon:
 
 - `latitude`, `longitude` (Double)
 - `method` (Int): **13 = Diyanet** (Türkiye varsayılan), 3 = MWL, 2 = ISNA, 4 = Umm al-Qura, 5 = Egyptian
-- `school` (Int): 0 = Shafi, **1 = Hanafi** (Türkiye varsayılan, Asr için)
+- `school` (Int): **0 = Standart** (varsayılan), 1 = Hanefi (kullanıcı seçimi, ikindi için)
 
 **Key yok, rate limit yok, bedava.**
 

@@ -47,7 +47,10 @@ struct CitySelectionView: View {
 
             resultsList
 
-            MethodSelectionView(method: $viewModel.method)
+            MethodSelectionView(
+                method: $viewModel.method,
+                asrCalculation: $viewModel.asrCalculation
+            )
 
             Spacer()
 

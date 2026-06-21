@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* PrayerAccuracyTests.swift */; };
 		13A596E6620E927F8E0BDCE6 /* UfukWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		322CC2C3BD4A436E8DC5584A /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = FED66DFEE5424FF389755875 /* RevenueCat */; };
 		3ECEBAA566C74225835CA9ED /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEB944B591481386752953 /* Adhan */; };
@@ -15,6 +16,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A10000000000000000000003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55B61435A08D4CB58053593C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5E10C3EE6FD4F8498190FEE;
+			remoteInfo = Vakit;
+		};
 		B447D1BDAD1BFD5DE1E8781D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55B61435A08D4CB58053593C /* Project object */;
@@ -39,6 +47,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A10000000000000000000002 /* PrayerAccuracyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerAccuracyTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000004 /* VakitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VakitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UfukWidget.swift; sourceTree = "<group>"; };
 		1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UfukWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = UfukWidget.entitlements; sourceTree = "<group>"; };
@@ -65,6 +75,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A10000000000000000000007 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CBF2A86D5907500C0598EAE1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				92DFE05AD2B0418FBE6F4AF8 /* Vakit */,
+				A10000000000000000000005 /* VakitTests */,
 				C000000000000000000001 /* Config */,
 				EB9174D72115468DA18B6633 /* Shared */,
 				DC8C9C2517B94A1688293EEB /* Products */,
@@ -105,6 +123,14 @@
 				53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */,
 			);
 			path = UfukWidget;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000005 /* VakitTests */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* PrayerAccuracyTests.swift */,
+			);
+			path = VakitTests;
 			sourceTree = "<group>";
 		};
 		3931F68F4F2F36F0C459C851 /* iOS */ = {
@@ -137,6 +163,7 @@
 			children = (
 				C3239F2272834908A926EE60 /* Vakit.app */,
 				1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */,
+				A10000000000000000000004 /* VakitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -144,6 +171,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A10000000000000000000008 /* VakitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000011 /* Build configuration list for PBXNativeTarget "VakitTests" */;
+			buildPhases = (
+				A10000000000000000000006 /* Sources */,
+				A10000000000000000000007 /* Frameworks */,
+				A10000000000000000000009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1000000000000000000000A /* PBXTargetDependency */,
+			);
+			name = VakitTests;
+			productName = VakitTests;
+			productReference = A10000000000000000000004 /* VakitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D6F86F2213623A35EAAFE064 /* UfukWidget */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91BAD9589DCE1F81E1F943FC /* Build configuration list for PBXNativeTarget "UfukWidget" */;
@@ -235,11 +280,19 @@
 			targets = (
 				E5E10C3EE6FD4F8498190FEE /* Vakit */,
 				D6F86F2213623A35EAAFE064 /* UfukWidget */,
+				A10000000000000000000008 /* VakitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A10000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1E622D0C2ADB7C31714B90DB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -257,6 +310,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A10000000000000000000006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		205B498377D03806BC820DE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -275,6 +336,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A1000000000000000000000A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5E10C3EE6FD4F8498190FEE /* Vakit */;
+			targetProxy = A10000000000000000000003 /* PBXContainerItemProxy */;
+		};
 		60E48EA2ACD8800B176962EA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = UfukWidget;
@@ -284,6 +350,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		A1000000000000000000000B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8XPP7Z37GF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vakit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vakit";
+			};
+			name = Debug;
+		};
+		A1000000000000000000000C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8XPP7Z37GF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vakit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vakit";
+			};
+			name = Release;
+		};
 		1FC16D5184A848318E65D37E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
@@ -543,6 +657,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A10000000000000000000011 /* Build configuration list for PBXNativeTarget "VakitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000000000000000000000B /* Debug */,
+				A1000000000000000000000C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		00710D7578E54B458420A16E /* Build configuration list for PBXNativeTarget "Vakit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

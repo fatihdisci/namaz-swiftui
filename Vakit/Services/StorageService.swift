@@ -93,7 +93,7 @@ final class StorageService {
     /// Yeni veya eski modelden `City` üretir (HomeViewModel, bildirimler vs. için).
     var resolvedCity: City? {
         if let location = selectedPrayerLocation {
-            return location.makeCity(school: 0)
+            return location.makeCity()
         }
         return selectedCity?.makeCity()
     }
@@ -109,7 +109,7 @@ final class StorageService {
         get {
             // Önce yeni PrayerLocation modelini dene, yoksa eski snapshot'a düş.
             if let prayerLoc = selectedPrayerLocation {
-                return prayerLoc.toSnapshot(school: 0)
+                return prayerLoc.toSnapshot()
             }
             return legacySelectedCitySnapshot
         }
@@ -151,12 +151,13 @@ final class StorageService {
             if let newValue, let data = try? encoder.encode(newValue) {
                 defaults.set(data, forKey: Key.prayerLocation)
                 // Eski selectedCity ve selectedCityID'yi de güncelle (geriye uyumluluk).
-                let snapshot = newValue.toSnapshot(school: 0)
+                let snapshot = newValue.toSnapshot()
                 if let snapData = try? encoder.encode(snapshot) {
                     defaults.set(snapData, forKey: Key.selectedCity)
                 }
                 defaults.set(newValue.id.uuidString, forKey: Key.selectedCityID)
                 method = newValue.calculationMethod
+                school = newValue.school
                 addOrUpdateSavedPrayerLocation(newValue)
                 if homePrayerLocation == nil {
                     homePrayerLocation = newValue
@@ -228,15 +229,17 @@ final class StorageService {
         set { defaults.set(newValue.rawValue, forKey: Key.method) }
     }
 
-    /// Asr mezhebi: 0 = Standart (Şafi, varsayılan), 1 = Hanefi.
+    /// İkindi hesabı: 0 = standart, 1 = Hanefi.
     var school: Int {
         get {
-            if defaults.integer(forKey: Key.school) != 0 {
-                defaults.set(0, forKey: Key.school)
-            }
-            return 0
+            AsrCalculation(rawValue: defaults.integer(forKey: Key.school))?.rawValue
+                ?? AsrCalculation.standard.rawValue
         }
-        set { defaults.set(0, forKey: Key.school) }
+        set {
+            let validValue = AsrCalculation(rawValue: newValue)?.rawValue
+                ?? AsrCalculation.standard.rawValue
+            defaults.set(validValue, forKey: Key.school)
+        }
     }
 
     /// "tr" veya "en"
@@ -457,7 +460,7 @@ struct CitySnapshot: Codable, Equatable {
             country: country,
             timezone: timezone,
             method: method,
-            school: 0
+            school: school
         )
     }
 }

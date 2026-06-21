@@ -30,7 +30,10 @@ struct LocationSelectionView: View {
                     .foregroundStyle(Color.maghrib)
             }
 
-            MethodSelectionView(method: $viewModel.method)
+            MethodSelectionView(
+                method: $viewModel.method,
+                asrCalculation: $viewModel.asrCalculation
+            )
 
             Spacer()
 

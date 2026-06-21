@@ -12,6 +12,7 @@ final class OnboardingViewModel {
     var results: [CitySnapshot] = []
     var selectedCity: CitySnapshot?
     var method: CalculationMethod = .default
+    var asrCalculation: AsrCalculation
     var isSearching = false
     var isLocating = false
     var errorKey: String?
@@ -55,6 +56,7 @@ final class OnboardingViewModel {
 
     init(storage: StorageService = .shared) {
         self.storage = storage
+        self.asrCalculation = AsrCalculation(rawValue: storage.school) ?? .standard
     }
 
     // MARK: - Şehir arama (iller.json yerel veri)
@@ -175,6 +177,7 @@ final class OnboardingViewModel {
     func saveSelectedCity(context: ModelContext) {
         guard var snapshot = selectedCity else { return }
         snapshot.method = method
+        snapshot.school = asrCalculation.rawValue
 
         // Tek birincil şehir: mevcut kayıtların isPrimary işaretini kaldır.
         let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
@@ -188,19 +191,20 @@ final class OnboardingViewModel {
         storage.selectedCity = snapshot
         storage.selectedCityID = snapshot.id
         storage.method = method
-        storage.school = 0
+        storage.school = snapshot.school
     }
 
     /// Seçilen `PrayerLocation`'ı kaydeder (cascading konum seçiminden gelir).
     func saveSelectedLocation(_ location: PrayerLocation, context: ModelContext) {
         storage.selectedPrayerLocation = location
         storage.method = location.calculationMethod
+        storage.school = location.school
 
         // SwiftData'ya da yaz (geriye uyumluluk).
         let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
         existing.forEach { $0.isPrimary = false }
 
-        let city = location.makeCity(school: 0)
+        let city = location.makeCity()
         city.isPrimary = true
         context.insert(city)
         try? context.save()

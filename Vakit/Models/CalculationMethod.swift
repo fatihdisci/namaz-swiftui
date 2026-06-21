@@ -33,3 +33,18 @@ enum CalculationMethod: Int, CaseIterable, Codable, Identifiable {
         }
     }
 }
+
+/// İkindi vaktinin gölge uzunluğu hesabı. Raw value Aladhan `school` parametresidir.
+enum AsrCalculation: Int, CaseIterable, Codable, Identifiable {
+    case standard = 0
+    case hanafi = 1
+
+    var id: Int { rawValue }
+
+    var localizationKey: String {
+        switch self {
+        case .standard: return "school.standard"
+        case .hanafi: return "school.hanafi"
+        }
+    }
+}

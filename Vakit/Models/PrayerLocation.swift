@@ -17,6 +17,7 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
     var longitude: Double
     var timeZoneIdentifier: String
     var calculationMethod: CalculationMethod
+    var school: Int
 
     // MARK: - Init
 
@@ -33,7 +34,8 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
         latitude: Double,
         longitude: Double,
         timeZoneIdentifier: String,
-        calculationMethod: CalculationMethod = .diyanet
+        calculationMethod: CalculationMethod = .diyanet,
+        school: Int = AsrCalculation.standard.rawValue
     ) {
         self.id = id
         self.countryCode = countryCode
@@ -48,6 +50,30 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
         self.longitude = longitude
         self.timeZoneIdentifier = timeZoneIdentifier
         self.calculationMethod = calculationMethod
+        self.school = AsrCalculation(rawValue: school)?.rawValue ?? AsrCalculation.standard.rawValue
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, countryCode, countryName, admin1Name, admin1Type, admin2Name, admin2Type
+        case cityName, districtName, latitude, longitude, timeZoneIdentifier, calculationMethod, school
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        countryCode = try container.decode(String.self, forKey: .countryCode)
+        countryName = try container.decode(String.self, forKey: .countryName)
+        admin1Name = try container.decode(String.self, forKey: .admin1Name)
+        admin1Type = try container.decode(String.self, forKey: .admin1Type)
+        admin2Name = try container.decode(String.self, forKey: .admin2Name)
+        admin2Type = try container.decode(String.self, forKey: .admin2Type)
+        cityName = try container.decode(String.self, forKey: .cityName)
+        districtName = try container.decode(String.self, forKey: .districtName)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
+        timeZoneIdentifier = try container.decode(String.self, forKey: .timeZoneIdentifier)
+        calculationMethod = try container.decode(CalculationMethod.self, forKey: .calculationMethod)
+        school = try container.decodeIfPresent(Int.self, forKey: .school) ?? AsrCalculation.standard.rawValue
     }
 
     // MARK: - Display
@@ -88,7 +114,7 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
     // MARK: - Bridge to City (prayer time calculation)
 
     /// Namaz vakti hesaplaması için geçici `City` örneği üretir.
-    func makeCity(school: Int = 0) -> City {
+    func makeCity() -> City {
         City(
             id: id,
             name: displayName,
@@ -104,7 +130,7 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
 
     // MARK: - Bridge to CitySnapshot (backward compat)
 
-    func toSnapshot(school: Int = 0) -> CitySnapshot {
+    func toSnapshot() -> CitySnapshot {
         CitySnapshot(
             id: id,
             name: displayName,

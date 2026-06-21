@@ -10,6 +10,7 @@ import WidgetKit
 @MainActor
 final class SettingsViewModel {
     var method: CalculationMethod
+    var asrCalculation: AsrCalculation
     private(set) var city: CitySnapshot?
     private(set) var location: PrayerLocation?
     private(set) var homeLocation: PrayerLocation?
@@ -29,6 +30,7 @@ final class SettingsViewModel {
         self.notificationService = notificationService
         self.locationService = locationService ?? LocationService()
         self.method = storage.method
+        self.asrCalculation = AsrCalculation(rawValue: storage.school) ?? .standard
         self.city = storage.selectedCity
         self.location = storage.selectedPrayerLocation
         self.homeLocation = storage.homePrayerLocation ?? storage.selectedPrayerLocation
@@ -59,19 +61,28 @@ final class SettingsViewModel {
         }
     }
 
+    func setAsrCalculation(_ newValue: AsrCalculation, context: ModelContext) {
+        guard newValue != asrCalculation else { return }
+        asrCalculation = newValue
+        storage.school = newValue.rawValue
+        updateSelectedLocation(context: context) {
+            $0.school = newValue.rawValue
+        }
+    }
+
     /// Yeni cascading konum seçiminden kaydeder.
     func saveLocation(_ location: PrayerLocation, context: ModelContext) {
         storage.selectedPrayerLocation = location
         storage.method = location.calculationMethod
         self.location = location
         self.method = location.calculationMethod
-        city = location.toSnapshot(school: 0)
+        city = location.toSnapshot()
 
         // SwiftData'yı da güncelle.
         let existing = (try? context.fetch(FetchDescriptor<City>())) ?? []
         existing.forEach { $0.isPrimary = false }
 
-        let cityModel = location.makeCity(school: 0)
+        let cityModel = location.makeCity()
         cityModel.isPrimary = true
         context.insert(cityModel)
         try? context.save()
@@ -115,6 +126,7 @@ final class SettingsViewModel {
         location = nil
         homeLocation = nil
         method = storage.method
+        asrCalculation = AsrCalculation(rawValue: storage.school) ?? .standard
 
         // 7. Uygulamayı onboarding'e döndür.
         NotificationCenter.default.post(name: .vakitAccountDeleted, object: nil)
@@ -176,14 +188,14 @@ final class SettingsViewModel {
         storage.selectedPrayerLocation = loc
         storage.method = loc.calculationMethod
         location = loc
-        city = loc.toSnapshot(school: 0)
+        city = loc.toSnapshot()
 
         // SwiftData'yı da güncelle.
         let cityID = loc.id
         let descriptor = FetchDescriptor<City>(predicate: #Predicate { $0.id == cityID })
         if let stored = try? context.fetch(descriptor).first {
             stored.method = loc.calculationMethod
-            stored.school = 0
+            stored.school = loc.school
             try? context.save()
         }
 
@@ -201,7 +213,7 @@ final class SettingsViewModel {
         let descriptor = FetchDescriptor<City>(predicate: #Predicate { $0.id == cityID })
         if let stored = try? context.fetch(descriptor).first {
             stored.method = snapshot.method
-            stored.school = 0
+            stored.school = snapshot.school
             try? context.save()
         }
 

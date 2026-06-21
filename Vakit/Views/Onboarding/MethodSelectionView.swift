@@ -3,6 +3,7 @@ import SwiftUI
 /// Hesaplama metodu seçici. Varsayılan: Diyanet.
 struct MethodSelectionView: View {
     @Binding var method: CalculationMethod
+    @Binding var asrCalculation: AsrCalculation
 
     @Environment(LanguageService.self) private var lang
 
@@ -33,6 +34,18 @@ struct MethodSelectionView: View {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .strokeBorder(Color.vakitBorder, lineWidth: 1)
             )
+
+            Text(lang.t("school.title"))
+                .font(.system(.subheadline, weight: .semibold))
+                .foregroundStyle(Color.vakitText)
+                .padding(.top, 8)
+
+            Picker(lang.t("school.title"), selection: $asrCalculation) {
+                ForEach(AsrCalculation.allCases) { option in
+                    Text(lang.t(option.localizationKey)).tag(option)
+                }
+            }
+            .pickerStyle(.segmented)
         }
     }
 }
@@ -40,7 +53,7 @@ struct MethodSelectionView: View {
 #Preview {
     ZStack {
         Color.vakitBg.ignoresSafeArea()
-        MethodSelectionView(method: .constant(.diyanet))
+        MethodSelectionView(method: .constant(.diyanet), asrCalculation: .constant(.standard))
             .padding()
     }
     .environment(LanguageService.shared)

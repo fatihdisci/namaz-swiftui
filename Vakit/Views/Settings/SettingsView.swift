@@ -83,6 +83,8 @@ struct SettingsView: View {
             cityRow
             divider
             methodRow
+            divider
+            asrCalculationRow
         }
     }
 
@@ -130,6 +132,24 @@ struct SettingsView: View {
                 set: { viewModel.setMethod($0, context: modelContext) }
             )) {
                 ForEach(CalculationMethod.allCases) { option in
+                    Text(lang.t(option.localizationKey)).tag(option)
+                }
+            }
+            .pickerStyle(.menu)
+            .tint(Color.vakitAccent)
+        }
+        .padding(.vertical, 6)
+    }
+
+    private var asrCalculationRow: some View {
+        HStack {
+            rowLabel(icon: "sun.max", titleKey: "school.title")
+            Spacer()
+            Picker("", selection: Binding(
+                get: { viewModel.asrCalculation },
+                set: { viewModel.setAsrCalculation($0, context: modelContext) }
+            )) {
+                ForEach(AsrCalculation.allCases) { option in
                     Text(lang.t(option.localizationKey)).tag(option)
                 }
             }

@@ -98,6 +98,10 @@ final class NotificationService {
         calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
 
         for (date, prayerTimes) in times {
+            // Uç enlem fallback'i yalnızca UI'ın boş kalmaması içindir; yaklaşık
+            // saatler ibadet bildirimi olarak kesin vakit gibi planlanmaz.
+            guard prayerTimes.isReliableForNotifications else { continue }
+
             for prayer in Prayer.allCases {
                 let setting = settings.setting(for: prayer)
                 guard setting.enabled else { continue }

@@ -17,6 +17,7 @@ final class LocationSelectionViewModel {
     /// Yerel datası olan ülkeler için cascading seçim aktif mi?
     var useCascadingFlow: Bool
     var method: CalculationMethod
+    var asrCalculation: AsrCalculation
 
     // Manually entered city for non-Turkey countries
     var manualCityQuery: String = ""
@@ -53,6 +54,7 @@ final class LocationSelectionViewModel {
         self.selectedCountryName = ""
         self.useCascadingFlow = locationData.hasLocalData(for: detectedCode)
         self.method = storage.method
+        self.asrCalculation = AsrCalculation(rawValue: storage.school) ?? .standard
 
         setupCountries()
         updateCountryName()
@@ -190,27 +192,23 @@ final class LocationSelectionViewModel {
         do {
             var request = URLRequest(url: url)
             request.timeoutInterval = 10
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
             guard !Task.isCancelled else { return }
+            guard let http = response as? HTTPURLResponse,
+                  (200..<300).contains(http.statusCode) else {
+                throw URLError(.badServerResponse)
+            }
 
             let payload = try JSONDecoder().decode(AladhanCityInfoResponse.self, from: data)
             guard
                 payload.code == 200,
                 let info = payload.data,
                 let latitude = info.latitude?.value,
-                let longitude = info.longitude?.value
+                let longitude = info.longitude?.value,
+                Self.isValidCityCoordinate(latitude: latitude, longitude: longitude)
             else {
-                // API bulamadıysa manuel olarak query'den CitySnapshot oluştur
-                manualCityResults = [
-                    CitySnapshot(
-                        name: query,
-                        latitude: 0,
-                        longitude: 0,
-                        country: selectedCountryName,
-                        timezone: TimeZone.current.identifier,
-                        method: method
-                    )
-                ]
+                manualCityResults = []
+                selectedManualCity = nil
                 errorKey = "location.manualFallback"
                 return
             }
@@ -229,19 +227,16 @@ final class LocationSelectionViewModel {
             // yeni arama başladı
         } catch {
             guard !Task.isCancelled else { return }
-            // Ağ hatasında da manuel fallback
-            manualCityResults = [
-                CitySnapshot(
-                    name: query,
-                    latitude: 0,
-                    longitude: 0,
-                    country: selectedCountryName,
-                    timezone: TimeZone.current.identifier,
-                    method: method
-                )
-            ]
+            manualCityResults = []
+            selectedManualCity = nil
             errorKey = "location.manualFallback"
         }
+    }
+
+    nonisolated static func isValidCityCoordinate(latitude: Double, longitude: Double) -> Bool {
+        (-90...90).contains(latitude)
+            && (-180...180).contains(longitude)
+            && !(abs(latitude) < 0.0001 && abs(longitude) < 0.0001)
     }
 
     func selectManualCity(_ city: CitySnapshot) {
@@ -277,7 +272,8 @@ final class LocationSelectionViewModel {
                 latitude: admin2.latitude,
                 longitude: admin2.longitude,
                 timeZoneIdentifier: admin2.timezone,
-                calculationMethod: method
+                calculationMethod: method,
+                school: asrCalculation.rawValue
             )
         } else {
             guard let city = selectedManualCity else { return nil }
@@ -293,7 +289,8 @@ final class LocationSelectionViewModel {
                 latitude: city.latitude,
                 longitude: city.longitude,
                 timeZoneIdentifier: city.timezone,
-                calculationMethod: method
+                calculationMethod: method,
+                school: asrCalculation.rawValue
             )
         }
     }

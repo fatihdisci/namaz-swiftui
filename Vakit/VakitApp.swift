@@ -60,7 +60,7 @@ struct VakitApp: App {
     private func rescheduleNotifications() async {
         // Yeni PrayerLocation veya eski CitySnapshot üzerinden City oluştur.
         if let location = StorageService.shared.selectedPrayerLocation {
-            await notificationService.reschedule(city: location.makeCity(school: 0))
+            await notificationService.reschedule(city: location.makeCity())
         } else if let city = StorageService.shared.selectedCity?.makeCity() {
             await notificationService.reschedule(city: city)
         }

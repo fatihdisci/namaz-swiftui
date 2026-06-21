@@ -10,8 +10,7 @@ final class City {
     var country: String
     var timezone: String
     var method: CalculationMethod
-    /// Aladhan `school` / Asr mezhebi. Uygulama kullanıcıya seçenek göstermez
-    /// ve standart/Şafi hesap için her zaman 0 kullanır.
+    /// Aladhan `school` / ikindi hesabı: 0 standart, 1 Hanefi.
     var school: Int
     var isPrimary: Bool
 
@@ -33,7 +32,7 @@ final class City {
         self.country = country
         self.timezone = timezone
         self.method = method
-        self.school = 0
+        self.school = AsrCalculation(rawValue: school)?.rawValue ?? AsrCalculation.standard.rawValue
         self.isPrimary = isPrimary
     }
 }
