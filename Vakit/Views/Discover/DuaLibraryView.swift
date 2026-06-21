@@ -97,8 +97,8 @@ struct DuaLibraryView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     if let title = dua.title(language: lang.currentLanguage) {
                         Text(title)
-                            .font(.headline)
-                            .foregroundStyle(Color.vakitText)
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(Color.vakitAccent)
                     }
                     Text(dua.text(language: lang.currentLanguage))
                         .font(.body)
@@ -146,6 +146,11 @@ private struct DuaDetailView: View {
             AuroraBackground(accentColor: .isha)
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    if let title = dua.title(language: lang.currentLanguage) {
+                        Text(title)
+                            .font(.system(.title2, design: .rounded, weight: .bold))
+                            .foregroundStyle(Color.vakitAccent)
+                    }
                     if let arabic = dua.arabic, !arabic.isEmpty {
                         Text(arabic)
                             .font(.system(size: 27, weight: .medium))
