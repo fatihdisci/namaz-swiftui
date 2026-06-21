@@ -8,11 +8,12 @@ struct DiscoverView: View {
 
     enum GeneratingType { case verse, hadith, dua }
     @State private var generating: GeneratingType?
+    @State private var contentRevision = 0
 
-    private let verse = DailyContent.dailyVerse()
-    private let hadith = DailyContent.dailyHadith()
-    private let dua = DailyContent.dailyDua()
-    private let dailyEsma = DailyContent.dailyEsma()
+    private var verse: Verse? { DailyContent.dailyVerse() }
+    private var hadith: Hadith? { DailyContent.dailyHadith() }
+    private var dua: Dua? { DailyContent.dailyDua() }
+    private var dailyEsma: EsmaName? { DailyContent.dailyEsma() }
 
     var body: some View {
         ZStack {
@@ -59,6 +60,9 @@ struct DiscoverView: View {
             }
         }
         .toolbar(.hidden, for: .navigationBar)
+        .onReceive(NotificationCenter.default.publisher(for: .vakitContentUpdated)) { _ in
+            contentRevision &+= 1
+        }
     }
 
     // MARK: - Header

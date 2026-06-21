@@ -5,6 +5,7 @@ struct DuaLibraryView: View {
     @State private var selectedCategory: DuaCategory = .all
     @State private var favoritesOnly = false
     @State private var favoriteIDs = StorageService.shared.favoriteDuaIDs
+    @State private var contentRevision = 0
 
     @Environment(LanguageService.self) private var lang
 
@@ -64,6 +65,9 @@ struct DuaLibraryView: View {
                 .accessibilityLabel(lang.t("dua.favorites"))
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .vakitContentUpdated)) { _ in
+            contentRevision &+= 1
+        }
     }
 
     private var categoryPicker: some View {
@@ -90,11 +94,18 @@ struct DuaLibraryView: View {
     private func duaRow(_ dua: Dua) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top) {
-                Text(dua.text(language: lang.currentLanguage))
-                    .font(.body)
-                    .foregroundStyle(Color.vakitText)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(3)
+                VStack(alignment: .leading, spacing: 5) {
+                    if let title = dua.title(language: lang.currentLanguage) {
+                        Text(title)
+                            .font(.headline)
+                            .foregroundStyle(Color.vakitText)
+                    }
+                    Text(dua.text(language: lang.currentLanguage))
+                        .font(.body)
+                        .foregroundStyle(Color.vakitText)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(3)
+                }
                 Spacer(minLength: 10)
                 if favoriteIDs.contains(dua.id) {
                     Image(systemName: "heart.fill").foregroundStyle(Color.vakitAccent)
@@ -164,7 +175,9 @@ private struct DuaDetailView: View {
                 .padding(20)
             }
         }
-        .navigationTitle(lang.t(dua.category.localizationKey))
+        .navigationTitle(
+            dua.title(language: lang.currentLanguage) ?? lang.t(dua.category.localizationKey)
+        )
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

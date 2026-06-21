@@ -30,7 +30,7 @@ struct HomeView: View {
             ZStack {
                 AuroraBackground(accentColor: viewModel.nextPrayer.accentColor)
 
-                TimelineView(.periodic(from: .now, by: 1.0)) { context in
+                TimelineView(.periodic(from: .now, by: 30.0)) { context in
                     content
                         .onChange(of: context.date) { _, newDate in
                             viewModel.tick(date: newDate)
@@ -47,6 +47,9 @@ struct HomeView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .vakitSavedPrayerLocationsChanged)) { _ in
             viewModel.refreshSavedLocations()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .vakitContentUpdated)) { _ in
+            viewModel.refreshDailyContent()
         }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
