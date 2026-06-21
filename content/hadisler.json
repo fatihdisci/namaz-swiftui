@@ -500,5 +500,505 @@
     "derece": "Hasen",
     "atifUrl": "https://sunnah.com/tirmidhi:1639",
     "dogrulandiMi": true
+  },
+  {
+    "id": "h051",
+    "tema": "dostluk",
+    "metin_tr": "Kişi dostunun dini üzeredir. Öyleyse her biriniz kiminle dost olduğuna dikkat etsin.",
+    "metin_en": "A person is upon the religion of his friend, so let one of you look at whom he befriends.",
+    "kaynak": "Ebu Davud, Edeb 16; Tirmizi, Zühd 45",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/abudawud:4833",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h052",
+    "tema": "emanet",
+    "metin_tr": "Münafığın alameti üçtür: konuştuğunda yalan söyler, söz verdiğinde cayar, emanete ihanet eder.",
+    "metin_en": "The signs of a hypocrite are three: when he speaks, he lies; when he promises, he breaks it; and when he is entrusted, he betrays.",
+    "kaynak": "Buhari, İman 24; Müslim, İman 58",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:33",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h053",
+    "tema": "helal kazanç",
+    "metin_tr": "Hiçbir kimse, elinin emeğinden daha hayırlı bir lokma yememiştir.",
+    "metin_en": "No one has ever eaten better food than that which he earns with his own hands.",
+    "kaynak": "Buhari, Büyu 15",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:2072",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h054",
+    "tema": "ticaret ahlakı",
+    "metin_tr": "Doğru ve güvenilir tüccar, peygamberler, sıddıklar ve şehitlerle beraberdir.",
+    "metin_en": "The truthful, trustworthy merchant is with the prophets, the truthful, and the martyrs.",
+    "kaynak": "Tirmizi, Büyu 4",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1209",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h055",
+    "tema": "ticaret ahlakı",
+    "metin_tr": "Satıcı ve alıcı birbirlerinden ayrılmadıkça muhayyerdirler (alışverişi iptal etme hakkına sahiptirler).",
+    "metin_en": "The seller and the buyer have the option (to cancel the transaction) as long as they have not separated.",
+    "kaynak": "Buhari, Büyu 48; Müslim, Büyu 4",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:2109",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h056",
+    "tema": "cömertlik",
+    "metin_tr": "Cömert kimse Allah'a yakındır, cennete yakındır, insanlara yakındır; cimri kimse ise Allah'tan uzaktır, cehennemden uzaktır ve insanlardan uzaktır.",
+    "metin_en": "The generous person is close to Allah, close to Paradise, close to people, and far from Hell. The miserly person is far from Allah, far from Paradise, far from people, and close to Hell.",
+    "kaynak": "Tirmizi, Birr 40",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1961",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h057",
+    "tema": "emanet",
+    "metin_tr": "Emanet ehline verilmediği, işler ehli olmayanlara bırakıldığı zaman kıyameti bekle.",
+    "metin_en": "When the trust is betrayed, and authority is given to those who are not qualified, then expect the Hour.",
+    "kaynak": "Buhari, İlim 2",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:59",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h058",
+    "tema": "sıla-i rahim",
+    "metin_tr": "Rahm (akrabalık bağı) Rahmân'dandır. Kim onu bağlarsa (ilgi gösterirse) Allah da onu bağlar; kim onu koparırsa Allah da onu koparır.",
+    "metin_en": "The womb (ties of kinship) is derived from Ar-Rahman. Whoever maintains it, Allah maintains him; whoever severs it, Allah severs him.",
+    "kaynak": "Buhari, Edeb 13; Müslim, Birr 16",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:5988",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h059",
+    "tema": "hayvan hakları",
+    "metin_tr": "Bir kadın, susuzluktan ölmek üzere olan bir köpeğe su verdi ve Allah onu affetti.",
+    "metin_en": "A woman gave water to a dog suffering from thirst, and Allah forgave her for that.",
+    "kaynak": "Buhari, Enbiya 54; Müslim, Selam 153",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:3321",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h060",
+    "tema": "çevre",
+    "metin_tr": "Kıyamet kopuyor olsa bile elinizde bir fidan varsa dikin.",
+    "metin_en": "If the Hour is about to be established, and one of you has a palm shoot in his hand, let him plant it.",
+    "kaynak": "Ahmed, Müsned 3/191",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/ahmad:12512",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h061",
+    "tema": "yetim hakkı",
+    "metin_tr": "Ben ve yetime bakan kimse cennette böyleyiz (işaret parmağını ve orta parmağını birleştirdi).",
+    "metin_en": "I and the one who sponsors an orphan will be like this in Paradise (pointing to his index and middle fingers).",
+    "kaynak": "Buhari, Edeb 24; Müslim, Zühd 42",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:5304",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h062",
+    "tema": "misafirperverlik",
+    "metin_tr": "Allah'a ve ahiret gününe iman eden, misafirine ikram etsin.",
+    "metin_en": "Let him who believes in Allah and the Last Day honor his guest.",
+    "kaynak": "Buhari, Edeb 31; Müslim, İman 74",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6018",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h063",
+    "tema": "tevazu",
+    "metin_tr": "Kim Allah için alçakgönüllü olursa, Allah onu yükseltir.",
+    "metin_en": "Whoever humbles himself for the sake of Allah, Allah will raise him.",
+    "kaynak": "Müslim, Birr 69; Tirmizi, Kıyamet 23",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2588",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h064",
+    "tema": "şifa",
+    "metin_tr": "Çörek otu, ölümden başka her derde devadır.",
+    "metin_en": "Black seed is a cure for every disease except death.",
+    "kaynak": "Buhari, Tıb 7; Müslim, Selam 87",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:5688",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h065",
+    "tema": "sağlık",
+    "metin_tr": "İnsanın midesine, kendisini taşıyacak birkaç lokmadan daha kötü bir kap dolduramaz.",
+    "metin_en": "The son of Adam does not fill a vessel worse than his stomach. A few mouthfuls are sufficient for him.",
+    "kaynak": "Tirmizi, Zühd 47; İbn Mace, Etime 50",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:2380",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h066",
+    "tema": "borç",
+    "metin_tr": "Zenginin borcu geciktirmesi zulümdür.",
+    "metin_en": "Delaying the repayment of debt by a wealthy person is oppression.",
+    "kaynak": "Buhari, İstikraz 12; Müslim, Müsakat 32",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:2400",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h067",
+    "tema": "kanaat",
+    "metin_tr": "Zenginlik mal çokluğu değil, gönül zenginliğidir.",
+    "metin_en": "Richness is not the abundance of wealth, but richness of the heart (contentment).",
+    "kaynak": "Buhari, Rikak 15; Müslim, Zekat 120",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6446",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h068",
+    "tema": "ahiret",
+    "metin_tr": "Sizin en hayırlınız, ömrü uzun ve ameli güzel olanınızdır.",
+    "metin_en": "The best of you are those who have long lives and good deeds.",
+    "kaynak": "Tirmizi, Kıyamet 26",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:2330",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h069",
+    "tema": "vefa",
+    "metin_tr": "İnsanlara teşekkür etmeyen, Allah'a da şükretmez.",
+    "metin_en": "He who does not thank people does not thank Allah.",
+    "kaynak": "Tirmizi, Birr 35; Ebu Davud, Edeb 11",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:1954",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h070",
+    "tema": "kardeşlik",
+    "metin_tr": "Birbirinize hediye verin; çünkü hediye kinleri giderir.",
+    "metin_en": "Exchange gifts with one another, for gifts remove ill-feelings from the hearts.",
+    "kaynak": "Tirmizi, Birr 43; Muvatta, Hüsnü'l-Hulk 16",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1959",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h071",
+    "tema": "ahlak",
+    "metin_tr": "Edepsizlik (fuhuş) bir şeyi kirletir, haya ise onu süsler.",
+    "metin_en": "Lewdness (fahisha) disgraces a person, and modesty (haya) adorns him.",
+    "kaynak": "Tirmizi, Edeb 57",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:2783",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h072",
+    "tema": "dua",
+    "metin_tr": "Allah'ım, faydasız ilimden, korkmayan kalpten, doymayan nefisten ve kabul edilmeyen duadan sana sığınırım.",
+    "metin_en": "O Allah, I seek refuge in You from knowledge that does not benefit, a heart that does not fear, a soul that is not satisfied, and a supplication that is not answered.",
+    "kaynak": "Müslim, Zikir 73; Tirmizi, Daavat 67",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2722",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h073",
+    "tema": "tefekkür",
+    "metin_tr": "Müminin ferasetinden sakının; çünkü o Allah'ın nuruyla bakar.",
+    "metin_en": "Be cautious of the intuition of the believer, for he sees with the light of Allah.",
+    "kaynak": "Tirmizi, Tefsir 15",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:3127",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h074",
+    "tema": "ahlak",
+    "metin_tr": "Kıskançlık (haset), iyilikleri ateşin odunu yediği gibi yer.",
+    "metin_en": "Envy (hasad) consumes good deeds just as fire consumes wood.",
+    "kaynak": "Ebu Davud, Edeb 44; İbn Mace, Zühd 22",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/abudawud:4903",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h075",
+    "tema": "kardeşlik",
+    "metin_tr": "Din kardeşinin ayıbını örtenin, Allah da dünya ve ahirette ayıbını örter.",
+    "metin_en": "Whoever covers the fault of his Muslim brother, Allah will cover his faults in this world and the Hereafter.",
+    "kaynak": "Müslim, Birr 71; Tirmizi, Birr 19",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2580",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h076",
+    "tema": "adalet",
+    "metin_tr": "Rüşvet veren ve rüşvet alan lanetlenmiştir.",
+    "metin_en": "Allah curses the one who gives a bribe and the one who takes a bribe.",
+    "kaynak": "Tirmizi, Ahkam 11; Ebu Davud, Akdiye 4",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:1336",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h077",
+    "tema": "dünya",
+    "metin_tr": "Dünya, müminin zindanı, kâfirin cennetidir.",
+    "metin_en": "The world is a prison for the believer and a paradise for the disbeliever.",
+    "kaynak": "Müslim, Zühd 1; Tirmizi, Zühd 19",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2956",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h078",
+    "tema": "kardeşlik",
+    "metin_tr": "Müslümanın Müslüman üzerinde altı hakkı vardır: karşılaştığında selam ver, davetini kabul et, aksırdığında 'yerhamükellah' de, hastalanınca ziyaret et, cenazesinde bulun, ve kendin için istediğini onun için de iste.",
+    "metin_en": "The rights of a Muslim upon another Muslim are six: when you meet him, greet him; when he invites you, accept it; when he sneezes and praises Allah, say 'Yarhamukallah'; when he is sick, visit him; when he dies, follow his funeral; and wish for him what you wish for yourself.",
+    "kaynak": "Müslim, Selam 4; Tirmizi, Cenâiz 8",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2162",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h079",
+    "tema": "tevbe",
+    "metin_tr": "Allah, kulun tövbesine, ölüm gelip çatmadan ve güneş batıdan doğmadan önce yapılan tövbeyi kabul eder.",
+    "metin_en": "Allah accepts the repentance of His servant as long as death has not reached his throat, and the sun has not risen from the west.",
+    "kaynak": "Tirmizi, Daavat 99; Müslim, Zikir 50",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/tirmidhi:3537",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h080",
+    "tema": "ahlak",
+    "metin_tr": "Kulak hırsızlığı (başkalarının gizli konuşmalarını dinlemek) yapanın Allah, cehennemde kulaklarına erimiş kurşun döker.",
+    "metin_en": "Whoever listens to the private conversation of people without their consent, on the Day of Resurrection, Allah will pour molten lead into his ears.",
+    "kaynak": "Buhari, Edeb 39",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:7042",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h081",
+    "tema": "yardımlaşma",
+    "metin_tr": "Kim dünyada bir Müslüman'ın sıkıntısını giderirse, Allah da kıyamet günü onun sıkıntılarından birini giderir.",
+    "metin_en": "Whoever relieves a Muslim of a distress from the distresses of the world, Allah will relieve him of a distress from the distresses of the Day of Judgment.",
+    "kaynak": "Müslim, Zikir 38; Buhari, Edeb 35",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2699",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h082",
+    "tema": "ibadet",
+    "metin_tr": "Cennette öyle köşkler vardır ki içleri dışlarından görünür. Bunlar, sözün güzelini söyleyen, yemek yediren, oruç tutan ve gece namazı kılanlar içindir.",
+    "metin_en": "There are chambers in Paradise whose inside can be seen from the outside. They are for those who speak kindly, feed the hungry, fast, and pray at night.",
+    "kaynak": "Tirmizi, Birr 36",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:1984",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h083",
+    "tema": "komşuluk",
+    "metin_tr": "Komşusu açken tok yatan bizden değildir.",
+    "metin_en": "He who sleeps full while his neighbor is hungry is not one of us.",
+    "kaynak": "Buhari, Edeb 29; Taberani, Evsat",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6016",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h084",
+    "tema": "niyet",
+    "metin_tr": "Bir kimse bir iyilik yapmaya niyet edip de yapamazsa, Allah onun için niyetine göre tam bir iyilik sevabı yazar.",
+    "metin_en": "Whoever intends to do a good deed but does not do it, Allah will write it as a complete good deed for him.",
+    "kaynak": "Buhari, Rikak 31; Müslim, İman 58",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6491",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h085",
+    "tema": "tevekkül",
+    "metin_tr": "Kim Allah için bir şeyden vazgeçerse, Allah ona ondan daha hayırlısını verir.",
+    "metin_en": "Whoever leaves something for the sake of Allah, Allah will compensate him with something better.",
+    "kaynak": "Ahmed, Müsned 5/363",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/ahmad:22166",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h086",
+    "tema": "imtihan",
+    "metin_tr": "Allah bir kulu sevdiğinde, onu bela ile imtihan eder. Kim sabrederse Allah onu seçer, kim rıza gösterirse Allah onu yükseltir.",
+    "metin_en": "When Allah loves a servant, He tests him. If he is patient, Allah selects him; if he is content, Allah elevates him.",
+    "kaynak": "Tirmizi, Zühd 57; İbn Mace, Fiten 17",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:2396",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h087",
+    "tema": "sadaka",
+    "metin_tr": "Kim yeryüzünde bir su kaynağı (çeşme) açarsa, ondan içen insanlar, kuşlar ve hayvanlar için sadaka akışı devam eder.",
+    "metin_en": "Whoever digs a well (in a land where it is needed), for every person, bird, or animal that drinks from it, there is a reward (sadaqah) for him.",
+    "kaynak": "Buhari, Hars 11; Müslim, Müsakat 10",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:2351",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h088",
+    "tema": "adalet",
+    "metin_tr": "Müminlerin kanları eşittir; en düşükleri onların sözünü bağlar.",
+    "metin_en": "The blood of the believers is equal in value. The lowest of them is bound by their covenant.",
+    "kaynak": "Ebu Davud, Diyat 11; İbn Mace, Diyat 15",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/abudawud:4549",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h089",
+    "tema": "affetmek",
+    "metin_tr": "Affediciliğini artıran kimseye Allah izzet (şeref) verir.",
+    "metin_en": "Allah increases the honor of the one who pardons.",
+    "kaynak": "Müslim, Birr 69; Tirmizi, Birr 82",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2588",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h090",
+    "tema": "cömertlik",
+    "metin_tr": "Cimrilik ve iman, bir müminin kalbinde bir arada bulunmaz.",
+    "metin_en": "Miserliness and faith do not coexist in the heart of a believer.",
+    "kaynak": "Nesai, Zekat 5; İbn Mace, Zekat 24",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/nasai:2559",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h091",
+    "tema": "doğruluk",
+    "metin_tr": "Yalandan kaçının; çünkü yalan fıska (günaha) götürür, fısk da cehenneme götürür.",
+    "metin_en": "Avoid lying, for lying leads to wickedness, and wickedness leads to Hell.",
+    "kaynak": "Buhari, Edeb 69; Müslim, Birr 103",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6094",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h092",
+    "tema": "sağlık",
+    "metin_tr": "İki nimet vardır ki insanların çoğu onlarda aldanmıştır: sağlık ve boş vakit.",
+    "metin_en": "There are two blessings which many people waste: health and free time.",
+    "kaynak": "Buhari, Rikak 1; Tirmizi, Zühd 3",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:6412",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h093",
+    "tema": "kardeşlik",
+    "metin_tr": "Bir Müslüman'ın malı ve kanı başka bir Müslüman'a haramdır.",
+    "metin_en": "The blood and property of a Muslim are forbidden to another Muslim.",
+    "kaynak": "Buhari, İlim 9; Müslim, Birr 32",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:67",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h094",
+    "tema": "ibadet",
+    "metin_tr": "Namaz gözümün nuru kılındı.",
+    "metin_en": "Prayer has been made the delight of my eyes.",
+    "kaynak": "Nesai, İftitah 7; Ahmed, Müsned 4/251",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/nasai:3940",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h095",
+    "tema": "ümit",
+    "metin_tr": "Ben kulumun beni zannettiği gibiyim. O hayır zannetse hayır, şer zannetse şer.",
+    "metin_en": "I am as My servant thinks I am. If he thinks good, he will find good; if he thinks bad, he will find bad.",
+    "kaynak": "Buhari, Tevhid 15; Müslim, Zikir 2",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/bukhari:7405",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h096",
+    "tema": "kardeşlik",
+    "metin_tr": "Müslümanlar birbirine karşı merhametlidir; birbirlerine zulmetmezler, birbirlerini terk etmezler.",
+    "metin_en": "Muslims are merciful to one another; they do not wrong each other nor abandon each other.",
+    "kaynak": "Müslim, Birr 32",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2586",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h097",
+    "tema": "tevazu",
+    "metin_tr": "Kalbinde zerre miktarı kibir bulunan kimse cennete giremez.",
+    "metin_en": "No one who has an atom's weight of arrogance in his heart will enter Paradise.",
+    "kaynak": "Müslim, İman 147; Tirmizi, Birr 62",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:91",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h098",
+    "tema": "cömertlik",
+    "metin_tr": "Sadaka vermek, malı eksiltmez.",
+    "metin_en": "Charity does not decrease wealth.",
+    "kaynak": "Müslim, Birr 69",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2588",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h099",
+    "tema": "dua",
+    "metin_tr": "Dua, kaderi değiştirir; iyilik (sıla-i rahim) ise ömrü uzatır.",
+    "metin_en": "Supplication (dua) changes destiny, and good deeds (kindness to kin) increase lifespan.",
+    "kaynak": "Tirmizi, Kader 6; İbn Mace, Fiten 20",
+    "derece": "Hasen",
+    "atifUrl": "https://sunnah.com/tirmidhi:2139",
+    "dogrulandiMi": true
+  },
+  {
+    "id": "h100",
+    "tema": "ahlak",
+    "metin_tr": "İyilik, güzel ahlaktır; günah ise kalbinde rahatsızlık oluşturan ve insanların bilmesini istemediğin şeydir.",
+    "metin_en": "Righteousness is good character, and sin is that which causes unease in your heart and which you do not want people to know about.",
+    "kaynak": "Müslim, Birr 14; Tirmizi, Zühd 52",
+    "derece": "Sahih",
+    "atifUrl": "https://sunnah.com/muslim:2553",
+    "dogrulandiMi": true
   }
 ]
