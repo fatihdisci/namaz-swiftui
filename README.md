@@ -4,8 +4,9 @@ Ufuk, iOS 17 ve üzeri için geliştirilmiş Türkçe ve İngilizce bir namaz va
 
 ## Güncel durum
 
-- Pazarlama sürümü: `1.1.0` (`1.0.0` App Review sürecindeyken geliştirme dalı)
-- Xcode proje build numarası: `7`
+- App Store sürümü `1.0.0`: App Review onayı bekliyor
+- Hazır sonraki sürüm: `1.1.0` (build `7`)
+- Ana dal: `main`; `1.1.0` kaynak kodu ve mağaza build'i hazır
 - Ana uygulama: `com.vakit.app`
 - Widget: `com.vakit.app.widget`
 - Minimum iOS sürümü: `17.0`
@@ -24,7 +25,7 @@ Ufuk, iOS 17 ve üzeri için geliştirilmiş Türkçe ve İngilizce bir namaz va
 - 30 gün geçmişten 1 yıl ileriye tarih seçilebilir vakit takvimi
 - Kategorili ve aranabilir dua kütüphanesi ile cihazda saklanan favoriler
 - Cuma günü kartı, isteğe bağlı Cuma hatırlatması ve Ramazan sahur/iftar kartı
-- Home Screen widget'ı
+- Home Screen ve Lock Screen widget'ları; dinamik gökyüzü, canlı vakit ilerleme halkası ve küçük/orta/inline/circular/rectangular düzenler
 - Türkçe ve İngilizce dil desteği
 - Sign in with Apple ile isteğe bağlı hesap bağlantısı ve uygulama içinden hesap silme
 - RevenueCat üzerinden aylık, yıllık ve ömür boyu Ufuk Pro satın alımları
