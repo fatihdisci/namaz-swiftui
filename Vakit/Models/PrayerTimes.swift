@@ -76,6 +76,12 @@ struct PrayerTimes: Codable, Equatable {
 
     var isReliableForNotifications: Bool { source.isReliableForNotifications }
 
+    var isRamadan: Bool {
+        let normalized = hijriMonthName
+            .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale(identifier: "en"))
+        return normalized == "ramadan" || normalized == "ramazan"
+    }
+
     func time(for prayer: Prayer) -> Date {
         switch prayer {
         case .fajr: return fajr

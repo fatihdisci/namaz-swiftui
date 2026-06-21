@@ -83,6 +83,14 @@ struct HomeView: View {
 
                     citySelector
 
+                    if viewModel.isFriday, let times = viewModel.todaysTimes {
+                        FridayCard(dhuhrTime: times.dhuhr)
+                    }
+
+                    if let times = viewModel.todaysTimes, times.isRamadan {
+                        RamadanCard(times: times)
+                    }
+
                     VStack(spacing: 4) {
                         ForEach(Prayer.allCases) { prayer in
                             let state = viewModel.rowState(for: prayer)
@@ -126,7 +134,28 @@ struct HomeView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            HStack(spacing: 8) {
+            if let city = viewModel.currentCity {
+                NavigationLink {
+                    PrayerCalendarView(city: city)
+                } label: {
+                    hijriSummary
+                }
+            } else {
+                hijriSummary
+            }
+        }
+        .padding(10)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .strokeBorder(Color.vakitBorder, lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(0.12), radius: 18, y: 10)
+    }
+
+    private var hijriSummary: some View {
+        HStack(spacing: 8) {
                 Image(systemName: "calendar")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(Color.vakitAccent)
@@ -146,15 +175,6 @@ struct HomeView: View {
             .padding(.vertical, 7)
             .background(Color.vakitSurface)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        }
-        .padding(10)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .strokeBorder(Color.vakitBorder, lineWidth: 1)
-        )
-        .shadow(color: Color.black.opacity(0.12), radius: 18, y: 10)
     }
 
 

@@ -22,6 +22,8 @@ struct DiscoverView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     header
 
+                    duaLibraryLink
+
                     if let verse {
                         verseCard(verse)
                     }
@@ -56,6 +58,7 @@ struct DiscoverView: View {
                 .padding(.top, 100)
             }
         }
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     // MARK: - Header
@@ -71,6 +74,35 @@ struct DiscoverView: View {
                     .foregroundStyle(Color.vakitTextDim)
             }
             Spacer()
+        }
+    }
+
+    private var duaLibraryLink: some View {
+        NavigationLink {
+            DuaLibraryView()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "books.vertical.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Color.isha)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Color.isha.opacity(0.14)))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(lang.t("dua.library.title"))
+                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                    Text(lang.t("dua.library.subtitle"))
+                        .font(.footnote)
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+            .padding(16)
+            .background(Color.vakitSurface)
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(Color.vakitBorder))
         }
     }
 

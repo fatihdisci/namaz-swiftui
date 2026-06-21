@@ -84,6 +84,43 @@ struct Dua: Codable, Identifiable, Equatable {
     func text(language: String) -> String {
         language == "tr" ? textTR : textEN
     }
+
+    var category: DuaCategory {
+        switch id {
+        case "d003", "d010", "d012": return .calm
+        case "d004", "d005", "d009", "d014": return .success
+        case "d002", "d006", "d007": return .forgiveness
+        case "d008", "d013", "d015": return .family
+        case "d001", "d011": return .gratitude
+        default: return .other
+        }
+    }
+
+    func matches(_ query: String, language: String) -> Bool {
+        let normalized = query.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+        guard !normalized.isEmpty else { return true }
+        return [text(language: language), source, transliteration ?? ""]
+            .joined(separator: " ")
+            .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+            .contains(normalized)
+    }
+}
+
+enum DuaCategory: String, CaseIterable, Identifiable {
+    case all
+    case calm
+    case success
+    case forgiveness
+    case family
+    case gratitude
+    case other
+
+    var id: String { rawValue }
+    var localizationKey: String { "dua.category.\(rawValue)" }
+
+    func contains(_ dua: Dua) -> Bool {
+        self == .all || dua.category == self
+    }
 }
 
 /// Esmaül Hüsna (99 isim).

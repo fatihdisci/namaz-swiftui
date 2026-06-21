@@ -129,6 +129,27 @@ final class NotificationService {
 
                 try? await center.add(request)
             }
+
+            if storage.fridayReminderEnabled,
+               calendar.component(.weekday, from: prayerTimes.dhuhr) == 6 {
+                let triggerDate = prayerTimes.dhuhr.addingTimeInterval(-60 * 60)
+                guard triggerDate > now else { continue }
+
+                let content = UNMutableNotificationContent()
+                content.title = languageService.t("friday.notification.title")
+                content.body = languageService.t("friday.notification.body")
+                content.sound = .default
+
+                let components = calendar.dateComponents(
+                    [.year, .month, .day, .hour, .minute, .second],
+                    from: triggerDate
+                )
+                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                let identifier = "friday_\(StorageService.dateKey(for: date))"
+                try? await center.add(
+                    UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                )
+            }
         }
     }
 }

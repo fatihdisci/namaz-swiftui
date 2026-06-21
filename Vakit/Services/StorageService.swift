@@ -23,6 +23,8 @@ final class StorageService {
         static let onboardingDone = "onboarding_done"
         static let notificationSettings = "notification_settings"
         static let kazaCounts = "kaza_counts"
+        static let favoriteDuaIDs = "favorite_dua_ids"
+        static let fridayReminderEnabled = "friday_reminder_enabled"
     }
 
     private static let cacheRetentionDays = 30
@@ -269,6 +271,29 @@ final class StorageService {
         }
     }
 
+    var favoriteDuaIDs: Set<String> {
+        get { Set(defaults.stringArray(forKey: Key.favoriteDuaIDs) ?? []) }
+        set { defaults.set(Array(newValue).sorted(), forKey: Key.favoriteDuaIDs) }
+    }
+
+    func toggleFavoriteDua(id: String) {
+        var ids = favoriteDuaIDs
+        if ids.contains(id) {
+            ids.remove(id)
+        } else {
+            ids.insert(id)
+        }
+        favoriteDuaIDs = ids
+    }
+
+    var fridayReminderEnabled: Bool {
+        get {
+            guard defaults.object(forKey: Key.fridayReminderEnabled) != nil else { return false }
+            return defaults.bool(forKey: Key.fridayReminderEnabled)
+        }
+        set { defaults.set(newValue, forKey: Key.fridayReminderEnabled) }
+    }
+
     /// Beş farz vakit için kullanıcının girdiği kaza adetleri.
     var kazaCounts: KazaCounts {
         get {
@@ -350,6 +375,8 @@ extension StorageService {
             Key.onboardingDone,
             Key.notificationSettings,
             Key.kazaCounts,
+            Key.favoriteDuaIDs,
+            Key.fridayReminderEnabled,
         ]
         keysToRemove.forEach { defaults.removeObject(forKey: $0) }
 

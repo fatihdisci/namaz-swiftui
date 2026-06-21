@@ -4,6 +4,7 @@ import SwiftUI
 /// ANAYASA KURALI: Her vakit bağımsız — birini kapatmak diğerlerini etkilemez.
 struct NotificationSettingsView: View {
     @State private var settings: NotificationSettings
+    @State private var fridayReminderEnabled: Bool
 
     @Environment(LanguageService.self) private var lang
 
@@ -16,6 +17,7 @@ struct NotificationSettingsView: View {
         self.storage = storage
         self.notificationService = notificationService
         _settings = State(initialValue: storage.notificationSettings)
+        _fridayReminderEnabled = State(initialValue: storage.fridayReminderEnabled)
     }
 
     var body: some View {
@@ -27,6 +29,8 @@ struct NotificationSettingsView: View {
                     ForEach(Prayer.allCases) { prayer in
                         card(for: prayer)
                     }
+
+                    fridayReminderCard
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -105,6 +109,41 @@ struct NotificationSettingsView: View {
     }
 
     // MARK: - Helpers
+
+    private var fridayReminderCard: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "building.columns.fill")
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(Color.vakitAccent)
+                .frame(width: 40, height: 40)
+                .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(lang.t("friday.reminder.title"))
+                    .font(.system(.body, weight: .medium))
+                    .foregroundStyle(Color.vakitText)
+                Text(lang.t("friday.reminder.subtitle"))
+                    .font(.caption)
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+
+            Spacer()
+
+            Toggle("", isOn: $fridayReminderEnabled)
+                .labelsHidden()
+                .tint(Color.vakitAccent)
+                .onChange(of: fridayReminderEnabled) { _, enabled in
+                    storage.fridayReminderEnabled = enabled
+                    guard let city = storage.resolvedCity else { return }
+                    Task { await notificationService.reschedule(city: city) }
+                }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(Color.vakitSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.vakitBorder))
+    }
 
     private func minuteLabel(_ minutes: Int) -> String {
         minutes == 0

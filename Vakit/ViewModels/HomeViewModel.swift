@@ -150,6 +150,13 @@ final class HomeViewModel {
         let isNext = prayer == nextPrayer && Calendar.current.isDate(time, inSameDayAs: date)
         return (time, time <= date, isNext)
     }
+
+    var isFriday: Bool {
+        guard let city = currentCity else { return false }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
+        return calendar.component(.weekday, from: Date()) == 6
+    }
 }
 
 extension Date {

@@ -59,6 +59,35 @@ final class PrayerAccuracyTests: XCTestCase {
         XCTAssertEqual(decoded.school, AsrCalculation.standard.rawValue)
     }
 
+    func testRamadanDetectionAcceptsTurkishAndEnglishMonthNames() {
+        XCTAssertTrue(makeTimes(source: .aladhan, hijriMonth: "Ramadan").isRamadan)
+        XCTAssertTrue(makeTimes(source: .aladhan, hijriMonth: "Ramazan").isRamadan)
+        XCTAssertFalse(makeTimes(source: .aladhan, hijriMonth: "Muharram").isRamadan)
+    }
+
+    @MainActor
+    func testDuaCategoriesAndSearch() throws {
+        let calmDua = try XCTUnwrap(DailyContent.duas.first { $0.id == "d003" })
+        let knowledgeDua = try XCTUnwrap(DailyContent.duas.first { $0.id == "d005" })
+
+        XCTAssertEqual(calmDua.category, .calm)
+        XCTAssertEqual(knowledgeDua.category, .success)
+        XCTAssertTrue(calmDua.matches("ferahlık", language: "tr"))
+        XCTAssertTrue(knowledgeDua.matches("knowledge", language: "en"))
+    }
+
+    func testFavoriteDuaStorageTogglesDeterministically() throws {
+        let suiteName = "PrayerAccuracyTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let storage = StorageService(defaults: defaults)
+
+        storage.toggleFavoriteDua(id: "d003")
+        XCTAssertEqual(storage.favoriteDuaIDs, ["d003"])
+        storage.toggleFavoriteDua(id: "d003")
+        XCTAssertTrue(storage.favoriteDuaIDs.isEmpty)
+    }
+
     /// Diyanet'in 21 Haziran 2026 Ankara tablosuna karşı çevrimdışı fallback sapmasını izler.
     func testOfflineAnkaraTimesStayNearDiyanetGoldenData() throws {
         let timeZone = try XCTUnwrap(TimeZone(identifier: "Europe/Istanbul"))
@@ -83,7 +112,7 @@ final class PrayerAccuracyTests: XCTestCase {
         }
     }
 
-    private func makeTimes(source: PrayerTimeSource) -> PrayerTimes {
+    private func makeTimes(source: PrayerTimeSource, hijriMonth: String = "Ramadan") -> PrayerTimes {
         let date = Date(timeIntervalSince1970: 1_700_000_000)
         return PrayerTimes(
             date: date,
@@ -94,7 +123,7 @@ final class PrayerAccuracyTests: XCTestCase {
             maghrib: date.addingTimeInterval(14_400),
             isha: date.addingTimeInterval(18_000),
             hijriDay: "1",
-            hijriMonthName: "Ramadan",
+            hijriMonthName: hijriMonth,
             hijriYear: "1447",
             source: source
         )

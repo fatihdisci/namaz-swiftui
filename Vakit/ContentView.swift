@@ -21,7 +21,9 @@ struct ContentView: View {
                 }
                 .tag(AppTab.home)
 
-            DiscoverView()
+            NavigationStack {
+                DiscoverView()
+            }
                 .tabItem {
                     Label(lang.t("tab.discover"), systemImage: "book.fill")
                 }

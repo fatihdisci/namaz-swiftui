@@ -21,6 +21,9 @@ Ufuk, iOS 17 ve üzeri için geliştirilmiş Türkçe ve İngilizce bir namaz va
 - Vakit bazında yerel bildirimler ve bildirim öncesi hatırlatma ayarı
 - Kıble pusulası
 - Ayet, hadis, dua ve Esmaül Hüsna içerikleri; kare veya hikâye formatında paylaşım görseli
+- 30 gün geçmişten 1 yıl ileriye tarih seçilebilir vakit takvimi
+- Kategorili ve aranabilir dua kütüphanesi ile cihazda saklanan favoriler
+- Cuma günü kartı, isteğe bağlı Cuma hatırlatması ve Ramazan sahur/iftar kartı
 - Home Screen widget'ı
 - Türkçe ve İngilizce dil desteği
 - Sign in with Apple ile isteğe bağlı hesap bağlantısı ve uygulama içinden hesap silme
