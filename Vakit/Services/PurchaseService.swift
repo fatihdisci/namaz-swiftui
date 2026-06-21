@@ -29,9 +29,32 @@ final class PurchaseService {
     private(set) var products: [Product] = []
     private(set) var isLoading = false
 
+    #if DEBUG
+    private static let debugOverrideKey = "debug_pro_override"
+    var debugProOverride: Bool? = UserDefaults.standard.object(forKey: PurchaseService.debugOverrideKey) == nil
+        ? nil
+        : UserDefaults.standard.bool(forKey: PurchaseService.debugOverrideKey)
+    #endif
+
     var hasProAccess: Bool {
-        entitlementHasProAccess
+        #if DEBUG
+        if let debugProOverride {
+            return debugProOverride
+        }
+        #endif
+        return entitlementHasProAccess
     }
+
+    #if DEBUG
+    func setDebugProOverride(_ value: Bool?) {
+        debugProOverride = value
+        if let value {
+            UserDefaults.standard.set(value, forKey: Self.debugOverrideKey)
+        } else {
+            UserDefaults.standard.removeObject(forKey: Self.debugOverrideKey)
+        }
+    }
+    #endif
 
     @ObservationIgnored private var storeProducts: [ProductID: StoreProduct] = [:]
     @ObservationIgnored private var customerInfoTask: Task<Void, Never>?

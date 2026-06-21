@@ -29,6 +29,9 @@ struct SettingsView: View {
                         generalSection
                         notificationsSection
                         proSection
+                        #if DEBUG
+                        developerSection
+                        #endif
                         if !authService.isGuest {
                             accountSection
                         }
@@ -204,6 +207,29 @@ struct SettingsView: View {
             .disabled(purchaseService.hasProAccess)
         }
     }
+
+    #if DEBUG
+    // MARK: - Geliştirici (sadece DEBUG build'lerde; archive'a dahil edilmez)
+
+    private var developerSection: some View {
+        section(titleKey: "settings.developer") {
+            HStack {
+                rowLabel(icon: "hammer.fill", titleKey: "settings.developer.proOverride")
+                Spacer()
+                Toggle(
+                    "",
+                    isOn: Binding(
+                        get: { purchaseService.hasProAccess },
+                        set: { purchaseService.setDebugProOverride($0) }
+                    )
+                )
+                .labelsHidden()
+                .tint(Color.vakitAccent)
+            }
+            .padding(.vertical, 10)
+        }
+    }
+    #endif
 
     // MARK: - Hesap
 
