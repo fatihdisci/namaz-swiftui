@@ -850,5 +850,625 @@
     "ingilizce": "My Lord, expand my chest for me, make my task easy for me, and untie the knot from my tongue so they may understand my speech.",
     "kaynak": "Taha Suresi 25-28; Tirmizi, Tefsir 20",
     "referans": "https://sunnah.com/tirmidhi:3170"
+  },
+  {
+    "id": "d055",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Sabaha Erişme Duası",
+    "baslik_en": "Reaching the Morning",
+    "kategori": "morningEvening",
+    "etiketler": [
+      "sabah",
+      "zikir",
+      "mülk"
+    ],
+    "arapca": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+    "okunus": "Asbahnâ ve asbahal-mülkü lillâh, vel-hamdü lillâh, lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehül-mülkü ve lehül-hamdü ve hüve alâ külli şey'in kadîr",
+    "turkce": "Sabaha çıktık ve bütün mülk Allah'ın oldu. Hamd Allah'a aittir. Allah'tan başka ilah yoktur; O tektir, ortağı yoktur. Mülk O'nundur, hamd O'na aittir ve O her şeye gücü yetendir.",
+    "ingilizce": "We have entered the morning and the dominion belongs to Allah. Praise be to Allah. There is no god but Allah alone, with no partner; His is the dominion and His is the praise, and He has power over all things.",
+    "kaynak": "Müslim, Zikir 75 (no. 2723) — Abdullah b. Mes'ud / Ebu Hureyre",
+    "referans": "https://sunnah.com/muslim:2723"
+  },
+  {
+    "id": "d056",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Seyyidü'l-İstiğfar",
+    "baslik_en": "The Master Supplication for Forgiveness",
+    "kategori": "morningEvening",
+    "etiketler": [
+      "istiğfar",
+      "tevbe",
+      "sabah",
+      "akşam"
+    ],
+    "arapca": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+    "okunus": "Allâhümme ente rabbî lâ ilâhe illâ ente, halaktenî ve ene abdüke, ve ene alâ ahdike ve va'dike mesteta't, eûzü bike min şerri mâ sana't, ebûü leke bi-ni'metike aleyye ve ebûü leke bi-zenbî, fağfir lî fe-innehû lâ yağfiru'z-zünûbe illâ ente",
+    "turkce": "Allah'ım! Sen benim Rabbimsin, Senden başka ilah yoktur. Beni Sen yarattın, ben Senin kulunum. Gücüm yettiğince Sana verdiğim söz ve ahit üzereyim. Yaptıklarımın şerrinden Sana sığınırım. Bana olan nimetini kabul ediyor, günahımı da itiraf ediyorum. Beni bağışla; çünkü günahları Senden başka bağışlayan yoktur.",
+    "ingilizce": "O Allah, You are my Lord, there is no god but You. You created me and I am Your servant. I keep Your covenant and promise as much as I can. I seek refuge in You from the evil I have done. I acknowledge Your favor upon me and I confess my sin, so forgive me, for none forgives sins but You.",
+    "kaynak": "Buhârî, Daavât 2 (no. 6306) — Şeddâd b. Evs (Sahih)",
+    "referans": "https://sunnah.com/bukhari:6306"
+  },
+  {
+    "id": "d057",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Sabah-Akşam Tevekkül Duası",
+    "baslik_en": "Morning and Evening Reliance",
+    "kategori": "morningEvening",
+    "etiketler": [
+      "sabah",
+      "akşam",
+      "tevekkül"
+    ],
+    "arapca": "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+    "okunus": "Allâhümme bike asbahnâ ve bike emseynâ, ve bike nahyâ ve bike nemûtü ve ileyke'n-nüşûr",
+    "turkce": "Allah'ım! Senin (yardımınla) sabaha çıktık, Senin (yardımınla) akşama erdik. Seninle yaşar, Seninle ölürüz ve dönüş yalnız Sanadır.",
+    "ingilizce": "O Allah, by You we enter the morning and by You we enter the evening, by You we live and by You we die, and to You is the resurrection.",
+    "kaynak": "Tirmizî, Deavât 13 (no. 3391); Ebu Davud 5068 (Hasen)",
+    "referans": "https://sunnah.com/tirmidhi:3391"
+  },
+  {
+    "id": "d058",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Rab, Din ve Peygambere Razı Olma",
+    "baslik_en": "Contentment with Allah, Islam and the Prophet",
+    "kategori": "morningEvening",
+    "etiketler": [
+      "sabah",
+      "akşam",
+      "iman",
+      "rıza"
+    ],
+    "arapca": "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا",
+    "okunus": "Radîtü billâhi Rabben, ve bi'l-İslâmi dînen, ve bi-Muhammedin sallallâhu aleyhi ve sellem nebiyyâ",
+    "turkce": "Rab olarak Allah'tan, din olarak İslam'dan ve peygamber olarak Muhammed'den (s.a.v.) razı oldum.",
+    "ingilizce": "I am content with Allah as Lord, with Islam as religion, and with Muhammad (peace be upon him) as Prophet.",
+    "kaynak": "Ebu Davud, Edeb 110 (no. 5072); Tirmizî 3389 — sabah-akşam üç kez",
+    "referans": "https://sunnah.com/abudawud:5072"
+  },
+  {
+    "id": "d059",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Kendini Allah'a Teslim Etme",
+    "baslik_en": "Submitting Oneself to Allah",
+    "kategori": "sleep",
+    "etiketler": [
+      "uyku",
+      "teslimiyet",
+      "iman"
+    ],
+    "arapca": "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ",
+    "okunus": "Allâhümme eslemtü nefsî ileyke, ve fevvadtü emrî ileyke, ve veccehtü vechî ileyke, ve elce'tü zahrî ileyke, rağbeten ve rehbeten ileyke, lâ melcee ve lâ mencâ minke illâ ileyke, âmentü bi-kitâbike'llezî enzelte ve bi-nebiyyike'llezî erselte",
+    "turkce": "Allah'ım! Kendimi Sana teslim ettim, işimi Sana havale ettim, yüzümü Sana çevirdim, sırtımı Sana dayadım; Sana rağbet ederek ve Senden korkarak. Senden kaçıp sığınılacak yer yine ancak Sensin. İndirdiğin kitabına ve gönderdiğin peygamberine iman ettim.",
+    "ingilizce": "O Allah, I submit myself to You, entrust my affair to You, turn my face to You, and rely upon You, in hope and fear of You. There is no refuge or escape from You except to You. I believe in Your Book which You revealed and in Your Prophet whom You sent.",
+    "kaynak": "Buhârî, Vudû 75 (no. 247); Müslim, Zikir 56 (no. 2710) — Berâ b. Âzib",
+    "referans": "https://sunnah.com/bukhari:247"
+  },
+  {
+    "id": "d060",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Kıyamet Azabından Korunma (Yatarken)",
+    "baslik_en": "Protection from Punishment at Bedtime",
+    "kategori": "sleep",
+    "etiketler": [
+      "uyku",
+      "korunma",
+      "ahiret"
+    ],
+    "arapca": "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ",
+    "okunus": "Allâhümme kınî azâbeke yevme teb'asü ibâdek",
+    "turkce": "Allah'ım! Kullarını dirilteceğin gün beni azabından koru.",
+    "ingilizce": "O Allah, protect me from Your punishment on the Day You resurrect Your servants.",
+    "kaynak": "Ebu Davud, Edeb 107 (no. 5045); Tirmizî 3398 — Hafsa / Berâ (üç kez)",
+    "referans": "https://sunnah.com/abudawud:5045"
+  },
+  {
+    "id": "d061",
+    "tip": "sabah_akşam",
+    "baslik_tr": "Yanını Yatağa Koyarken",
+    "baslik_en": "Lying Down to Rest",
+    "kategori": "sleep",
+    "etiketler": [
+      "uyku",
+      "rahmet",
+      "korunma"
+    ],
+    "arapca": "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ",
+    "okunus": "Bismike Rabbî veda'tü cenbî, ve bike erfeuhû, in emsekte nefsî ferhamhâ, ve in erseltehâ fahfazhâ bimâ tahfazu bihî ibâdeke's-sâlihîn",
+    "turkce": "Rabbim! Senin adınla yanımı (yatağa) koydum ve Senin adınla onu kaldırırım. Eğer canımı alırsan ona merhamet et; eğer (uyandırıp) salıverirsen, salih kullarını koruduğun gibi onu koru.",
+    "ingilizce": "In Your name, my Lord, I lay down my side, and by You I raise it up. If You take my soul, have mercy on it; and if You release it, protect it as You protect Your righteous servants.",
+    "kaynak": "Buhârî, Daavât 13 (no. 6320); Müslim, Zikir 64 (no. 2714) — Ebu Hureyre",
+    "referans": "https://sunnah.com/bukhari:6320"
+  },
+  {
+    "id": "d062",
+    "tip": "özel_durum",
+    "baslik_tr": "Hasta İçin Şifa Duası",
+    "baslik_en": "Healing Prayer for the Sick",
+    "kategori": "healing",
+    "etiketler": [
+      "şifa",
+      "hastalık",
+      "rahmet"
+    ],
+    "arapca": "اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا",
+    "okunus": "Allâhümme Rabbe'n-nâs, ezhibi'l-be's, işfi ente'ş-Şâfî, lâ şifâe illâ şifâüke, şifâen lâ yügâdiru sekamâ",
+    "turkce": "Ey insanların Rabbi olan Allah'ım! Bu hastalığı gider, şifa ver; şifa veren yalnız Sensin. Senin şifandan başka şifa yoktur. Öyle bir şifa ver ki hiçbir hastalık bırakmasın.",
+    "ingilizce": "O Allah, Lord of mankind, remove the affliction and grant healing — You are the Healer. There is no healing but Your healing, a healing that leaves no illness behind.",
+    "kaynak": "Buhârî, Tıb 38 (no. 5743); Müslim, Selâm 46 (no. 2191) — Hz. Âişe",
+    "referans": "https://sunnah.com/bukhari:5743"
+  },
+  {
+    "id": "d063",
+    "tip": "özel_durum",
+    "baslik_tr": "Vücuttaki Ağrı İçin",
+    "baslik_en": "For Pain in the Body",
+    "kategori": "healing",
+    "etiketler": [
+      "şifa",
+      "ağrı",
+      "korunma"
+    ],
+    "arapca": "بِسْمِ اللَّهِ (ثَلَاثًا) أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (سَبْعًا)",
+    "okunus": "Bismillâh (üç kez). Eûzü billâhi ve kudratihî min şerri mâ ecidü ve ühâzir (yedi kez)",
+    "turkce": "Allah'ın adıyla (üç kez). Hissettiğim ve çekindiğim şeyin şerrinden Allah'a ve O'nun kudretine sığınırım (yedi kez).",
+    "ingilizce": "In the name of Allah (3 times). I seek refuge in Allah and His power from the evil of what I find and fear (7 times).",
+    "kaynak": "Müslim, Selâm 16 (no. 2202) — Osman b. Ebi'l-Âs; ağrıyan yere el konularak",
+    "referans": "https://sunnah.com/muslim:2202"
+  },
+  {
+    "id": "d064",
+    "tip": "özel_durum",
+    "baslik_tr": "Hastayı Teselli Sözü",
+    "baslik_en": "Reassurance for the Sick",
+    "kategori": "healing",
+    "etiketler": [
+      "şifa",
+      "teselli",
+      "sabır"
+    ],
+    "arapca": "لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
+    "okunus": "Lâ be'se tahûrun inşâallâh",
+    "turkce": "Zararı yok; inşaallah (günahlardan) temizleyici olur.",
+    "ingilizce": "No harm; it is a purification (from sins), if Allah wills.",
+    "kaynak": "Buhârî, Tıb 10 (no. 3616) — İbn Abbâs",
+    "referans": "https://sunnah.com/bukhari:3616"
+  },
+  {
+    "id": "d065",
+    "tip": "özel_durum",
+    "baslik_tr": "Hz. İbrahim'in Şifa Sözü (Kur'an)",
+    "baslik_en": "Ibrahim's Words on Healing (Quran)",
+    "kategori": "healing",
+    "etiketler": [
+      "şifa",
+      "Kur'an",
+      "tevhid"
+    ],
+    "arapca": "وَإِذَا مَرِضْتُ فَهُوَ يَشْفِينِ",
+    "okunus": "Ve izâ maridtü fe hüve yeşfîn",
+    "turkce": "Hastalandığımda bana şifa veren O'dur.",
+    "ingilizce": "And when I am ill, it is He who cures me.",
+    "kaynak": "Kur'an-ı Kerim, Şuarâ sûresi, 80. ayet",
+    "referans": "https://quran.com/26/80"
+  },
+  {
+    "id": "d066",
+    "tip": "özel_durum",
+    "baslik_tr": "Musibet Anında (İstircâ)",
+    "baslik_en": "When Struck by Calamity",
+    "kategori": "patience",
+    "etiketler": [
+      "sabır",
+      "musibet",
+      "teslimiyet"
+    ],
+    "arapca": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا",
+    "okunus": "İnnâ lillâhi ve innâ ileyhi râciûn. Allâhümme'cürnî fî musîbetî ve ahlif lî hayran minhâ",
+    "turkce": "Biz Allah'a aitiz ve elbette O'na döneceğiz. Allah'ım! Bu musibetime karşılık beni mükâfatlandır ve bana ondan daha hayırlısını ver.",
+    "ingilizce": "Indeed we belong to Allah and to Him we shall return. O Allah, reward me in my affliction and replace it for me with something better.",
+    "kaynak": "Müslim, Cenâiz 4 (no. 918) — Ümmü Seleme",
+    "referans": "https://sunnah.com/muslim:918a"
+  },
+  {
+    "id": "d067",
+    "tip": "özel_durum",
+    "baslik_tr": "Sabredenlerin Sözü (Kur'an)",
+    "baslik_en": "The Words of the Patient (Quran)",
+    "kategori": "patience",
+    "etiketler": [
+      "sabır",
+      "Kur'an",
+      "musibet"
+    ],
+    "arapca": "الَّذِينَ إِذَا أَصَابَتْهُمْ مُصِيبَةٌ قَالُوا إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
+    "okunus": "Ellezîne izâ esâbethüm musîbetün kâlû innâ lillâhi ve innâ ileyhi râciûn",
+    "turkce": "Onlar, başlarına bir musibet geldiğinde 'Biz Allah'a aitiz ve elbette O'na döneceğiz' derler.",
+    "ingilizce": "Who, when disaster strikes them, say, 'Indeed we belong to Allah, and indeed to Him we will return.'",
+    "kaynak": "Kur'an-ı Kerim, Bakara sûresi, 156. ayet",
+    "referans": "https://quran.com/2/156"
+  },
+  {
+    "id": "d068",
+    "tip": "özel_durum",
+    "baslik_tr": "Sıkıntı Anında Yardım Dileme",
+    "baslik_en": "Seeking Help in Distress",
+    "kategori": "patience",
+    "etiketler": [
+      "sabır",
+      "sıkıntı",
+      "rahmet"
+    ],
+    "arapca": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ",
+    "okunus": "Yâ Hayyu yâ Kayyûmu bi-rahmetike estegîs, aslih lî şe'nî küllehû ve lâ tekilnî ilâ nefsî tarfete ayn",
+    "turkce": "Ey diri ve her şeyi ayakta tutan Allah'ım! Rahmetinle Senden yardım diliyorum. Bütün işlerimi düzelt ve beni göz açıp kapayıncaya kadar bile nefsime bırakma.",
+    "ingilizce": "O Ever-Living, O Sustainer, by Your mercy I seek help. Rectify all my affairs and do not leave me to myself even for the blink of an eye.",
+    "kaynak": "Nesâî, Amelü'l-Yevm ve'l-Leyle (no. 575); Hâkim, Müstedrek — Enes b. Mâlik (Elbânî hasen)",
+    "referans": "https://sunnah.com/hisn:39"
+  },
+  {
+    "id": "d069",
+    "tip": "özel_durum",
+    "baslik_tr": "Yeterlilik ve Tevekkül",
+    "baslik_en": "Sufficiency and Trust",
+    "kategori": "patience",
+    "etiketler": [
+      "sabır",
+      "tevekkül",
+      "iman"
+    ],
+    "arapca": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+    "okunus": "Hasbünallâhu ve ni'me'l-vekîl",
+    "turkce": "Allah bize yeter; O ne güzel vekildir.",
+    "ingilizce": "Allah is sufficient for us, and He is the best Disposer of affairs.",
+    "kaynak": "Buhârî, Tefsir 4/13 (no. 4563) — İbn Abbâs; ayrıca Kur'an, Âl-i İmrân 173",
+    "referans": "https://sunnah.com/bukhari:4563"
+  },
+  {
+    "id": "d070",
+    "tip": "günlük",
+    "baslik_tr": "Yemek İkram Edene Dua",
+    "baslik_en": "Supplication for the One Who Provides Food",
+    "kategori": "sustenance",
+    "etiketler": [
+      "yemek",
+      "bereket",
+      "dua"
+    ],
+    "arapca": "اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُمْ، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ",
+    "okunus": "Allâhümme bârik lehüm fîmâ razaktehüm, vağfir lehüm verhamhüm",
+    "turkce": "Allah'ım! Onlara rızık olarak verdiklerini bereketli kıl, onları bağışla ve onlara merhamet et.",
+    "ingilizce": "O Allah, bless them in what You have provided them, forgive them, and have mercy on them.",
+    "kaynak": "Müslim, Eşribe 32 (no. 2042) — Abdullah b. Büsr; yemek ikram edene okunur",
+    "referans": "https://sunnah.com/muslim:2042"
+  },
+  {
+    "id": "d071",
+    "tip": "günlük",
+    "baslik_tr": "Yemekten Sonra Şükür",
+    "baslik_en": "Gratitude After Eating",
+    "kategori": "sustenance",
+    "etiketler": [
+      "yemek",
+      "şükür",
+      "rızık"
+    ],
+    "arapca": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+    "okunus": "Elhamdü lillâhillezî at'amenâ ve sekânâ ve cealenâ müslimîn",
+    "turkce": "Bize yediren, içiren ve bizi Müslümanlardan kılan Allah'a hamdolsun.",
+    "ingilizce": "All praise is for Allah who fed us, gave us drink, and made us Muslims.",
+    "kaynak": "Ebu Davud, Et'ime 53 (no. 3850); Tirmizî 3457 — Ebu Saîd el-Hudrî (Elbânî sahih)",
+    "referans": "https://sunnah.com/abudawud:3850"
+  },
+  {
+    "id": "d072",
+    "tip": "günlük",
+    "baslik_tr": "Helal Rızık ve Borçtan Kurtuluş",
+    "baslik_en": "Halal Provision and Relief from Debt",
+    "kategori": "sustenance",
+    "etiketler": [
+      "rızık",
+      "bereket",
+      "borç"
+    ],
+    "arapca": "اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ",
+    "okunus": "Allâhümme'kfinî bi-halâlike an harâmike, ve agninî bi-fadlike ammen sivâk",
+    "turkce": "Allah'ım! Helalinle yetindirip beni haramından koru ve lütfunla beni Senden başkasına muhtaç etme.",
+    "ingilizce": "O Allah, suffice me with what You have made lawful instead of what You have forbidden, and enrich me by Your bounty so I have no need of anyone besides You.",
+    "kaynak": "Tirmizî, Deavât 110 (no. 3563); Riyâzü's-Sâlihîn 1486 — Hz. Ali (Hasen)",
+    "referans": "https://sunnah.com/tirmidhi:3563"
+  },
+  {
+    "id": "d073",
+    "tip": "günlük",
+    "baslik_tr": "Yemeğe Başlarken",
+    "baslik_en": "Before Beginning to Eat",
+    "kategori": "sustenance",
+    "etiketler": [
+      "yemek",
+      "besmele",
+      "bereket"
+    ],
+    "arapca": "بِسْمِ اللَّهِ، فَإِنْ نَسِيَ: بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ",
+    "okunus": "Bismillâh; (unutulursa) Bismillâhi evvelehû ve âhirahû",
+    "turkce": "Allah'ın adıyla. (Başında söylemeyi unutursa:) Başında da sonunda da Allah'ın adıyla.",
+    "ingilizce": "In the name of Allah. (If forgotten at the start:) In the name of Allah at its beginning and its end.",
+    "kaynak": "Buhârî, Et'ime 2 (no. 5376) — Ömer b. Ebî Seleme; unutma için Ebu Davud 3767, Tirmizî 1858",
+    "referans": "https://sunnah.com/bukhari:5376"
+  },
+  {
+    "id": "d074",
+    "tip": "özel_durum",
+    "baslik_tr": "Yolda ve Ailede Koruyucu Allah",
+    "baslik_en": "Allah as Companion and Guardian",
+    "kategori": "travel",
+    "etiketler": [
+      "yolculuk",
+      "aile",
+      "korunma"
+    ],
+    "arapca": "اللَّهُمَّ أَنْتَ الصَّاحِبُ فِي السَّفَرِ وَالْخَلِيفَةُ فِي الْأَهْلِ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ وَعْثَاءِ السَّفَرِ وَكَآبَةِ الْمَنْظَرِ وَسُوءِ الْمُنْقَلَبِ فِي الْمَالِ وَالْأَهْلِ",
+    "okunus": "Allâhümme ente's-sâhibü fi's-seferi ve'l-halîfetü fi'l-ehl, Allâhümme innî eûzü bike min va'sâi's-seferi ve keâbeti'l-manzari ve sûi'l-münkalebi fi'l-mâli ve'l-ehl",
+    "turkce": "Allah'ım! Yolculukta arkadaş, geride kalan ailede koruyucu Sensin. Allah'ım! Yolculuğun zorluğundan, üzücü manzaradan, malda ve ailede kötü bir sonla dönmekten Sana sığınırım.",
+    "ingilizce": "O Allah, You are the Companion on the journey and the Guardian of the family. O Allah, I seek refuge in You from the hardship of travel, distressing sights, and an evil return in property and family.",
+    "kaynak": "Müslim, Hac 425 (no. 1342) — İbn Ömer",
+    "referans": "https://sunnah.com/muslim:1342"
+  },
+  {
+    "id": "d075",
+    "tip": "korunma",
+    "baslik_tr": "Evden Çıkarken",
+    "baslik_en": "Leaving the Home",
+    "kategori": "protection",
+    "etiketler": [
+      "korunma",
+      "evden çıkış",
+      "tevekkül"
+    ],
+    "arapca": "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+    "okunus": "Bismillâhi tevekkeltü alallâh, lâ havle ve lâ kuvvete illâ billâh",
+    "turkce": "Allah'ın adıyla; Allah'a tevekkül ettim. Güç ve kuvvet ancak Allah iledir.",
+    "ingilizce": "In the name of Allah, I place my trust in Allah; there is no might nor power except with Allah.",
+    "kaynak": "Ebu Davud, Edeb 112 (no. 5095); Tirmizî 3426 — Enes b. Mâlik (Elbânî sahih)",
+    "referans": "https://sunnah.com/abudawud:5095"
+  },
+  {
+    "id": "d076",
+    "tip": "korunma",
+    "baslik_tr": "Nazar ve Şeytandan Korunma",
+    "baslik_en": "Protection from the Evil Eye and Devils",
+    "kategori": "protection",
+    "etiketler": [
+      "nazar",
+      "korunma",
+      "çocuk"
+    ],
+    "arapca": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ",
+    "okunus": "Eûzü bi-kelimâtillâhi't-tâmmeti min külli şeytânin ve hâmmeh, ve min külli aynin lâmmeh",
+    "turkce": "Allah'ın eksiksiz kelimelerine sığınırım; her şeytandan, her zehirli/zararlı canlıdan ve her kötü, kem gözden.",
+    "ingilizce": "I seek refuge in the perfect words of Allah from every devil and every poisonous creature, and from every evil, harmful eye.",
+    "kaynak": "Buhârî, Enbiyâ 10 (no. 3371) — İbn Abbâs; Hz. Peygamber'in Hasan ve Hüseyin'e okuduğu dua",
+    "referans": "https://sunnah.com/bukhari:3371"
+  },
+  {
+    "id": "d077",
+    "tip": "korunma",
+    "baslik_tr": "Faydasız İlim ve Kabul Olmayan Duadan Sığınma",
+    "baslik_en": "Refuge from Useless Knowledge and Unanswered Prayer",
+    "kategori": "protection",
+    "etiketler": [
+      "korunma",
+      "ilim",
+      "kalp"
+    ],
+    "arapca": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَعُ، وَمِنْ قَلْبٍ لَا يَخْشَعُ، وَمِنْ نَفْسٍ لَا تَشْبَعُ، وَمِنْ دَعْوَةٍ لَا يُسْتَجَابُ لَهَا",
+    "okunus": "Allâhümme innî eûzü bike min ilmin lâ yenfe', ve min kalbin lâ yahşa', ve min nefsin lâ teşba', ve min da'vetin lâ yüstecâbü lehâ",
+    "turkce": "Allah'ım! Fayda vermeyen ilimden, ürpermeyen kalpten, doymayan nefisten ve kabul edilmeyen duadan Sana sığınırım.",
+    "ingilizce": "O Allah, I seek refuge in You from knowledge that does not benefit, a heart that does not fear You, a soul that is never satisfied, and a supplication that is not answered.",
+    "kaynak": "Müslim, Zikir 18 (no. 2722) — Zeyd b. Erkam",
+    "referans": "https://sunnah.com/muslim:2722"
+  },
+  {
+    "id": "d078",
+    "tip": "özel_durum",
+    "baslik_tr": "Hz. Yunus'un Duası (Sıkıntı Anında)",
+    "baslik_en": "The Supplication of Yunus (in Distress)",
+    "kategori": "calm",
+    "etiketler": [
+      "huzur",
+      "sıkıntı",
+      "tevhid",
+      "Kur'an"
+    ],
+    "arapca": "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
+    "okunus": "Lâ ilâhe illâ ente sübhâneke innî küntü mine'z-zâlimîn",
+    "turkce": "Senden başka ilah yoktur. Seni tüm eksikliklerden tenzih ederim. Şüphesiz ben zalimlerden oldum.",
+    "ingilizce": "There is no god but You; glory be to You. Indeed, I was among the wrongdoers.",
+    "kaynak": "Tirmizî, Deavât 81 (no. 3505) — Sa'd b. Ebî Vakkâs; ayrıca Kur'an, Enbiyâ 87",
+    "referans": "https://sunnah.com/tirmidhi:3505"
+  },
+  {
+    "id": "d079",
+    "tip": "özel_durum",
+    "baslik_tr": "Zorluğu Kolaylaştırma Duası",
+    "baslik_en": "Making the Difficult Easy",
+    "kategori": "calm",
+    "etiketler": [
+      "huzur",
+      "kolaylık",
+      "stres"
+    ],
+    "arapca": "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا",
+    "okunus": "Allâhümme lâ sehle illâ mâ cealtehû sehlâ, ve ente tec'alü'l-hazne izâ şi'te sehlâ",
+    "turkce": "Allah'ım! Senin kolaylaştırdığından başka kolay bir şey yoktur. Dilersen zoru da kolay kılarsın.",
+    "ingilizce": "O Allah, there is no ease except in what You make easy, and You make the difficult easy if You will.",
+    "kaynak": "Sahîh İbn Hibbân (no. 2427); İbnü's-Sünnî no. 351 — Enes b. Mâlik (İbn Hacer ve Elbânî sahih kabul etti; Silsiletü's-Sahîha 2886)",
+    "referans": "https://sunnah.com/hisn:262"
+  },
+  {
+    "id": "d080",
+    "tip": "özel_durum",
+    "baslik_tr": "Faydalı İlim ve Helal Rızık İsteme",
+    "baslik_en": "Beneficial Knowledge and Good Provision",
+    "kategori": "success",
+    "etiketler": [
+      "ilim",
+      "başarı",
+      "rızık",
+      "amel"
+    ],
+    "arapca": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
+    "okunus": "Allâhümme innî es'elüke ilmen nâfia, ve rızkan tayyiba, ve amelen mütekabbelâ",
+    "turkce": "Allah'ım! Senden faydalı ilim, helal rızık ve kabul edilen amel isterim.",
+    "ingilizce": "O Allah, I ask You for beneficial knowledge, good provision, and accepted deeds.",
+    "kaynak": "İbn Mâce, İkâmetü's-Salât 32 (no. 925) — Ümmü Seleme (Elbânî sahih)",
+    "referans": "https://sunnah.com/ibnmajah:925"
+  },
+  {
+    "id": "d081",
+    "tip": "özel_durum",
+    "baslik_tr": "Tevbe ve İstiğfar",
+    "baslik_en": "Repentance and Seeking Forgiveness",
+    "kategori": "forgiveness",
+    "etiketler": [
+      "istiğfar",
+      "tevbe",
+      "bağışlanma"
+    ],
+    "arapca": "أَسْتَغْفِرُ اللَّهَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+    "okunus": "Estağfirullâhellezî lâ ilâhe illâ hüve'l-Hayyu'l-Kayyûmu ve etûbü ileyh",
+    "turkce": "Kendisinden başka ilah olmayan, diri ve her şeyi ayakta tutan Allah'tan bağışlanma diler ve O'na tevbe ederim.",
+    "ingilizce": "I seek the forgiveness of Allah, besides whom there is no god, the Ever-Living, the Self-Sustaining, and I turn to Him in repentance.",
+    "kaynak": "Ebu Davud, Vitr 26 (no. 1517) — Zeyd (Hz. Peygamber'in azatlısı) (Elbânî sahih); Tirmizî 3577",
+    "referans": "https://sunnah.com/abudawud:1517"
+  },
+  {
+    "id": "d082",
+    "tip": "özel_durum",
+    "baslik_tr": "Bağışlanma ve Tevbenin Kabulü",
+    "baslik_en": "Forgiveness and Acceptance of Repentance",
+    "kategori": "forgiveness",
+    "etiketler": [
+      "istiğfar",
+      "tevbe",
+      "bağışlanma"
+    ],
+    "arapca": "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
+    "okunus": "Rabbi'ğfir lî ve tüb aleyye inneke ente't-Tevvâbu'r-Rahîm",
+    "turkce": "Rabbim! Beni bağışla ve tevbemi kabul et. Şüphesiz Sen tevbeleri çok kabul eden, çok merhametli olansın.",
+    "ingilizce": "My Lord, forgive me and accept my repentance; indeed You are the Ever-Relenting, the Most Merciful.",
+    "kaynak": "İbn Mâce, Edeb 57 (no. 3814) — İbn Ömer (Elbânî sahih); Hz. Peygamber bir mecliste yüz kez söylerdi (Ebu Davud 1516, Tirmizî 3434)",
+    "referans": "https://sunnah.com/ibnmajah:3814"
+  },
+  {
+    "id": "d083",
+    "tip": "günlük",
+    "baslik_tr": "Anne-Baba İçin Dua (Kur'an)",
+    "baslik_en": "Supplication for Parents (Quran)",
+    "kategori": "family",
+    "etiketler": [
+      "aile",
+      "anne-baba",
+      "rahmet",
+      "Kur'an"
+    ],
+    "arapca": "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+    "okunus": "Rabbi'rhamhümâ kemâ rabbeyânî sagîrâ",
+    "turkce": "Rabbim! Onlar beni küçükken (şefkatle) büyüttükleri gibi Sen de onlara merhamet et.",
+    "ingilizce": "My Lord, have mercy upon them as they raised me when I was small.",
+    "kaynak": "Kur'an-ı Kerim, İsrâ sûresi, 24. ayet",
+    "referans": "https://quran.com/17/24"
+  },
+  {
+    "id": "d084",
+    "tip": "günlük",
+    "baslik_tr": "Kendisi ve Anne-Babası İçin Mağfiret (Kur'an)",
+    "baslik_en": "Forgiveness for Oneself and Parents (Quran)",
+    "kategori": "family",
+    "etiketler": [
+      "aile",
+      "anne-baba",
+      "mağfiret",
+      "Kur'an"
+    ],
+    "arapca": "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ",
+    "okunus": "Rabbi'ğfir lî ve li-vâlideyye ve li'l-mü'minîne yevme yekûmü'l-hisâb",
+    "turkce": "Rabbim! Hesabın görüleceği gün beni, anne-babamı ve müminleri bağışla.",
+    "ingilizce": "My Lord, forgive me and my parents and the believers on the Day the account is established.",
+    "kaynak": "Kur'an-ı Kerim, İbrâhîm sûresi, 41. ayet",
+    "referans": "https://quran.com/14/41"
+  },
+  {
+    "id": "d085",
+    "tip": "ibadet",
+    "baslik_tr": "Namaz Sonrası Tesbih",
+    "baslik_en": "Glorification After Prayer",
+    "kategori": "gratitude",
+    "etiketler": [
+      "şükür",
+      "tesbih",
+      "namaz sonrası",
+      "zikir"
+    ],
+    "arapca": "سُبْحَانَ اللَّهِ (ثَلَاثًا وَثَلَاثِينَ) وَالْحَمْدُ لِلَّهِ (ثَلَاثًا وَثَلَاثِينَ) وَاللَّهُ أَكْبَرُ (ثَلَاثًا وَثَلَاثِينَ)",
+    "okunus": "Sübhânallâh (33), elhamdü lillâh (33), Allâhu ekber (33)",
+    "turkce": "Allah'ı tüm eksikliklerden tenzih ederim (33 kez), Allah'a hamdolsun (33 kez), Allah en büyüktür (33 kez).",
+    "ingilizce": "Glory be to Allah (33 times), praise be to Allah (33 times), Allah is the Greatest (33 times).",
+    "kaynak": "Müslim, Mesâcid 146 (no. 597) — Ebu Hureyre; her farz namazdan sonra",
+    "referans": "https://sunnah.com/muslim:597"
+  },
+  {
+    "id": "d086",
+    "tip": "ibadet",
+    "baslik_tr": "Namazdan Sonra (Selam Verince)",
+    "baslik_en": "After the Prayer (Following the Taslim)",
+    "kategori": "worship",
+    "etiketler": [
+      "ibadet",
+      "namaz sonrası",
+      "selam"
+    ],
+    "arapca": "اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ",
+    "okunus": "Allâhümme ente's-selâmü ve minke's-selâm, tebârekte yâ Ze'l-Celâli ve'l-İkrâm",
+    "turkce": "Allah'ım! Selam (esenlik) Sensin, esenlik yalnız Sendendir. Ey azamet ve ikram sahibi, Sen pek yücesin.",
+    "ingilizce": "O Allah, You are Peace and from You comes peace. Blessed are You, O Possessor of Majesty and Honor.",
+    "kaynak": "Müslim, Mesâcid 135 (no. 591) — Sevbân; farz namazın selamından sonra (üç kez istiğfardan sonra)",
+    "referans": "https://sunnah.com/muslim:591"
+  },
+  {
+    "id": "d087",
+    "tip": "ibadet",
+    "baslik_tr": "Telbiye (Hac ve Umre)",
+    "baslik_en": "The Talbiyah (Hajj and Umrah)",
+    "kategori": "worship",
+    "etiketler": [
+      "ibadet",
+      "hac",
+      "umre",
+      "telbiye"
+    ],
+    "arapca": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
+    "okunus": "Lebbeyk Allâhümme lebbeyk, lebbeyke lâ şerîke leke lebbeyk, inne'l-hamde ve'n-ni'mete leke ve'l-mülk, lâ şerîke lek",
+    "turkce": "Buyur Allah'ım, buyur! Buyur, Senin hiçbir ortağın yoktur, buyur! Şüphesiz hamd, nimet ve mülk Sana aittir. Senin ortağın yoktur.",
+    "ingilizce": "Here I am, O Allah, here I am. Here I am, You have no partner, here I am. Indeed all praise, grace, and dominion belong to You. You have no partner.",
+    "kaynak": "Buhârî, Hac 26 (no. 1549); Müslim, Hac 19 (no. 1184) — İbn Ömer",
+    "referans": "https://sunnah.com/bukhari:1549"
+  },
+  {
+    "id": "d088",
+    "tip": "günlük",
+    "baslik_tr": "Güç ve Kuvvet Yalnız Allah'tandır",
+    "baslik_en": "There Is No Power Except with Allah",
+    "kategori": "other",
+    "etiketler": [
+      "zikir",
+      "tevekkül",
+      "cennet hazinesi"
+    ],
+    "arapca": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+    "okunus": "Lâ havle ve lâ kuvvete illâ billâh",
+    "turkce": "Güç ve kuvvet ancak Allah iledir.",
+    "ingilizce": "There is no might nor power except with Allah.",
+    "kaynak": "Buhârî, Daavât 50 (no. 6384); Müslim, Zikir 44 (no. 2704) — Ebu Musa el-Eş'arî; cennet hazinelerinden biri",
+    "referans": "https://sunnah.com/bukhari:6384"
   }
 ]
