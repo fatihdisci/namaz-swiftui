@@ -4,7 +4,7 @@
 
 - Uygulama adı: Ufuk - Namaz Vakitleri
 - Bundle ID: `com.vakit.app`
-- Sürüm: `1.1.0`
+- Sürüm: `1.0.0`
 - Build: `27`
 - Birincil kategori: Utilities
 - İkincil kategori: Reference
