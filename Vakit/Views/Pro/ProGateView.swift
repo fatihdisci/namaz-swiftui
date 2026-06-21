@@ -286,12 +286,11 @@ struct ProGateView: View {
 
             purchaseButton
 
-            HStack(spacing: 12) {
+            VStack(spacing: 8) {
                 restoreButton
-                Text("·")
-                    .foregroundStyle(Color.vakitTextDim)
                 legalLinks
             }
+            .frame(maxWidth: .infinity)
         }
         .padding(.horizontal, 20)
         .padding(.top, 14)

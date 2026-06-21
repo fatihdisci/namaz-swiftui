@@ -26,6 +26,9 @@ Pods/
 # macOS
 .DS_Store
 
+# Claude Code local session files
+.claude/
+
 # Secrets / local config
 *.xcconfig.local
 Config/Secrets.xcconfig
