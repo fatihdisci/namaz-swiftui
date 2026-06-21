@@ -1,5 +1,4 @@
 import SwiftUI
-import AuthenticationServices
 
 enum ProGateContext {
     case general
@@ -77,7 +76,6 @@ struct ProGateView: View {
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
-    @Environment(AuthService.self) private var authService
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedProductID: PurchaseService.ProductID = .yearly
@@ -107,6 +105,7 @@ struct ProGateView: View {
                     VStack(spacing: 16) {
                         header
                         productCards
+                        purchaseDetails
                         features
                     }
                     .padding(.horizontal, 20)
@@ -197,6 +196,21 @@ struct ProGateView: View {
             productCard(id: .yearly, titleKey: "pro.yearly", isPopular: true)
             productCard(id: .lifetime, titleKey: "pro.lifetime")
         }
+    }
+
+    private var purchaseDetails: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(lang.t("pro.noAccountRequired"), systemImage: "person.crop.circle.badge.checkmark")
+                .foregroundStyle(Color.vakitAccent)
+
+            if selectedProductID != .lifetime {
+                Text(lang.t("pro.cancellationPolicy"))
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+        }
+        .font(.caption)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 4)
     }
 
     private func productCard(
@@ -291,46 +305,24 @@ struct ProGateView: View {
     }
 
     private var purchaseButton: some View {
-        Group {
-            if authService.isGuest {
-                VStack(spacing: 8) {
-                    SignInWithAppleButton(.continue) { request in
-                        request.requestedScopes = []
-                    } onCompletion: { result in
-                        Task { await authService.handleSignInResult(result) }
-                    }
-                    .signInWithAppleButtonStyle(.white)
-                    .frame(height: 52)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .disabled(authService.isSigningIn)
-
-                    if let error = authService.errorMessage {
-                        Text(error)
-                            .font(.caption)
-                            .foregroundStyle(Color.maghrib)
-                    }
+        Button {
+            Task { await purchaseSelectedProduct() }
+        } label: {
+            HStack(spacing: 10) {
+                if isProcessing {
+                    ProgressView().tint(Color.vakitText)
                 }
-            } else {
-                Button {
-                    Task { await purchaseSelectedProduct() }
-                } label: {
-                    HStack(spacing: 10) {
-                        if isProcessing {
-                            ProgressView().tint(Color.vakitText)
-                        }
-                        Text(lang.t("pro.purchase"))
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                    }
-                    .foregroundStyle(Color.vakitBg)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(Color.vakitAccent)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                }
-                .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
-                .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
+                Text(lang.t("pro.purchase"))
+                    .font(.system(.headline, design: .rounded, weight: .bold))
             }
+            .foregroundStyle(Color.vakitBg)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(Color.vakitAccent)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
+        .disabled(isProcessing || purchaseService.product(for: selectedProductID) == nil)
+        .opacity(purchaseService.product(for: selectedProductID) == nil ? 0.55 : 1)
     }
 
     private var restoreButton: some View {
@@ -389,10 +381,6 @@ struct ProGateView: View {
     }
 
     private func restorePurchases() async {
-        guard !authService.isGuest else {
-            errorMessage = lang.t("pro.signInRequired")
-            return
-        }
         isProcessing = true
         defer { isProcessing = false }
 
@@ -414,6 +402,5 @@ struct ProGateView: View {
 #Preview {
     ProGateView()
         .environment(LanguageService.shared)
-        .environment(AuthService.shared)
         .environment(PurchaseService.shared)
 }

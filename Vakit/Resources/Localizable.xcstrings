@@ -2522,6 +2522,23 @@
         }
       }
     },
+    "pro.noAccountRequired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No registration or app account is required to purchase or restore."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın alma ve geri yükleme için kayıt veya uygulama hesabı gerekmez."
+          }
+        }
+      }
+    },
     "pro.popular" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2654,23 +2671,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seçili plan"
-          }
-        }
-      }
-    },
-    "pro.signInRequired" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign in with Apple to continue."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Devam etmek için Apple ile giriş yapın."
           }
         }
       }

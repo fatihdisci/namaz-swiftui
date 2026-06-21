@@ -4,8 +4,8 @@
 
 - Uygulama adı: Ufuk - Namaz Vakitleri
 - Bundle ID: `com.vakit.app`
-- Sürüm: `1.0.0`
-- Build: `1`
+- Sürüm: `1.1.0`
+- Build: `27`
 - Birincil kategori: Utilities
 - İkincil kategori: Reference
 - Kısa açıklama: Namaz vakitleri, kıble ve seferi hesaplama.
@@ -21,7 +21,9 @@
 
 Uygulama yerel bildirimler kullanır. Kullanıcı bildirim iznini onboarding sırasında veya bildirim ayarları ekranında verir. Namaz vakti hatırlatmaları cihaz üzerinde planlanır.
 
-Ufuk Pro satın alımları RevenueCat üzerinden yönetilir. İnceleme öncesinde App Store Connect ürünleri ve RevenueCat entitlement/offerings yapılandırması tamamlanmalıdır.
+Ufuk Pro satın alımları RevenueCat ve Apple In-App Purchase üzerinden yönetilir. Kullanıcılar kayıt olmadan veya Apple ile Giriş yapmadan tüm ürünleri satın alabilir ve satın alımlarını geri yükleyebilir. RevenueCat anonim kullanıcı kimliği uygulama tarafından otomatik oluşturulur; kişisel bilgi istenmez. İsteğe bağlı uygulama hesabı satın alma veya Pro içeriğe erişim için gerekli değildir.
+
+Guideline 5.1.1(v) için önceki ret sonrasında satın alma akışı güncellendi. Paywall üzerindeki zorunlu Apple ile Giriş adımı kaldırıldı; "Satın Al" ve "Satın Alımları Geri Yükle" eylemleri misafir kullanıcılar için doğrudan kullanılabilir.
 
 ## App Store Connect Kontrol Listesi
 
