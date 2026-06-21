@@ -126,7 +126,9 @@ struct PrayerCalendarView: View {
         return past...future
     }
 
-    private var selectedDayKey: String { StorageService.dateKey(for: selectedDate) }
+    private var selectedDayKey: String {
+        StorageService.dateKey(for: selectedDate, timeZone: cityCalendar.timeZone)
+    }
 
     private var formattedDate: String {
         let formatter = DateFormatter()
@@ -137,8 +139,15 @@ struct PrayerCalendarView: View {
     }
 
     private func load() async {
+        let requestedDate = selectedDate
+        let requestedKey = StorageService.dateKey(
+            for: requestedDate,
+            timeZone: cityCalendar.timeZone
+        )
         isLoading = true
-        times = await prayerService.getPrayerTimes(city: city, date: selectedDate)
+        let result = await prayerService.getPrayerTimes(city: city, date: requestedDate)
+        guard !Task.isCancelled, requestedKey == selectedDayKey else { return }
+        times = result
         isLoading = false
     }
 }

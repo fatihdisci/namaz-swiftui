@@ -66,16 +66,18 @@ final class NotificationService {
             return
         }
 
-        let today = Calendar.current.startOfDay(for: Date())
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
+        let today = calendar.startOfDay(for: Date())
         var times: [Date: PrayerTimes] = [:]
         for offset in 0..<Self.scheduleDays {
-            guard let date = Calendar.current.date(byAdding: .day, value: offset, to: today) else { continue }
+            guard let date = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
             times[date] = await prayerService.getPrayerTimes(city: city, date: date)
         }
 
         // Taze vakitlerden Home Screen widget snapshot'ını güncelle.
         if let todayTimes = times[today] {
-            let tomorrowDate = Calendar.current.date(byAdding: .day, value: 1, to: today)
+            let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: today)
             let tomorrowTimes = tomorrowDate.flatMap { times[$0] }
             WidgetSnapshotWriter.update(
                 city: city,
@@ -110,7 +112,7 @@ final class NotificationService {
                     .addingTimeInterval(-Double(setting.minutesBefore * 60))
                 guard triggerDate > now else { continue }
 
-                let identifier = "\(prayer.rawValue)_\(StorageService.dateKey(for: date))"
+                let identifier = "\(prayer.rawValue)_\(StorageService.dateKey(for: date, timeZone: calendar.timeZone))"
 
                 let content = UNMutableNotificationContent()
                 let prayerName = languageService.t(prayer.localizationKey)
@@ -145,7 +147,7 @@ final class NotificationService {
                     from: triggerDate
                 )
                 let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-                let identifier = "friday_\(StorageService.dateKey(for: date))"
+                let identifier = "friday_\(StorageService.dateKey(for: date, timeZone: calendar.timeZone))"
                 try? await center.add(
                     UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 )

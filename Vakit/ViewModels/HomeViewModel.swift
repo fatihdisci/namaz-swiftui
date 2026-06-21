@@ -53,8 +53,10 @@ final class HomeViewModel {
         isLoading = true
         defer { isLoading = false }
 
-        let today = Calendar.current.startOfDay(for: Date())
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today) ?? today
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
+        let today = calendar.startOfDay(for: Date())
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) ?? today
 
         async let todayTask = prayerService.getPrayerTimes(city: city, date: today)
         async let tomorrowTask = prayerService.getPrayerTimes(city: city, date: tomorrow)
@@ -94,6 +96,10 @@ final class HomeViewModel {
         savedLocations = storage.savedPrayerLocations
     }
 
+    func refreshDailyContent() {
+        dailyVerse = DailyContent.dailyVerse()
+    }
+
     private static func hijriDateText(from times: PrayerTimes) -> String {
         let monthName = PrayerTimeService.displayHijriMonthName(times.hijriMonthName)
         return "\(times.hijriDay) \(monthName) \(times.hijriYear)"
@@ -110,7 +116,9 @@ final class HomeViewModel {
         }
 
         // Gün değiştiyse (gece yarısı) verileri yeniden yükle.
-        if Calendar.current.startOfDay(for: date) != today.date, !isLoading {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: currentCity?.timezone ?? "") ?? .current
+        if calendar.startOfDay(for: date) != today.date, !isLoading {
             Task { await load() }
             return
         }

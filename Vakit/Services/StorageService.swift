@@ -29,13 +29,6 @@ final class StorageService {
 
     private static let cacheRetentionDays = 30
 
-    private static let dateKeyFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
-
     init(defaults: UserDefaults = AppGroup.userDefaults) {
         self.defaults = defaults
 
@@ -50,23 +43,35 @@ final class StorageService {
 
     // MARK: - Vakit Cache
 
-    static func dateKey(for date: Date) -> String {
-        dateKeyFormatter.string(from: date)
+    static func dateKey(for date: Date, timeZone: TimeZone = .current) -> String {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(
+            format: "%04d-%02d-%02d",
+            components.year ?? 0,
+            components.month ?? 0,
+            components.day ?? 0
+        )
     }
 
-    private func cacheKey(for date: Date) -> String {
-        Key.timesPrefix + Self.dateKey(for: date)
+    private func cacheKey(for date: Date, timeZone: TimeZone) -> String {
+        Key.timesPrefix + Self.dateKey(for: date, timeZone: timeZone)
     }
 
-    func cachedPrayerTimes(for date: Date) -> CachedPrayerTimes? {
+    func cachedPrayerTimes(for date: Date, timeZone: TimeZone = .current) -> CachedPrayerTimes? {
         pruneExpiredCache()
-        guard let data = defaults.data(forKey: cacheKey(for: date)) else { return nil }
+        guard let data = defaults.data(forKey: cacheKey(for: date, timeZone: timeZone)) else { return nil }
         return try? decoder.decode(CachedPrayerTimes.self, from: data)
     }
 
-    func cachePrayerTimes(_ cached: CachedPrayerTimes, for date: Date) {
+    func cachePrayerTimes(
+        _ cached: CachedPrayerTimes,
+        for date: Date,
+        timeZone: TimeZone = .current
+    ) {
         guard let data = try? encoder.encode(cached) else { return }
-        defaults.set(data, forKey: cacheKey(for: date))
+        defaults.set(data, forKey: cacheKey(for: date, timeZone: timeZone))
         pruneExpiredCache()
     }
 
@@ -80,7 +85,11 @@ final class StorageService {
 
         for key in defaults.dictionaryRepresentation().keys where key.hasPrefix(Key.timesPrefix) {
             let dateKey = String(key.dropFirst(Key.timesPrefix.count))
-            guard let cacheDate = Self.dateKeyFormatter.date(from: dateKey) else {
+            let parts = dateKey.split(separator: "-").compactMap { Int($0) }
+            guard parts.count == 3,
+                  let cacheDate = Calendar.current.date(
+                      from: DateComponents(year: parts[0], month: parts[1], day: parts[2])
+                  ) else {
                 defaults.removeObject(forKey: key)
                 continue
             }
@@ -311,15 +320,20 @@ final class StorageService {
     /// Offline hicri tarih: `Calendar(identifier: .islamicUmmAlQura)` ile hesaplanır.
     /// Ay ismi İngilizce sembol olarak döner (örn. "Ramadan"); UI lokalizasyonu ileride
     /// String Catalog üzerinden yapılır.
-    func offlineHijri(for date: Date) -> (day: String, monthName: String, year: String) {
+    func offlineHijri(
+        for date: Date,
+        timeZone: TimeZone = .current
+    ) -> (day: String, monthName: String, year: String) {
         var calendar = Calendar(identifier: .islamicUmmAlQura)
         calendar.locale = Locale(identifier: "en")
+        calendar.timeZone = timeZone
 
         let components = calendar.dateComponents([.day, .month, .year], from: date)
 
         let formatter = DateFormatter()
         formatter.calendar = calendar
         formatter.locale = Locale(identifier: "en")
+        formatter.timeZone = timeZone
         let monthSymbols = formatter.monthSymbols ?? []
 
         let monthIndex = (components.month ?? 1) - 1

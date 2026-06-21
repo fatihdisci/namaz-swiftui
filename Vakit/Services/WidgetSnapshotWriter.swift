@@ -43,10 +43,14 @@ enum WidgetSnapshotWriter {
     /// Foreground gibi vakit hesaplaması yapılmayan durumlar için: cache'ten okuyup yazar.
     static func refreshFromCache(storage: StorageService = .shared, language: String) {
         guard let city = storage.resolvedCity else { return }
-        let today = Calendar.current.startOfDay(for: Date())
-        guard let cachedToday = storage.cachedPrayerTimes(for: today)?.times else { return }
-        let tomorrowDate = Calendar.current.date(byAdding: .day, value: 1, to: today)
-        let cachedTomorrow = tomorrowDate.flatMap { storage.cachedPrayerTimes(for: $0)?.times }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
+        let today = calendar.startOfDay(for: Date())
+        guard let cachedToday = storage.cachedPrayerTimes(for: today, timeZone: calendar.timeZone)?.times else { return }
+        let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: today)
+        let cachedTomorrow = tomorrowDate.flatMap {
+            storage.cachedPrayerTimes(for: $0, timeZone: calendar.timeZone)?.times
+        }
         update(city: city, today: cachedToday, tomorrow: cachedTomorrow, language: language)
     }
 

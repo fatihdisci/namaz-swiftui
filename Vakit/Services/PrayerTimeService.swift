@@ -38,7 +38,10 @@ final class PrayerTimeService {
         school: Int,
         timezone: TimeZone? = nil
     ) async throws -> PrayerTimes {
-        var components = URLComponents(string: "\(Self.apiBaseURL)/timings/\(Self.apiDateString(from: date))")
+        let tz = timezone ?? .current
+        var components = URLComponents(
+            string: "\(Self.apiBaseURL)/timings/\(Self.apiDateString(from: date, timeZone: tz))"
+        )
         components?.queryItems = [
             URLQueryItem(name: "latitude", value: String(lat)),
             URLQueryItem(name: "longitude", value: String(lng)),
@@ -58,7 +61,6 @@ final class PrayerTimeService {
         let payload = try JSONDecoder().decode(AladhanResponse.self, from: data)
         guard payload.code == 200 else { throw ServiceError.invalidResponse }
 
-        let tz = timezone ?? .current
         let timings = payload.data.timings
         guard
             let fajr = Self.combine(date: date, withTiming: timings.fajr, timeZone: tz),
@@ -80,14 +82,14 @@ final class PrayerTimeService {
             hijriMonthName = Self.displayHijriMonthName(hijri.month.en)
             hijriYear = hijri.year
         } else {
-            let offline = storage.offlineHijri(for: date)
+            let offline = storage.offlineHijri(for: date, timeZone: tz)
             hijriDay = offline.day
             hijriMonthName = Self.displayHijriMonthName(offline.monthName)
             hijriYear = offline.year
         }
 
         return PrayerTimes(
-            date: Calendar.current.startOfDay(for: date),
+            date: Self.startOfDay(for: date, timeZone: tz),
             fajr: fajr,
             sunrise: sunrise,
             dhuhr: dhuhr,
@@ -114,7 +116,7 @@ final class PrayerTimeService {
         timezone: TimeZone? = nil
     ) -> PrayerTimes {
         calculateWithAdhan(lat: lat, lng: lng, date: date, method: method, school: school, timezone: timezone)
-            ?? approximateTimes(for: date)
+            ?? approximateTimes(for: date, timeZone: timezone ?? .current)
     }
 
     /// Adhan Swift hesabı. Uç enlemlerde (güneş batmayan/doğmayan günler) nil dönebilir.
@@ -142,9 +144,9 @@ final class PrayerTimeService {
             calculationParameters: params
         ) else { return nil }
 
-        let hijri = storage.offlineHijri(for: date)
+        let hijri = storage.offlineHijri(for: date, timeZone: calendar.timeZone)
         return PrayerTimes(
-            date: Calendar.current.startOfDay(for: date),
+            date: Self.startOfDay(for: date, timeZone: calendar.timeZone),
             fajr: adhanTimes.fajr,
             sunrise: adhanTimes.sunrise,
             dhuhr: adhanTimes.dhuhr,
@@ -160,11 +162,13 @@ final class PrayerTimeService {
 
     /// Çok nadir durum (uç enlemler): kaba yaklaşık değerlerle asla boş dönme.
     /// Bu sonuç cache'e YAZILMAZ — gerçek veri gibi 30 gün yaşamasın.
-    private func approximateTimes(for date: Date) -> PrayerTimes {
-        let day = Calendar.current.startOfDay(for: date)
-        let hijri = storage.offlineHijri(for: date)
+    private func approximateTimes(for date: Date, timeZone: TimeZone) -> PrayerTimes {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let day = calendar.startOfDay(for: date)
+        let hijri = storage.offlineHijri(for: date, timeZone: timeZone)
         func approximate(_ hour: Int, _ minute: Int) -> Date {
-            Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: day) ?? day
+            calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day) ?? day
         }
         return PrayerTimes(
             date: day,
@@ -191,9 +195,9 @@ final class PrayerTimeService {
     func getPrayerTimes(city: City, date: Date) async -> PrayerTimes {
         let method = city.method
         let school = city.school
-        let timezone = TimeZone(identifier: city.timezone)
+        let timezone = TimeZone(identifier: city.timezone) ?? .current
 
-        if let cached = storage.cachedPrayerTimes(for: date),
+        if let cached = storage.cachedPrayerTimes(for: date, timeZone: timezone),
            cached.matches(
                latitude: city.latitude,
                longitude: city.longitude,
@@ -235,19 +239,22 @@ final class PrayerTimeService {
                     school: school,
                     cachedAt: Date()
                 ),
-                for: date
+                for: date,
+                timeZone: timezone
             )
             return times
         }
 
-        return approximateTimes(for: date)
+        return approximateTimes(for: date, timeZone: timezone)
     }
 
     /// Uygulama açılışında bugün + sonraki 7 günü cache'e doldurur.
     func prefetch(city: City) async {
-        let today = Calendar.current.startOfDay(for: Date())
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
+        let today = calendar.startOfDay(for: Date())
         for offset in 0...7 {
-            guard let date = Calendar.current.date(byAdding: .day, value: offset, to: today) else { continue }
+            guard let date = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
             _ = await getPrayerTimes(city: city, date: date)
         }
     }
@@ -274,11 +281,18 @@ final class PrayerTimeService {
     // MARK: - Yardımcılar
 
     /// Aladhan URL formatı: DD-MM-YYYY
-    static func apiDateString(from date: Date) -> String {
+    static func apiDateString(from date: Date, timeZone: TimeZone = .current) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = timeZone
         formatter.dateFormat = "dd-MM-yyyy"
         return formatter.string(from: date)
+    }
+
+    private static func startOfDay(for date: Date, timeZone: TimeZone) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        return calendar.startOfDay(for: date)
     }
 
     /// "05:43 (+03)" gibi bir timing string'inden HH:mm çekip verilen güne yerleştirir.
