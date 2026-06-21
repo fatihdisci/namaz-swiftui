@@ -59,7 +59,7 @@ struct SafarView: View {
                 .environment(purchaseService)
         }
         .sheet(isPresented: $showHomeCityPicker) {
-            LocationPickerSheet(purpose: .home, lang: lang) { location in
+            LocationPickerSheet(purpose: .home, mode: .add, lang: lang) { location in
                 StorageService.shared.homePrayerLocation = location
                 viewModel.refreshHomeLocation()
                 showHomeCityPicker = false

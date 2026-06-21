@@ -25,6 +25,7 @@ final class StorageService {
         static let kazaCounts = "kaza_counts"
         static let favoriteDuaIDs = "favorite_dua_ids"
         static let fridayReminderEnabled = "friday_reminder_enabled"
+        static let freeCitiesCleaned = "free_cities_cleaned"
     }
 
     private static let cacheRetentionDays = 30
@@ -230,6 +231,12 @@ final class StorageService {
             locations = [selectedPrayerLocation]
         }
         savedPrayerLocations = locations
+    }
+
+    /// Free kullanıcıların eski çoklu şehirlerini temizleme göçü — bir kerelik.
+    var hasCleanedFreeCities: Bool {
+        get { defaults.bool(forKey: Key.freeCitiesCleaned) }
+        set { defaults.set(newValue, forKey: Key.freeCitiesCleaned) }
     }
 
     var method: CalculationMethod {

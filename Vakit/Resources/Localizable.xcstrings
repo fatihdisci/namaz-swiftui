@@ -3593,6 +3593,23 @@
         }
       }
     },
+    "settings.cityEdit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit City"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şehri Düzenle"
+          }
+        }
+      }
+    },
     "settings.deleteAccount" : {
       "extractionState" : "manual",
       "localizations" : {

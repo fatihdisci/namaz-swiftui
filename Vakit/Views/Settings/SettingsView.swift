@@ -45,13 +45,24 @@ struct SettingsView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
         }
+        .onAppear {
+            cleanupFreeUserCities()
+        }
         .sheet(item: $activeLocationPicker) { purpose in
             // Her açılışta TAZE bir LocationSelectionViewModel sahiplenen alt view;
             // konum, view'ın kendi instance'ından üretilip geri verilir.
-            LocationPickerSheet(purpose: purpose, lang: lang) { location in
+            LocationPickerSheet(
+                purpose: purpose,
+                mode: purchaseService.hasProAccess ? .add : .edit,
+                lang: lang
+            ) { location in
                 switch purpose {
                 case .prayer:
-                    viewModel.saveLocation(location, context: modelContext)
+                    viewModel.saveLocation(
+                        location,
+                        context: modelContext,
+                        replaceExisting: !purchaseService.hasProAccess
+                    )
                 case .home:
                     viewModel.saveHomeLocation(location)
                 }
@@ -75,6 +86,16 @@ struct SettingsView: View {
         } message: {
             Text(lang.t("account.delete.message"))
         }
+    }
+
+    /// Free kullanıcıların birikmiş çoklu şehirlerini tek şehre indirger (bir kerelik göç).
+    private func cleanupFreeUserCities() {
+        let storage = StorageService.shared
+        guard !purchaseService.hasProAccess, !storage.hasCleanedFreeCities else { return }
+        if let current = storage.selectedPrayerLocation {
+            storage.savedPrayerLocations = [current]
+        }
+        storage.hasCleanedFreeCities = true
     }
 
     // MARK: - Genel
@@ -369,6 +390,14 @@ struct SettingsView: View {
 
 // MARK: - Location picker sheet
 
+/// Konum seçici modu.
+/// - `.add`: Tam yetkili — kayıtlı şehirler listesi, maksimum limit denetimi (Pro).
+/// - `.edit`: Yalnızca mevcut şehri değiştirme — kayıtlı liste gizlenir (Free).
+enum LocationPickerMode {
+    case add
+    case edit
+}
+
 /// Konum seçim sheet'inin amacı. `.sheet(item:)` ile kullanıldığı için Identifiable.
 enum LocationPickerPurpose: Identifiable {
     case prayer
@@ -383,6 +412,7 @@ enum LocationPickerPurpose: Identifiable {
 /// `onSave` ile geri verilir.
 struct LocationPickerSheet: View {
     let purpose: LocationPickerPurpose
+    let mode: LocationPickerMode
     let lang: LanguageService
     let onSave: (PrayerLocation) -> Void
 
@@ -417,13 +447,20 @@ struct LocationPickerSheet: View {
                             handleCitySelection(location)
                         }
 
-                        if !savedLocations.isEmpty {
+                        if !savedLocations.isEmpty && mode == .add {
                             savedCitiesSection
                         }
                     }
                 }
             }
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(mode == .add
+                         ? (purpose == .home ? lang.t("safar.homeCity") : lang.t("settings.city"))
+                         : lang.t("settings.cityEdit"))
+                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         dismiss()
@@ -528,7 +565,7 @@ struct LocationPickerSheet: View {
 
         if isDuplicate {
             showCityDuplicateAlert = true
-        } else if isNew && storage.savedPrayerLocations.count >= maxSavedCities {
+        } else if mode == .add && isNew && storage.savedPrayerLocations.count >= maxSavedCities {
             showCityLimitAlert = true
         } else {
             onSave(location)

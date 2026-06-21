@@ -71,7 +71,11 @@ final class SettingsViewModel {
     }
 
     /// Yeni cascading konum seçiminden kaydeder.
-    func saveLocation(_ location: PrayerLocation, context: ModelContext) {
+    /// `replaceExisting: true` ise eski şehri kayıtlı listeden çıkarır —
+    /// free kullanıcıların tek şehirle sınırlı kalmasını sağlar.
+    func saveLocation(_ location: PrayerLocation, context: ModelContext, replaceExisting: Bool = false) {
+        let oldID = replaceExisting ? storage.selectedPrayerLocation?.id : nil
+
         storage.selectedPrayerLocation = location
         storage.method = location.calculationMethod
         self.location = location
@@ -88,6 +92,12 @@ final class SettingsViewModel {
         try? context.save()
 
         storage.selectedCityID = location.id
+
+        // Free kullanıcı: eski şehri kayıtlı listeden temizle, sadece yeni kalsın.
+        if let oldID {
+            storage.removeSavedPrayerLocation(id: oldID)
+        }
+
         rescheduleNotifications()
     }
 
