@@ -138,8 +138,32 @@ private struct DuaDetailView: View {
     let dua: Dua
     @State var isFavorite: Bool
     let onToggleFavorite: () -> Void
+    @State private var showShareSheet = false
 
     @Environment(LanguageService.self) private var lang
+
+    /// Paylaşım metni: başlık, Arapça, okunuş, meal ve kaynak.
+    private var shareText: String {
+        var parts: [String] = []
+        if let title = dua.title(language: lang.currentLanguage) {
+            parts.append(title)
+        }
+        if let arabic = dua.arabic, !arabic.isEmpty {
+            parts.append(arabic)
+        }
+        if let transliteration = dua.transliteration, !transliteration.isEmpty {
+            parts.append(lang.currentLanguage == "tr"
+                ? "Okunuşu: \(transliteration)"
+                : "Transliteration: \(transliteration)")
+        }
+        if lang.currentLanguage == "tr" {
+            parts.append("Meali: \(dua.textTR)")
+        } else {
+            parts.append("Meaning: \(dua.textEN)")
+        }
+        parts.append(dua.source)
+        return parts.joined(separator: "\n\n")
+    }
 
     var body: some View {
         ZStack {
@@ -187,6 +211,15 @@ private struct DuaDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    showShareSheet = true
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundStyle(Color.vakitAccent)
+                }
+                .accessibilityLabel(lang.t("dua.share"))
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
                     onToggleFavorite()
                     isFavorite.toggle()
                 } label: {
@@ -195,5 +228,22 @@ private struct DuaDetailView: View {
                 }
             }
         }
+        .sheet(isPresented: $showShareSheet) {
+            ActivityView(activityItems: [shareText])
+                .presentationDetents([.medium, .large])
+        }
     }
+}
+
+// MARK: - Paylaşım yardımcısı
+
+/// Sistem paylaşım sayfasını SwiftUI'ye taşıyan sarmalayıcı.
+private struct ActivityView: UIViewControllerRepresentable {
+    let activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

@@ -2,6 +2,8 @@
   {
     "id": "d001",
     "tip": "kurani",
+    "baslik_tr": "Dünya ve Ahiret İyiliği Duası",
+    "baslik_en": "Prayer for Good in Both Worlds",
     "arapca": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
     "okunus": null,
     "turkce": "Rabbimiz! Bize dünyada da ahirette de iyilik ver. Bizi ateş azabından koru.",
@@ -13,6 +15,8 @@
   {
     "id": "d002",
     "tip": "kurani",
+    "baslik_tr": "Kalbe Sebat Duası",
+    "baslik_en": "Prayer for a Steadfast Heart",
     "arapca": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً",
     "okunus": null,
     "turkce": "Rabbimiz! Bizi doğru yola ilettikten sonra kalplerimizi eğriltme. Katından bize rahmet bağışla.",
@@ -24,6 +28,8 @@
   {
     "id": "d003",
     "tip": "kurani",
+    "baslik_tr": "Gönül Ferahlığı Duası",
+    "baslik_en": "Prayer for Ease of Heart",
     "arapca": "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي",
     "okunus": null,
     "turkce": "Rabbim! Gönlüme ferahlık ver, işimi kolaylaştır.",
@@ -35,6 +41,8 @@
   {
     "id": "d004",
     "tip": "kurani",
+    "baslik_tr": "Bağışlanma ve Sebat Duası",
+    "baslik_en": "Prayer for Forgiveness and Steadfastness",
     "arapca": "رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا",
     "okunus": null,
     "turkce": "Rabbimiz! Günahlarımızı ve işimizdeki aşırılıklarımızı bağışla. Ayaklarımızı sabit kıl.",
@@ -46,6 +54,8 @@
   {
     "id": "d005",
     "tip": "kurani",
+    "baslik_tr": "İlim Artışı Duası",
+    "baslik_en": "Prayer for Increase in Knowledge",
     "arapca": "رَّبِّ زِدْنِي عِلْمًا",
     "okunus": null,
     "turkce": "Rabbim! İlmimi artır.",
@@ -57,6 +67,8 @@
   {
     "id": "d006",
     "tip": "kurani",
+    "baslik_tr": "Hata ve Unutkanlık Duası",
+    "baslik_en": "Prayer for Mistakes and Forgetfulness",
     "arapca": "رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا",
     "okunus": null,
     "turkce": "Rabbimiz! Unutur veya hata edersek bizi sorumlu tutma.",
@@ -68,6 +80,8 @@
   {
     "id": "d007",
     "tip": "kurani",
+    "baslik_tr": "Tövbe ve Bağışlanma Duası",
+    "baslik_en": "Prayer for Repentance and Forgiveness",
     "arapca": "رَبِّ إِنِّي ظَلَمْتُ نَفْسِي فَاغْفِرْ لِي",
     "okunus": null,
     "turkce": "Rabbim! Ben kendime zulmettim, beni bağışla.",
@@ -79,6 +93,8 @@
   {
     "id": "d008",
     "tip": "kurani",
+    "baslik_tr": "Hayırlı Nesil Duası",
+    "baslik_en": "Prayer for Righteous Offspring",
     "arapca": "رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً",
     "okunus": null,
     "turkce": "Rabbim! Katından bana temiz bir nesil bağışla.",
@@ -90,6 +106,8 @@
   {
     "id": "d009",
     "tip": "kurani",
+    "baslik_tr": "Amellerin Kabulü Duası",
+    "baslik_en": "Prayer for Acceptance of Deeds",
     "arapca": "رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ",
     "okunus": null,
     "turkce": "Rabbimiz! Bizden kabul buyur. Şüphesiz sen işiten ve bilensin.",
@@ -101,6 +119,8 @@
   {
     "id": "d010",
     "tip": "kurani",
+    "baslik_tr": "Hasbiyallah Duası",
+    "baslik_en": "Hasbiyallah Prayer",
     "arapca": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
     "okunus": null,
     "turkce": "Allah bana yeter. O'ndan başka ilah yoktur. Ben yalnız O'na güvendim.",
@@ -112,6 +132,8 @@
   {
     "id": "d011",
     "tip": "kurani",
+    "baslik_tr": "Şükür ve Salih Amel Duası",
+    "baslik_en": "Prayer for Gratitude and Righteous Deeds",
     "arapca": "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ",
     "okunus": null,
     "turkce": "Rabbim! Bana ve anne babama verdiğin nimetlere şükretmemi ve razı olacağın salih ameller işlememi ilham et.",
@@ -123,6 +145,8 @@
   {
     "id": "d012",
     "tip": "kurani",
+    "baslik_tr": "Yunus Peygamberin Duası",
+    "baslik_en": "Prayer of Prophet Yunus",
     "arapca": "لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ",
     "okunus": null,
     "turkce": "Senden başka ilah yoktur. Seni her türlü noksandan tenzih ederim. Gerçekten ben zalimlerden oldum.",
@@ -134,6 +158,8 @@
   {
     "id": "d013",
     "tip": "kurani",
+    "baslik_tr": "Yalnızlıktan Korunma Duası",
+    "baslik_en": "Prayer Against Loneliness",
     "arapca": "رَبِّ لَا تَذَرْنِي فَرْدًا وَأَنتَ خَيْرُ الْوَارِثِينَ",
     "okunus": null,
     "turkce": "Rabbim! Beni tek başıma bırakma. Sen varislerin en hayırlısısın.",
@@ -145,6 +171,8 @@
   {
     "id": "d014",
     "tip": "nebevi",
+    "baslik_tr": "Hidayet ve Takva Duası",
+    "baslik_en": "Prayer for Guidance and Piety",
     "arapca": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى",
     "okunus": null,
     "turkce": "Allah'ım! Senden hidayet, takva, iffet ve gönül zenginliği isterim.",
@@ -156,6 +184,8 @@
   {
     "id": "d015",
     "tip": "kurani",
+    "baslik_tr": "Aile Saadeti Duası",
+    "baslik_en": "Prayer for Family Happiness",
     "arapca": "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
     "okunus": null,
     "turkce": "Rabbimiz! Eşlerimizi ve çocuklarımızı bize göz aydınlığı kıl ve bizi Allah'a karşı sorumluluk bilincinde olanlara önder yap.",

@@ -852,6 +852,23 @@
         }
       }
     },
+    "dua.share" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paylaş"
+          }
+        }
+      }
+    },
     "error.generic" : {
       "extractionState" : "manual",
       "localizations" : {
