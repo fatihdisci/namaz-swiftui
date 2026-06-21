@@ -49,7 +49,7 @@ private let lightGold = Color(hex: "c9a44b")
 @MainActor
 func makeVerseShareImage(verse: Verse?, language: String) -> UIImage? {
     guard let verse else { return nil }
-    let view = SingleShareView(imageName: "ayet") {
+    let view = SingleShareView(imageName: "ayet\(Int.random(in: 1...3))") {
         VStack(spacing: 0) {
             Spacer()
 
@@ -92,7 +92,7 @@ func makeVerseShareImage(verse: Verse?, language: String) -> UIImage? {
 @MainActor
 func makeHadithShareImage(hadith: Hadith?, language: String) -> UIImage? {
     guard let hadith else { return nil }
-    let view = SingleShareView(imageName: "hadis", darkOverlay: 0) {
+    let view = SingleShareView(imageName: "hadis\(Int.random(in: 1...3))", darkOverlay: 0) {
         VStack(spacing: 0) {
             Spacer()
 
@@ -135,7 +135,7 @@ func makeHadithShareImage(hadith: Hadith?, language: String) -> UIImage? {
 @MainActor
 func makeDuaShareImage(dua: Dua?, language: String) -> UIImage? {
     guard let dua else { return nil }
-    let view = SingleShareView(imageName: "dua", darkOverlay: 0) {
+    let view = SingleShareView(imageName: "dua\(Int.random(in: 1...3))", darkOverlay: 0) {
         VStack(spacing: 0) {
             Spacer()
 
