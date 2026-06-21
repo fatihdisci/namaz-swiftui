@@ -88,6 +88,60 @@ final class PrayerAccuracyTests: XCTestCase {
         XCTAssertTrue(storage.favoriteDuaIDs.isEmpty)
     }
 
+    func testDateKeysRespectCityTimeZone() throws {
+        let instant = Date(timeIntervalSince1970: 1_735_689_000) // UTC'de yıl sınırına yakın.
+        let istanbul = try XCTUnwrap(TimeZone(identifier: "Europe/Istanbul"))
+        let losAngeles = try XCTUnwrap(TimeZone(identifier: "America/Los_Angeles"))
+
+        XCTAssertNotEqual(
+            StorageService.dateKey(for: instant, timeZone: istanbul),
+            StorageService.dateKey(for: instant, timeZone: losAngeles)
+        )
+    }
+
+    func testAPIDateFormattingUsesRequestedTimeZone() throws {
+        let instant = Date(timeIntervalSince1970: 1_735_689_000)
+        let istanbul = try XCTUnwrap(TimeZone(identifier: "Europe/Istanbul"))
+        let losAngeles = try XCTUnwrap(TimeZone(identifier: "America/Los_Angeles"))
+
+        XCTAssertNotEqual(
+            PrayerTimeService.apiDateString(from: instant, timeZone: istanbul),
+            PrayerTimeService.apiDateString(from: instant, timeZone: losAngeles)
+        )
+    }
+
+    func testBundledContentFilesPassRemoteValidation() throws {
+        for fileName in ["ayetler.json", "dualar.json", "hadisler.json", "esma.json"] {
+            let parts = fileName.split(separator: ".", maxSplits: 1).map(String.init)
+            let url = try XCTUnwrap(Bundle.main.url(forResource: parts[0], withExtension: parts[1]))
+            let data = try Data(contentsOf: url)
+            XCTAssertTrue(RemoteContentService.isValidContent(data, fileName: fileName), fileName)
+        }
+    }
+
+    @MainActor
+    func testBundledContentVersionIsAvailable() {
+        XCTAssertGreaterThanOrEqual(RemoteContentService.shared.bundledVersion, 1)
+    }
+
+    func testExpandedDuaSchemaDecodesResearchFields() throws {
+        let json = """
+        [{
+          "id":"d100", "tip":"kurani", "baslik_tr":"İlim Duası",
+          "baslik_en":"Prayer for Knowledge", "kategori":"success",
+          "etiketler":["ilim","sınav"], "arapca":"رَبِّ زِدْنِي عِلْمًا",
+          "okunus":"Rabbi zidni ilma", "turkce":"Rabbim, ilmimi artır.",
+          "ingilizce":"My Lord, increase me in knowledge.", "kaynak":"Tâhâ 20:114",
+          "derece":null, "atifUrl":"https://kuran.diyanet.gov.tr/"
+        }]
+        """
+        let dua = try XCTUnwrap(JSONDecoder().decode([Dua].self, from: Data(json.utf8)).first)
+
+        XCTAssertEqual(dua.title(language: "tr"), "İlim Duası")
+        XCTAssertEqual(dua.category, .success)
+        XCTAssertTrue(dua.matches("sınav", language: "tr"))
+    }
+
     /// Diyanet'in 21 Haziran 2026 Ankara tablosuna karşı çevrimdışı fallback sapmasını izler.
     func testOfflineAnkaraTimesStayNearDiyanetGoldenData() throws {
         let timeZone = try XCTUnwrap(TimeZone(identifier: "Europe/Istanbul"))
