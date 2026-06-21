@@ -258,12 +258,15 @@
 					E5E10C3EE6FD4F8498190FEE = {
 						CreatedOnToolsVersion = 16.2;
 						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-							com.apple.SignInWithApple = {
-								enabled = 1;
-							};
+						 com.apple.ApplicationGroups.iOS = {
+						  enabled = 1;
+						 };
+						 com.apple.InAppPurchase = {
+						  enabled = 1;
+						 };
+						 com.apple.SignInWithApple = {
+						  enabled = 1;
+						 };
 						};
 					};
 				};
