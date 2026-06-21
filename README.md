@@ -4,8 +4,8 @@ Ufuk, iOS 17 ve üzeri için geliştirilmiş Türkçe ve İngilizce bir namaz va
 
 ## Güncel durum
 
-- Pazarlama sürümü: `1.0.0`
-- Xcode proje build numarası: `6`
+- Pazarlama sürümü: `1.1.0` (`1.0.0` App Review sürecindeyken geliştirme dalı)
+- Xcode proje build numarası: `7`
 - Ana uygulama: `com.vakit.app`
 - Widget: `com.vakit.app.widget`
 - Minimum iOS sürümü: `17.0`
@@ -105,7 +105,7 @@ App Store Connect ürünleri aynı kimliklerle oluşturulmalı ve RevenueCat'tek
 
 ## İçerik güncelleme
 
-`content/` altındaki JSON dosyalarını değiştirdikten sonra `content/content-version.json` içindeki sürümü artırın. Uygulama yeni sürümü algılayarak ayet, hadis, dua ve Esmaül Hüsna dosyalarını indirir; ağ hatasında paket içeriğini kullanmaya devam eder.
+`content/` altındaki JSON dosyalarını değiştirdikten sonra hem `content/content-version.json` hem de `Vakit/Resources/Content/content-version.json` içindeki sürümü artırın. Uygulama yeni sürümü algılayarak ayet, hadis, dua ve Esmaül Hüsna dosyalarını indirir; ağ hatasında paket içeriğini kullanmaya devam eder. Remote cache sürümü bundle sürümünden eskiyse yeni bundle içeriği tercih edilir.
 
 ## App Store materyalleri
 
