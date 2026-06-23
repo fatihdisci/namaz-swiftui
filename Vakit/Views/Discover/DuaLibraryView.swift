@@ -192,6 +192,9 @@ private struct DuaDetailView: View {
                         .font(.title3)
                         .lineSpacing(6)
                         .foregroundStyle(Color.vakitText)
+                    SpeakButton(id: "dua-\(dua.id)",
+                                text: dua.text(language: lang.currentLanguage),
+                                tint: .isha)
                     Divider().overlay(Color.vakitBorder)
                     Label(dua.source, systemImage: "bookmark")
                         .font(.footnote)
@@ -232,6 +235,7 @@ private struct DuaDetailView: View {
             ActivityView(activityItems: [shareText])
                 .presentationDetents([.medium, .large])
         }
+        .onDisappear { TranslationSpeechService.shared.stop() }
     }
 }
 

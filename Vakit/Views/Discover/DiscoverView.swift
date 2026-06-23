@@ -64,7 +64,10 @@ struct DiscoverView: View {
         .onReceive(NotificationCenter.default.publisher(for: .vakitContentUpdated)) { _ in
             contentRevision &+= 1
         }
-        .onDisappear { audioPlayer.stop() }
+        .onDisappear {
+            audioPlayer.stop()
+            TranslationSpeechService.shared.stop()
+        }
     }
 
     // MARK: - Header
@@ -193,6 +196,9 @@ struct DiscoverView: View {
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
+                SpeakButton(id: "hadith-\(hadith.id)",
+                            text: hadith.text(language: lang.currentLanguage),
+                            tint: .sunrise)
                 referenceRow(hadith.source, badge: hadith.grade)
             }
         }
@@ -216,6 +222,9 @@ struct DiscoverView: View {
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
+                SpeakButton(id: "dua-\(dua.id)",
+                            text: dua.text(language: lang.currentLanguage),
+                            tint: .isha)
                 referenceRow(dua.source, badge: dua.grade)
             }
         }

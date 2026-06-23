@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* PrayerAccuracyTests.swift */; };
-		A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000032 /* QuranAudioServiceTests.swift */; };
 		13A596E6620E927F8E0BDCE6 /* UfukWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		322CC2C3BD4A436E8DC5584A /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = FED66DFEE5424FF389755875 /* RevenueCat */; };
 		3ECEBAA566C74225835CA9ED /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEB944B591481386752953 /* Adhan */; };
-		C791883C9B522D281C7AC072 /* UfukWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */; };
+		A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* PrayerAccuracyTests.swift */; };
+		A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000032 /* QuranAudioServiceTests.swift */; };
 		AF0000000000000000000002 /* SkyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000001 /* SkyGradient.swift */; };
 		AF0000000000000000000004 /* PrayerIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000003 /* PrayerIcon.swift */; };
 		AF0000000000000000000006 /* PrayerProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000005 /* PrayerProgressRing.swift */; };
+		C791883C9B522D281C7AC072 /* UfukWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */; };
 		D7D177C9F1A85EEDBB060DAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB925CA7726FC375CD6DA19F /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,15 +51,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A10000000000000000000002 /* PrayerAccuracyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerAccuracyTests.swift; sourceTree = "<group>"; };
-		A10000000000000000000032 /* QuranAudioServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranAudioServiceTests.swift; sourceTree = "<group>"; };
-		A10000000000000000000004 /* VakitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VakitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UfukWidget.swift; sourceTree = "<group>"; };
+		1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UfukWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = UfukWidget.entitlements; sourceTree = "<group>"; };
+		A10000000000000000000002 /* PrayerAccuracyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerAccuracyTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000004 /* VakitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VakitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000032 /* QuranAudioServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranAudioServiceTests.swift; sourceTree = "<group>"; };
 		AF0000000000000000000001 /* SkyGradient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SkyGradient.swift; sourceTree = "<group>"; };
 		AF0000000000000000000003 /* PrayerIcon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrayerIcon.swift; sourceTree = "<group>"; };
 		AF0000000000000000000005 /* PrayerProgressRing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrayerProgressRing.swift; sourceTree = "<group>"; };
-		1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UfukWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = UfukWidget.entitlements; sourceTree = "<group>"; };
 		BB925CA7726FC375CD6DA19F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C000000000000000000002 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
@@ -136,6 +136,14 @@
 			path = UfukWidget;
 			sourceTree = "<group>";
 		};
+		3931F68F4F2F36F0C459C851 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				BB925CA7726FC375CD6DA19F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		A10000000000000000000005 /* VakitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,14 +151,6 @@
 				A10000000000000000000032 /* QuranAudioServiceTests.swift */,
 			);
 			path = VakitTests;
-			sourceTree = "<group>";
-		};
-		3931F68F4F2F36F0C459C851 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				BB925CA7726FC375CD6DA19F /* Foundation.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		C000000000000000000001 /* Config */ = {
@@ -261,15 +261,15 @@
 					E5E10C3EE6FD4F8498190FEE = {
 						CreatedOnToolsVersion = 16.2;
 						SystemCapabilities = {
-						 com.apple.ApplicationGroups.iOS = {
-						  enabled = 1;
-						 };
-						 com.apple.InAppPurchase = {
-						  enabled = 1;
-						 };
-						 com.apple.SignInWithApple = {
-						  enabled = 1;
-						 };
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.SignInWithApple = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -301,13 +301,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A10000000000000000000009 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1E622D0C2ADB7C31714B90DB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -322,18 +315,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		A10000000000000000000006 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+		A10000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */,
-				A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
 		205B498377D03806BC820DE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -352,71 +343,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A10000000000000000000006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */,
+				A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A1000000000000000000000A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E5E10C3EE6FD4F8498190FEE /* Vakit */;
-			targetProxy = A10000000000000000000003 /* PBXContainerItemProxy */;
-		};
 		60E48EA2ACD8800B176962EA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = UfukWidget;
 			target = D6F86F2213623A35EAAFE064 /* UfukWidget */;
 			targetProxy = B447D1BDAD1BFD5DE1E8781D /* PBXContainerItemProxy */;
 		};
+		A1000000000000000000000A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5E10C3EE6FD4F8498190FEE /* Vakit */;
+			targetProxy = A10000000000000000000003 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		A1000000000000000000000B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8XPP7Z37GF;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vakit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vakit";
-			};
-			name = Debug;
-		};
-		A1000000000000000000000C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8XPP7Z37GF;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vakit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vakit";
-			};
-			name = Release;
-		};
 		1FC16D5184A848318E65D37E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
@@ -583,6 +535,54 @@
 			};
 			name = Debug;
 		};
+		A1000000000000000000000B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8XPP7Z37GF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vakit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vakit";
+			};
+			name = Debug;
+		};
+		A1000000000000000000000C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8XPP7Z37GF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vakit.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vakit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Vakit";
+			};
+			name = Release;
+		};
 		E5C7CF0982604265920835C2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C000000000000000000002 /* Base.xcconfig */;
@@ -676,15 +676,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A10000000000000000000011 /* Build configuration list for PBXNativeTarget "VakitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A1000000000000000000000B /* Debug */,
-				A1000000000000000000000C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		00710D7578E54B458420A16E /* Build configuration list for PBXNativeTarget "Vakit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -708,6 +699,15 @@
 			buildConfigurations = (
 				F7BE98581B5C170CA48E26F3 /* Release */,
 				987770D6632A29FE4344FE59 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000011 /* Build configuration list for PBXNativeTarget "VakitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000000000000000000000B /* Debug */,
+				A1000000000000000000000C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

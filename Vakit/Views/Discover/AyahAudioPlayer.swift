@@ -29,6 +29,24 @@ final class AyahAudioPlayer {
     private var timeControlObservation: NSKeyValueObservation?
     private var statusObservations: [NSKeyValueObservation] = []
     private var endObserver: NSObjectProtocol?
+    // init (MainActor) yazar, deinit (nonisolated) okur — örtüşmezler, bu yüzden güvenli.
+    private nonisolated(unsafe) var crossStopObserver: NSObjectProtocol?
+
+    init() {
+        // Başka bir ses kaynağı (meal TTS) başlarsa tilaveti durdur.
+        crossStopObserver = NotificationCenter.default.addObserver(
+            forName: .vakitAudioPlaybackStarted, object: nil, queue: .main
+        ) { [weak self] note in
+            guard let self, (note.object as AnyObject?) !== self else { return }
+            MainActor.assumeIsolated { self.stop() }
+        }
+    }
+
+    deinit {
+        if let crossStopObserver {
+            NotificationCenter.default.removeObserver(crossStopObserver)
+        }
+    }
 
     // MARK: - UI sorguları
 

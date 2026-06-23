@@ -37,3 +37,6 @@ RevenueCatAPIKeys.swift
 *.p12
 *.mobileprovision
 *.cer
+
+# Claude Code local session/config
+.claude/
