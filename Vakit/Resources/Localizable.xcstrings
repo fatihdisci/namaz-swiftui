@@ -4211,13 +4211,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diyanet calculates Asr according to the Hanafi school (shadow = 2× object height), so Hanafi is selected automatically. You can change this if you prefer."
+            "value" : "Diyanet prayer tables match the Standard Asr calculation (shadow = 1× object height), so Standard is selected automatically. You can change this if you prefer."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diyanet ikindi vaktini Hanefi esasına göre hesaplar (gölge = cismin 2 katı), bu yüzden Hanefi otomatik seçildi. İsterseniz değiştirebilirsiniz."
+            "value" : "Diyanet namaz vakti tabloları Standart ikindi hesabıyla (gölge = cismin 1 katı) eşleşir; bu yüzden Standart otomatik seçilir. İsterseniz değiştirebilirsiniz."
           }
         }
       }
@@ -4262,13 +4262,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Source: Presidency of Religious Affairs (Diyanet), diyanet.gov.tr"
+            "value" : "Sources: Diyanet prayer tables, Aladhan method metadata and school parameter"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kaynak: Diyanet İşleri Başkanlığı, diyanet.gov.tr"
+            "value" : "Kaynaklar: Diyanet namaz vakti tabloları, Aladhan metod bilgisi ve school parametresi"
           }
         }
       }

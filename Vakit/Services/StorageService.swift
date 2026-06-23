@@ -28,6 +28,7 @@ final class StorageService {
         static let freeCitiesCleaned = "free_cities_cleaned"
         static let hasManuallySetAsrCalculation = "has_manually_set_asr"
         static let asrSchoolMigrated = "asr_school_migrated"
+        static let asrSchoolStandardCorrectionMigrated = "asr_school_standard_correction_migrated"
     }
 
     private static let cacheRetentionDays = 30
@@ -43,14 +44,13 @@ final class StorageService {
         decoder.dateDecodingStrategy = .iso8601
         self.decoder = decoder
 
-        migrateAsrSchoolIfNeeded()
+        correctErroneousAsrSchoolIfNeeded()
     }
 
-    /// Bir kerelik göç: Diyanet kullanan eski kullanıcıların ikindi hesabını
-    /// Standart'tan (0) Hanefi'ye (1) çeker — ancak kullanıcı daha önce
-    /// manuel olarak değiştirmediyse.
-    private func migrateAsrSchoolIfNeeded() {
-        guard !defaults.bool(forKey: Key.asrSchoolMigrated) else { return }
+    /// Bir kerelik düzeltme: Hatalı eski göçle Diyanet + Hanefi'ye çekilmiş
+    /// kullanıcıları, manuel seçim yapmadılarsa Diyanet tablosuyla eşleşen Standart'a döndürür.
+    private func correctErroneousAsrSchoolIfNeeded() {
+        guard !defaults.bool(forKey: Key.asrSchoolStandardCorrectionMigrated) else { return }
 
         let currentMethod = method
         let currentSchool = defaults.integer(forKey: Key.school)
@@ -58,12 +58,12 @@ final class StorageService {
 
         if currentMethod == .diyanet
             && !userManuallySet
-            && currentSchool == AsrCalculation.standard.rawValue
+            && currentSchool == AsrCalculation.hanafi.rawValue
         {
-            defaults.set(AsrCalculation.hanafi.rawValue, forKey: Key.school)
+            defaults.set(AsrCalculation.standard.rawValue, forKey: Key.school)
         }
 
-        defaults.set(true, forKey: Key.asrSchoolMigrated)
+        defaults.set(true, forKey: Key.asrSchoolStandardCorrectionMigrated)
     }
 
     // MARK: - Vakit Cache
@@ -429,6 +429,7 @@ extension StorageService {
             Key.school,
             Key.hasManuallySetAsrCalculation,
             Key.asrSchoolMigrated,
+            Key.asrSchoolStandardCorrectionMigrated,
             Key.onboardingDone,
             Key.notificationSettings,
             Key.kazaCounts,
