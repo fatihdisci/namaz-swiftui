@@ -1,607 +1,774 @@
 [
   {
     "id": "v001",
-    "arapca": null,
+    "arapca": "وَٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى ٱلْخَٰشِعِينَ",
     "turkce": "Sabır ve namazla Allah'tan yardım isteyin. Şüphesiz bu, Allah'a saygı duyanlardan başkasına ağır gelir.",
     "ingilizce": "Seek help through patience and prayer. Indeed, it is hard except for the humbly submissive.",
     "sureAdi": "Bakara",
     "sureNo": 2,
     "ayetNo": "45",
     "kaynak": "Bakara 2:45",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      52
+    ]
   },
   {
     "id": "v002",
-    "arapca": null,
+    "arapca": "وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ ۖ فَلْيَسْتَجِيبُوا۟ لِى وَلْيُؤْمِنُوا۟ بِى لَعَلَّهُمْ يَرْشُدُونَ",
     "turkce": "Kullarım sana beni sorduğunda: Ben onlara yakınım. Bana dua edenin duasına karşılık veririm.",
     "ingilizce": "When My servants ask you about Me: I am near. I answer the call of the caller when he calls upon Me.",
     "sureAdi": "Bakara",
     "sureNo": 2,
     "ayetNo": "186",
     "kaynak": "Bakara 2:186",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      193
+    ]
   },
   {
     "id": "v003",
-    "arapca": null,
+    "arapca": "لَا يُكَلِّفُ ٱللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا ٱكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَآ إِن نَّسِينَآ أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَآ إِصْرًۭا كَمَا حَمَلْتَهُۥ عَلَى ٱلَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِۦ ۖ وَٱعْفُ عَنَّا وَٱغْفِرْ لَنَا وَٱرْحَمْنَآ ۚ أَنتَ مَوْلَىٰنَا فَٱنصُرْنَا عَلَى ٱلْقَوْمِ ٱلْكَٰفِرِينَ",
     "turkce": "Allah hiç kimseye gücünün yeteceğinden fazlasını yüklemez.",
     "ingilizce": "Allah does not burden a soul beyond its capacity.",
     "sureAdi": "Bakara",
     "sureNo": 2,
     "ayetNo": "286",
     "kaynak": "Bakara 2:286",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      293
+    ]
   },
   {
     "id": "v004",
-    "arapca": null,
+    "arapca": "وَلَا تَهِنُوا۟ وَلَا تَحْزَنُوا۟ وَأَنتُمُ ٱلْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ",
     "turkce": "Gevşemeyin, üzülmeyin. Eğer inanıyorsanız en üstün sizsiniz.",
     "ingilizce": "Do not lose heart or grieve. You will be superior if you are true believers.",
     "sureAdi": "Âl-i İmrân",
     "sureNo": 3,
     "ayetNo": "139",
     "kaynak": "Âl-i İmrân 3:139",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      432
+    ]
   },
   {
     "id": "v005",
-    "arapca": null,
+    "arapca": "فَبِمَا رَحْمَةٍۢ مِّنَ ٱللَّهِ لِنتَ لَهُمْ ۖ وَلَوْ كُنتَ فَظًّا غَلِيظَ ٱلْقَلْبِ لَٱنفَضُّوا۟ مِنْ حَوْلِكَ ۖ فَٱعْفُ عَنْهُمْ وَٱسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِى ٱلْأَمْرِ ۖ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى ٱللَّهِ ۚ إِنَّ ٱللَّهَ يُحِبُّ ٱلْمُتَوَكِّلِينَ",
     "turkce": "Bir kere karar verdin mi artık Allah'a güven. Şüphesiz Allah kendisine güvenenleri sever.",
     "ingilizce": "Once you have decided, put your trust in Allah. Allah loves those who put their trust in Him.",
     "sureAdi": "Âl-i İmrân",
     "sureNo": 3,
     "ayetNo": "159",
     "kaynak": "Âl-i İmrân 3:159",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      452
+    ]
   },
   {
     "id": "v006",
-    "arapca": null,
+    "arapca": "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُونُوا۟ قَوَّٰمِينَ لِلَّهِ شُهَدَآءَ بِٱلْقِسْطِ ۖ وَلَا يَجْرِمَنَّكُمْ شَنَـَٔانُ قَوْمٍ عَلَىٰٓ أَلَّا تَعْدِلُوا۟ ۚ ٱعْدِلُوا۟ هُوَ أَقْرَبُ لِلتَّقْوَىٰ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ خَبِيرٌۢ بِمَا تَعْمَلُونَ",
     "turkce": "Adil olun. Şüphesiz Allah adaletli davrananları sever.",
     "ingilizce": "Be just. Indeed, Allah loves those who act justly.",
     "sureAdi": "Mâide",
     "sureNo": 5,
     "ayetNo": "8",
     "kaynak": "Mâide 5:8",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      677
+    ]
   },
   {
     "id": "v007",
-    "arapca": null,
+    "arapca": "وَأَطِيعُوا۟ ٱللَّهَ وَرَسُولَهُۥ وَلَا تَنَٰزَعُوا۟ فَتَفْشَلُوا۟ وَتَذْهَبَ رِيحُكُمْ ۖ وَٱصْبِرُوٓا۟ ۚ إِنَّ ٱللَّهَ مَعَ ٱلصَّٰبِرِينَ",
     "turkce": "Sabredin. Şüphesiz Allah sabredenlerle beraberdir.",
     "ingilizce": "Be patient. Indeed, Allah is with the patient.",
     "sureAdi": "Enfâl",
     "sureNo": 8,
     "ayetNo": "46",
     "kaynak": "Enfâl 8:46",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1206
+    ]
   },
   {
     "id": "v008",
-    "arapca": null,
+    "arapca": "لَهُۥ مُعَقِّبَٰتٌۭ مِّنۢ بَيْنِ يَدَيْهِ وَمِنْ خَلْفِهِۦ يَحْفَظُونَهُۥ مِنْ أَمْرِ ٱللَّهِ ۗ إِنَّ ٱللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّىٰ يُغَيِّرُوا۟ مَا بِأَنفُسِهِمْ ۗ وَإِذَآ أَرَادَ ٱللَّهُ بِقَوْمٍۢ سُوٓءًۭا فَلَا مَرَدَّ لَهُۥ ۚ وَمَا لَهُم مِّن دُونِهِۦ مِن وَالٍ",
     "turkce": "Bir toplum kendi özünü değiştirmedikçe Allah onların durumunu değiştirmez.",
     "ingilizce": "Allah does not change the condition of a people until they change what is in themselves.",
     "sureAdi": "Ra'd",
     "sureNo": 13,
     "ayetNo": "11",
     "kaynak": "Ra'd 13:11",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1718
+    ]
   },
   {
     "id": "v009",
-    "arapca": null,
+    "arapca": "ٱلَّذِينَ ءَامَنُوا۟ وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ ٱللَّهِ ۗ أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ",
     "turkce": "Bilin ki kalpler ancak Allah'ı anmakla huzur bulur.",
     "ingilizce": "Verily, in the remembrance of Allah do hearts find rest.",
     "sureAdi": "Ra'd",
     "sureNo": 13,
     "ayetNo": "28",
     "kaynak": "Ra'd 13:28",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1735
+    ]
   },
   {
     "id": "v010",
-    "arapca": null,
+    "arapca": "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِى لَشَدِيدٌۭ",
     "turkce": "Şükrederseniz elbette size nimetimi artırırım.",
     "ingilizce": "If you are grateful, I will surely increase your favor.",
     "sureAdi": "İbrâhim",
     "sureNo": 14,
     "ayetNo": "7",
     "kaynak": "İbrâhim 14:7",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1757
+    ]
   },
   {
     "id": "v011",
-    "arapca": null,
+    "arapca": "۞ إِنَّ ٱللَّهَ يَأْمُرُ بِٱلْعَدْلِ وَٱلْإِحْسَٰنِ وَإِيتَآئِ ذِى ٱلْقُرْبَىٰ وَيَنْهَىٰ عَنِ ٱلْفَحْشَآءِ وَٱلْمُنكَرِ وَٱلْبَغْىِ ۚ يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُونَ",
     "turkce": "Allah adaleti, iyiliği ve akrabaya yardımı emreder.",
     "ingilizce": "Allah commands justice, good conduct, and giving to relatives.",
     "sureAdi": "Nahl",
     "sureNo": 16,
     "ayetNo": "90",
     "kaynak": "Nahl 16:90",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1991
+    ]
   },
   {
     "id": "v012",
-    "arapca": null,
+    "arapca": "۞ وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوٓا۟ إِلَّآ إِيَّاهُ وَبِٱلْوَٰلِدَيْنِ إِحْسَٰنًا ۚ إِمَّا يَبْلُغَنَّ عِندَكَ ٱلْكِبَرَ أَحَدُهُمَآ أَوْ كِلَاهُمَا فَلَا تَقُل لَّهُمَآ أُفٍّۢ وَلَا تَنْهَرْهُمَا وَقُل لَّهُمَا قَوْلًۭا كَرِيمًۭا",
     "turkce": "Rabbin yalnızca kendisine kulluk etmenizi ve anne babaya iyi davranmanızı emretti.",
     "ingilizce": "Your Lord has decreed that you worship none but Him and be good to your parents.",
     "sureAdi": "İsrâ",
     "sureNo": 17,
     "ayetNo": "23",
     "kaynak": "İsrâ 17:23",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2052
+    ]
   },
   {
     "id": "v013",
-    "arapca": null,
+    "arapca": "۞ وَلَقَدْ كَرَّمْنَا بَنِىٓ ءَادَمَ وَحَمَلْنَٰهُمْ فِى ٱلْبَرِّ وَٱلْبَحْرِ وَرَزَقْنَٰهُم مِّنَ ٱلطَّيِّبَٰتِ وَفَضَّلْنَٰهُمْ عَلَىٰ كَثِيرٍۢ مِّمَّنْ خَلَقْنَا تَفْضِيلًۭا",
     "turkce": "Andolsun biz insanoğluna şan ve şeref verdik.",
     "ingilizce": "We have certainly honored the children of Adam.",
     "sureAdi": "İsrâ",
     "sureNo": 17,
     "ayetNo": "70",
     "kaynak": "İsrâ 17:70",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2099
+    ]
   },
   {
     "id": "v014",
-    "arapca": null,
+    "arapca": "إِنَّنِىٓ أَنَا ٱللَّهُ لَآ إِلَٰهَ إِلَّآ أَنَا۠ فَٱعْبُدْنِى وَأَقِمِ ٱلصَّلَوٰةَ لِذِكْرِىٓ",
     "turkce": "Şüphesiz ben Allah'ım. Benden başka ilah yoktur. Öyleyse bana kulluk et ve beni anmak için namaz kıl.",
     "ingilizce": "Indeed, I am Allah. There is no deity except Me, so worship Me and establish prayer for My remembrance.",
     "sureAdi": "Tâhâ",
     "sureNo": 20,
     "ayetNo": "14",
     "kaynak": "Tâhâ 20:14",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2362
+    ]
   },
   {
     "id": "v015",
-    "arapca": null,
+    "arapca": "قَالَ لَا تَخَافَآ ۖ إِنَّنِى مَعَكُمَآ أَسْمَعُ وَأَرَىٰ",
     "turkce": "Korkmayın. Şüphesiz ben sizinle beraberim; işitir ve görürüm.",
     "ingilizce": "Fear not. Indeed, I am with you; I hear and I see.",
     "sureAdi": "Tâhâ",
     "sureNo": 20,
     "ayetNo": "46",
     "kaynak": "Tâhâ 20:46",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2394
+    ]
   },
   {
     "id": "v016",
-    "arapca": null,
+    "arapca": "۞ ٱللَّهُ نُورُ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ ۚ مَثَلُ نُورِهِۦ كَمِشْكَوٰةٍۢ فِيهَا مِصْبَاحٌ ۖ ٱلْمِصْبَاحُ فِى زُجَاجَةٍ ۖ ٱلزُّجَاجَةُ كَأَنَّهَا كَوْكَبٌۭ دُرِّىٌّۭ يُوقَدُ مِن شَجَرَةٍۢ مُّبَٰرَكَةٍۢ زَيْتُونَةٍۢ لَّا شَرْقِيَّةٍۢ وَلَا غَرْبِيَّةٍۢ يَكَادُ زَيْتُهَا يُضِىٓءُ وَلَوْ لَمْ تَمْسَسْهُ نَارٌۭ ۚ نُّورٌ عَلَىٰ نُورٍۢ ۗ يَهْدِى ٱللَّهُ لِنُورِهِۦ مَن يَشَآءُ ۚ وَيَضْرِبُ ٱللَّهُ ٱلْأَمْثَٰلَ لِلنَّاسِ ۗ وَٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمٌۭ",
     "turkce": "Allah göklerin ve yerin nurudur.",
     "ingilizce": "Allah is the Light of the heavens and the earth.",
     "sureAdi": "Nûr",
     "sureNo": 24,
     "ayetNo": "35",
     "kaynak": "Nûr 24:35",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2826
+    ]
   },
   {
     "id": "v017",
-    "arapca": null,
+    "arapca": "وَعِبَادُ ٱلرَّحْمَٰنِ ٱلَّذِينَ يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًۭا وَإِذَا خَاطَبَهُمُ ٱلْجَٰهِلُونَ قَالُوا۟ سَلَٰمًۭا",
     "turkce": "Rahmân'ın kulları yeryüzünde tevazu ile yürürler.",
     "ingilizce": "The servants of the Most Merciful walk upon the earth with humility.",
     "sureAdi": "Furkân",
     "sureNo": 25,
     "ayetNo": "63",
     "kaynak": "Furkân 25:63",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2918
+    ]
   },
   {
     "id": "v018",
-    "arapca": null,
+    "arapca": "ٱتْلُ مَآ أُوحِىَ إِلَيْكَ مِنَ ٱلْكِتَٰبِ وَأَقِمِ ٱلصَّلَوٰةَ ۖ إِنَّ ٱلصَّلَوٰةَ تَنْهَىٰ عَنِ ٱلْفَحْشَآءِ وَٱلْمُنكَرِ ۗ وَلَذِكْرُ ٱللَّهِ أَكْبَرُ ۗ وَٱللَّهُ يَعْلَمُ مَا تَصْنَعُونَ",
     "turkce": "Namaz, insanı hayasızlıktan ve kötülükten alıkoyar.",
     "ingilizce": "Indeed, prayer restrains from immorality and wrongdoing.",
     "sureAdi": "Ankebût",
     "sureNo": 29,
     "ayetNo": "45",
     "kaynak": "Ankebût 29:45",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3385
+    ]
   },
   {
     "id": "v019",
-    "arapca": null,
+    "arapca": "يَٰبُنَىَّ أَقِمِ ٱلصَّلَوٰةَ وَأْمُرْ بِٱلْمَعْرُوفِ وَٱنْهَ عَنِ ٱلْمُنكَرِ وَٱصْبِرْ عَلَىٰ مَآ أَصَابَكَ ۖ إِنَّ ذَٰلِكَ مِنْ عَزْمِ ٱلْأُمُورِ",
     "turkce": "Namazı dosdoğru kıl, iyiliği emret, kötülükten sakındır ve başına gelene sabret.",
     "ingilizce": "Establish prayer, enjoin good, forbid evil, and be patient over what befalls you.",
     "sureAdi": "Lokmân",
     "sureNo": 31,
     "ayetNo": "17",
     "kaynak": "Lokmân 31:17",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3486
+    ]
   },
   {
     "id": "v020",
-    "arapca": null,
+    "arapca": "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَقُولُوا۟ قَوْلًۭا سَدِيدًۭا",
     "turkce": "Ey iman edenler! Allah'a karşı sorumluluğunuzun bilincinde olun ve doğru söz söyleyin.",
     "ingilizce": "O you who believe, be mindful of Allah and speak words of truth.",
     "sureAdi": "Ahzâb",
     "sureNo": 33,
     "ayetNo": "70",
     "kaynak": "Ahzâb 33:70",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3603
+    ]
   },
   {
     "id": "v021",
-    "arapca": null,
+    "arapca": "فَٱصْبِرْ إِنَّ وَعْدَ ٱللَّهِ حَقٌّۭ وَٱسْتَغْفِرْ لِذَنۢبِكَ وَسَبِّحْ بِحَمْدِ رَبِّكَ بِٱلْعَشِىِّ وَٱلْإِبْكَٰرِ",
     "turkce": "Sabret. Allah'ın vaadi haktır. Senden sabır isteyenler seni sarsmasın.",
     "ingilizce": "Be patient. The promise of Allah is truth. Do not let those who have no certainty shake you.",
     "sureAdi": "Mü'min",
     "sureNo": 40,
     "ayetNo": "55",
     "kaynak": "Mü'min 40:55",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4188
+    ]
   },
   {
     "id": "v022",
-    "arapca": null,
+    "arapca": "۞ قُلْ يَٰعِبَادِىَ ٱلَّذِينَ أَسْرَفُوا۟ عَلَىٰٓ أَنفُسِهِمْ لَا تَقْنَطُوا۟ مِن رَّحْمَةِ ٱللَّهِ ۚ إِنَّ ٱللَّهَ يَغْفِرُ ٱلذُّنُوبَ جَمِيعًا ۚ إِنَّهُۥ هُوَ ٱلْغَفُورُ ٱلرَّحِيمُ",
     "turkce": "De ki: Ey kendilerinin aleyhine aşırı giden kullarım! Allah'ın rahmetinden ümit kesmeyin.",
     "ingilizce": "Say: O My servants who have transgressed against themselves, do not despair of the mercy of Allah.",
     "sureAdi": "Zümer",
     "sureNo": 39,
     "ayetNo": "53",
     "kaynak": "Zümer 39:53",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4111
+    ]
   },
   {
     "id": "v023",
-    "arapca": null,
+    "arapca": "وَلَا تَسْتَوِى ٱلْحَسَنَةُ وَلَا ٱلسَّيِّئَةُ ۚ ٱدْفَعْ بِٱلَّتِى هِىَ أَحْسَنُ فَإِذَا ٱلَّذِى بَيْنَكَ وَبَيْنَهُۥ عَدَٰوَةٌۭ كَأَنَّهُۥ وَلِىٌّ حَمِيمٌۭ",
     "turkce": "İyilikle kötülük bir olmaz. Kötülüğü en güzel şekilde karşıla.",
     "ingilizce": "Good and evil are not equal. Repel evil with what is better.",
     "sureAdi": "Fussilet",
     "sureNo": 41,
     "ayetNo": "34",
     "kaynak": "Fussilet 41:34",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4252
+    ]
   },
   {
     "id": "v024",
-    "arapca": null,
+    "arapca": "إِنَّمَا ٱلْمُؤْمِنُونَ إِخْوَةٌۭ فَأَصْلِحُوا۟ بَيْنَ أَخَوَيْكُمْ ۚ وَٱتَّقُوا۟ ٱللَّهَ لَعَلَّكُمْ تُرْحَمُونَ",
     "turkce": "Müminler ancak kardeştir. Öyleyse kardeşlerinizin arasını düzeltin.",
     "ingilizce": "The believers are but brothers, so make peace between your brothers.",
     "sureAdi": "Hucurât",
     "sureNo": 49,
     "ayetNo": "10",
     "kaynak": "Hucurât 49:10",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4622
+    ]
   },
   {
     "id": "v025",
-    "arapca": null,
+    "arapca": "يَٰٓأَيُّهَا ٱلنَّاسُ إِنَّا خَلَقْنَٰكُم مِّن ذَكَرٍۢ وَأُنثَىٰ وَجَعَلْنَٰكُمْ شُعُوبًۭا وَقَبَآئِلَ لِتَعَارَفُوٓا۟ ۚ إِنَّ أَكْرَمَكُمْ عِندَ ٱللَّهِ أَتْقَىٰكُمْ ۚ إِنَّ ٱللَّهَ عَلِيمٌ خَبِيرٌۭ",
     "turkce": "Allah katında en değerliniz, O'na karşı en çok sorumluluk bilinci taşıyanınızdır.",
     "ingilizce": "The most noble of you in the sight of Allah is the most mindful of Him.",
     "sureAdi": "Hucurât",
     "sureNo": 49,
     "ayetNo": "13",
     "kaynak": "Hucurât 49:13",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4625
+    ]
   },
   {
     "id": "v026",
-    "arapca": null,
+    "arapca": "وَأَن لَّيْسَ لِلْإِنسَٰنِ إِلَّا مَا سَعَىٰ",
     "turkce": "İnsan için ancak çalıştığının karşılığı vardır.",
     "ingilizce": "A person will have nothing except what they strive for.",
     "sureAdi": "Necm",
     "sureNo": 53,
     "ayetNo": "39",
     "kaynak": "Necm 53:39",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4823
+    ]
   },
   {
     "id": "v027",
-    "arapca": null,
+    "arapca": "هُوَ ٱلَّذِى خَلَقَ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضَ فِى سِتَّةِ أَيَّامٍۢ ثُمَّ ٱسْتَوَىٰ عَلَى ٱلْعَرْشِ ۚ يَعْلَمُ مَا يَلِجُ فِى ٱلْأَرْضِ وَمَا يَخْرُجُ مِنْهَا وَمَا يَنزِلُ مِنَ ٱلسَّمَآءِ وَمَا يَعْرُجُ فِيهَا ۖ وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ ۚ وَٱللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌۭ",
     "turkce": "Nerede olsanız O sizinle beraberdir. Allah yaptıklarınızı görendir.",
     "ingilizce": "Wherever you are, He is with you. Allah is Seeing of what you do.",
     "sureAdi": "Hadîd",
     "sureNo": 57,
     "ayetNo": "4",
     "kaynak": "Hadîd 57:4",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      5079
+    ]
   },
   {
     "id": "v028",
-    "arapca": null,
+    "arapca": "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَلْتَنظُرْ نَفْسٌۭ مَّا قَدَّمَتْ لِغَدٍۢ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ خَبِيرٌۢ بِمَا تَعْمَلُونَ",
     "turkce": "Ey iman edenler! Allah'a karşı sorumluluğunuzun bilincinde olun ve herkes yarın için ne hazırladığına baksın.",
     "ingilizce": "O you who believe, be mindful of Allah. Let every soul consider what it has prepared for tomorrow.",
     "sureAdi": "Haşr",
     "sureNo": 59,
     "ayetNo": "18",
     "kaynak": "Haşr 59:18",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      5144
+    ]
   },
   {
     "id": "v029",
-    "arapca": null,
+    "arapca": "وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ۚ وَمَن يَتَوَكَّلْ عَلَى ٱللَّهِ فَهُوَ حَسْبُهُۥٓ ۚ إِنَّ ٱللَّهَ بَٰلِغُ أَمْرِهِۦ ۚ قَدْ جَعَلَ ٱللَّهُ لِكُلِّ شَىْءٍۢ قَدْرًۭا",
     "turkce": "Kim Allah'a güvenirse O kendisine yeter.",
     "ingilizce": "Whoever puts their trust in Allah, He is sufficient for them.",
     "sureAdi": "Talâk",
     "sureNo": 65,
     "ayetNo": "3",
     "kaynak": "Talâk 65:3",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      5220
+    ]
   },
   {
     "id": "v030",
-    "arapca": null,
+    "arapca": "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا إِنَّ مَعَ ٱلْعُسْرِ يُسْرًۭا",
     "turkce": "Şüphesiz her zorlukla beraber bir kolaylık vardır.",
     "ingilizce": "Indeed, with hardship comes ease.",
     "sureAdi": "İnşirâh",
     "sureNo": 94,
     "ayetNo": "5-6",
     "kaynak": "İnşirâh 94:5-6",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      6095,
+      6096
+    ]
   },
   {
     "id": "v031",
-    "arapca": null,
+    "arapca": "وَمَن يَعْمَلْ سُوٓءًا أَوْ يَظْلِمْ نَفْسَهُۥ ثُمَّ يَسْتَغْفِرِ ٱللَّهَ يَجِدِ ٱللَّهَ غَفُورًۭا رَّحِيمًۭا",
     "turkce": "Kim bir kötülük yapar veya nefsine zulmeder de sonra Allah'tan bağışlanma dilerse, Allah'ı çok bağışlayıcı ve merhametli bulur.",
     "ingilizce": "And whoever does a wrong or wrongs himself but then seeks forgiveness of Allah will find Allah Forgiving and Merciful.",
     "sureAdi": "Nisa",
     "sureNo": 4,
     "ayetNo": "110",
     "kaynak": "Nisa 4:110",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      603
+    ]
   },
   {
     "id": "v032",
-    "arapca": null,
+    "arapca": "إِنَّ فِى خَلْقِ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ وَٱخْتِلَٰفِ ٱلَّيْلِ وَٱلنَّهَارِ لَءَايَٰتٍۢ لِّأُو۟لِى ٱلْأَلْبَٰبِ",
     "turkce": "Göklerin ve yerin yaratılışında, gece ile gündüzün birbiri ardınca gelişinde akıl sahipleri için gerçekten açık ibretler vardır.",
     "ingilizce": "Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding.",
     "sureAdi": "Âl-i İmrân",
     "sureNo": 3,
     "ayetNo": "190",
     "kaynak": "Âl-i İmrân 3:190",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      483
+    ]
   },
   {
     "id": "v033",
-    "arapca": null,
+    "arapca": "وَهُوَ ٱلَّذِىٓ أَنزَلَ مِنَ ٱلسَّمَآءِ مَآءًۭ فَأَخْرَجْنَا بِهِۦ نَبَاتَ كُلِّ شَىْءٍۢ فَأَخْرَجْنَا مِنْهُ خَضِرًۭا نُّخْرِجُ مِنْهُ حَبًّۭا مُّتَرَاكِبًۭا وَمِنَ ٱلنَّخْلِ مِن طَلْعِهَا قِنْوَانٌۭ دَانِيَةٌۭ وَجَنَّٰتٍۢ مِّنْ أَعْنَابٍۢ وَٱلزَّيْتُونَ وَٱلرُّمَّانَ مُشْتَبِهًۭا وَغَيْرَ مُتَشَٰبِهٍ ۗ ٱنظُرُوٓا۟ إِلَىٰ ثَمَرِهِۦٓ إِذَآ أَثْمَرَ وَيَنْعِهِۦٓ ۚ إِنَّ فِى ذَٰلِكُمْ لَءَايَٰتٍۢ لِّقَوْمٍۢ يُؤْمِنُونَ",
     "turkce": "O, gökten su indirendir. İşte onunla her şeyin bitkisini çıkardık.",
     "ingilizce": "And He is the One who sends down water from the sky, and We produce thereby the growth of all things.",
     "sureAdi": "En'âm",
     "sureNo": 6,
     "ayetNo": "99",
     "kaynak": "En'âm 6:99",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      888
+    ]
   },
   {
     "id": "v034",
-    "arapca": null,
+    "arapca": "وَٱبْتَغِ فِيمَآ ءَاتَىٰكَ ٱللَّهُ ٱلدَّارَ ٱلْءَاخِرَةَ ۖ وَلَا تَنسَ نَصِيبَكَ مِنَ ٱلدُّنْيَا ۖ وَأَحْسِن كَمَآ أَحْسَنَ ٱللَّهُ إِلَيْكَ ۖ وَلَا تَبْغِ ٱلْفَسَادَ فِى ٱلْأَرْضِ ۖ إِنَّ ٱللَّهَ لَا يُحِبُّ ٱلْمُفْسِدِينَ",
     "turkce": "Allah'ın sana verdiği şeylerde ahiret yurdunu ara; dünyadan da nasibini unutma.",
     "ingilizce": "But seek, through that which Allah has given you, the home of the Hereafter; and [yet], do not forget your share of the world.",
     "sureAdi": "Kasas",
     "sureNo": 28,
     "ayetNo": "77",
     "kaynak": "Kasas 28:77",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3329
+    ]
   },
   {
     "id": "v035",
-    "arapca": null,
+    "arapca": "وَقَالَ رَبُّكُمُ ٱدْعُونِىٓ أَسْتَجِبْ لَكُمْ ۚ إِنَّ ٱلَّذِينَ يَسْتَكْبِرُونَ عَنْ عِبَادَتِى سَيَدْخُلُونَ جَهَنَّمَ دَاخِرِينَ",
     "turkce": "Rabbiniz, kendisine yalvarıp yakarmanızı emretti.",
     "ingilizce": "And your Lord says, 'Call upon Me; I will respond to you.'",
     "sureAdi": "Mü'min",
     "sureNo": 40,
     "ayetNo": "60",
     "kaynak": "Mü'min 40:60",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4193
+    ]
   },
   {
     "id": "v036",
-    "arapca": null,
+    "arapca": "إِن تُبْدُوا۟ ٱلصَّدَقَٰتِ فَنِعِمَّا هِىَ ۖ وَإِن تُخْفُوهَا وَتُؤْتُوهَا ٱلْفُقَرَآءَ فَهُوَ خَيْرٌۭ لَّكُمْ ۚ وَيُكَفِّرُ عَنكُم مِّن سَيِّـَٔاتِكُمْ ۗ وَٱللَّهُ بِمَا تَعْمَلُونَ خَبِيرٌۭ",
     "turkce": "Sadakaları (zekâtı) açıktan verirseniz ne güzel! Eğer onu gizleyip fakirlere verirseniz işte bu sizin için daha hayırlıdır.",
     "ingilizce": "If you disclose your charitable expenditures, they are good; but if you conceal them and give them to the poor, it is better for you.",
     "sureAdi": "Bakara",
     "sureNo": 2,
     "ayetNo": "271",
     "kaynak": "Bakara 2:271",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      278
+    ]
   },
   {
     "id": "v037",
-    "arapca": null,
+    "arapca": "لَن تَنَالُوا۟ ٱلْبِرَّ حَتَّىٰ تُنفِقُوا۟ مِمَّا تُحِبُّونَ ۚ وَمَا تُنفِقُوا۟ مِن شَىْءٍۢ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٌۭ",
     "turkce": "Sevdiğiniz şeylerden infak etmedikçe iyiliğe asla erişemezsiniz.",
     "ingilizce": "Never will you attain the good [reward] until you spend [in the way of Allah] from that which you love.",
     "sureAdi": "Âl-i İmrân",
     "sureNo": 3,
     "ayetNo": "92",
     "kaynak": "Âl-i İmrân 3:92",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      385
+    ]
   },
   {
     "id": "v038",
-    "arapca": null,
+    "arapca": "كُلُّ نَفْسٍۢ ذَآئِقَةُ ٱلْمَوْتِ ۖ ثُمَّ إِلَيْنَا تُرْجَعُونَ",
     "turkce": "Her nefis ölümü tadacaktır. Sonra bize döndürüleceksiniz.",
     "ingilizce": "Every soul will taste death. Then to Us will you be returned.",
     "sureAdi": "Ankebût",
     "sureNo": 29,
     "ayetNo": "57",
     "kaynak": "Ankebût 29:57",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3397
+    ]
   },
   {
     "id": "v039",
-    "arapca": null,
+    "arapca": "وَمَا ٱلْحَيَوٰةُ ٱلدُّنْيَآ إِلَّا لَعِبٌۭ وَلَهْوٌۭ ۖ وَلَلدَّارُ ٱلْءَاخِرَةُ خَيْرٌۭ لِّلَّذِينَ يَتَّقُونَ ۗ أَفَلَا تَعْقِلُونَ",
     "turkce": "Dünya hayatı sadece bir oyun ve eğlencedir. Ahiret yurdu ise işte asıl hayat odur.",
     "ingilizce": "The worldly life is not but amusement and diversion; but the home of the Hereafter is best for those who fear Allah.",
     "sureAdi": "En'âm",
     "sureNo": 6,
     "ayetNo": "32",
     "kaynak": "En'âm 6:32",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      821
+    ]
   },
   {
     "id": "v040",
-    "arapca": null,
+    "arapca": "شَهْرُ رَمَضَانَ ٱلَّذِىٓ أُنزِلَ فِيهِ ٱلْقُرْءَانُ هُدًۭى لِّلنَّاسِ وَبَيِّنَٰتٍۢ مِّنَ ٱلْهُدَىٰ وَٱلْفُرْقَانِ ۚ فَمَن شَهِدَ مِنكُمُ ٱلشَّهْرَ فَلْيَصُمْهُ ۖ وَمَن كَانَ مَرِيضًا أَوْ عَلَىٰ سَفَرٍۢ فَعِدَّةٌۭ مِّنْ أَيَّامٍ أُخَرَ ۗ يُرِيدُ ٱللَّهُ بِكُمُ ٱلْيُسْرَ وَلَا يُرِيدُ بِكُمُ ٱلْعُسْرَ وَلِتُكْمِلُوا۟ ٱلْعِدَّةَ وَلِتُكَبِّرُوا۟ ٱللَّهَ عَلَىٰ مَا هَدَىٰكُمْ وَلَعَلَّكُمْ تَشْكُرُونَ",
     "turkce": "Allah size kolaylık diler, zorluk dilemez.",
     "ingilizce": "Allah intends for you ease and does not intend for you hardship.",
     "sureAdi": "Bakara",
     "sureNo": 2,
     "ayetNo": "185",
     "kaynak": "Bakara 2:185",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      192
+    ]
   },
   {
     "id": "v041",
-    "arapca": null,
+    "arapca": "ٱلَّذِينَ يَذْكُرُونَ ٱللَّهَ قِيَٰمًۭا وَقُعُودًۭا وَعَلَىٰ جُنُوبِهِمْ وَيَتَفَكَّرُونَ فِى خَلْقِ ٱلسَّمَٰوَٰتِ وَٱلْأَرْضِ رَبَّنَا مَا خَلَقْتَ هَٰذَا بَٰطِلًۭا سُبْحَٰنَكَ فَقِنَا عَذَابَ ٱلنَّارِ",
     "turkce": "Onlar ki, ayakta dururken, otururken ve yanları üzerine yatarken Allah'ı anarlar; göklerin ve yerin yaratılışı üzerinde düşünürler.",
     "ingilizce": "Who remember Allah while standing or sitting or [lying] on their sides and give thought to the creation of the heavens and the earth.",
     "sureAdi": "Âl-i İmrân",
     "sureNo": 3,
     "ayetNo": "191",
     "kaynak": "Âl-i İmrân 3:191",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      484
+    ]
   },
   {
     "id": "v042",
-    "arapca": null,
+    "arapca": "وَفِى ٱلْأَرْضِ قِطَعٌۭ مُّتَجَٰوِرَٰتٌۭ وَجَنَّٰتٌۭ مِّنْ أَعْنَٰبٍۢ وَزَرْعٌۭ وَنَخِيلٌۭ صِنْوَانٌۭ وَغَيْرُ صِنْوَانٍۢ يُسْقَىٰ بِمَآءٍۢ وَٰحِدٍۢ وَنُفَضِّلُ بَعْضَهَا عَلَىٰ بَعْضٍۢ فِى ٱلْأُكُلِ ۚ إِنَّ فِى ذَٰلِكَ لَءَايَٰتٍۢ لِّقَوْمٍۢ يَعْقِلُونَ",
     "turkce": "Yeryüzünde birbiriyle komşu olarak yaratılan toprak parçaları, üzüm bağları, ekinler, bir kökten ve çeşitli köklerden dallanan hurma ağaçları vardır.",
     "ingilizce": "And in the earth are neighboring tracts and gardens of grapes and crops and palm trees, [growing] from one root and not from one root.",
     "sureAdi": "Ra'd",
     "sureNo": 13,
     "ayetNo": "4",
     "kaynak": "Ra'd 13:4",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1711
+    ]
   },
   {
     "id": "v043",
-    "arapca": null,
+    "arapca": "۞ لِّلَّذِينَ أَحْسَنُوا۟ ٱلْحُسْنَىٰ وَزِيَادَةٌۭ ۖ وَلَا يَرْهَقُ وُجُوهَهُمْ قَتَرٌۭ وَلَا ذِلَّةٌ ۚ أُو۟لَٰٓئِكَ أَصْحَٰبُ ٱلْجَنَّةِ ۖ هُمْ فِيهَا خَٰلِدُونَ",
     "turkce": "İyilik edenlere daha güzeli ve bir de fazlası vardır.",
     "ingilizce": "For those who do good is the best [reward] and more.",
     "sureAdi": "Yûnus",
     "sureNo": 10,
     "ayetNo": "26",
     "kaynak": "Yûnus 10:26",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1390
+    ]
   },
   {
     "id": "v044",
-    "arapca": null,
+    "arapca": "قُلْ أَغَيْرَ ٱللَّهِ أَبْغِى رَبًّۭا وَهُوَ رَبُّ كُلِّ شَىْءٍۢ ۚ وَلَا تَكْسِبُ كُلُّ نَفْسٍ إِلَّا عَلَيْهَا ۚ وَلَا تَزِرُ وَازِرَةٌۭ وِزْرَ أُخْرَىٰ ۚ ثُمَّ إِلَىٰ رَبِّكُم مَّرْجِعُكُمْ فَيُنَبِّئُكُم بِمَا كُنتُمْ فِيهِ تَخْتَلِفُونَ",
     "turkce": "Hiçbir günahkâr başka bir günahkârın yükünü yüklenmez.",
     "ingilizce": "And no bearer of burdens will bear the burden of another.",
     "sureAdi": "En'âm",
     "sureNo": 6,
     "ayetNo": "164",
     "kaynak": "En'âm 6:164",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      953
+    ]
   },
   {
     "id": "v045",
-    "arapca": null,
+    "arapca": "ٱدْعُ إِلَىٰ سَبِيلِ رَبِّكَ بِٱلْحِكْمَةِ وَٱلْمَوْعِظَةِ ٱلْحَسَنَةِ ۖ وَجَٰدِلْهُم بِٱلَّتِى هِىَ أَحْسَنُ ۚ إِنَّ رَبَّكَ هُوَ أَعْلَمُ بِمَن ضَلَّ عَن سَبِيلِهِۦ ۖ وَهُوَ أَعْلَمُ بِٱلْمُهْتَدِينَ",
     "turkce": "Rabbinin yoluna hikmetle ve güzel öğütle çağır.",
     "ingilizce": "Invite to the way of your Lord with wisdom and good instruction.",
     "sureAdi": "Nahl",
     "sureNo": 16,
     "ayetNo": "125",
     "kaynak": "Nahl 16:125",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      2026
+    ]
   },
   {
     "id": "v046",
-    "arapca": null,
+    "arapca": "يَٰبَنِىَّ ٱذْهَبُوا۟ فَتَحَسَّسُوا۟ مِن يُوسُفَ وَأَخِيهِ وَلَا تَا۟يْـَٔسُوا۟ مِن رَّوْحِ ٱللَّهِ ۖ إِنَّهُۥ لَا يَا۟يْـَٔسُ مِن رَّوْحِ ٱللَّهِ إِلَّا ٱلْقَوْمُ ٱلْكَٰفِرُونَ",
     "turkce": "Allah'ın rahmetinden ümit kesmeyin. Çünkü kâfirler topluluğundan başkası Allah'ın rahmetinden ümit kesmez.",
     "ingilizce": "Do not despair of the mercy of Allah. Indeed, no one despairs of the mercy of Allah except the disbelieving people.",
     "sureAdi": "Yûsuf",
     "sureNo": 12,
     "ayetNo": "87",
     "kaynak": "Yûsuf 12:87",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1683
+    ]
   },
   {
     "id": "v047",
-    "arapca": null,
+    "arapca": "وَلِلَّهِ مَا فِى ٱلسَّمَٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۚ وَكَانَ ٱللَّهُ بِكُلِّ شَىْءٍۢ مُّحِيطًۭا",
     "turkce": "Göklerde ve yerde ne varsa hepsi Allah'ındır. Allah her şeyi kuşatmıştır.",
     "ingilizce": "To Allah belongs whatever is in the heavens and whatever is in the earth, and Allah encompasses all things.",
     "sureAdi": "Nisa",
     "sureNo": 4,
     "ayetNo": "126",
     "kaynak": "Nisa 4:126",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      619
+    ]
   },
   {
     "id": "v048",
-    "arapca": null,
+    "arapca": "قُلْ بِفَضْلِ ٱللَّهِ وَبِرَحْمَتِهِۦ فَبِذَٰلِكَ فَلْيَفْرَحُوا۟ هُوَ خَيْرٌۭ مِّمَّا يَجْمَعُونَ",
     "turkce": "De ki: Allah'ın lütuf ve rahmetiyle, işte bunlarla sevinsinler. Bu, onların topladıklarından daha hayırlıdır.",
     "ingilizce": "Say, 'In the bounty of Allah and in His mercy – in that let them rejoice; it is better than what they accumulate.'",
     "sureAdi": "Yûnus",
     "sureNo": 10,
     "ayetNo": "58",
     "kaynak": "Yûnus 10:58",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      1422
+    ]
   },
   {
     "id": "v049",
-    "arapca": null,
+    "arapca": "۞ إِنَّ ٱللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا۟ ٱلْأَمَٰنَٰتِ إِلَىٰٓ أَهْلِهَا وَإِذَا حَكَمْتُم بَيْنَ ٱلنَّاسِ أَن تَحْكُمُوا۟ بِٱلْعَدْلِ ۚ إِنَّ ٱللَّهَ نِعِمَّا يَعِظُكُم بِهِۦٓ ۗ إِنَّ ٱللَّهَ كَانَ سَمِيعًۢا بَصِيرًۭا",
     "turkce": "İnsanların arasında hükmederken adaletle hükmetmenizi emreder.",
     "ingilizce": "Indeed, Allah commands you to render trusts to whom they are due and when you judge between people to judge with justice.",
     "sureAdi": "Nisa",
     "sureNo": 4,
     "ayetNo": "58",
     "kaynak": "Nisa 4:58",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      551
+    ]
   },
   {
     "id": "v050",
-    "arapca": null,
+    "arapca": "۞ قَوْلٌۭ مَّعْرُوفٌۭ وَمَغْفِرَةٌ خَيْرٌۭ مِّن صَدَقَةٍۢ يَتْبَعُهَآ أَذًۭى ۗ وَٱللَّهُ غَنِىٌّ حَلِيمٌۭ",
     "turkce": "Güzel bir söz ve bağışlama, ardından eziyet gelen bir sadakadan daha hayırlıdır.",
     "ingilizce": "Kind speech and forgiveness are better than charity followed by injury.",
     "sureAdi": "Bakara",
     "sureNo": 2,
     "ayetNo": "263",
     "kaynak": "Bakara 2:263",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      270
+    ]
   },
   {
     "id": "v051",
-    "arapca": null,
+    "arapca": "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًۭا يَرَهُۥ وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍۢ شَرًّۭا يَرَهُۥ",
     "turkce": "Kim zerre miktarı hayır yaparsa onu görür. Kim zerre miktarı şer işlerse onu görür.",
     "ingilizce": "So whoever does an atom's weight of good will see it, and whoever does an atom's weight of evil will see it.",
     "sureAdi": "Zilzâl",
     "sureNo": 99,
     "ayetNo": "7-8",
     "kaynak": "Zilzâl 99:7-8",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      6145,
+      6146
+    ]
   },
   {
     "id": "v052",
-    "arapca": null,
+    "arapca": "أَيْنَمَا تَكُونُوا۟ يُدْرِككُّمُ ٱلْمَوْتُ وَلَوْ كُنتُمْ فِى بُرُوجٍۢ مُّشَيَّدَةٍۢ ۗ وَإِن تُصِبْهُمْ حَسَنَةٌۭ يَقُولُوا۟ هَٰذِهِۦ مِنْ عِندِ ٱللَّهِ ۖ وَإِن تُصِبْهُمْ سَيِّئَةٌۭ يَقُولُوا۟ هَٰذِهِۦ مِنْ عِندِكَ ۚ قُلْ كُلٌّۭ مِّنْ عِندِ ٱللَّهِ ۖ فَمَالِ هَٰٓؤُلَآءِ ٱلْقَوْمِ لَا يَكَادُونَ يَفْقَهُونَ حَدِيثًۭا",
     "turkce": "Nerede olursanız olun, ölüm sizi bulur; isterseniz sağlam kaleler içinde olun.",
     "ingilizce": "Wherever you may be, death will overtake you, even if you should be within towers of lofty construction.",
     "sureAdi": "Nisa",
     "sureNo": 4,
     "ayetNo": "78",
     "kaynak": "Nisa 4:78",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      571
+    ]
   },
   {
     "id": "v053",
-    "arapca": null,
+    "arapca": "وَٱللَّهُ خَلَقَكُم مِّن تُرَابٍۢ ثُمَّ مِن نُّطْفَةٍۢ ثُمَّ جَعَلَكُمْ أَزْوَٰجًۭا ۚ وَمَا تَحْمِلُ مِنْ أُنثَىٰ وَلَا تَضَعُ إِلَّا بِعِلْمِهِۦ ۚ وَمَا يُعَمَّرُ مِن مُّعَمَّرٍۢ وَلَا يُنقَصُ مِنْ عُمُرِهِۦٓ إِلَّا فِى كِتَٰبٍ ۚ إِنَّ ذَٰلِكَ عَلَى ٱللَّهِ يَسِيرٌۭ",
     "turkce": "Allah, sizi topraktan, sonra bir damla sudan yarattı; sonra sizi çiftler kıldı.",
     "ingilizce": "And Allah created you from dust, then from a sperm-drop; then He made you mates.",
     "sureAdi": "Fâtır",
     "sureNo": 35,
     "ayetNo": "11",
     "kaynak": "Fâtır 35:11",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3671
+    ]
   },
   {
     "id": "v054",
-    "arapca": null,
+    "arapca": "مَثَلُ ٱلَّذِينَ ٱتَّخَذُوا۟ مِن دُونِ ٱللَّهِ أَوْلِيَآءَ كَمَثَلِ ٱلْعَنكَبُوتِ ٱتَّخَذَتْ بَيْتًۭا ۖ وَإِنَّ أَوْهَنَ ٱلْبُيُوتِ لَبَيْتُ ٱلْعَنكَبُوتِ ۖ لَوْ كَانُوا۟ يَعْلَمُونَ",
     "turkce": "Allah'tan başka dost edinenlerin durumu, kendine yuva yapan örümceğin durumu gibidir.",
     "ingilizce": "The example of those who take allies other than Allah is like that of the spider who takes a home.",
     "sureAdi": "Ankebût",
     "sureNo": 29,
     "ayetNo": "41",
     "kaynak": "Ankebût 29:41",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      3381
+    ]
   },
   {
     "id": "v055",
-    "arapca": null,
+    "arapca": "ٱللَّهُ لَطِيفٌۢ بِعِبَادِهِۦ يَرْزُقُ مَن يَشَآءُ ۖ وَهُوَ ٱلْقَوِىُّ ٱلْعَزِيزُ",
     "turkce": "Allah kullarına lütufkârdır, dilediğini rızıklandırır. O güçlüdür, üstündür.",
     "ingilizce": "Allah is the Subtle with His servants; He gives provision to whom He wills. And He is the Powerful, the Exalted in Might.",
     "sureAdi": "Şûrâ",
     "sureNo": 42,
     "ayetNo": "19",
     "kaynak": "Şûrâ 42:19",
-    "atifUrl": null
+    "atifUrl": null,
+    "sesAyetNo": [
+      4291
+    ]
   }
 ]

@@ -9,6 +9,7 @@ struct DiscoverView: View {
     enum GeneratingType { case verse, hadith, dua }
     @State private var generating: GeneratingType?
     @State private var contentRevision = 0
+    @State private var audioPlayer = AyahAudioPlayer()
 
     private var verse: Verse? { DailyContent.dailyVerse() }
     private var hadith: Hadith? { DailyContent.dailyHadith() }
@@ -63,6 +64,7 @@ struct DiscoverView: View {
         .onReceive(NotificationCenter.default.publisher(for: .vakitContentUpdated)) { _ in
             contentRevision &+= 1
         }
+        .onDisappear { audioPlayer.stop() }
     }
 
     // MARK: - Header
@@ -123,6 +125,9 @@ struct DiscoverView: View {
                         .foregroundStyle(Color.vakitText)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .environment(\.layoutDirection, .rightToLeft)
+                    if verse.hasAudio {
+                        listenControl(for: verse)
+                    }
                 }
                 Text(verse.text(language: lang.currentLanguage))
                     .font(.system(.body, design: .default))
@@ -130,6 +135,50 @@ struct DiscoverView: View {
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
                 referenceRow(verse.reference)
+            }
+        }
+    }
+
+    /// Tilavet (hafız sesi) dinle/durdur kontrolü + hafız atfı + hata mesajı.
+    private func listenControl(for verse: Verse) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 10) {
+                Button {
+                    audioPlayer.toggle(verse)
+                } label: {
+                    HStack(spacing: 7) {
+                        if audioPlayer.isLoading(verse) {
+                            ProgressView()
+                                .controlSize(.small)
+                                .tint(Color.vakitAccent)
+                        } else {
+                            Image(systemName: audioPlayer.isPlaying(verse) ? "pause.circle.fill" : "play.circle.fill")
+                                .font(.system(size: 18, weight: .semibold))
+                        }
+                        Text(audioPlayer.isPlaying(verse)
+                            ? lang.t("discover.audio.stop")
+                            : lang.t("discover.audio.listen"))
+                            .font(.system(.subheadline, weight: .semibold))
+                    }
+                    .foregroundStyle(Color.vakitAccent)
+                    .padding(.horizontal, 12)
+                    .frame(height: 34)
+                    .background(Capsule().fill(Color.vakitAccent.opacity(0.12)))
+                }
+                .disabled(audioPlayer.isLoading(verse))
+                .accessibilityLabel(lang.t(audioPlayer.isPlaying(verse) ? "discover.audio.stop" : "discover.audio.listen"))
+
+                Spacer(minLength: 8)
+
+                Text(lang.t("discover.audio.reciter"))
+                    .font(.caption2)
+                    .foregroundStyle(Color.vakitTextDim)
+                    .lineLimit(1)
+            }
+            if audioPlayer.didFail(verse) {
+                Text(lang.t("discover.audio.error"))
+                    .font(.caption)
+                    .foregroundStyle(.red)
             }
         }
     }

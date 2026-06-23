@@ -13,6 +13,8 @@ struct Verse: Codable, Identifiable, Equatable {
     let verseNumber: String
     let source: String
     let referenceURL: String?
+    /// Global ayet numara(ları) (1-6236) — hafız ses CDN'i için. Aralıklarda birden fazla.
+    let audioAyahNumbersRaw: [Int]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,10 +26,17 @@ struct Verse: Codable, Identifiable, Equatable {
         case verseNumber = "ayetNo"
         case source = "kaynak"
         case referenceURL = "atifUrl"
+        case audioAyahNumbersRaw = "sesAyetNo"
     }
 
     /// "Bakara · 45" biçiminde referans.
     var reference: String { "\(surahName) · \(verseNumber)" }
+
+    /// Ses oynatma için global ayet numaraları. Boşsa tilavet kullanılamaz.
+    var audioAyahNumbers: [Int] { audioAyahNumbersRaw ?? [] }
+
+    /// Tilavet sesi mevcut mu (global ayet numarası var mı).
+    var hasAudio: Bool { !audioAyahNumbers.isEmpty }
 
     func text(language: String) -> String {
         language == "tr" ? textTR : textEN

@@ -1,8 +1,8 @@
 {
-  "version": 5,
-  "lastUpdated": "2026-06-21",
+  "version": 6,
+  "lastUpdated": "2026-06-23",
   "files": {
-    "ayetler.json": 1,
+    "ayetler.json": 2,
     "dualar.json": 1,
     "hadisler.json": 1,
     "esma.json": 1

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* PrayerAccuracyTests.swift */; };
+		A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000032 /* QuranAudioServiceTests.swift */; };
 		13A596E6620E927F8E0BDCE6 /* UfukWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1B272A75E8AFDDF2E35FD5A0 /* UfukWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		322CC2C3BD4A436E8DC5584A /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = FED66DFEE5424FF389755875 /* RevenueCat */; };
 		3ECEBAA566C74225835CA9ED /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEB944B591481386752953 /* Adhan */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		A10000000000000000000002 /* PrayerAccuracyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerAccuracyTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000032 /* QuranAudioServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranAudioServiceTests.swift; sourceTree = "<group>"; };
 		A10000000000000000000004 /* VakitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VakitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UfukWidget.swift; sourceTree = "<group>"; };
 		AF0000000000000000000001 /* SkyGradient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SkyGradient.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000002 /* PrayerAccuracyTests.swift */,
+				A10000000000000000000032 /* QuranAudioServiceTests.swift */,
 			);
 			path = VakitTests;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000001 /* PrayerAccuracyTests.swift in Sources */,
+				A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
