@@ -9,6 +9,7 @@ struct SettingsView: View {
     @State private var showProGate = false
     @State private var showDeleteAccountConfirm = false
     @State private var isDeletingAccount = false
+    @State private var showAsrInfoSheet = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -73,6 +74,10 @@ struct SettingsView: View {
             ProGateView()
                 .environment(lang)
                 .environment(purchaseService)
+        }
+        .sheet(isPresented: $showAsrInfoSheet) {
+            AsrInfoSheet(method: viewModel.method)
+                .environment(lang)
         }
         .alert(lang.t("account.delete.title"), isPresented: $showDeleteAccountConfirm) {
             Button(lang.t("account.delete.cancel"), role: .cancel) {}
@@ -148,39 +153,69 @@ struct SettingsView: View {
     }
 
     private var methodRow: some View {
-        HStack {
-            rowLabel(icon: "function", titleKey: "settings.method")
-            Spacer()
-            Picker("", selection: Binding(
-                get: { viewModel.method },
-                set: { viewModel.setMethod($0, context: modelContext) }
-            )) {
-                ForEach(CalculationMethod.allCases) { option in
-                    Text(lang.t(option.localizationKey)).tag(option)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                rowLabel(icon: "function", titleKey: "settings.method")
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { viewModel.method },
+                    set: { viewModel.setMethod($0, context: modelContext) }
+                )) {
+                    ForEach(CalculationMethod.allCases) { option in
+                        Text(lang.t(option.localizationKey)).tag(option)
+                    }
                 }
+                .pickerStyle(.menu)
+                .tint(Color.vakitAccent)
             }
-            .pickerStyle(.menu)
-            .tint(Color.vakitAccent)
+            .padding(.vertical, 6)
+
+            Text(lang.t("method.explanation"))
+                .font(.caption)
+                .foregroundStyle(Color.vakitTextDim)
+                .padding(.horizontal, 36) // icon width (24) + spacing (12)
         }
-        .padding(.vertical, 6)
     }
 
     private var asrCalculationRow: some View {
-        HStack {
-            rowLabel(icon: "sun.max", titleKey: "school.title")
-            Spacer()
-            Picker("", selection: Binding(
-                get: { viewModel.asrCalculation },
-                set: { viewModel.setAsrCalculation($0, context: modelContext) }
-            )) {
-                ForEach(AsrCalculation.allCases) { option in
-                    Text(lang.t(option.localizationKey)).tag(option)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                rowLabel(icon: "sun.max", titleKey: "school.title")
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { viewModel.asrCalculation },
+                    set: { viewModel.setAsrCalculation($0, context: modelContext) }
+                )) {
+                    ForEach(AsrCalculation.allCases) { option in
+                        Text(lang.t(option.localizationKey)).tag(option)
+                    }
                 }
+                .pickerStyle(.menu)
+                .tint(Color.vakitAccent)
             }
-            .pickerStyle(.menu)
-            .tint(Color.vakitAccent)
+            .padding(.vertical, 6)
+
+            Text(lang.t("school.explanation"))
+                .font(.caption)
+                .foregroundStyle(Color.vakitTextDim)
+                .padding(.horizontal, 36)
+
+            if viewModel.method == .diyanet {
+                Text(lang.t("school.diyanetNote"))
+                    .font(.caption)
+                    .foregroundStyle(Color.vakitAccent)
+                    .padding(.horizontal, 36)
+            }
+
+            Button {
+                showAsrInfoSheet = true
+            } label: {
+                Text(lang.t("school.learnMore"))
+                    .font(.caption)
+                    .foregroundStyle(Color.vakitAccent)
+                    .padding(.horizontal, 36)
+            }
         }
-        .padding(.vertical, 6)
     }
 
     // MARK: - Bildirimler

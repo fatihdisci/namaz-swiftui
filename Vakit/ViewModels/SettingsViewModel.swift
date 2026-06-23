@@ -56,8 +56,16 @@ final class SettingsViewModel {
         guard newMethod != method else { return }
         method = newMethod
         storage.method = newMethod
+
+        // Metod değişince ikindi mezhebini de o metodun önerdiği değere çek
+        // (kullanıcı isterse Settings'ten tekrar manuel değiştirebilir).
+        let recommended = newMethod.recommendedAsrCalculation
+        asrCalculation = recommended
+        storage.school = recommended.rawValue
+
         updateSelectedLocation(context: context) {
             $0.calculationMethod = newMethod
+            $0.school = recommended.rawValue
         }
     }
 
@@ -65,6 +73,7 @@ final class SettingsViewModel {
         guard newValue != asrCalculation else { return }
         asrCalculation = newValue
         storage.school = newValue.rawValue
+        storage.hasManuallySetAsrCalculation = true
         updateSelectedLocation(context: context) {
             $0.school = newValue.rawValue
         }

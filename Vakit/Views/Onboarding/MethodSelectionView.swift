@@ -7,11 +7,25 @@ struct MethodSelectionView: View {
 
     @Environment(LanguageService.self) private var lang
 
+    @State private var showInfoSheet = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(lang.t("onboarding.method.title"))
-                .font(.system(.subheadline, weight: .semibold))
-                .foregroundStyle(Color.vakitText)
+            HStack {
+                Text(lang.t("onboarding.method.title"))
+                    .font(.system(.subheadline, weight: .semibold))
+                    .foregroundStyle(Color.vakitText)
+
+                Spacer()
+
+                Button {
+                    showInfoSheet = true
+                } label: {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color.vakitAccent)
+                }
+            }
 
             Text(lang.t("onboarding.method.subtitle"))
                 .font(.footnote)
@@ -35,6 +49,11 @@ struct MethodSelectionView: View {
                     .strokeBorder(Color.vakitBorder, lineWidth: 1)
             )
 
+            Text(lang.t("method.explanation"))
+                .font(.caption)
+                .foregroundStyle(Color.vakitTextDim)
+                .padding(.bottom, 4)
+
             Text(lang.t("school.title"))
                 .font(.system(.subheadline, weight: .semibold))
                 .foregroundStyle(Color.vakitText)
@@ -46,6 +65,29 @@ struct MethodSelectionView: View {
                 }
             }
             .pickerStyle(.segmented)
+
+            Text(lang.t("school.explanation"))
+                .font(.caption)
+                .foregroundStyle(Color.vakitTextDim)
+
+            if method == .diyanet {
+                Text(lang.t("school.diyanetNote"))
+                    .font(.caption)
+                    .foregroundStyle(Color.vakitAccent)
+                    .padding(.top, 2)
+            }
+
+            Button {
+                showInfoSheet = true
+            } label: {
+                Text(lang.t("school.learnMore"))
+                    .font(.caption)
+                    .foregroundStyle(Color.vakitAccent)
+            }
+        }
+        .sheet(isPresented: $showInfoSheet) {
+            AsrInfoSheet(method: method)
+                .environment(lang)
         }
     }
 }

@@ -4051,6 +4051,125 @@
           }
         }
       }
+    },
+    "asrInfo.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Calculation Methods"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesaplama Yöntemleri Hakkında"
+          }
+        }
+      }
+    },
+    "common.close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapat"
+          }
+        }
+      }
+    },
+    "method.explanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Determines how Fajr and Isha angles are calculated. Each method is used by different regions and religious authorities."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah ve yatsı vakitlerinin hesaplanma açılarını belirler. Her yöntem farklı bölgeler ve dini otoriteler tarafından kullanılır."
+          }
+        }
+      }
+    },
+    "school.diyanetNote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diyanet calculates Asr according to the Hanafi school (shadow = 2× object height), so Hanafi is selected automatically. You can change this if you prefer."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diyanet ikindi vaktini Hanefi esasına göre hesaplar (gölge = cismin 2 katı), bu yüzden Hanefi otomatik seçildi. İsterseniz değiştirebilirsiniz."
+          }
+        }
+      }
+    },
+    "school.explanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard (Shafi): Asr begins when shadow = object height. Hanafi: Asr begins when shadow = 2× object height (Asr enters later)."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standart (Şafi): Gölge boyu cisim boyuna eşit olunca ikindi girer. Hanefi: Gölge boyu cismin 2 katı olunca ikindi girer (daha geç)."
+          }
+        }
+      }
+    },
+    "school.learnMore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn more about methods"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yöntemler hakkında bilgi al"
+          }
+        }
+      }
+    },
+    "school.source" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source: Presidency of Religious Affairs (Diyanet), diyanet.gov.tr"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaynak: Diyanet İşleri Başkanlığı, diyanet.gov.tr"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

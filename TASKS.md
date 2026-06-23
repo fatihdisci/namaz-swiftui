@@ -27,6 +27,7 @@
 - **ShareableContentView**: Discover içerikleri için paylaşılabilir görsel üretimi (Story/Kare format, ImageRenderer)
 - **Konum servis düzeltmeleri**: CLLocationManager delegate + MainActor garantisi
 - **DEBUG Pro**: `hasProAccess` her zaman true, Settings'te paywall önizleme
+- **Asr/Diyanet düzeltmesi**: Diyanet metodu için `recommendedAsrCalculation = .hanafi` eklendi; tüm model init'leri default school için bunu kullanıyor; method değişince Asr otomatik önerilen değere geçiyor. **Migration**: Eski Diyanet kullanıcıları (`school=0`, `hasManuallySetAsrCalculation=false`) için bir kerelik göç ile `school` Hanefi'ye (1) çekiliyor (`StorageService.migrateAsrSchoolIfNeeded()`, `asrSchoolMigrated` flag ile). Kullanıcı manuel seçim yaptıysa göç ezilmiyor.
 
 ---
 

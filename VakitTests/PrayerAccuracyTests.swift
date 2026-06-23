@@ -39,15 +39,17 @@ final class PrayerAccuracyTests: XCTestCase {
         XCTAssertEqual(decoded.source, .aladhan)
     }
 
-    func testLegacyPrayerLocationDefaultsToStandardAsrCalculation() throws {
+    func testLegacyPrayerLocationDefaultsToRecommendedAsrCalculation() throws {
+        // ISNA kullanan legacy data (school key'i yok) → recommendedAsrCalculation (.standard)
         let location = PrayerLocation(
-            countryCode: "TR",
-            countryName: "Türkiye",
-            admin1Name: "Ankara",
-            admin2Name: "Çankaya",
-            latitude: 39.9179,
-            longitude: 32.8627,
-            timeZoneIdentifier: "Europe/Istanbul",
+            countryCode: "US",
+            countryName: "United States",
+            admin1Name: "New York",
+            admin2Name: "Manhattan",
+            latitude: 40.7128,
+            longitude: -74.0060,
+            timeZoneIdentifier: "America/New_York",
+            calculationMethod: .isna,
             school: AsrCalculation.hanafi.rawValue
         )
         let encoded = try JSONEncoder().encode(location)
@@ -56,6 +58,7 @@ final class PrayerAccuracyTests: XCTestCase {
         let legacyData = try JSONSerialization.data(withJSONObject: object)
 
         let decoded = try JSONDecoder().decode(PrayerLocation.self, from: legacyData)
+        // ISNA'nın önerdiği Asr = Standard
         XCTAssertEqual(decoded.school, AsrCalculation.standard.rawValue)
     }
 
@@ -97,6 +100,136 @@ final class PrayerAccuracyTests: XCTestCase {
             StorageService.dateKey(for: instant, timeZone: istanbul),
             StorageService.dateKey(for: instant, timeZone: losAngeles)
         )
+    }
+
+    // MARK: - Asr hesaplama önerileri
+
+    func testDiyanetRecommendsHanafiAsrCalculation() {
+        XCTAssertEqual(CalculationMethod.diyanet.recommendedAsrCalculation, .hanafi)
+    }
+
+    func testAllOtherMethodsRecommendStandardAsrCalculation() {
+        XCTAssertEqual(CalculationMethod.mwl.recommendedAsrCalculation, .standard)
+        XCTAssertEqual(CalculationMethod.isna.recommendedAsrCalculation, .standard)
+        XCTAssertEqual(CalculationMethod.ummAlQura.recommendedAsrCalculation, .standard)
+        XCTAssertEqual(CalculationMethod.egyptian.recommendedAsrCalculation, .standard)
+    }
+
+    func testPrayerLocationDefaultInitUsesRecommendedAsrForDiyanet() {
+        let location = PrayerLocation(
+            countryCode: "TR",
+            countryName: "Türkiye",
+            latitude: 41.0082,
+            longitude: 28.9784,
+            timeZoneIdentifier: "Europe/Istanbul",
+            calculationMethod: .diyanet
+            // school verilmedi → recommendedAsrCalculation (.hanafi) kullanılmalı
+        )
+        XCTAssertEqual(location.school, AsrCalculation.hanafi.rawValue)
+    }
+
+    func testPrayerLocationDefaultInitUsesStandardForISNA() {
+        let location = PrayerLocation(
+            countryCode: "US",
+            countryName: "United States",
+            latitude: 40.7128,
+            longitude: -74.0060,
+            timeZoneIdentifier: "America/New_York",
+            calculationMethod: .isna
+            // school verilmedi → recommendedAsrCalculation (.standard) kullanılmalı
+        )
+        XCTAssertEqual(location.school, AsrCalculation.standard.rawValue)
+    }
+
+    func testPrayerLocationExplicitSchoolOverridesRecommended() {
+        let location = PrayerLocation(
+            countryCode: "TR",
+            countryName: "Türkiye",
+            latitude: 41.0082,
+            longitude: 28.9784,
+            timeZoneIdentifier: "Europe/Istanbul",
+            calculationMethod: .diyanet,
+            school: AsrCalculation.standard.rawValue
+        )
+        // Kullanıcı bilerek Standart seçmişse onu kullan
+        XCTAssertEqual(location.school, AsrCalculation.standard.rawValue)
+    }
+
+    // MARK: - Asr migration
+
+    func testAsrMigrationConvertsDiyanetStandardToHanafiWhenNeverManuallySet() throws {
+        let suiteName = "AsrMigrationTest.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        // Eski kullanıcı durumu: method = Diyanet, school = 0 (Standart),
+        // ama hasManuallySetAsrCalculation = false (hiç elle değiştirmedi)
+        defaults.set(CalculationMethod.diyanet.rawValue, forKey: "method")
+        defaults.set(AsrCalculation.standard.rawValue, forKey: "school")
+        // hasManuallySetAsrCalculation key'i set edilmemiş → false
+        // asrSchoolMigrated key'i set edilmemiş → false
+
+        let storage = StorageService(defaults: defaults)
+
+        // Migration sonrası: school Hanefi olmalı
+        XCTAssertEqual(storage.school, AsrCalculation.hanafi.rawValue)
+        XCTAssertTrue(defaults.bool(forKey: "asr_school_migrated"))
+    }
+
+    func testAsrMigrationDoesNotOverwriteManualSelection() throws {
+        let suiteName = "AsrMigrationManual.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        // Kullanıcı Diyanet kullanıyor, ama bilerek Standart seçmiş
+        defaults.set(CalculationMethod.diyanet.rawValue, forKey: "method")
+        defaults.set(AsrCalculation.standard.rawValue, forKey: "school")
+        defaults.set(true, forKey: "has_manually_set_asr")
+
+        let storage = StorageService(defaults: defaults)
+
+        // Migration kullanıcının manuel seçimini EZMEMELİ
+        XCTAssertEqual(storage.school, AsrCalculation.standard.rawValue)
+        XCTAssertTrue(defaults.bool(forKey: "asr_school_migrated"))
+    }
+
+    func testAsrMigrationOnlyAppliesOnce() throws {
+        let suiteName = "AsrMigrationOnce.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        // İlk durum: Diyanet + Standard + manuel değiştirilmemiş
+        defaults.set(CalculationMethod.diyanet.rawValue, forKey: "method")
+        defaults.set(AsrCalculation.standard.rawValue, forKey: "school")
+        // hasManuallySetAsrCalculation = false (key yok)
+
+        // İlk StorageService init'i migration yapar
+        let storage1 = StorageService(defaults: defaults)
+        XCTAssertEqual(storage1.school, AsrCalculation.hanafi.rawValue)
+
+        // Kullanıcı sonradan manuel olarak Standard'a geri döndürsün
+        storage1.hasManuallySetAsrCalculation = true
+        defaults.set(AsrCalculation.standard.rawValue, forKey: "school")
+
+        // İkinci StorageService init'i migration'ı TEKRARLAMAMALI
+        let storage2 = StorageService(defaults: defaults)
+        XCTAssertEqual(storage2.school, AsrCalculation.standard.rawValue)
+    }
+
+    func testAsrMigrationDoesNotAffectNonDiyanetMethods() throws {
+        let suiteName = "AsrMigrationNonTR.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        // MWL kullanan bir kullanıcı
+        defaults.set(CalculationMethod.mwl.rawValue, forKey: "method")
+        defaults.set(AsrCalculation.standard.rawValue, forKey: "school")
+
+        let storage = StorageService(defaults: defaults)
+
+        // MWL + Standard = migration yapılmamalı
+        XCTAssertEqual(storage.school, AsrCalculation.standard.rawValue)
+        XCTAssertTrue(defaults.bool(forKey: "asr_school_migrated"))
     }
 
     func testAPIDateFormattingUsesRequestedTimeZone() throws {

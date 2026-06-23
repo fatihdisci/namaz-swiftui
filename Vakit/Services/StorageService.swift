@@ -26,6 +26,8 @@ final class StorageService {
         static let favoriteDuaIDs = "favorite_dua_ids"
         static let fridayReminderEnabled = "friday_reminder_enabled"
         static let freeCitiesCleaned = "free_cities_cleaned"
+        static let hasManuallySetAsrCalculation = "has_manually_set_asr"
+        static let asrSchoolMigrated = "asr_school_migrated"
     }
 
     private static let cacheRetentionDays = 30
@@ -40,6 +42,28 @@ final class StorageService {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         self.decoder = decoder
+
+        migrateAsrSchoolIfNeeded()
+    }
+
+    /// Bir kerelik göç: Diyanet kullanan eski kullanıcıların ikindi hesabını
+    /// Standart'tan (0) Hanefi'ye (1) çeker — ancak kullanıcı daha önce
+    /// manuel olarak değiştirmediyse.
+    private func migrateAsrSchoolIfNeeded() {
+        guard !defaults.bool(forKey: Key.asrSchoolMigrated) else { return }
+
+        let currentMethod = method
+        let currentSchool = defaults.integer(forKey: Key.school)
+        let userManuallySet = defaults.bool(forKey: Key.hasManuallySetAsrCalculation)
+
+        if currentMethod == .diyanet
+            && !userManuallySet
+            && currentSchool == AsrCalculation.standard.rawValue
+        {
+            defaults.set(AsrCalculation.hanafi.rawValue, forKey: Key.school)
+        }
+
+        defaults.set(true, forKey: Key.asrSchoolMigrated)
     }
 
     // MARK: - Vakit Cache
@@ -250,7 +274,11 @@ final class StorageService {
     /// İkindi hesabı: 0 = standart, 1 = Hanefi.
     var school: Int {
         get {
-            AsrCalculation(rawValue: defaults.integer(forKey: Key.school))?.rawValue
+            // Key henüz hiç set edilmemişse method'un önerdiği Asr mezhebini kullan.
+            guard defaults.object(forKey: Key.school) != nil else {
+                return method.recommendedAsrCalculation.rawValue
+            }
+            return AsrCalculation(rawValue: defaults.integer(forKey: Key.school))?.rawValue
                 ?? AsrCalculation.standard.rawValue
         }
         set {
@@ -258,6 +286,12 @@ final class StorageService {
                 ?? AsrCalculation.standard.rawValue
             defaults.set(validValue, forKey: Key.school)
         }
+    }
+
+    /// Kullanıcı Settings'ten ikindi mezhebini manuel olarak değiştirdiyse `true`.
+    var hasManuallySetAsrCalculation: Bool {
+        get { defaults.bool(forKey: Key.hasManuallySetAsrCalculation) }
+        set { defaults.set(newValue, forKey: Key.hasManuallySetAsrCalculation) }
     }
 
     /// "tr" veya "en"
@@ -393,6 +427,8 @@ extension StorageService {
             Key.homePrayerLocation,
             Key.method,
             Key.school,
+            Key.hasManuallySetAsrCalculation,
+            Key.asrSchoolMigrated,
             Key.onboardingDone,
             Key.notificationSettings,
             Key.kazaCounts,
@@ -473,7 +509,7 @@ struct CitySnapshot: Codable, Equatable {
         country: String,
         timezone: String,
         method: CalculationMethod = .diyanet,
-        school: Int = 0
+        school: Int? = nil
     ) {
         self.id = id
         self.name = name
@@ -482,7 +518,7 @@ struct CitySnapshot: Codable, Equatable {
         self.country = country
         self.timezone = timezone
         self.method = method
-        self.school = school
+        self.school = school ?? method.recommendedAsrCalculation.rawValue
     }
 
     init(city: City) {

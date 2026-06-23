@@ -35,7 +35,7 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
         longitude: Double,
         timeZoneIdentifier: String,
         calculationMethod: CalculationMethod = .diyanet,
-        school: Int = AsrCalculation.standard.rawValue
+        school: Int? = nil
     ) {
         self.id = id
         self.countryCode = countryCode
@@ -50,7 +50,8 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
         self.longitude = longitude
         self.timeZoneIdentifier = timeZoneIdentifier
         self.calculationMethod = calculationMethod
-        self.school = AsrCalculation(rawValue: school)?.rawValue ?? AsrCalculation.standard.rawValue
+        let resolvedSchool = school ?? calculationMethod.recommendedAsrCalculation.rawValue
+        self.school = AsrCalculation(rawValue: resolvedSchool)?.rawValue ?? AsrCalculation.standard.rawValue
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -73,7 +74,7 @@ struct PrayerLocation: Codable, Equatable, Identifiable {
         longitude = try container.decode(Double.self, forKey: .longitude)
         timeZoneIdentifier = try container.decode(String.self, forKey: .timeZoneIdentifier)
         calculationMethod = try container.decode(CalculationMethod.self, forKey: .calculationMethod)
-        school = try container.decodeIfPresent(Int.self, forKey: .school) ?? AsrCalculation.standard.rawValue
+        school = try container.decodeIfPresent(Int.self, forKey: .school) ?? calculationMethod.recommendedAsrCalculation.rawValue
     }
 
     // MARK: - Display

@@ -22,7 +22,7 @@ final class City {
         country: String,
         timezone: String,
         method: CalculationMethod = .diyanet,
-        school: Int = 0,
+        school: Int? = nil,
         isPrimary: Bool = false
     ) {
         self.id = id
@@ -32,7 +32,8 @@ final class City {
         self.country = country
         self.timezone = timezone
         self.method = method
-        self.school = AsrCalculation(rawValue: school)?.rawValue ?? AsrCalculation.standard.rawValue
+        let resolvedSchool = school ?? method.recommendedAsrCalculation.rawValue
+        self.school = AsrCalculation(rawValue: resolvedSchool)?.rawValue ?? AsrCalculation.standard.rawValue
         self.isPrimary = isPrimary
     }
 }

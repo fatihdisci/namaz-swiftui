@@ -107,6 +107,7 @@ final class LocationSelectionViewModel {
 
     private func updateMethod() {
         method = PrayerLocation.defaultMethod(for: selectedCountryCode)
+        asrCalculation = method.recommendedAsrCalculation
     }
 
     private func resetSelections() {

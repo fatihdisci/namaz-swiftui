@@ -11,7 +11,12 @@ final class OnboardingViewModel {
     }
     var results: [CitySnapshot] = []
     var selectedCity: CitySnapshot?
-    var method: CalculationMethod = .default
+    var method: CalculationMethod = .default {
+        didSet {
+            guard method != oldValue else { return }
+            asrCalculation = method.recommendedAsrCalculation
+        }
+    }
     var asrCalculation: AsrCalculation
     var isSearching = false
     var isLocating = false

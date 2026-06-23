@@ -13,6 +13,15 @@ enum CalculationMethod: Int, CaseIterable, Codable, Identifiable {
 
     var id: Int { rawValue }
 
+    /// Bu hesaplama metoduyla birlikte kullanılması önerilen Asr (ikindi) mezhebi.
+    /// Diyanet Hanefi esasına göre hesaplar (gölge = 2 kat); diğerleri Standart (1 kat).
+    var recommendedAsrCalculation: AsrCalculation {
+        switch self {
+        case .diyanet: return .hanafi
+        case .mwl, .isna, .ummAlQura, .egyptian: return .standard
+        }
+    }
+
     var displayName: String {
         switch self {
         case .diyanet: return "Diyanet"
