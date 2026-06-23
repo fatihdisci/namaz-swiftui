@@ -8,8 +8,11 @@ enum AppTab: Hashable {
 }
 
 struct ContentView: View {
+    private let whatsNewVersion = "1.1.0"
+
     @State private var selectedTab: AppTab = .home
     @State private var homeViewModel = HomeViewModel()
+    @State private var showWhatsNew = false
 
     @Environment(LanguageService.self) private var lang
 
@@ -42,6 +45,22 @@ struct ContentView: View {
                 .tag(AppTab.settings)
         }
         .tint(.vakitAccent)
+        .task {
+            showWhatsNewIfNeeded()
+        }
+        .sheet(isPresented: $showWhatsNew) {
+            WhatsNewSheet(version: whatsNewVersion) {
+                StorageService.shared.lastSeenWhatsNewVersion = whatsNewVersion
+            }
+            .environment(lang)
+        }
+    }
+
+    private func showWhatsNewIfNeeded() {
+        let storage = StorageService.shared
+        guard storage.onboardingDone else { return }
+        guard storage.lastSeenWhatsNewVersion != whatsNewVersion else { return }
+        showWhatsNew = true
     }
 }
 

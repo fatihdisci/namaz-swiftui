@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var showDeleteAccountConfirm = false
     @State private var isDeletingAccount = false
     @State private var showAsrInfoSheet = false
+    @State private var showWhatsNewSheet = false
 
     @Environment(LanguageService.self) private var lang
     @Environment(PurchaseService.self) private var purchaseService
@@ -77,6 +78,10 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showAsrInfoSheet) {
             AsrInfoSheet(method: viewModel.method)
+                .environment(lang)
+        }
+        .sheet(isPresented: $showWhatsNewSheet) {
+            WhatsNewSheet(version: "1.1.0")
                 .environment(lang)
         }
         .alert(lang.t("account.delete.title"), isPresented: $showDeleteAccountConfirm) {
@@ -329,6 +334,21 @@ struct SettingsView: View {
 
     private var aboutSection: some View {
         section(titleKey: "settings.about") {
+            Button {
+                showWhatsNewSheet = true
+            } label: {
+                HStack {
+                    rowLabel(icon: "sparkles", titleKey: "settings.whatsNew")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                .padding(.vertical, 10)
+            }
+
+            divider
+
             HStack {
                 rowLabel(icon: "info.circle", titleKey: "settings.version")
                 Spacer()

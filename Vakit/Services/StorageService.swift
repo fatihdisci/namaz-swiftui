@@ -21,6 +21,7 @@ final class StorageService {
         static let school = "school"
         static let language = "language"
         static let onboardingDone = "onboarding_done"
+        static let lastSeenWhatsNewVersion = "last_seen_whats_new_version"
         static let notificationSettings = "notification_settings"
         static let kazaCounts = "kaza_counts"
         static let favoriteDuaIDs = "favorite_dua_ids"
@@ -309,6 +310,11 @@ final class StorageService {
         set { defaults.set(newValue, forKey: Key.onboardingDone) }
     }
 
+    var lastSeenWhatsNewVersion: String {
+        get { defaults.string(forKey: Key.lastSeenWhatsNewVersion) ?? "" }
+        set { defaults.set(newValue, forKey: Key.lastSeenWhatsNewVersion) }
+    }
+
     /// Vakit bazlı bildirim ayarları. Kayıtlı değer yoksa veya bozuksa varsayılana döner.
     var notificationSettings: NotificationSettings {
         get {
@@ -430,6 +436,7 @@ extension StorageService {
             Key.hasManuallySetAsrCalculation,
             Key.asrSchoolMigrated,
             Key.asrSchoolStandardCorrectionMigrated,
+            Key.lastSeenWhatsNewVersion,
             Key.onboardingDone,
             Key.notificationSettings,
             Key.kazaCounts,

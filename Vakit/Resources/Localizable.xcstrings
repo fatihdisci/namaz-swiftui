@@ -4272,6 +4272,261 @@
           }
         }
       }
+    },
+    "settings.whatsNew" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's New"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yenilikler"
+          }
+        }
+      }
+    },
+    "whatsNew.asr.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diyanet Asr defaults now match the official table more closely, while manual Asr school choices are still respected."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diyanet ikindi varsayılanı resmi tabloyla daha uyumlu hale getirildi; manuel ikindi mezhebi seçiminiz korunur."
+          }
+        }
+      }
+    },
+    "whatsNew.asr.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More accurate Diyanet Asr default"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha doğru Diyanet ikindi varsayılanı"
+          }
+        }
+      }
+    },
+    "whatsNew.navTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's New"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yenilikler"
+          }
+        }
+      }
+    },
+    "whatsNew.reciter.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verse cards now include Arabic text and real reciter audio for a more natural listening experience."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayet kartlarında Arapça metin ve gerçek okuyucu sesi var; dinleme deneyimi daha doğal."
+          }
+        }
+      }
+    },
+    "whatsNew.reciter.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Real reciter audio"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerçek okuyucu sesi"
+          }
+        }
+      }
+    },
+    "whatsNew.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A calmer Discover experience, better prayer-time defaults, and widgets you can keep on your Home Screen."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha sakin bir Keşfet deneyimi, daha doğru vakit varsayılanları ve ana ekranda kullanabileceğiniz widget'lar."
+          }
+        }
+      }
+    },
+    "whatsNew.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ufuk %@ is here"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ufuk %@ hazır"
+          }
+        }
+      }
+    },
+    "whatsNew.tts.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dua and hadith translations can now be read aloud in your selected language."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dua ve hadis mealleri artık seçili dilinizde sesli okunabiliyor."
+          }
+        }
+      }
+    },
+    "whatsNew.tts.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listen to translations"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mealleri sesli dinleyin"
+          }
+        }
+      }
+    },
+    "whatsNew.widget.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See the next prayer time and countdown without opening the app."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıradaki vakti ve kalan süreyi uygulamayı açmadan görün."
+          }
+        }
+      }
+    },
+    "whatsNew.widget.step1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch and hold an empty area on the Home Screen."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana ekranda boş bir alana basılı tutun."
+          }
+        }
+      }
+    },
+    "whatsNew.widget.step2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap +, then search for Ufuk."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ düğmesine dokunun, ardından Ufuk'u arayın."
+          }
+        }
+      }
+    },
+    "whatsNew.widget.step3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a widget size and add it to your screen."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir widget boyutu seçip ekranınıza ekleyin."
+          }
+        }
+      }
+    },
+    "whatsNew.widget.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ufuk widgets are ready"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ufuk widget'ları hazır"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
