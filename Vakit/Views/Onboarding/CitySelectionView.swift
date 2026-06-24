@@ -16,7 +16,7 @@ struct CitySelectionView: View {
                     .font(.system(.title, design: .rounded, weight: .bold))
                     .foregroundStyle(Color.vakitText)
                 Text(lang.t("onboarding.city.subtitle"))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
             .padding(.top, 32)
@@ -41,7 +41,7 @@ struct CitySelectionView: View {
 
             if let errorKey = viewModel.errorKey {
                 Text(lang.t(errorKey))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.maghrib)
             }
 
@@ -59,7 +59,7 @@ struct CitySelectionView: View {
                 onContinue()
             } label: {
                 Text(lang.t("onboarding.city.continue"))
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .font(.vakitHeadline)
                     .foregroundStyle(Color.vakitText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
@@ -73,7 +73,7 @@ struct CitySelectionView: View {
     }
 
     private var searchField: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 12) {
             if viewModel.isSearching {
                 ProgressView().tint(Color.vakitTextDim)
             } else {
@@ -91,7 +91,7 @@ struct CitySelectionView: View {
             .autocorrectionDisabled()
             .submitLabel(.search)
         }
-        .padding(14)
+        .padding(16)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
@@ -118,7 +118,7 @@ struct CitySelectionView: View {
                                 .foregroundStyle(Color.vakitAccent)
                         }
                     }
-                    .padding(14)
+                    .padding(16)
                     .background(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .fill(viewModel.selectedCity?.id == city.id

@@ -22,7 +22,7 @@ struct DailyContentCard: View {
             }
 
             Text(verse.text(language: language))
-                .font(.system(.body, design: .default))
+                .font(.vakitBody)
                 .foregroundStyle(Color.vakitText)
                 .lineSpacing(4)
                 .lineLimit(3)

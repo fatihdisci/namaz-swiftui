@@ -70,10 +70,10 @@ struct SafarView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(lang.t("safar.title"))
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                .font(.vakitScreenTitle)
                 .foregroundStyle(Color.vakitText)
             Text(lang.t("safar.description"))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
         }
     }
@@ -82,7 +82,7 @@ struct SafarView: View {
         Button {
             showHomeCityPicker = true
         } label: {
-            HStack(spacing: 14) {
+            HStack(spacing: 16) {
                 Image(systemName: "house.fill")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundStyle(Color.vakitAccent)
@@ -91,7 +91,7 @@ struct SafarView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(lang.t("safar.homeCity"))
-                        .font(.caption)
+                        .font(.vakitReference)
                         .foregroundStyle(Color.vakitTextDim)
                     Text(homeCityLabel)
                         .font(.system(.body, design: .default, weight: .semibold))
@@ -133,7 +133,7 @@ struct SafarView: View {
                         .font(.system(size: 15, weight: .semibold))
                 }
                 Text(lang.t("safar.checkLocation"))
-                    .font(.system(.body, design: .rounded, weight: .semibold))
+                    .font(.vakitBodyRounded)
             }
             .foregroundStyle(Color.vakitText)
             .frame(maxWidth: .infinity)
@@ -155,7 +155,7 @@ struct SafarView: View {
                     .foregroundStyle(isSafar ? Color.vakitAccent : Color.vakitText)
 
                 Text(lang.t("safar.distanceFromHome", String(format: "%.1f", distance)))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
             .frame(maxWidth: .infinity)
@@ -173,7 +173,7 @@ struct SafarView: View {
         case .denied:
             VStack(spacing: 12) {
                 Text(lang.t("qibla.permissionDenied"))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.vakitTextDim)
 
@@ -191,7 +191,7 @@ struct SafarView: View {
 
         case .error(let messageKey):
             Text(lang.t(messageKey))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color.maghrib)
                 .frame(maxWidth: .infinity)
@@ -201,7 +201,7 @@ struct SafarView: View {
                 ProgressView()
                     .tint(Color.vakitAccent)
                 Text(lang.t("safar.checkLocation"))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
             .frame(maxWidth: .infinity)
@@ -220,27 +220,27 @@ struct SafarView: View {
 
             HStack(spacing: 6) {
                 Image(systemName: "checkmark.shield")
-                    .font(.caption)
+                    .font(.vakitReference)
                 Text(lang.t("safar.homePrivacyNote"))
-                    .font(.caption)
+                    .font(.vakitReference)
             }
             .foregroundStyle(Color.vakitTextDim)
         }
-        .padding(14)
+        .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
     private var infoSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(lang.t("safar.infoTitle"))
                 .font(.system(.headline, design: .default, weight: .semibold))
                 .foregroundStyle(Color.vakitText)
 
             ForEach(["safar.infoWhat", "safar.infoDistance", "safar.infoPrayer"], id: \.self) { key in
                 Text(lang.t(key))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
@@ -251,18 +251,18 @@ struct SafarView: View {
                 .foregroundStyle(Color.vakitTextDim.opacity(0.8))
                 .fixedSize(horizontal: false, vertical: true)
 
-            HStack(alignment: .top, spacing: 10) {
+            HStack(alignment: .top, spacing: 12) {
                 Image(systemName: "info.circle.fill")
                     .font(.system(size: 16))
                     .foregroundStyle(Color.sunrise)
 
                 Text(lang.t("safar.disclaimer"))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(3)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(14)
+            .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color.sunrise.opacity(0.08))
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))

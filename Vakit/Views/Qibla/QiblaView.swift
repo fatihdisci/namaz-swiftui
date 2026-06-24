@@ -13,7 +13,7 @@ struct QiblaView: View {
 
             VStack(spacing: 24) {
                 Text(lang.t("qibla.title"))
-                    .font(.system(.title2, design: .rounded, weight: .semibold))
+                    .font(.vakitSectionTitle)
                     .foregroundStyle(Color.vakitText)
                     .padding(.top, 24)
 
@@ -77,7 +77,7 @@ struct QiblaView: View {
     private func actionButton(titleKey: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(lang.t(titleKey))
-                .font(.system(.body, design: .rounded, weight: .semibold))
+                .font(.vakitBodyRounded)
                 .foregroundStyle(Color.vakitText)
                 .padding(.horizontal, 32)
                 .padding(.vertical, 16)
@@ -89,9 +89,9 @@ struct QiblaView: View {
     private var privacyNote: some View {
         HStack(spacing: 6) {
             Image(systemName: "checkmark.shield")
-                .font(.footnote)
+                .font(.vakitCaption)
             Text(lang.t("qibla.locationNote"))
-                .font(.footnote)
+                .font(.vakitCaption)
         }
         .foregroundStyle(Color.vakitTextDim)
     }

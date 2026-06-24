@@ -23,13 +23,13 @@ struct NotificationPermissionView: View {
                     .multilineTextAlignment(.center)
 
                 Text(lang.t("onboarding.notifications.body"))
-                    .font(.body)
+                    .font(.vakitBody)
                     .foregroundStyle(Color.vakitTextDim)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
 
                 Text(lang.t("onboarding.notifications.privacy"))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
                     .multilineTextAlignment(.center)
             }
@@ -42,7 +42,7 @@ struct NotificationPermissionView: View {
                     requestPermission()
                 } label: {
                     Text(lang.t("onboarding.notifications.allow"))
-                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .font(.vakitHeadline)
                         .foregroundStyle(Color.vakitText)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)

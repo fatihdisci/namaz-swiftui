@@ -46,15 +46,15 @@ struct DiscoverView: View {
         }
         .overlay(alignment: .top) {
             if generating != nil {
-                HStack(spacing: 10) {
+                HStack(spacing: 12) {
                     ProgressView()
                         .tint(Color.vakitAccent)
                     Text(lang.t("discover.generatingImage"))
-                        .font(.subheadline)
+                        .font(.vakitCaption)
                         .foregroundStyle(Color.vakitTextDim)
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
                 .background(.ultraThinMaterial)
                 .clipShape(Capsule())
                 .padding(.top, 100)
@@ -76,10 +76,10 @@ struct DiscoverView: View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(lang.t("discover.title"))
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    .font(.vakitScreenTitle)
                     .foregroundStyle(Color.vakitText)
                 Text(lang.t("discover.subtitle"))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
             Spacer()
@@ -90,7 +90,7 @@ struct DiscoverView: View {
         NavigationLink {
             DuaLibraryView()
         } label: {
-            HStack(spacing: 14) {
+            HStack(spacing: 16) {
                 Image(systemName: "books.vertical.fill")
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Color.isha)
@@ -98,10 +98,10 @@ struct DiscoverView: View {
                     .background(Circle().fill(Color.isha.opacity(0.14)))
                 VStack(alignment: .leading, spacing: 3) {
                     Text(lang.t("dua.library.title"))
-                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .font(.vakitHeadline)
                         .foregroundStyle(Color.vakitText)
                     Text(lang.t("dua.library.subtitle"))
-                        .font(.footnote)
+                        .font(.vakitCaption)
                         .foregroundStyle(Color.vakitTextDim)
                 }
                 Spacer()
@@ -124,7 +124,7 @@ struct DiscoverView: View {
             VStack(alignment: .leading, spacing: 12) {
                 if let arabic = verse.arabic, !arabic.isEmpty {
                     Text(arabic)
-                        .font(.system(size: 22, weight: .medium))
+                        .font(.vakitArabic)
                         .foregroundStyle(Color.vakitText)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .environment(\.layoutDirection, .rightToLeft)
@@ -133,7 +133,7 @@ struct DiscoverView: View {
                     }
                 }
                 Text(verse.text(language: lang.currentLanguage))
-                    .font(.system(.body, design: .default))
+                    .font(.vakitBody)
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
@@ -145,7 +145,7 @@ struct DiscoverView: View {
     /// Tilavet (hafız sesi) dinle/durdur kontrolü + hafız atfı + hata mesajı.
     private func listenControl(for verse: Verse) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 Button {
                     audioPlayer.toggle(verse)
                 } label: {
@@ -180,7 +180,7 @@ struct DiscoverView: View {
             }
             if audioPlayer.didFail(verse) {
                 Text(lang.t("discover.audio.error"))
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(.red)
             }
         }
@@ -192,7 +192,7 @@ struct DiscoverView: View {
         {
             VStack(alignment: .leading, spacing: 12) {
                 Text(hadith.text(language: lang.currentLanguage))
-                    .font(.system(.body, design: .default))
+                    .font(.vakitBody)
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
                     .fixedSize(horizontal: false, vertical: true)
@@ -211,13 +211,13 @@ struct DiscoverView: View {
             VStack(alignment: .leading, spacing: 12) {
                 if let arabic = dua.arabic, !arabic.isEmpty {
                     Text(arabic)
-                        .font(.system(size: 20, weight: .medium))
+                        .font(.vakitArabic)
                         .foregroundStyle(Color.vakitText)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .environment(\.layoutDirection, .rightToLeft)
                 }
                 Text(dua.text(language: lang.currentLanguage))
-                    .font(.system(.body, design: .default))
+                    .font(.vakitBody)
                     .italic()
                     .foregroundStyle(Color.vakitText)
                     .lineSpacing(5)
@@ -237,7 +237,7 @@ struct DiscoverView: View {
                     .font(.system(.title, design: .rounded, weight: .bold))
                     .foregroundStyle(Color.vakitAccent)
                 Text(esma.meaning(language: lang.currentLanguage))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
                     .multilineTextAlignment(.center)
             }
@@ -306,7 +306,7 @@ struct DiscoverView: View {
         onShare: (() -> Void)? = nil,
         @ViewBuilder content: () -> some View
     ) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
                 Image(systemName: icon)
                     .font(.system(size: 14, weight: .semibold))
@@ -337,7 +337,7 @@ struct DiscoverView: View {
                 }
             }
             content()
-                .padding(18)
+                .padding(20)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.vakitSurface)
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
@@ -354,7 +354,7 @@ struct DiscoverView: View {
                 .font(.system(size: 11))
                 .foregroundStyle(Color.vakitTextDim)
             Text(source)
-                .font(.caption)
+                .font(.vakitReference)
                 .foregroundStyle(Color.vakitTextDim)
             Spacer()
             if let badge, !badge.isEmpty {

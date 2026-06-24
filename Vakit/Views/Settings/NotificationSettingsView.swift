@@ -5,6 +5,7 @@ import SwiftUI
 struct NotificationSettingsView: View {
     @State private var settings: NotificationSettings
     @State private var fridayReminderEnabled: Bool
+    @State private var motivationalNotesEnabled: Bool
 
     @Environment(LanguageService.self) private var lang
 
@@ -18,6 +19,7 @@ struct NotificationSettingsView: View {
         self.notificationService = notificationService
         _settings = State(initialValue: storage.notificationSettings)
         _fridayReminderEnabled = State(initialValue: storage.fridayReminderEnabled)
+        _motivationalNotesEnabled = State(initialValue: storage.motivationalNotesEnabled)
     }
 
     var body: some View {
@@ -31,6 +33,8 @@ struct NotificationSettingsView: View {
                     }
 
                     fridayReminderCard
+
+                    motivationalNotesCard
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -75,7 +79,7 @@ struct NotificationSettingsView: View {
                 .tint(prayer.accentColor)
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 14)
+            .padding(.vertical, 16)
 
             // Picker (shown when enabled)
             if setting.enabled {
@@ -123,7 +127,7 @@ struct NotificationSettingsView: View {
                     .font(.system(.body, weight: .medium))
                     .foregroundStyle(Color.vakitText)
                 Text(lang.t("friday.reminder.subtitle"))
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitTextDim)
             }
 
@@ -139,7 +143,42 @@ struct NotificationSettingsView: View {
                 }
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 14)
+        .padding(.vertical, 16)
+        .background(Color.vakitSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.vakitBorder))
+    }
+
+    private var motivationalNotesCard: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "quote.bubble.fill")
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(Color.vakitAccent)
+                .frame(width: 40, height: 40)
+                .background(Circle().fill(Color.vakitAccent.opacity(0.12)))
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(lang.t("notification.motivational.title"))
+                    .font(.system(.body, weight: .medium))
+                    .foregroundStyle(Color.vakitText)
+                Text(lang.t("notification.motivational.subtitle"))
+                    .font(.vakitReference)
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+
+            Spacer()
+
+            Toggle("", isOn: $motivationalNotesEnabled)
+                .labelsHidden()
+                .tint(Color.vakitAccent)
+                .onChange(of: motivationalNotesEnabled) { _, enabled in
+                    storage.motivationalNotesEnabled = enabled
+                    guard let city = storage.resolvedCity else { return }
+                    Task { await notificationService.reschedule(city: city) }
+                }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 16)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.vakitBorder))

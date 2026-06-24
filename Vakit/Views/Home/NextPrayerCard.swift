@@ -24,7 +24,7 @@ struct NextPrayerCard: View {
             }
 
             Text(countdown)
-                .font(.system(size: 42, weight: .bold, design: .rounded))
+                .font(.vakitCountdown)
                 .foregroundStyle(Color.vakitText)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)

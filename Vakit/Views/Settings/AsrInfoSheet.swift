@@ -42,7 +42,7 @@ struct AsrInfoSheet: View {
                 .foregroundStyle(Color.vakitText)
 
             Text(lang.t("method.explanation"))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
 
             VStack(alignment: .leading, spacing: 6) {
@@ -53,7 +53,7 @@ struct AsrInfoSheet: View {
                             .foregroundStyle(Color.vakitText)
                         Spacer()
                         Text(m.recommendedAsrCalculation.localizationKey)
-                            .font(.caption)
+                            .font(.vakitReference)
                             .foregroundStyle(Color.vakitTextDim)
                     }
                     .padding(.vertical, 4)
@@ -74,7 +74,7 @@ struct AsrInfoSheet: View {
                 .foregroundStyle(Color.vakitText)
 
             Text(lang.t("school.explanation"))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
 
             HStack(spacing: 12) {
@@ -86,7 +86,7 @@ struct AsrInfoSheet: View {
                         Text(school == .standard
                              ? lang.t("prayer.asr")
                              : lang.t("prayer.asr"))
-                            .font(.caption)
+                            .font(.vakitReference)
                             .foregroundStyle(Color.vakitTextDim)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -107,7 +107,7 @@ struct AsrInfoSheet: View {
                     Image(systemName: "info.circle.fill")
                         .foregroundStyle(Color.vakitAccent)
                     Text(lang.t("school.diyanetNote"))
-                        .font(.subheadline)
+                        .font(.vakitCaption)
                         .foregroundStyle(Color.vakitText)
                 }
                 .padding(12)

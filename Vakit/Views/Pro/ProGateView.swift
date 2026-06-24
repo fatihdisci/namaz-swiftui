@@ -152,7 +152,7 @@ struct ProGateView: View {
                 .foregroundStyle(Color.vakitText)
 
             Text(lang.t(context.subtitleKey))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color.vakitTextDim)
         }
@@ -160,12 +160,12 @@ struct ProGateView: View {
     }
 
     private var features: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 16) {
             ForEach(context.featureRows) { row in
                 featureRow(icon: row.icon, titleKey: row.titleKey)
             }
         }
-        .padding(18)
+        .padding(20)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay(
@@ -175,7 +175,7 @@ struct ProGateView: View {
     }
 
     private func featureRow(icon: String, titleKey: String) -> some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 16) {
             Image(systemName: icon)
                 .foregroundStyle(Color.vakitAccent)
                 .frame(width: 28)
@@ -208,7 +208,7 @@ struct ProGateView: View {
                     .foregroundStyle(Color.vakitTextDim)
             }
         }
-        .font(.caption)
+        .font(.vakitReference)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 4)
     }
@@ -221,14 +221,14 @@ struct ProGateView: View {
         Button {
             selectedProductID = id
         } label: {
-            HStack(spacing: 14) {
+            HStack(spacing: 16) {
                 Image(systemName: selectedProductID == id ? "largecircle.fill.circle" : "circle")
                     .foregroundStyle(Color.vakitAccent)
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 8) {
                         Text(lang.t(titleKey))
-                            .font(.system(.body, design: .rounded, weight: .semibold))
+                            .font(.vakitBodyRounded)
                             .foregroundStyle(Color.vakitText)
 
                         if isPopular {
@@ -246,7 +246,7 @@ struct ProGateView: View {
                 Spacer()
 
                 Text(price(for: id))
-                    .font(.system(.body, design: .rounded, weight: .semibold))
+                    .font(.vakitBodyRounded)
                     .foregroundStyle(Color.vakitText)
             }
             .padding(16)
@@ -308,7 +308,7 @@ struct ProGateView: View {
         Button {
             Task { await purchaseSelectedProduct() }
         } label: {
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 if isProcessing {
                     ProgressView().tint(Color.vakitText)
                 }
@@ -335,7 +335,7 @@ struct ProGateView: View {
     }
 
     private var legalLinks: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 12) {
             Link(lang.t("pro.terms"), destination: termsURL)
             Text("·")
             Link(lang.t("pro.privacy"), destination: privacyURL)

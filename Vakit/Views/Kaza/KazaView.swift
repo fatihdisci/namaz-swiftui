@@ -60,7 +60,7 @@ struct KazaView: View {
     private var totalCard: some View {
         VStack(spacing: 8) {
             Text(lang.t("kaza.total"))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
 
             Text("\(viewModel.totalCount)")
@@ -79,7 +79,7 @@ struct KazaView: View {
     }
 
     private func counterRow(for prayer: Prayer) -> some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 16) {
             Image(systemName: prayer.systemImage)
                 .font(.system(size: 18, weight: .medium))
                 .foregroundStyle(prayer.accentColor)
@@ -87,7 +87,7 @@ struct KazaView: View {
                 .background(Circle().fill(prayer.accentColor.opacity(0.12)))
 
             Text(lang.t(prayer.localizationKey))
-                .font(.system(.body, design: .rounded, weight: .semibold))
+                .font(.vakitBodyRounded)
                 .foregroundStyle(Color.vakitText)
 
             Spacer()
@@ -137,7 +137,7 @@ struct KazaView: View {
             Image(systemName: "checkmark.shield")
             Text(lang.t("kaza.storageNote"))
         }
-        .font(.caption)
+        .font(.vakitReference)
         .foregroundStyle(Color.vakitTextDim)
         .frame(maxWidth: .infinity)
     }

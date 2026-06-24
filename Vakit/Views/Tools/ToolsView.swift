@@ -13,9 +13,9 @@ struct ToolsView: View {
                 Color.vakitBg.ignoresSafeArea()
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 18) {
+                    VStack(alignment: .leading, spacing: 20) {
                         Text(lang.t("tools.title"))
-                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                            .font(.vakitScreenTitle)
                             .foregroundStyle(Color.vakitText)
 
                         VStack(spacing: 12) {
@@ -94,7 +94,7 @@ struct ToolsView: View {
         subtitleKey: String,
         isLocked: Bool
     ) -> some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 16) {
             Image(systemName: icon)
                 .font(.system(size: 21, weight: .medium))
                 .foregroundStyle(Color.vakitAccent)
@@ -103,10 +103,10 @@ struct ToolsView: View {
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(lang.t(titleKey))
-                    .font(.system(.body, design: .rounded, weight: .semibold))
+                    .font(.vakitBodyRounded)
                     .foregroundStyle(Color.vakitText)
                 Text(lang.t(subtitleKey))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)

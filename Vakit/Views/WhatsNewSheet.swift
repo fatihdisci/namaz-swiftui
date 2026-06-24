@@ -10,7 +10,7 @@ struct WhatsNewSheet: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 20) {
                     header
                     highlights
                     widgetGuide
@@ -38,19 +38,19 @@ struct WhatsNewSheet: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(String(format: lang.t("whatsNew.title"), version))
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                .font(.vakitScreenTitle)
                 .foregroundStyle(Color.vakitText)
                 .fixedSize(horizontal: false, vertical: true)
 
             Text(lang.t("whatsNew.subtitle"))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
 
     private var highlights: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 12) {
             WhatsNewRow(
                 icon: "speaker.wave.2.fill",
                 title: lang.t("whatsNew.tts.title"),
@@ -70,7 +70,7 @@ struct WhatsNewSheet: View {
     }
 
     private var widgetGuide: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack(spacing: 12) {
                 Image(systemName: "rectangle.grid.2x2.fill")
                     .font(.system(size: 22, weight: .semibold))
@@ -124,15 +124,15 @@ private struct WhatsNewRow: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .font(.vakitHeadline)
                     .foregroundStyle(Color.vakitText)
                 Text(detail)
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(14)
+        .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -148,7 +148,7 @@ private struct WidgetStep: View {
     let text: String
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
+        HStack(alignment: .top, spacing: 12) {
             Text(number)
                 .font(.caption.weight(.bold))
                 .foregroundStyle(Color.vakitBg)

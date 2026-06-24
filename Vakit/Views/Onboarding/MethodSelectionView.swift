@@ -28,7 +28,7 @@ struct MethodSelectionView: View {
             }
 
             Text(lang.t("onboarding.method.subtitle"))
-                .font(.footnote)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
 
             Picker(lang.t("onboarding.method.title"), selection: $method) {
@@ -50,7 +50,7 @@ struct MethodSelectionView: View {
             )
 
             Text(lang.t("method.explanation"))
-                .font(.caption)
+                .font(.vakitReference)
                 .foregroundStyle(Color.vakitTextDim)
                 .padding(.bottom, 4)
 
@@ -67,12 +67,12 @@ struct MethodSelectionView: View {
             .pickerStyle(.segmented)
 
             Text(lang.t("school.explanation"))
-                .font(.caption)
+                .font(.vakitReference)
                 .foregroundStyle(Color.vakitTextDim)
 
             if method == .diyanet {
                 Text(lang.t("school.diyanetNote"))
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitAccent)
                     .padding(.top, 2)
             }
@@ -81,7 +81,7 @@ struct MethodSelectionView: View {
                 showInfoSheet = true
             } label: {
                 Text(lang.t("school.learnMore"))
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitAccent)
             }
         }

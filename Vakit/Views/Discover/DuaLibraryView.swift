@@ -22,7 +22,7 @@ struct DuaLibraryView: View {
             Color.vakitBg.ignoresSafeArea()
 
             ScrollView {
-                LazyVStack(spacing: 14) {
+                LazyVStack(spacing: 16) {
                     categoryPicker
 
                     if filteredDuas.isEmpty {
@@ -92,7 +92,7 @@ struct DuaLibraryView: View {
     }
 
     private func duaRow(_ dua: Dua) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 5) {
                     if let title = dua.title(language: lang.currentLanguage) {
@@ -101,7 +101,7 @@ struct DuaLibraryView: View {
                             .foregroundStyle(Color.vakitAccent)
                     }
                     Text(dua.text(language: lang.currentLanguage))
-                        .font(.body)
+                        .font(.vakitBody)
                         .foregroundStyle(Color.vakitText)
                         .multilineTextAlignment(.leading)
                         .lineLimit(3)
@@ -117,7 +117,7 @@ struct DuaLibraryView: View {
                     .foregroundStyle(Color.vakitAccent)
                 Spacer()
                 Text(dua.source)
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitTextDim)
                     .lineLimit(1)
             }
@@ -177,7 +177,7 @@ private struct DuaDetailView: View {
                     }
                     if let arabic = dua.arabic, !arabic.isEmpty {
                         Text(arabic)
-                            .font(.system(size: 27, weight: .medium))
+                            .font(.vakitArabic)
                             .lineSpacing(10)
                             .foregroundStyle(Color.vakitText)
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -197,7 +197,7 @@ private struct DuaDetailView: View {
                                 tint: .isha)
                     Divider().overlay(Color.vakitBorder)
                     Label(dua.source, systemImage: "bookmark")
-                        .font(.footnote)
+                        .font(.vakitCaption)
                         .foregroundStyle(Color.vakitTextDim)
                 }
                 .padding(22)

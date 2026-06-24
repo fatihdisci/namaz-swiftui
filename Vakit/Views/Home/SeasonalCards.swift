@@ -5,7 +5,7 @@ struct FridayCard: View {
     @Environment(LanguageService.self) private var lang
 
     var body: some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 16) {
             Image(systemName: "building.columns.fill")
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(Color.vakitAccent)
@@ -13,10 +13,10 @@ struct FridayCard: View {
                 .background(Circle().fill(Color.vakitAccent.opacity(0.14)))
             VStack(alignment: .leading, spacing: 3) {
                 Text(lang.t("friday.title"))
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .font(.vakitHeadline)
                     .foregroundStyle(Color.vakitText)
                 Text(lang.t("friday.subtitle"))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
             Spacer()
@@ -38,7 +38,7 @@ struct RamadanCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Label(lang.t("ramadan.title"), systemImage: "moon.stars.fill")
-                .font(.system(.headline, design: .rounded, weight: .semibold))
+                .font(.vakitHeadline)
                 .foregroundStyle(Color.vakitAccent)
             HStack(spacing: 12) {
                 timeItem(title: lang.t("ramadan.sahur"), time: times.fajr)
@@ -53,7 +53,7 @@ struct RamadanCard: View {
 
     private func timeItem(title: String, time: Date) -> some View {
         VStack(alignment: .leading, spacing: 3) {
-            Text(title).font(.caption).foregroundStyle(Color.vakitTextDim)
+            Text(title).font(.vakitReference).foregroundStyle(Color.vakitTextDim)
             Text(time.hhmm)
                 .font(.system(.title2, design: .rounded, weight: .bold))
                 .foregroundStyle(Color.vakitText)

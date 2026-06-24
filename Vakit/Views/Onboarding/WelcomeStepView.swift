@@ -11,11 +11,11 @@ struct WelcomeStepView: View {
 
             VStack(spacing: 16) {
                 Text(lang.t("app.name"))
-                    .font(.system(size: 56, weight: .bold, design: .rounded))
+                    .font(.vakitHero)
                     .foregroundStyle(Color.vakitText)
 
                 Text(lang.t("onboarding.welcome.subtitle"))
-                    .font(.body)
+                    .font(.vakitBody)
                     .foregroundStyle(Color.vakitTextDim)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -26,7 +26,7 @@ struct WelcomeStepView: View {
 
             Button(action: onContinue) {
                 Text(lang.t("onboarding.welcome.start"))
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .font(.vakitHeadline)
                     .foregroundStyle(Color.vakitText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)

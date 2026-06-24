@@ -16,7 +16,7 @@ struct PrayerCalendarView: View {
             AuroraBackground(accentColor: .vakitAccent)
 
             ScrollView {
-                VStack(spacing: 18) {
+                VStack(spacing: 20) {
                     dateControls
 
                     if isLoading && times == nil {
@@ -51,7 +51,7 @@ struct PrayerCalendarView: View {
 
             dayButton(offset: 1, icon: "chevron.right")
         }
-        .padding(14)
+        .padding(16)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.vakitBorder))
@@ -73,10 +73,10 @@ struct PrayerCalendarView: View {
     private func hijriCard(_ times: PrayerTimes) -> some View {
         VStack(spacing: 5) {
             Text(formattedDate)
-                .font(.system(.headline, design: .rounded, weight: .semibold))
+                .font(.vakitHeadline)
                 .foregroundStyle(Color.vakitText)
             Text("\(times.hijriDay) \(times.hijriMonthName) \(times.hijriYear)")
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitAccent)
         }
         .frame(maxWidth: .infinity)
@@ -96,12 +96,12 @@ struct PrayerCalendarView: View {
                         .foregroundStyle(Color.vakitText)
                     Spacer()
                     Text(times.time(for: prayer).hhmm)
-                        .font(.system(.body, design: .rounded, weight: .semibold))
+                        .font(.vakitBodyRounded)
                         .foregroundStyle(Color.vakitText)
                         .monospacedDigit()
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 14)
+                .padding(.vertical, 16)
 
                 if index < Prayer.allCases.count - 1 {
                     Divider().overlay(Color.vakitBorder).padding(.leading, 56)

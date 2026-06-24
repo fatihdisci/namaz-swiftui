@@ -26,7 +26,7 @@ struct LocationSelectionView: View {
 
             if let errorKey = viewModel.errorKey {
                 Text(lang.t(errorKey))
-                    .font(.footnote)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.maghrib)
             }
 
@@ -50,7 +50,7 @@ struct LocationSelectionView: View {
                 .font(.system(.title, design: .rounded, weight: .bold))
                 .foregroundStyle(Color.vakitText)
             Text(lang.t("location.subtitle"))
-                .font(.subheadline)
+                .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
         }
         .padding(.top, 32)
@@ -70,7 +70,7 @@ struct LocationSelectionView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(lang.t("location.country"))
-                        .font(.caption)
+                        .font(.vakitReference)
                         .foregroundStyle(Color.vakitTextDim)
                     Text(viewModel.selectedCountryName.isEmpty
                          ? lang.t("location.selectCountry")
@@ -83,7 +83,7 @@ struct LocationSelectionView: View {
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(Color.vakitTextDim)
             }
-            .padding(14)
+            .padding(16)
             .background(Color.vakitSurface)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay(
@@ -111,7 +111,7 @@ struct LocationSelectionView: View {
                                     .font(.system(.body, weight: .medium))
                                     .foregroundStyle(Color.vakitText)
                                 Text(country.code)
-                                    .font(.caption)
+                                    .font(.vakitReference)
                                     .foregroundStyle(Color.vakitTextDim)
                             }
                             Spacer()
@@ -186,7 +186,7 @@ struct LocationSelectionView: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(label)
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitTextDim)
                 Text(value)
                     .font(.system(.body, weight: .medium))
@@ -197,7 +197,7 @@ struct LocationSelectionView: View {
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(Color.vakitTextDim)
         }
-        .padding(14)
+        .padding(16)
         .background(Color.vakitSurface)
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
@@ -235,7 +235,7 @@ struct LocationSelectionView: View {
     private var manualSearchSection: some View {
         VStack(spacing: 12) {
             // Search field
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 if viewModel.isSearching {
                     ProgressView().tint(Color.vakitTextDim)
                 } else {
@@ -256,7 +256,7 @@ struct LocationSelectionView: View {
                 .autocorrectionDisabled()
                 .submitLabel(.search)
             }
-            .padding(14)
+            .padding(16)
             .background(Color.vakitSurface)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay(
@@ -276,7 +276,7 @@ struct LocationSelectionView: View {
                                 .foregroundStyle(Color.vakitText)
                             if !city.country.isEmpty {
                                 Text(city.country)
-                                    .font(.footnote)
+                                    .font(.vakitCaption)
                                     .foregroundStyle(Color.vakitTextDim)
                             }
                         }
@@ -286,7 +286,7 @@ struct LocationSelectionView: View {
                                 .foregroundStyle(Color.vakitAccent)
                         }
                     }
-                    .padding(14)
+                    .padding(16)
                     .background(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .fill(viewModel.selectedManualCity?.id == city.id
@@ -320,7 +320,7 @@ struct LocationSelectionView: View {
             }
         } label: {
             Text(lang.t("onboarding.city.continue"))
-                .font(.system(.headline, design: .rounded, weight: .semibold))
+                .font(.vakitHeadline)
                 .foregroundStyle(Color.vakitText)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)

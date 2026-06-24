@@ -115,7 +115,7 @@ struct HomeView: View {
 
     private var topBar: some View {
         HStack(spacing: 12) {
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 Image(systemName: "location.fill")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundStyle(Color.vakitAccent)
@@ -130,7 +130,7 @@ struct HomeView: View {
                         .minimumScaleFactor(0.82)
 
                     Text(viewModel.currentCity?.country ?? "")
-                        .font(.caption)
+                        .font(.vakitReference)
                         .foregroundStyle(Color.vakitTextDim)
                         .lineLimit(1)
                 }
@@ -147,7 +147,7 @@ struct HomeView: View {
                 hijriSummary
             }
         }
-        .padding(10)
+        .padding(12)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         .overlay(
@@ -183,7 +183,7 @@ struct HomeView: View {
 
     private var citySelector: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 ForEach(viewModel.savedLocations) { location in
                     Button {
                         guard purchaseService.hasProAccess || location.id == viewModel.currentCity?.id else {
@@ -197,7 +197,7 @@ struct HomeView: View {
                             .font(.system(.subheadline, design: .rounded, weight: .semibold))
                             .foregroundStyle(location.id == viewModel.currentCity?.id ? Color.vakitBg : Color.vakitText)
                             .lineLimit(1)
-                            .padding(.horizontal, 14)
+                            .padding(.horizontal, 16)
                             .frame(height: 36)
                             .background(
                                 Capsule().fill(

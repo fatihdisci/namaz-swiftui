@@ -28,7 +28,7 @@ struct PrayerListRow: View {
                 .foregroundStyle(isNext ? prayer.accentColor : Color.vakitText)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 14)
+        .padding(.vertical, 16)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .fill(isNext ? prayer.accentColor.opacity(0.12) : Color.clear)
