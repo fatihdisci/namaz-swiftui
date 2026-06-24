@@ -17,6 +17,7 @@ struct OnboardingView: View {
     @State private var locationVM = LocationSelectionViewModel()
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -44,7 +45,7 @@ struct OnboardingView: View {
                     .transition(stepTransition)
                 }
             }
-            .animation(.easeInOut(duration: 0.35), value: step)
+            .animation(vakitAnimation(.vakitMedium, reduceMotion: reduceMotion), value: step)
         }
         .preferredColorScheme(.dark)
     }

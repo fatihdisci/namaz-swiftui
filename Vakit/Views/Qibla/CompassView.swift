@@ -5,6 +5,7 @@ struct CompassView: View {
     let viewModel: QiblaViewModel
 
     @Environment(LanguageService.self) private var lang
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(spacing: 28) {
@@ -12,13 +13,13 @@ struct CompassView: View {
                 // Pusula yüzü heading ile döner → N her zaman gerçek kuzeyi gösterir.
                 compassFace
                     .rotationEffect(.degrees(-viewModel.heading))
-                    .animation(.interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.heading)
+                    .animation(reduceMotion ? .none : .interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.heading)
 
                 // İğne Kabe'yi gösterir: kıble açısı cihaz yönüne (heading) göre düzeltilir,
                 // böylece pusula yüzü ile aynı dünya çerçevesinde kalır.
                 needle
                     .rotationEffect(.degrees(viewModel.needleRotation))
-                    .animation(.interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.needleRotation)
+                    .animation(reduceMotion ? .none : .interpolatingSpring(stiffness: 50, damping: 10), value: viewModel.needleRotation)
             }
             .frame(width: 260, height: 260)
 
@@ -29,7 +30,7 @@ struct CompassView: View {
                     .contentTransition(.numericText())
 
                 Text(lang.t(directionKey))
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
         }

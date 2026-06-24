@@ -25,7 +25,7 @@ struct SettingsView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
                         Text(lang.t("settings.title"))
-                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                            .font(.vakitScreenTitle)
                             .foregroundStyle(Color.vakitText)
 
                         generalSection
@@ -147,13 +147,13 @@ struct SettingsView: View {
                 rowLabel(icon: "building.2", titleKey: "settings.city")
                 Spacer()
                 Text(viewModel.locationDisplayName)
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(Color.vakitTextDim)
             }
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
         }
     }
 
@@ -176,7 +176,7 @@ struct SettingsView: View {
             .padding(.vertical, 6)
 
             Text(lang.t("method.explanation"))
-                .font(.caption)
+                .font(.vakitReference)
                 .foregroundStyle(Color.vakitTextDim)
                 .padding(.horizontal, 36) // icon width (24) + spacing (12)
         }
@@ -201,13 +201,13 @@ struct SettingsView: View {
             .padding(.vertical, 6)
 
             Text(lang.t("school.explanation"))
-                .font(.caption)
+                .font(.vakitReference)
                 .foregroundStyle(Color.vakitTextDim)
                 .padding(.horizontal, 36)
 
             if viewModel.method == .diyanet {
                 Text(lang.t("school.diyanetNote"))
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitAccent)
                     .padding(.horizontal, 36)
             }
@@ -216,7 +216,7 @@ struct SettingsView: View {
                 showAsrInfoSheet = true
             } label: {
                 Text(lang.t("school.learnMore"))
-                    .font(.caption)
+                    .font(.vakitReference)
                     .foregroundStyle(Color.vakitAccent)
                     .padding(.horizontal, 36)
             }
@@ -237,7 +237,7 @@ struct SettingsView: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(Color.vakitTextDim)
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
         }
     }
@@ -253,7 +253,7 @@ struct SettingsView: View {
                     rowLabel(icon: "sparkles", titleKey: "settings.pro")
                     Spacer()
                     Text(lang.t(purchaseService.hasProAccess ? "pro.active" : "pro.unlock"))
-                        .font(.caption)
+                        .font(.vakitReference)
                         .foregroundStyle(
                             purchaseService.hasProAccess ? Color.vakitAccent : Color.vakitTextDim
                         )
@@ -263,7 +263,7 @@ struct SettingsView: View {
                             .foregroundStyle(Color.vakitTextDim)
                     }
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
             .disabled(purchaseService.hasProAccess)
         }
@@ -287,7 +287,7 @@ struct SettingsView: View {
                 .labelsHidden()
                 .tint(Color.vakitAccent)
             }
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
         }
     }
     #endif
@@ -303,7 +303,7 @@ struct SettingsView: View {
                     rowLabel(icon: "rectangle.portrait.and.arrow.right", titleKey: "settings.signOut")
                     Spacer()
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
 
             divider
@@ -317,14 +317,14 @@ struct SettingsView: View {
                         .foregroundStyle(Color.maghrib)
                         .frame(width: 24)
                     Text(lang.t("settings.deleteAccount"))
-                        .font(.body)
+                        .font(.vakitBody)
                         .foregroundStyle(Color.maghrib)
                     Spacer()
                     if isDeletingAccount {
                         ProgressView().tint(Color.maghrib)
                     }
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
             .disabled(isDeletingAccount)
         }
@@ -344,7 +344,7 @@ struct SettingsView: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(Color.vakitTextDim)
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
 
             divider
@@ -353,10 +353,10 @@ struct SettingsView: View {
                 rowLabel(icon: "info.circle", titleKey: "settings.version")
                 Spacer()
                 Text(viewModel.appVersion)
-                    .font(.subheadline)
+                    .font(.vakitCaption)
                     .foregroundStyle(Color.vakitTextDim)
             }
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
         }
     }
 
@@ -374,7 +374,7 @@ struct SettingsView: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(Color.vakitTextDim)
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
 
             divider
@@ -389,7 +389,7 @@ struct SettingsView: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(Color.vakitTextDim)
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
         }
     }
@@ -401,9 +401,9 @@ struct SettingsView: View {
     // MARK: - Yardımcılar
 
     private func section(titleKey: String, @ViewBuilder content: () -> some View) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
             Text(lang.t(titleKey))
-                .font(.system(.footnote, design: .default, weight: .semibold))
+                .font(.vakitSectionHeader)
                 .foregroundStyle(Color.vakitTextDim)
                 .textCase(.uppercase)
 
@@ -433,7 +433,7 @@ struct SettingsView: View {
                 .frame(width: 24)
 
             Text(title)
-                .font(.body)
+                .font(.vakitBody)
                 .foregroundStyle(Color.vakitText)
         }
     }
@@ -478,6 +478,7 @@ struct LocationPickerSheet: View {
     @State private var isAutoLocating = false
     @State private var autoLocateError: String?
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let storage = StorageService.shared
     private let maxSavedCities = 10
@@ -493,7 +494,7 @@ struct LocationPickerSheet: View {
 
                         if let error = autoLocateError {
                             Text(error)
-                                .font(.footnote)
+                                .font(.vakitCaption)
                                 .foregroundStyle(Color.maghrib)
                                 .padding(.horizontal, 24)
                         }
@@ -513,7 +514,7 @@ struct LocationPickerSheet: View {
                     Text(mode == .add
                          ? (purpose == .home ? lang.t("safar.homeCity") : lang.t("settings.city"))
                          : lang.t("settings.cityEdit"))
-                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .font(.vakitHeadline)
                         .foregroundStyle(Color.vakitText)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -550,7 +551,7 @@ struct LocationPickerSheet: View {
         Button {
             Task { await performAutoLocate() }
         } label: {
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 if isAutoLocating {
                     ProgressView()
                         .tint(Color.vakitAccent)
@@ -565,7 +566,7 @@ struct LocationPickerSheet: View {
                     .foregroundStyle(Color.vakitAccent)
                 Spacer()
             }
-            .padding(14)
+            .padding(16)
             .background(Color.vakitSurface)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay(
@@ -630,7 +631,7 @@ struct LocationPickerSheet: View {
     private var savedCitiesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(lang.t("settings.savedCities"))
-                .font(.system(.footnote, design: .default, weight: .semibold))
+                .font(.vakitSectionHeader)
                 .foregroundStyle(Color.vakitTextDim)
                 .textCase(.uppercase)
 
@@ -647,9 +648,14 @@ struct LocationPickerSheet: View {
                         }
                         Spacer()
                         Button {
-                            withAnimation {
+                            if reduceMotion {
                                 storage.removeSavedPrayerLocation(id: location.id)
                                 savedLocations = storage.savedPrayerLocations
+                            } else {
+                                withAnimation {
+                                    storage.removeSavedPrayerLocation(id: location.id)
+                                    savedLocations = storage.savedPrayerLocations
+                                }
                             }
                         } label: {
                             Image(systemName: "trash")
@@ -662,7 +668,7 @@ struct LocationPickerSheet: View {
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(Color.vakitTextDim)
                     }
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 12)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         handleCitySelection(location)

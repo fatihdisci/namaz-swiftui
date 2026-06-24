@@ -4,6 +4,7 @@ import SwiftUI
 /// yumuşak radial ışık lekeleri. Renk değişimi yumuşak animasyonludur.
 struct AuroraBackground: View {
     let accentColor: Color
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         GeometryReader { geometry in
@@ -35,7 +36,7 @@ struct AuroraBackground: View {
                     .blur(radius: 100)
                     .opacity(0.05)
             }
-            .animation(.easeInOut(duration: 1.5), value: accentColor)
+            .animation(vakitAnimation(.vakitSlow, reduceMotion: reduceMotion), value: accentColor)
         }
         .ignoresSafeArea()
     }
