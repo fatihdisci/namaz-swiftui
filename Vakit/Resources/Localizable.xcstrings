@@ -1995,6 +1995,57 @@
         }
       }
     },
+    "notification.disabled.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications are disabled"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildirimler kapalı"
+          }
+        }
+      }
+    },
+    "notification.disabled.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable notifications in system settings to receive prayer time alerts."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vakit bildirimlerini almak için sistem ayarlarından bildirimleri etkinleştirin."
+          }
+        }
+      }
+    },
+    "notification.disabled.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayarları Aç"
+          }
+        }
+      }
+    },
     "onboarding.city.continue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2777,6 +2828,74 @@
         }
       }
     },
+    "pro.cta.general" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Pro"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro'ya Geç"
+          }
+        }
+      }
+    },
+    "pro.cta.safar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Travel Mode"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seferi Modu Aç"
+          }
+        }
+      }
+    },
+    "pro.cta.kaza" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Missed Prayer Tracker"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaza Takibini Aç"
+          }
+        }
+      }
+    },
+    "pro.cta.cities" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Multiple Cities"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çoklu Şehir Ekle"
+          }
+        }
+      }
+    },
     "pro.popular" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2858,6 +2977,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple hesabınızla satın almaya hazırsınız."
+          }
+        }
+      }
+    },
+    "pro.restore.prompt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchased before?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha önce satın aldınız mı?"
           }
         }
       }

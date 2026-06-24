@@ -6,8 +6,10 @@ struct NotificationSettingsView: View {
     @State private var settings: NotificationSettings
     @State private var fridayReminderEnabled: Bool
     @State private var motivationalNotesEnabled: Bool
+    @State private var isAuthorized = true
 
     @Environment(LanguageService.self) private var lang
+    @Environment(\.openURL) private var openURL
 
     private let storage: StorageService
     private let notificationService: NotificationService
@@ -28,6 +30,10 @@ struct NotificationSettingsView: View {
 
             ScrollView {
                 VStack(spacing: 12) {
+                    if !isAuthorized {
+                        notificationDisabledBanner
+                    }
+
                     ForEach(Prayer.allCases) { prayer in
                         card(for: prayer)
                     }
@@ -44,8 +50,52 @@ struct NotificationSettingsView: View {
         .navigationTitle(lang.t("settings.notifications"))
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await notificationService.requestPermission()
+            isAuthorized = await notificationService.requestPermission()
         }
+    }
+
+    // MARK: - Disabled banner
+
+    private var notificationDisabledBanner: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "bell.slash.fill")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundStyle(Color.vakitError)
+                .frame(width: 36, height: 36)
+                .background(Circle().fill(Color.vakitError.opacity(0.12)))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(lang.t("notification.disabled.title"))
+                    .font(.system(.subheadline, weight: .semibold))
+                    .foregroundStyle(Color.vakitText)
+                Text(lang.t("notification.disabled.body"))
+                    .font(.vakitReference)
+                    .foregroundStyle(Color.vakitTextDim)
+            }
+
+            Spacer()
+
+            Button {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    openURL(url)
+                }
+            } label: {
+                Text(lang.t("notification.disabled.action"))
+                    .font(.system(.caption, weight: .semibold))
+                    .foregroundStyle(Color.vakitBg)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Color.vakitAccent)
+                    .clipShape(Capsule())
+            }
+        }
+        .padding(14)
+        .background(Color.vakitSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .strokeBorder(Color.vakitError.opacity(0.3), lineWidth: 1)
+        )
     }
 
     // MARK: - Card

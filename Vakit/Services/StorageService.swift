@@ -31,6 +31,7 @@ final class StorageService {
         static let hasManuallySetAsrCalculation = "has_manually_set_asr"
         static let asrSchoolMigrated = "asr_school_migrated"
         static let asrSchoolStandardCorrectionMigrated = "asr_school_standard_correction_migrated"
+        static let hasShownNotificationPromptKey = "has_shown_notification_prompt"
     }
 
     private static let cacheRetentionDays = 30
@@ -343,6 +344,13 @@ final class StorageService {
         favoriteDuaIDs = ids
     }
 
+    /// Bildirim izni onboarding sonrası ana ekranda değer gösterildikten sonra
+    /// bir kereliğine istenir. Gösterildikten sonra true olur.
+    var hasShownNotificationPrompt: Bool {
+        get { defaults.bool(forKey: Key.hasShownNotificationPromptKey) }
+        set { defaults.set(newValue, forKey: Key.hasShownNotificationPromptKey) }
+    }
+
     var fridayReminderEnabled: Bool {
         get {
             guard defaults.object(forKey: Key.fridayReminderEnabled) != nil else { return false }
@@ -450,6 +458,7 @@ extension StorageService {
             Key.favoriteDuaIDs,
             Key.fridayReminderEnabled,
             Key.motivationalNotesEnabled,
+            Key.hasShownNotificationPromptKey,
         ]
         keysToRemove.forEach { defaults.removeObject(forKey: $0) }
 

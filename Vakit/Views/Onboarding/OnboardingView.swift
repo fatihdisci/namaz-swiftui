@@ -4,10 +4,10 @@ import SwiftData
 enum OnboardingStep {
     case welcome
     case locationSelection
-    case notifications
 }
 
-/// Tam ekran onboarding akışı: karşılama → konum seçimi (ülke → il → ilçe) → bildirim izni.
+/// Tam ekran onboarding akışı: karşılama → konum seçimi (ülke → il → ilçe).
+/// Bildirim izni onboarding'den SONRA, ana ekranda değer gösterildikten sonra istenir.
 /// Konum izni onboarding'de İSTENMEZ. Kullanıcı konumunu manuel seçer.
 struct OnboardingView: View {
     let onComplete: () -> Void
@@ -34,13 +34,8 @@ struct OnboardingView: View {
                     NavigationStack {
                         LocationSelectionView(viewModel: locationVM) { location in
                             viewModel.saveSelectedLocation(location, context: modelContext)
-                            step = .notifications
+                            onComplete()
                         }
-                    }
-                    .transition(stepTransition)
-                case .notifications:
-                    NotificationPermissionView {
-                        onComplete()
                     }
                     .transition(stepTransition)
                 }

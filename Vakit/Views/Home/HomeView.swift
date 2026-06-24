@@ -6,6 +6,7 @@ struct HomeView: View {
     @State private var showLocationPicker = false
     @State private var showProGate = false
     @State private var proGateContext: ProGateContext = .general
+    @State private var showNotificationPrompt = false
     private let onOpenDiscover: () -> Void
 
     @Environment(LanguageService.self) private var lang
@@ -41,6 +42,12 @@ struct HomeView: View {
         }
         .task {
             await viewModel.load()
+            // Bildirim iznini değer gösterildikten 2sn sonra iste
+            if !StorageService.shared.hasShownNotificationPrompt {
+                try? await Task.sleep(for: .seconds(2))
+                showNotificationPrompt = true
+                StorageService.shared.hasShownNotificationPrompt = true
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .vakitPrayerLocationChanged)) { _ in
             Task { await reloadAndReschedule() }
@@ -67,6 +74,12 @@ struct HomeView: View {
             ProGateView(context: proGateContext)
                 .environment(lang)
                 .environment(purchaseService)
+        }
+        .sheet(isPresented: $showNotificationPrompt) {
+            NotificationPermissionView {
+                showNotificationPrompt = false
+            }
+            .environment(lang)
         }
     }
 
