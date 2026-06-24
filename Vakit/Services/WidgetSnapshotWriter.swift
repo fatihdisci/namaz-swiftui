@@ -11,6 +11,7 @@ import WidgetKit
 ///  - VakitApp scenePhase .active (foreground)
 enum WidgetSnapshotWriter {
     /// Taze hesaplanmış vakitlerden snapshot üretir, yazar ve widget'ı yeniler.
+    @MainActor
     static func update(city: City, today: PrayerTimes, tomorrow: PrayerTimes?, language: String) {
         let rows = Prayer.allCases.map {
             WidgetPrayerSnapshot.Row(prayerKey: $0.rawValue, time: today.time(for: $0))
@@ -19,6 +20,22 @@ enum WidgetSnapshotWriter {
         let now = Date()
         let accentKey = Prayer.allCases.first { today.time(for: $0) > now }?.rawValue
             ?? Prayer.fajr.rawValue
+
+        // Widget Medium için günlük değişen içerik (Hook Model variable reward)
+        let verse = DailyContent.dailyVerse()
+        let hadith = DailyContent.dailyHadith()
+        let dailyText: String?
+        let dailyRef: String?
+        if let verse {
+            dailyText = verse.text(language: language)
+            dailyRef = verse.reference
+        } else if let hadith {
+            dailyText = hadith.text(language: language)
+            dailyRef = hadith.source
+        } else {
+            dailyText = nil
+            dailyRef = nil
+        }
 
         let snapshot = WidgetPrayerSnapshot(
             cityName: city.name,
@@ -29,7 +46,9 @@ enum WidgetSnapshotWriter {
             rows: rows,
             tomorrowFajr: tomorrow?.fajr,
             language: language,
-            accentPrayerKey: accentKey
+            accentPrayerKey: accentKey,
+            dailyVerseText: dailyText,
+            dailyVerseReference: dailyRef
         )
 
         WidgetSnapshotStore.save(snapshot)
@@ -41,6 +60,7 @@ enum WidgetSnapshotWriter {
     }
 
     /// Foreground gibi vakit hesaplaması yapılmayan durumlar için: cache'ten okuyup yazar.
+    @MainActor
     static func refreshFromCache(storage: StorageService = .shared, language: String) {
         guard let city = storage.resolvedCity else { return }
         var calendar = Calendar(identifier: .gregorian)

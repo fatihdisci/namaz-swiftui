@@ -22,6 +22,8 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
     let tomorrowFajr: Date?     // Yatsıdan sonra "sıradaki" için (yarının sabahı)
     let language: String        // "tr" / "en"
     let accentPrayerKey: String // Snapshot üretildiği andaki sıradaki vakit
+    let dailyVerseText: String?     // Widget Medium için günlük ayet/hadis teaser'ı
+    let dailyVerseReference: String? // Kaynak referansı (örn. "Bakara · 255")
     let generatedAt: Date
 
     init(
@@ -34,6 +36,8 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
         tomorrowFajr: Date?,
         language: String,
         accentPrayerKey: String,
+        dailyVerseText: String? = nil,
+        dailyVerseReference: String? = nil,
         generatedAt: Date = Date()
     ) {
         self.cityName = cityName
@@ -45,6 +49,8 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
         self.tomorrowFajr = tomorrowFajr
         self.language = language
         self.accentPrayerKey = accentPrayerKey
+        self.dailyVerseText = dailyVerseText
+        self.dailyVerseReference = dailyVerseReference
         self.generatedAt = generatedAt
     }
 }

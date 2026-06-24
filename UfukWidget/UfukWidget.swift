@@ -354,11 +354,32 @@ private struct MediumView: View {
 
                 Spacer(minLength: 0)
 
-                Text(snapshot.hijriDate.hijriDiacriticStripped)
-                    .font(.caption2)
-                    .foregroundStyle(WidgetPalette.creamFaint)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                if let verseText = snapshot.dailyVerseText {
+                    Text(verseText)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(WidgetPalette.creamDim)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.7)
+                        .padding(.bottom, 2)
+                }
+
+                HStack(spacing: 4) {
+                    Text(snapshot.hijriDate.hijriDiacriticStripped)
+                        .font(.caption2)
+                        .foregroundStyle(WidgetPalette.creamFaint)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+
+                    if let ref = snapshot.dailyVerseReference {
+                        Text("·")
+                            .foregroundStyle(WidgetPalette.creamFaint)
+                        Text(ref)
+                            .font(.caption2)
+                            .foregroundStyle(WidgetPalette.creamFaint)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                    }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .skyTextShadow(phase)

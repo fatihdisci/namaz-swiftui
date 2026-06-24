@@ -62,7 +62,9 @@ final class NotificationService {
         guard authorized else {
             cancelAll()
             // Bildirim izni olmasa da Home Screen widget'ı güncel kalsın.
-            WidgetSnapshotWriter.refreshFromCache(language: languageService.currentLanguage)
+            await MainActor.run {
+                WidgetSnapshotWriter.refreshFromCache(language: languageService.currentLanguage)
+            }
             return
         }
 
@@ -79,12 +81,14 @@ final class NotificationService {
         if let todayTimes = times[today] {
             let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: today)
             let tomorrowTimes = tomorrowDate.flatMap { times[$0] }
-            WidgetSnapshotWriter.update(
-                city: city,
-                today: todayTimes,
-                tomorrow: tomorrowTimes,
-                language: languageService.currentLanguage
-            )
+            await MainActor.run {
+                WidgetSnapshotWriter.update(
+                    city: city,
+                    today: todayTimes,
+                    tomorrow: tomorrowTimes,
+                    language: languageService.currentLanguage
+                )
+            }
         }
 
         await scheduleNotifications(for: city, times: times)
