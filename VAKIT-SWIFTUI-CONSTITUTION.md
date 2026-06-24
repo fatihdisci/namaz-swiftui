@@ -107,24 +107,28 @@ Sabit koyu tema. Renk aksanı aktif vakte göre değişir.
 
 ```swift
 // Color+Theme.swift — bu renkler birebir korunacak
+// ⚠️ Renklerin tek doğru kaynağı Vakit/Theme/Color+Theme.swift'tir.
+// Bu tablo onu yansıtır. CONSTITUTION.md'yi değiştirmeden Color+Theme.swift'i
+// değiştirme — önce CONSTITUTION.md'de güncelle, sonra koda yansıt.
 extension Color {
     // Arka plan
-    static let vakitBg      = Color(hex: "0a0a0f")  // Ana arka plan
-    static let vakitSurface = Color(hex: "13131a")  // Kart arka planı
+    static let vakitBg      = Color(hex: "080d0c")  // Ana arka plan
+    static let vakitSurface = Color(hex: "111816")  // Kart arka planı
     static let vakitBorder  = Color.white.opacity(0.08)
 
     // Vakit aksan renkleri
-    static let fajr     = Color(hex: "7c3aed")  // Mor — Sabah/fecr
+    static let fajr     = Color(hex: "2dd4bf")  // Turkuaz — Sabah/fecr
     static let sunrise  = Color(hex: "d97706")  // Amber — Güneş
-    static let dhuhr    = Color(hex: "b45309")  // Altın — Öğle
-    static let asr      = Color(hex: "c2410c")  // Bronz — İkindi
+    static let dhuhr    = Color(hex: "ca8a04")  // Altın — Öğle
+    static let asr      = Color(hex: "b45309")  // Bronz — İkindi
     static let maghrib  = Color(hex: "dc2626")  // Kırmızı — Akşam
-    static let isha     = Color(hex: "1d4ed8")  // Lacivert — Yatsı
+    static let isha     = Color(hex: "2563eb")  // Lacivert — Yatsı
 
     // Metin
     static let vakitText    = Color(hex: "f1f0ed")
-    static let vakitTextDim = Color(hex: "6b6a66")
-    static let vakitAccent  = Color(hex: "7c3aed")  // Varsayılan mor
+    static let vakitTextDim = Color(hex: "8a8f88")
+    static let vakitAccent  = Color(hex: "2fbf8f")  // Varsayılan yeşil
+    static let vakitError   = Color(hex: "dc2626")  // Hata/uyarı (maghrib alias)
 }
 ```
 
@@ -142,6 +146,8 @@ extension Color {
 - Büyük geri sayım: SF Pro Rounded, bold, büyük punto
 - Vakit isimleri: SF Pro, medium
 - Sistem fontu kullan, custom font yükleme YOK (sadelik)
+- Tipografi ölçeği: `Vakit/Theme/Font+Theme.swift` (11 token, DESIGN.md §2.3)
+- Karar: SF Pro (sistem fontu), custom font yok. 24 Haziran 2026, DESIGN.md §10.
 
 -----
 

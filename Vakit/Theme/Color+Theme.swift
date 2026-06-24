@@ -18,4 +18,7 @@ extension Color {
     static let vakitText    = Color(hex: "f1f0ed")
     static let vakitTextDim = Color(hex: "8a8f88")
     static let vakitAccent  = Color(hex: "2fbf8f")  // Varsayılan yeşil
+
+    // Semantik alias
+    static let vakitError   = Color.maghrib       // Hata/uyarı metinleri için
 }
