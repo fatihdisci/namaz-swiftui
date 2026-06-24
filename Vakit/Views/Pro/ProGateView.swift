@@ -33,6 +33,15 @@ enum ProGateContext {
         }
     }
 
+    var ctaKey: String {
+        switch self {
+        case .general: return "pro.cta.general"
+        case .safar: return "pro.cta.safar"
+        case .kaza: return "pro.cta.kaza"
+        case .cities: return "pro.cta.cities"
+        }
+    }
+
     var featureRows: [ProFeatureRow] {
         switch self {
         case .general:
@@ -105,7 +114,7 @@ struct ProGateView: View {
                     VStack(spacing: 16) {
                         header
                         productCards
-                        purchaseDetails
+                        trustSignal
                         features
                     }
                     .padding(.horizontal, 20)
@@ -198,19 +207,13 @@ struct ProGateView: View {
         }
     }
 
-    private var purchaseDetails: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label(lang.t("pro.noAccountRequired"), systemImage: "person.crop.circle.badge.checkmark")
-                .foregroundStyle(Color.vakitAccent)
-
-            if selectedProductID != .lifetime {
-                Text(lang.t("pro.cancellationPolicy"))
-                    .foregroundStyle(Color.vakitTextDim)
-            }
-        }
-        .font(.vakitReference)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 4)
+    /// Güven sinyali (Apple hesabı gerekmez) — fiyat kartlarının hemen altında.
+    private var trustSignal: some View {
+        Label(lang.t("pro.noAccountRequired"), systemImage: "person.crop.circle.badge.checkmark")
+            .font(.caption.weight(.medium))
+            .foregroundStyle(Color.vakitAccent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 4)
     }
 
     private func productCard(
@@ -286,11 +289,21 @@ struct ProGateView: View {
 
             purchaseButton
 
-            HStack(spacing: 12) {
-                restoreButton
-                Text("·")
+            HStack(spacing: 4) {
+                Text(lang.t("pro.restore.prompt"))
+                    .font(.caption)
                     .foregroundStyle(Color.vakitTextDim)
-                legalLinks
+                restoreButton
+            }
+
+            legalLinks
+
+            if selectedProductID != .lifetime {
+                Text(lang.t("pro.cancellationPolicy"))
+                    .font(.caption2)
+                    .foregroundStyle(Color.vakitTextDim)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 2)
             }
         }
         .padding(.horizontal, 20)
@@ -312,7 +325,7 @@ struct ProGateView: View {
                 if isProcessing {
                     ProgressView().tint(Color.vakitText)
                 }
-                Text(lang.t("pro.purchase"))
+                Text(lang.t(context.ctaKey))
                     .font(.system(.headline, design: .rounded, weight: .bold))
             }
             .foregroundStyle(Color.vakitBg)
