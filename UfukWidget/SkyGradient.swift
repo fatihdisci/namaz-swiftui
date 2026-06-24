@@ -1,6 +1,13 @@
 import SwiftUI
 
 // MARK: - Renk yardımcısı (widget target'a özel, app Theme'inden bağımsız)
+//
+// Bu palet bilinçli olarak ayrı tutulmuştur (widget rendering kısıtları: gradyan
+// sistemi kendi içinde dengeli, her faz için 3 duraklı gradient). Ana uygulama
+// paleti: Vakit/Theme/Color+Theme.swift (#080d0c tabanlı koyu yeşil-siyah).
+// widget'ın mor tonlu gece paleti ile ana uygulamanın yeşil-siyah arka planı
+// farklı yönlere gider — bu bilinçli bir tasarım tercihidir.
+// Faz 9/10'da tam birleştirme değerlendirilebilir.
 
 extension Color {
     /// 0xRRGGBB tam sayısından sRGB renk.

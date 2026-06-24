@@ -245,9 +245,11 @@ Shared/                         # App + Widget + Watch ortak kod
 |**Seferi hesabı**                     |❌   |✅  |
 |**Kaza takibi**                       |❌   |✅  |
 |**Çoklu şehir (max 5)**               |❌   |✅  |
-|**Widget**                            |❌   |✅  |
+|Widget                                |✅   |✅  |
 |**Dynamic Island / Live Activity**    |❌   |✅  |
 |**Apple Watch**                       |❌   |✅  |
+
+Not: Widget başlangıçta Pro-only planlanmıştı, ancak kod hiçbir zaman Pro kontrolü uygulamadı. 24 Haziran 2026 kararıyla widget kalıcı olarak ücretsiz/herkese açık olarak onaylandı.
 
 **Pro gating:** `PurchaseService.isPro` üzerinden. Pro olmayan bir özelliğe dokununca `ProGateView` (paywall) gösterilir.
 
