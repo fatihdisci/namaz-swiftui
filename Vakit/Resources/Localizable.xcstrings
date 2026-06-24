@@ -1859,6 +1859,142 @@
         }
       }
     },
+    "notification.motivational.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivational Notes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motive Edici Notlar"
+          }
+        }
+      }
+    },
+    "notification.motivational.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a short inspirational note to each prayer notification"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her vakit bildirimine kısa bir motive edici not ekler"
+          }
+        }
+      }
+    },
+    "notification.note.fajr" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fajr prayer brings peace to your morning."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah namazı güne huzurla başlamandır."
+          }
+        }
+      }
+    },
+    "notification.note.sunrise" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sun rises on a new day full of blessings."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güneş doğuyor, yeni bir gün başlıyor."
+          }
+        }
+      }
+    },
+    "notification.note.dhuhr" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause and reconnect — Dhuhr is near."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öğle vakti yaklaşıyor, hazır mısın?"
+          }
+        }
+      }
+    },
+    "notification.note.asr" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asr — the quiet moment of the afternoon."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İkindi vakti, günün en sakin anı."
+          }
+        }
+      }
+    },
+    "notification.note.maghrib" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maghrib — gratitude with the sunset."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akşam güneşle birlikte şükür vakti."
+          }
+        }
+      }
+    },
+    "notification.note.isha" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isha brings light to your night."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yatsı namazı geceni aydınlatsın."
+          }
+        }
+      }
+    },
     "onboarding.city.continue" : {
       "extractionState" : "manual",
       "localizations" : {

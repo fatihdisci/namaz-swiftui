@@ -26,6 +26,7 @@ final class StorageService {
         static let kazaCounts = "kaza_counts"
         static let favoriteDuaIDs = "favorite_dua_ids"
         static let fridayReminderEnabled = "friday_reminder_enabled"
+        static let motivationalNotesEnabled = "motivational_notes_enabled"
         static let freeCitiesCleaned = "free_cities_cleaned"
         static let hasManuallySetAsrCalculation = "has_manually_set_asr"
         static let asrSchoolMigrated = "asr_school_migrated"
@@ -350,6 +351,12 @@ final class StorageService {
         set { defaults.set(newValue, forKey: Key.fridayReminderEnabled) }
     }
 
+    /// Bildirimlerde motive edici alt metin gösterilsin mi? Varsayılan: kapalı.
+    var motivationalNotesEnabled: Bool {
+        get { defaults.bool(forKey: Key.motivationalNotesEnabled) }
+        set { defaults.set(newValue, forKey: Key.motivationalNotesEnabled) }
+    }
+
     /// Beş farz vakit için kullanıcının girdiği kaza adetleri.
     var kazaCounts: KazaCounts {
         get {
@@ -442,6 +449,7 @@ extension StorageService {
             Key.kazaCounts,
             Key.favoriteDuaIDs,
             Key.fridayReminderEnabled,
+            Key.motivationalNotesEnabled,
         ]
         keysToRemove.forEach { defaults.removeObject(forKey: $0) }
 

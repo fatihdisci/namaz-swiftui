@@ -117,9 +117,19 @@ final class NotificationService {
                 let content = UNMutableNotificationContent()
                 let prayerName = languageService.t(prayer.localizationKey)
                 content.title = prayerName
-                content.body = setting.minutesBefore > 0
+                var body = setting.minutesBefore > 0
                     ? languageService.t("notification.body.remaining", prayerName, setting.minutesBefore)
                     : languageService.t("notification.body.started", prayerName)
+                // Motive edici alt metin (opsiyonel)
+                if storage.motivationalNotesEnabled,
+                   let noteKey = prayer.motivationalNoteKey {
+                    let note = languageService.t(noteKey)
+                    // Toplam 80 karakter sınırını aşarsa notu ekleme.
+                    if body.count + note.count + 1 <= 80 {
+                        body += "\n" + note
+                    }
+                }
+                content.body = body
                 content.sound = .default
 
                 let components = calendar.dateComponents(

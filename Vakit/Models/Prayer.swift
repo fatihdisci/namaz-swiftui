@@ -42,4 +42,17 @@ enum Prayer: String, CaseIterable, Identifiable, Codable {
         case .isha: return "moon.fill"
         }
     }
+
+    /// Motive edici bildirim alt metni için localization key'i.
+    /// nil dönerse o vakit için motive edici not yoktur.
+    var motivationalNoteKey: String? {
+        switch self {
+        case .fajr: return "notification.note.fajr"
+        case .sunrise: return "notification.note.sunrise"
+        case .dhuhr: return "notification.note.dhuhr"
+        case .asr: return "notification.note.asr"
+        case .maghrib: return "notification.note.maghrib"
+        case .isha: return "notification.note.isha"
+        }
+    }
 }
