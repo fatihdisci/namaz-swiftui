@@ -81,7 +81,7 @@ struct SettingsView: View {
                 .environment(lang)
         }
         .sheet(isPresented: $showWhatsNewSheet) {
-            WhatsNewSheet(version: "1.1.0")
+            WhatsNewSheet(version: viewModel.appVersion)
                 .environment(lang)
         }
         .alert(lang.t("account.delete.title"), isPresented: $showDeleteAccountConfirm) {
