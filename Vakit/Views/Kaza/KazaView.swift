@@ -48,7 +48,6 @@ struct KazaView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await purchaseService.refresh()
-            showProGate = !purchaseService.hasProAccess
         }
         .sheet(isPresented: $showProGate) {
             ProGateView(context: .kaza)
@@ -93,7 +92,7 @@ struct KazaView: View {
             Spacer()
 
             counterButton(systemImage: "minus", isDisabled: viewModel.count(for: prayer) == 0) {
-                viewModel.decrement(prayer)
+                handleCounterAction { viewModel.decrement(prayer) }
             }
 
             Text("\(viewModel.count(for: prayer))")
@@ -103,7 +102,7 @@ struct KazaView: View {
                 .contentTransition(.numericText())
 
             counterButton(systemImage: "plus") {
-                viewModel.increment(prayer)
+                handleCounterAction { viewModel.increment(prayer) }
             }
         }
         .padding(16)
@@ -130,6 +129,14 @@ struct KazaView: View {
                 )
         }
         .disabled(isDisabled)
+    }
+
+    private func handleCounterAction(action: @escaping () -> Void) {
+        guard purchaseService.hasProAccess else {
+            showProGate = true
+            return
+        }
+        action()
     }
 
     private var privacyNote: some View {

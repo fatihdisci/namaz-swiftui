@@ -48,7 +48,6 @@ struct SafarView: View {
         }
         .task {
             await purchaseService.refresh()
-            showProGate = !purchaseService.hasProAccess
         }
         .onReceive(NotificationCenter.default.publisher(for: .vakitHomePrayerLocationChanged)) { _ in
             viewModel.refreshHomeLocation()
@@ -122,6 +121,10 @@ struct SafarView: View {
 
     private var checkButton: some View {
         Button {
+            guard purchaseService.hasProAccess else {
+                showProGate = true
+                return
+            }
             Task { await viewModel.checkDistance() }
         } label: {
             HStack(spacing: 8) {
