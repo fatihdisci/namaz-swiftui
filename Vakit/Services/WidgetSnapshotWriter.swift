@@ -13,9 +13,8 @@ enum WidgetSnapshotWriter {
     /// Taze hesaplanmış vakitlerden snapshot üretir, yazar ve widget'ı yeniler.
     @MainActor
     static func update(city: City, today: PrayerTimes, tomorrow: PrayerTimes?, language: String) {
-        let rows = Prayer.allCases.map {
-            WidgetPrayerSnapshot.Row(prayerKey: $0.rawValue, time: today.time(for: $0))
-        }
+        let rows = Self.rows(from: today)
+        let tomorrowRows = tomorrow.map(Self.rows(from:)) ?? []
 
         let now = Date()
         let accentKey = Prayer.allCases.first { today.time(for: $0) > now }?.rawValue
@@ -44,6 +43,7 @@ enum WidgetSnapshotWriter {
             date: today.date,
             hijriDate: "\(today.hijriDay) \(today.hijriMonthName.hijriDiacriticStripped) \(today.hijriYear)",
             rows: rows,
+            tomorrowRows: tomorrowRows,
             tomorrowFajr: tomorrow?.fajr,
             language: language,
             accentPrayerKey: accentKey,
@@ -72,6 +72,12 @@ enum WidgetSnapshotWriter {
             storage.cachedPrayerTimes(for: $0, timeZone: calendar.timeZone)?.times
         }
         update(city: city, today: cachedToday, tomorrow: cachedTomorrow, language: language)
+    }
+
+    private static func rows(from times: PrayerTimes) -> [WidgetPrayerSnapshot.Row] {
+        Prayer.allCases.map {
+            WidgetPrayerSnapshot.Row(prayerKey: $0.rawValue, time: times.time(for: $0))
+        }
     }
 
     /// "Kadıköy, İstanbul" → "Kadıköy". Virgül yoksa adın kendisi.

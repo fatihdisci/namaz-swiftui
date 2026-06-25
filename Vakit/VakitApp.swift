@@ -44,11 +44,14 @@ struct VakitApp: App {
                     }
                 }
                 .onChange(of: scenePhase) { _, newPhase in
-                    // Foreground'a dönünce Home Screen widget'ını tazele.
+                    // Foreground'a dönünce vakit cache'i + Home Screen widget'ını tazele.
                     if newPhase == .active {
-                        WidgetSnapshotWriter.refreshFromCache(
-                            language: languageService.currentLanguage
-                        )
+                        Task {
+                            await rescheduleNotifications()
+                            WidgetSnapshotWriter.refreshFromCache(
+                                language: languageService.currentLanguage
+                            )
+                        }
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .vakitAccountDeleted)) { _ in

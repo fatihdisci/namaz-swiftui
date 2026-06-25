@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import WidgetKit
 
 /// Uygulama içi dil yönetimi.
 /// İlk açılışta cihaz dili Türkçe → "tr", değilse → "en" (StorageService varsayılanı).
@@ -28,6 +29,9 @@ final class LanguageService {
         bundle = Self.localizedBundle(language: code)
         // Sistem tarafı (bildirim içerikleri vb.) bir sonraki açılışta da bu dili kullansın.
         UserDefaults.standard.set([code], forKey: "AppleLanguages")
+        Task { @MainActor in
+            WidgetSnapshotWriter.refreshFromCache(language: code)
+        }
     }
 
     /// Verilen dilin .lproj bundle'ı. Bulunamazsa ana bundle'a düşer.

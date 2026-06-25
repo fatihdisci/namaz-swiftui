@@ -300,6 +300,49 @@ final class PrayerAccuracyTests: XCTestCase {
         }
     }
 
+    func testWidgetSnapshotUsesTomorrowRowsAfterMidnightAndAfterFajr() throws {
+        let calendar = try istanbulCalendar()
+        let day = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 6, day: 25)))
+        let snapshot = makeWidgetSnapshot(day: day, calendar: calendar)
+
+        let tomorrow = try XCTUnwrap(calendar.date(byAdding: .day, value: 1, to: day))
+        let afterMidnight = try XCTUnwrap(calendar.date(bySettingHour: 0, minute: 10, second: 0, of: tomorrow))
+        XCTAssertEqual(snapshot.next(after: afterMidnight)?.key, "fajr")
+
+        let afterTomorrowFajr = try XCTUnwrap(calendar.date(bySettingHour: 5, minute: 20, second: 0, of: tomorrow))
+        XCTAssertEqual(snapshot.next(after: afterTomorrowFajr)?.key, "sunrise")
+    }
+
+    func testWidgetSnapshotSwitchesExactlyAtPrayerTime() throws {
+        let calendar = try istanbulCalendar()
+        let day = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 6, day: 25)))
+        let snapshot = makeWidgetSnapshot(day: day, calendar: calendar)
+        let dhuhr = try XCTUnwrap(calendar.date(bySettingHour: 13, minute: 10, second: 0, of: day))
+
+        XCTAssertEqual(snapshot.next(after: dhuhr.addingTimeInterval(-1))?.key, "dhuhr")
+        XCTAssertEqual(snapshot.next(after: dhuhr)?.key, "asr")
+    }
+
+    func testWidgetProgressIsCurrentDateBased() throws {
+        let calendar = try istanbulCalendar()
+        let day = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 6, day: 25)))
+        let snapshot = makeWidgetSnapshot(day: day, calendar: calendar)
+        let afterDhuhr = try XCTUnwrap(calendar.date(bySettingHour: 14, minute: 0, second: 0, of: day))
+        let nearAsr = try XCTUnwrap(calendar.date(bySettingHour: 16, minute: 0, second: 0, of: day))
+
+        XCTAssertLessThan(snapshot.progress(at: afterDhuhr), snapshot.progress(at: nearAsr))
+    }
+
+    func testWidgetTimelineIncludesPrayerBoundaryEntries() throws {
+        let calendar = try istanbulCalendar()
+        let day = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 6, day: 25)))
+        let snapshot = makeWidgetSnapshot(day: day, calendar: calendar)
+        let noon = try XCTUnwrap(calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day))
+        let dhuhr = try XCTUnwrap(calendar.date(bySettingHour: 13, minute: 10, second: 0, of: day))
+
+        XCTAssertTrue(snapshot.timelineEntryDates(from: noon, horizon: 3 * 3600).contains(dhuhr))
+    }
+
     private func makeTimes(source: PrayerTimeSource, hijriMonth: String = "Ramadan") -> PrayerTimes {
         let date = Date(timeIntervalSince1970: 1_700_000_000)
         return PrayerTimes(
@@ -316,4 +359,46 @@ final class PrayerAccuracyTests: XCTestCase {
             source: source
         )
     }
+
+    private func istanbulCalendar() throws -> Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "Europe/Istanbul"))
+        return calendar
+    }
+
+    private func makeWidgetSnapshot(day: Date, calendar: Calendar) -> WidgetPrayerSnapshot {
+        func time(_ day: Date, _ hour: Int, _ minute: Int) -> Date {
+            calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day) ?? day
+        }
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: day) ?? day.addingTimeInterval(24 * 3600)
+        let rows: [WidgetPrayerSnapshot.Row] = [
+            .init(prayerKey: "fajr", time: time(day, 5, 10)),
+            .init(prayerKey: "sunrise", time: time(day, 6, 40)),
+            .init(prayerKey: "dhuhr", time: time(day, 13, 10)),
+            .init(prayerKey: "asr", time: time(day, 16, 50)),
+            .init(prayerKey: "maghrib", time: time(day, 20, 30)),
+            .init(prayerKey: "isha", time: time(day, 22, 10)),
+        ]
+        let tomorrowRows: [WidgetPrayerSnapshot.Row] = [
+            .init(prayerKey: "fajr", time: time(tomorrow, 5, 11)),
+            .init(prayerKey: "sunrise", time: time(tomorrow, 6, 41)),
+            .init(prayerKey: "dhuhr", time: time(tomorrow, 13, 11)),
+            .init(prayerKey: "asr", time: time(tomorrow, 16, 51)),
+            .init(prayerKey: "maghrib", time: time(tomorrow, 20, 31)),
+            .init(prayerKey: "isha", time: time(tomorrow, 22, 11)),
+        ]
+        return WidgetPrayerSnapshot(
+            cityName: "İstanbul",
+            shortCityName: "İstanbul",
+            countryName: "Türkiye",
+            date: day,
+            hijriDate: "10 Muharram 1448",
+            rows: rows,
+            tomorrowRows: tomorrowRows,
+            tomorrowFajr: tomorrowRows.first?.time,
+            language: "tr",
+            accentPrayerKey: "dhuhr"
+        )
+    }
+
 }

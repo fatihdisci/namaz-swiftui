@@ -25,6 +25,29 @@ private enum WidgetText {
         lang == "tr" ? "Şehir seçmek için uygulamayı açın." : "Open Ufuk to choose a city."
     }
 
+    static func progressLabel(_ lang: String) -> String {
+        localized("widget.progress.label", lang: lang)
+    }
+
+    static func progressAccessibility(_ lang: String) -> String {
+        localized("widget.progress.accessibility", lang: lang)
+    }
+
+    static func localized(_ key: String, lang: String) -> String {
+        if let path = Bundle.main.path(forResource: lang, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            let value = bundle.localizedString(forKey: key, value: nil, table: nil)
+            if value != key { return value }
+        }
+        switch (key, lang) {
+        case ("widget.progress.label", "tr"): return "Vakit aralığı"
+        case ("widget.progress.accessibility", "tr"): return "Halka mevcut vakit aralığının ne kadarının geçtiğini gösterir."
+        case ("widget.progress.label", _): return "Prayer interval"
+        case ("widget.progress.accessibility", _): return "The ring shows how much of the current prayer interval has passed."
+        default: return key
+        }
+    }
+
     /// "2s 14dk" / "2h 14m" — entry zamanında hesaplanır, canlı saniye yok.
     static func countdown(to target: Date, from now: Date, lang: String) -> String {
         let interval = max(0, target.timeIntervalSince(now))
@@ -56,34 +79,6 @@ private extension Date {
     }()
 }
 
-// MARK: - Vakit penceresi (progress halkası için)
-
-private extension WidgetPrayerSnapshot {
-    /// Verilen andaki "önceki → sonraki" vakit penceresi.
-    /// Progress halkası bu aralık üzerinden dolar.
-    func window(at now: Date) -> (previous: Date, next: (key: String, time: Date))? {
-        guard let next = next(after: now) else { return nil }
-        let sorted = rows.sorted { $0.time < $1.time }
-
-        if let previous = sorted.last(where: { $0.time <= now }) {
-            return (previous.time, next)
-        }
-        // Bugünün İmsak'ından önce: önceki sınır ≈ dünün Yatsısı (bugünkü Yatsı − 24s).
-        if let isha = rows.first(where: { $0.prayerKey == "isha" }) {
-            return (isha.time.addingTimeInterval(-24 * 3600), next)
-        }
-        return (now.addingTimeInterval(-3600), next)
-    }
-
-    /// 0...1 dolum oranı.
-    func progress(at now: Date) -> Double {
-        guard let window = window(at: now) else { return 0 }
-        let total = window.next.time.timeIntervalSince(window.previous)
-        guard total > 0 else { return 0 }
-        return min(1, max(0, now.timeIntervalSince(window.previous) / total))
-    }
-}
-
 // MARK: - Timeline
 
 struct UfukEntry: TimelineEntry {
@@ -113,18 +108,8 @@ struct UfukProvider: TimelineProvider {
 
         // Entry zamanları: 15 dk aralıklı (geri sayım metni + halka tazelensin) +
         // her vaktin tam zamanı (sıradaki vakit ve gökyüzü fazı tam o anda değişsin).
-        // Canlı saniye sayımı kilit ekranında Text/ProgressView(timerInterval:) ile,
-        // sistem tarafından reload'sız yapılır.
-        var dates: [Date] = [now]
-        var cursor = now
-        let horizon = now.addingTimeInterval(5 * 60 * 60)
-        while cursor < horizon {
-            cursor = cursor.addingTimeInterval(15 * 60)
-            dates.append(cursor)
-        }
-        dates.append(contentsOf: snapshot.upcomingTimes(after: now))
-
-        let entryDates = Array(Set(dates)).filter { $0 >= now }.sorted().prefix(64)
+        // Hesap snapshot'taki sabit kalan süreden değil, entry.date/current Date akışından yapılır.
+        let entryDates = snapshot.timelineEntryDates(from: now).prefix(96)
         let entries = entryDates.map { UfukEntry(date: $0, snapshot: snapshot) }
 
         completion(Timeline(entries: entries, policy: .atEnd))
@@ -140,6 +125,15 @@ private extension WidgetPrayerSnapshot {
         func t(_ h: Int, _ m: Int) -> Date {
             cal.date(bySettingHour: h, minute: m, second: 0, of: start) ?? start
         }
+        let tomorrowOffset: TimeInterval = 24 * 3600
+        let tomorrowRows: [WidgetPrayerSnapshot.Row] = [
+            .init(prayerKey: "fajr", time: t(5, 11).addingTimeInterval(tomorrowOffset)),
+            .init(prayerKey: "sunrise", time: t(6, 40).addingTimeInterval(tomorrowOffset)),
+            .init(prayerKey: "dhuhr", time: t(13, 10).addingTimeInterval(tomorrowOffset)),
+            .init(prayerKey: "asr", time: t(16, 49).addingTimeInterval(tomorrowOffset)),
+            .init(prayerKey: "maghrib", time: t(19, 27).addingTimeInterval(tomorrowOffset)),
+            .init(prayerKey: "isha", time: t(20, 50).addingTimeInterval(tomorrowOffset)),
+        ]
         return WidgetPrayerSnapshot(
             cityName: "Kadıköy, İstanbul",
             shortCityName: "Kadıköy",
@@ -154,7 +148,8 @@ private extension WidgetPrayerSnapshot {
                 .init(prayerKey: "maghrib", time: t(19, 26)),
                 .init(prayerKey: "isha", time: t(20, 49)),
             ],
-            tomorrowFajr: t(5, 11).addingTimeInterval(24 * 3600),
+            tomorrowRows: tomorrowRows,
+            tomorrowFajr: tomorrowRows.first?.time,
             language: WidgetText.deviceIsTurkish ? "tr" : "en",
             accentPrayerKey: "asr"
         )
@@ -270,6 +265,8 @@ private struct SmallView: View {
                     iconSize: 20
                 )
                 .frame(width: 58, height: 58)
+                .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
+                .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
 
                 VStack(spacing: 1) {
                     Text(WidgetText.prayerName(next.key, snapshot.language))
@@ -332,6 +329,8 @@ private struct MediumView: View {
                             iconSize: 16
                         )
                         .frame(width: 44, height: 44)
+                .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
+                .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
 
                         VStack(alignment: .leading, spacing: 0) {
                             Text(WidgetText.prayerName(next.key, snapshot.language))
@@ -432,6 +431,8 @@ private struct LargeView: View {
                                 iconSize: 18
                             )
                             .frame(width: 50, height: 50)
+                .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
+                .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
 
                             VStack(alignment: .leading, spacing: 1) {
                                 Text(WidgetText.prayerName(next.key, snapshot.language))
@@ -568,6 +569,8 @@ private struct CircularAccessoryView: View {
                 nextPrayerKey: window.next.key
             )
             .widgetAccentable()
+            .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
+            .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
         } else {
             Image(systemName: "moon.stars.fill")
                 .font(.system(size: 16))

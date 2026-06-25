@@ -74,8 +74,9 @@ extension SkyPhase {
 /// - İkindi–Akşam  → afternoon
 /// - Akşam ve sonrası (Yatsı dâhil) → night
 func currentSkyPhase(now: Date, snapshot: WidgetPrayerSnapshot) -> SkyPhase {
+    let rows = snapshot.rowsForSkyPhase(at: now)
     func time(_ key: String) -> Date? {
-        snapshot.rows.first { $0.prayerKey == key }?.time
+        rows.first { $0.prayerKey == key }?.time
     }
     guard
         let fajr = time("fajr"),
