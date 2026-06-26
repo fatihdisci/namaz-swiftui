@@ -63,6 +63,21 @@ private enum WidgetText {
         return lang == "tr" ? "\(hours)s \(minutes)dk" : "\(hours)h \(minutes)m"
     }
 
+    static func compactCountdown(to target: Date, from now: Date, lang: String) -> String {
+        let interval = max(0, target.timeIntervalSince(now))
+        if interval < 60 { return lang == "tr" ? "az" : "now" }
+        let totalMinutes = Int(interval) / 60
+        let hours = totalMinutes / 60
+        let minutes = totalMinutes % 60
+        if hours > 0 { return lang == "tr" ? "\(hours)s" : "\(hours)h" }
+        return lang == "tr" ? "\(minutes)dk" : "\(minutes)m"
+    }
+
+    static func compactPrayerName(_ key: String, _ lang: String) -> String {
+        let name = prayerName(key, lang)
+        return String(name.prefix(lang == "tr" ? 5 : 4))
+    }
+
     /// Galeri başlığı/açıklaması cihaz diline göre.
     static var deviceIsTurkish: Bool {
         (Locale.current.language.languageCode?.identifier ?? "en") == "tr"
@@ -126,6 +141,14 @@ private extension WidgetPrayerSnapshot {
             cal.date(bySettingHour: h, minute: m, second: 0, of: start) ?? start
         }
         let tomorrowOffset: TimeInterval = 24 * 3600
+        let todayRows: [WidgetPrayerSnapshot.Row] = [
+            .init(prayerKey: "fajr", time: t(5, 12)),
+            .init(prayerKey: "sunrise", time: t(6, 41)),
+            .init(prayerKey: "dhuhr", time: t(13, 9)),
+            .init(prayerKey: "asr", time: t(16, 48)),
+            .init(prayerKey: "maghrib", time: t(19, 26)),
+            .init(prayerKey: "isha", time: t(20, 49)),
+        ]
         let tomorrowRows: [WidgetPrayerSnapshot.Row] = [
             .init(prayerKey: "fajr", time: t(5, 11).addingTimeInterval(tomorrowOffset)),
             .init(prayerKey: "sunrise", time: t(6, 40).addingTimeInterval(tomorrowOffset)),
@@ -140,15 +163,12 @@ private extension WidgetPrayerSnapshot {
             countryName: "Türkiye",
             date: start,
             hijriDate: "12 Ramadan 1447",
-            rows: [
-                .init(prayerKey: "fajr", time: t(5, 12)),
-                .init(prayerKey: "sunrise", time: t(6, 41)),
-                .init(prayerKey: "dhuhr", time: t(13, 9)),
-                .init(prayerKey: "asr", time: t(16, 48)),
-                .init(prayerKey: "maghrib", time: t(19, 26)),
-                .init(prayerKey: "isha", time: t(20, 49)),
-            ],
+            rows: todayRows,
             tomorrowRows: tomorrowRows,
+            days: [
+                .init(date: start, hijriDate: "12 Ramadan 1447", rows: todayRows),
+                .init(date: cal.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(tomorrowOffset), hijriDate: "13 Ramadan 1447", rows: tomorrowRows),
+            ],
             tomorrowFajr: tomorrowRows.first?.time,
             language: WidgetText.deviceIsTurkish ? "tr" : "en",
             accentPrayerKey: "asr"
@@ -355,7 +375,7 @@ private struct MediumView: View {
 
                 Spacer(minLength: 0)
 
-                Text(snapshot.hijriDate.hijriDiacriticStripped)
+                Text(snapshot.hijriDate(at: now).hijriDiacriticStripped)
                     .font(.caption2)
                     .foregroundStyle(WidgetPalette.creamFaint)
                     .lineLimit(1)
@@ -366,7 +386,7 @@ private struct MediumView: View {
 
             // SAĞ: 6 vakit listesi, sıradaki vakit altın vurgulu
             VStack(spacing: 0) {
-                ForEach(snapshot.rows, id: \.prayerKey) { row in
+                ForEach(snapshot.displayRows(at: now), id: \.prayerKey) { row in
                     let isNext = next?.key == row.prayerKey && next?.time == row.time
                     let isPast = row.time <= now
                     HStack(spacing: 6) {
@@ -457,7 +477,7 @@ private struct LargeView: View {
 
                     Spacer(minLength: 4)
 
-                    Text(snapshot.hijriDate.hijriDiacriticStripped)
+                    Text(snapshot.hijriDate(at: now).hijriDiacriticStripped)
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(WidgetPalette.creamFaint)
                         .lineLimit(1)
@@ -468,7 +488,7 @@ private struct LargeView: View {
 
                 // SAĞ: 6 vakit listesi
                 VStack(spacing: 0) {
-                    ForEach(snapshot.rows, id: \.prayerKey) { row in
+                    ForEach(snapshot.displayRows(at: now), id: \.prayerKey) { row in
                         let isNext = next?.key == row.prayerKey && next?.time == row.time
                         let isPast = row.time <= now
                         HStack(spacing: 8) {
@@ -564,16 +584,30 @@ private struct CircularAccessoryView: View {
 
     var body: some View {
         if let window = snapshot.window(at: now) {
-            LivePrayerProgressRing(
-                interval: window.previous...window.next.time,
-                nextPrayerKey: window.next.key
-            )
-            .widgetAccentable()
+            ZStack {
+                LivePrayerProgressRing(
+                    interval: window.previous...window.next.time,
+                    nextPrayerKey: window.next.key
+                )
+                .widgetAccentable()
+
+                VStack(spacing: -1) {
+                    Text(WidgetText.compactPrayerName(window.next.key, snapshot.language))
+                        .font(.system(size: 8, weight: .semibold, design: .rounded))
+                    Text(WidgetText.compactCountdown(to: window.next.time, from: now, lang: snapshot.language))
+                        .font(.system(size: 8, weight: .bold, design: .rounded))
+                        .monospacedDigit()
+                }
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+                .widgetAccentable()
+            }
             .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
             .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
         } else {
-            Image(systemName: "moon.stars.fill")
-                .font(.system(size: 16))
+            Text("Ufuk")
+                .font(.system(size: 10, weight: .bold, design: .rounded))
+                .widgetAccentable()
         }
     }
 }
@@ -647,7 +681,9 @@ private struct EmptyStateView: View {
         case .accessoryInline:
             Text("Ufuk")
         case .accessoryCircular:
-            Image(systemName: "moon.stars.fill")
+            Text("Ufuk")
+                .font(.system(size: 10, weight: .bold, design: .rounded))
+                .widgetAccentable()
         case .accessoryRectangular:
             Text(WidgetText.emptyBody(lang))
                 .font(.caption)

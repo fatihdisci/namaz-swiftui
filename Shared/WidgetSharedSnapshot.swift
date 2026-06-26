@@ -13,13 +13,21 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
         let time: Date
     }
 
+    struct Day: Codable, Equatable {
+        /// Şehrin saat dilimine göre gün başlangıcı.
+        let date: Date
+        let hijriDate: String
+        let rows: [Row]
+    }
+
     let cityName: String        // Tam görünen ad, örn. "Kadıköy, İstanbul"
     let shortCityName: String   // Kısa ad (widget small için), örn. "Kadıköy"
     let countryName: String
     let date: Date              // Bugünün günü (startOfDay)
     let hijriDate: String       // "12 Ramadan 1447"
-    let rows: [Row]             // Bugünün 6 vakti, sırayla
-    let tomorrowRows: [Row]     // Yarın için 6 vakit; widget gece yarısından sonra bayatlamasın
+    let rows: [Row]             // Geriye uyumluluk / ilk günün 6 vakti
+    let tomorrowRows: [Row]     // Geriye uyumluluk / ikinci günün 6 vakti
+    let days: [Day]             // Widget'ın app açılmadan günlerce doğru kalması için çok günlü snapshot
     let tomorrowFajr: Date?     // Geriye uyumluluk: eski snapshot'larda sadece yarının sabahı
     let language: String        // "tr" / "en"
     let accentPrayerKey: String // Snapshot üretildiği andaki sıradaki vakit
@@ -35,6 +43,7 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
         hijriDate: String,
         rows: [Row],
         tomorrowRows: [Row] = [],
+        days: [Day]? = nil,
         tomorrowFajr: Date?,
         language: String,
         accentPrayerKey: String,
@@ -49,6 +58,15 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
         self.hijriDate = hijriDate
         self.rows = rows
         self.tomorrowRows = tomorrowRows
+        if let days {
+            self.days = days.sorted { $0.date < $1.date }
+        } else {
+            var legacyDays = [Day(date: date, hijriDate: hijriDate, rows: rows)]
+            if !tomorrowRows.isEmpty, let tomorrowDate = tomorrowRows.map(\.time).min() {
+                legacyDays.append(Day(date: tomorrowDate, hijriDate: hijriDate, rows: tomorrowRows))
+            }
+            self.days = legacyDays
+        }
         self.tomorrowFajr = tomorrowFajr
         self.language = language
         self.accentPrayerKey = accentPrayerKey
@@ -59,7 +77,7 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
 
     private enum CodingKeys: String, CodingKey {
         case cityName, shortCityName, countryName, date, hijriDate
-        case rows, tomorrowRows, tomorrowFajr, language, accentPrayerKey
+        case rows, tomorrowRows, days, tomorrowFajr, language, accentPrayerKey
         case dailyVerseText, dailyVerseReference, generatedAt
     }
 
@@ -72,6 +90,16 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
         hijriDate = try container.decode(String.self, forKey: .hijriDate)
         rows = try container.decode([Row].self, forKey: .rows)
         tomorrowRows = try container.decodeIfPresent([Row].self, forKey: .tomorrowRows) ?? []
+        let decodedDays = try container.decodeIfPresent([Day].self, forKey: .days)
+        if let decodedDays, !decodedDays.isEmpty {
+            days = decodedDays.sorted { $0.date < $1.date }
+        } else {
+            var legacyDays = [Day(date: date, hijriDate: hijriDate, rows: rows)]
+            if !tomorrowRows.isEmpty, let tomorrowDate = tomorrowRows.map(\.time).min() {
+                legacyDays.append(Day(date: tomorrowDate, hijriDate: hijriDate, rows: tomorrowRows))
+            }
+            days = legacyDays
+        }
         tomorrowFajr = try container.decodeIfPresent(Date.self, forKey: .tomorrowFajr)
         language = try container.decode(String.self, forKey: .language)
         accentPrayerKey = try container.decode(String.self, forKey: .accentPrayerKey)
@@ -84,9 +112,39 @@ struct WidgetPrayerSnapshot: Codable, Equatable {
 // MARK: - Sıradaki vakit yardımcıları (her iki target da kullanır)
 
 extension WidgetPrayerSnapshot {
-    /// Bugün + yarın satırları tek kronolojik akış. Eski snapshot'lar için `tomorrowFajr`
-    /// yedek olarak eklenir; böylece gece yarısından sonra en azından yarın imsak doğru kalır.
+    var sortedDays: [Day] { days.sorted { $0.date < $1.date } }
+
+    /// Verilen anda ekranda gösterilecek gün. Kullanıcı uygulamayı günlerce açmasa bile
+    /// snapshot içindeki ilgili güne geçer; snapshot süresi bittiyse son günü gösterir.
+    func day(at date: Date) -> Day? {
+        let sorted = sortedDays
+        guard !sorted.isEmpty else { return nil }
+        if date < sorted[0].date { return sorted[0] }
+        for index in sorted.indices {
+            let day = sorted[index]
+            let nextDate = sorted.index(after: index) < sorted.endIndex
+                ? sorted[sorted.index(after: index)].date
+                : Date.distantFuture
+            if date >= day.date && date < nextDate {
+                return day
+            }
+        }
+        return sorted.last
+    }
+
+    func displayRows(at date: Date) -> [Row] {
+        day(at: date)?.rows ?? rows
+    }
+
+    func hijriDate(at date: Date) -> String {
+        day(at: date)?.hijriDate ?? hijriDate
+    }
+
+    /// Çok günlü snapshot tek kronolojik akış. Eski snapshot'lar için legacy alanlara düşer.
     var chronologicalRows: [Row] {
+        let multiDayRows = sortedDays.flatMap(\.rows)
+        if !multiDayRows.isEmpty { return multiDayRows.sorted { $0.time < $1.time } }
+
         var combined = rows + tomorrowRows
         if tomorrowRows.isEmpty, let tomorrowFajr {
             combined.append(Row(prayerKey: "fajr", time: tomorrowFajr))
@@ -94,7 +152,7 @@ extension WidgetPrayerSnapshot {
         return combined.sorted { $0.time < $1.time }
     }
 
-    /// Verilen andan sonraki ilk vakit. Bugünün tüm vakitleri geçtiyse yarının vakitlerine geçer.
+    /// Verilen andan sonraki ilk vakit. Snapshot 30 gün taşıdığı için app açılmasa da devam eder.
     func next(after date: Date) -> (key: String, time: Date)? {
         chronologicalRows.first { $0.time > date }.map { ($0.prayerKey, $0.time) }
     }
@@ -113,7 +171,6 @@ extension WidgetPrayerSnapshot {
         if let previous = sorted.last(where: { $0.time <= now }) {
             return (previous.time, next)
         }
-        // Snapshot'ın ilk vaktinden önce: önceki sınır ≈ bir önceki günün yatsısı.
         if let isha = rows.first(where: { $0.prayerKey == "isha" }) {
             return (isha.time.addingTimeInterval(-24 * 3600), next)
         }
@@ -143,12 +200,7 @@ extension WidgetPrayerSnapshot {
 
     /// Gökyüzü fazı için verilen anda geçerli günün satırları.
     func rowsForSkyPhase(at now: Date) -> [Row] {
-        if let fajr = rows.first(where: { $0.prayerKey == "fajr" })?.time,
-           let nextFajr = tomorrowRows.first(where: { $0.prayerKey == "fajr" })?.time,
-           now >= nextFajr || now < fajr {
-            return tomorrowRows.isEmpty ? rows : tomorrowRows
-        }
-        return rows
+        displayRows(at: now)
     }
 }
 

@@ -248,12 +248,12 @@ final class PrayerTimeService {
         return approximateTimes(for: date, timeZone: timezone)
     }
 
-    /// Uygulama açılışında bugün + sonraki 7 günü cache'e doldurur.
-    func prefetch(city: City) async {
+    /// Uygulama açılışında bugün + sonraki günleri cache'e doldurur.
+    func prefetch(city: City, days: Int = 30) async {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
         let today = calendar.startOfDay(for: Date())
-        for offset in 0...7 {
+        for offset in 0..<days {
             guard let date = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
             _ = await getPrayerTimes(city: city, date: date)
         }

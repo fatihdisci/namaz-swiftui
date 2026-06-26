@@ -75,8 +75,13 @@ final class HomeViewModel {
             language: languageService.currentLanguage
         )
 
-        // Kalan günleri arka planda cache'le (UI'ı bekletme).
-        Task { await prayerService.prefetch(city: city) }
+        // Kalan günleri arka planda cache'le; bitince widget snapshot'ını 30 günlük cache'ten genişlet.
+        Task {
+            await prayerService.prefetch(city: city)
+            await MainActor.run {
+                WidgetSnapshotWriter.refreshFromCache(language: languageService.currentLanguage)
+            }
+        }
     }
 
     func reloadForLocationChange() async {

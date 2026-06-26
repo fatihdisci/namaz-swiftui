@@ -12,12 +12,48 @@ import WidgetKit
 enum WidgetSnapshotWriter {
     /// Taze hesaplanmış vakitlerden snapshot üretir, yazar ve widget'ı yeniler.
     @MainActor
-    static func update(city: City, today: PrayerTimes, tomorrow: PrayerTimes?, language: String) {
-        let rows = Self.rows(from: today)
-        let tomorrowRows = tomorrow.map(Self.rows(from:)) ?? []
+    static func update(
+        city: City,
+        today: PrayerTimes,
+        tomorrow: PrayerTimes?,
+        language: String,
+        storage: StorageService = .shared
+    ) {
+        var days = [today]
+        if let tomorrow { days.append(tomorrow) }
+
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
+        let todayDate = today.date
+        for offset in 2..<Self.snapshotDays {
+            guard let date = calendar.date(byAdding: .day, value: offset, to: todayDate),
+                  let cached = storage.cachedPrayerTimes(for: date, timeZone: calendar.timeZone)?.times
+            else { continue }
+            days.append(cached)
+        }
+
+        save(city: city, days: days, language: language)
+    }
+
+    @MainActor
+    static func update(city: City, days: [PrayerTimes], language: String) {
+        save(city: city, days: days, language: language)
+    }
+
+    private static let snapshotDays = 30
+
+    @MainActor
+    private static func save(city: City, days rawDays: [PrayerTimes], language: String) {
+        let sortedDays = rawDays.sorted { $0.date < $1.date }
+        guard let firstDay = sortedDays.first else { return }
+        let widgetDays = sortedDays.map(Self.day(from:))
+        let rows = widgetDays.first?.rows ?? []
+        let tomorrowRows = widgetDays.dropFirst().first?.rows ?? []
 
         let now = Date()
-        let accentKey = Prayer.allCases.first { today.time(for: $0) > now }?.rawValue
+        let accentKey = sortedDays
+            .flatMap { day in Prayer.allCases.map { ($0, day.time(for: $0)) } }
+            .first { $0.1 > now }?.0.rawValue
             ?? Prayer.fajr.rawValue
 
         // Widget Medium için günlük değişen içerik (Hook Model variable reward)
@@ -40,11 +76,12 @@ enum WidgetSnapshotWriter {
             cityName: city.name,
             shortCityName: Self.shortName(from: city.name),
             countryName: city.country,
-            date: today.date,
-            hijriDate: "\(today.hijriDay) \(today.hijriMonthName.hijriDiacriticStripped) \(today.hijriYear)",
+            date: firstDay.date,
+            hijriDate: Self.hijriDate(from: firstDay),
             rows: rows,
             tomorrowRows: tomorrowRows,
-            tomorrowFajr: tomorrow?.fajr,
+            days: widgetDays,
+            tomorrowFajr: sortedDays.dropFirst().first?.fajr,
             language: language,
             accentPrayerKey: accentKey,
             dailyVerseText: dailyText,
@@ -55,7 +92,7 @@ enum WidgetSnapshotWriter {
         WidgetCenter.shared.reloadAllTimelines()
 
         #if DEBUG
-        print("[Widget] snapshot yazıldı: \(snapshot.shortCityName), sıradaki=\(accentKey), satır=\(rows.count)")
+        print("[Widget] snapshot yazıldı: \(snapshot.shortCityName), sıradaki=\(accentKey), gün=\(widgetDays.count)")
         #endif
     }
 
@@ -66,12 +103,27 @@ enum WidgetSnapshotWriter {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
         let today = calendar.startOfDay(for: Date())
-        guard let cachedToday = storage.cachedPrayerTimes(for: today, timeZone: calendar.timeZone)?.times else { return }
-        let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: today)
-        let cachedTomorrow = tomorrowDate.flatMap {
-            storage.cachedPrayerTimes(for: $0, timeZone: calendar.timeZone)?.times
+        var days: [PrayerTimes] = []
+        for offset in 0..<Self.snapshotDays {
+            guard let date = calendar.date(byAdding: .day, value: offset, to: today),
+                  let cached = storage.cachedPrayerTimes(for: date, timeZone: calendar.timeZone)?.times
+            else { continue }
+            days.append(cached)
         }
-        update(city: city, today: cachedToday, tomorrow: cachedTomorrow, language: language)
+        guard !days.isEmpty else { return }
+        update(city: city, days: days, language: language)
+    }
+
+    private static func day(from times: PrayerTimes) -> WidgetPrayerSnapshot.Day {
+        WidgetPrayerSnapshot.Day(
+            date: times.date,
+            hijriDate: Self.hijriDate(from: times),
+            rows: rows(from: times)
+        )
+    }
+
+    private static func hijriDate(from times: PrayerTimes) -> String {
+        "\(times.hijriDay) \(times.hijriMonthName.hijriDiacriticStripped) \(times.hijriYear)"
     }
 
     private static func rows(from times: PrayerTimes) -> [WidgetPrayerSnapshot.Row] {

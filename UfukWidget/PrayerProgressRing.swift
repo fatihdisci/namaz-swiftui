@@ -77,9 +77,7 @@ struct LivePrayerProgressRing: View {
         ProgressView(timerInterval: interval, countsDown: false) {
             EmptyView()
         } currentValueLabel: {
-            Image(systemName: PrayerIcon.symbol(for: nextPrayerKey))
-                .font(.system(size: 13, weight: .medium))
-                .symbolRenderingMode(.hierarchical)
+            EmptyView()
         }
         .progressViewStyle(.circular)
         .tint(WidgetPalette.accentGold)

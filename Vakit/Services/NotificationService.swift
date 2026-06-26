@@ -8,6 +8,7 @@ final class NotificationService {
     static let shared = NotificationService()
 
     private static let scheduleDays = 7
+    private static let widgetSnapshotDays = 30
 
     @ObservationIgnored private let storage: StorageService
     @ObservationIgnored private let prayerService: PrayerTimeService
@@ -53,45 +54,42 @@ final class NotificationService {
     }
 
     /// Şehrin bugün + sonraki günlerinin vakitlerini çekip bildirimleri yeniden planlar.
-    /// İzin yoksa sadece bekleyen bildirimleri temizler.
+    /// Bildirim izni olmasa bile widget için 30 günlük snapshot üretilir.
     func reschedule(city: City) async {
         let settings = await center.notificationSettings()
         let authorized = [.authorized, .provisional, .ephemeral].contains(settings.authorizationStatus)
         isAuthorized = authorized
 
-        guard authorized else {
-            cancelAll()
-            // Bildirim izni olmasa da Home Screen widget'ı güncel kalsın.
-            await MainActor.run {
-                WidgetSnapshotWriter.refreshFromCache(language: languageService.currentLanguage)
-            }
-            return
-        }
-
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: city.timezone) ?? .current
         let today = calendar.startOfDay(for: Date())
         var times: [Date: PrayerTimes] = [:]
-        for offset in 0..<Self.scheduleDays {
+        for offset in 0..<Self.widgetSnapshotDays {
             guard let date = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
             times[date] = await prayerService.getPrayerTimes(city: city, date: date)
         }
 
-        // Taze vakitlerden Home Screen widget snapshot'ını güncelle.
-        if let todayTimes = times[today] {
-            let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: today)
-            let tomorrowTimes = tomorrowDate.flatMap { times[$0] }
-            await MainActor.run {
-                WidgetSnapshotWriter.update(
-                    city: city,
-                    today: todayTimes,
-                    tomorrow: tomorrowTimes,
-                    language: languageService.currentLanguage
-                )
-            }
+        // Taze vakitlerden 30 günlük Home/Lock Screen widget snapshot'ı üret.
+        let sortedWidgetDays = times.keys.sorted().compactMap { times[$0] }
+        await MainActor.run {
+            WidgetSnapshotWriter.update(
+                city: city,
+                days: sortedWidgetDays,
+                language: languageService.currentLanguage
+            )
         }
 
-        await scheduleNotifications(for: city, times: times)
+        guard authorized else {
+            cancelAll()
+            return
+        }
+
+        let notificationTimes = Dictionary(
+            uniqueKeysWithValues: times.keys.sorted().prefix(Self.scheduleDays).compactMap { date in
+                times[date].map { (date, $0) }
+            }
+        )
+        await scheduleNotifications(for: city, times: notificationTimes)
     }
 
     /// Verilen gün → vakitler eşlemesi için bildirimleri planlar. Önce mevcut bildirimler iptal edilir.
