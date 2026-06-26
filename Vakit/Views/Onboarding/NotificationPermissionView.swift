@@ -1,11 +1,11 @@
 import SwiftUI
-import UserNotifications
 
-/// Bildirim izni adımı. İzin verilsin ya da verilmesin onboarding tamamlanır.
+/// Bildirim tanıtım adımı. İzin verilsin ya da atlanılsın sonraki onboarding adımına geçer.
 struct NotificationPermissionView: View {
-    let onFinish: () -> Void
+    let onContinue: () -> Void
 
     @Environment(LanguageService.self) private var lang
+    @Environment(NotificationService.self) private var notificationService
     @State private var isRequesting = false
 
     var body: some View {
@@ -41,24 +41,31 @@ struct NotificationPermissionView: View {
                 Button {
                     requestPermission()
                 } label: {
-                    Text(lang.t("onboarding.notifications.allow"))
-                        .font(.vakitHeadline)
-                        .foregroundStyle(Color.vakitText)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(Color.vakitAccent)
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    HStack(spacing: 8) {
+                        if isRequesting {
+                            ProgressView()
+                                .tint(Color.vakitText)
+                        }
+                        Text(lang.t("onboarding.notifications.allow"))
+                    }
+                    .font(.vakitHeadline)
+                    .foregroundStyle(Color.vakitText)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.vakitAccent)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 }
                 .disabled(isRequesting)
 
                 Button {
-                    complete()
+                    continueWithoutPrompt()
                 } label: {
                     Text(lang.t("onboarding.notifications.skip"))
                         .font(.system(.subheadline, weight: .medium))
                         .foregroundStyle(Color.vakitTextDim)
                         .padding(.vertical, 8)
                 }
+                .disabled(isRequesting)
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
@@ -67,17 +74,17 @@ struct NotificationPermissionView: View {
 
     private func requestPermission() {
         isRequesting = true
+        StorageService.shared.hasShownNotificationPrompt = true
         Task {
-            _ = try? await UNUserNotificationCenter.current()
-                .requestAuthorization(options: [.alert, .sound, .badge])
+            _ = await notificationService.requestPermission()
             isRequesting = false
-            complete()
+            onContinue()
         }
     }
 
-    private func complete() {
-        StorageService.shared.onboardingDone = true
-        onFinish()
+    private func continueWithoutPrompt() {
+        StorageService.shared.hasShownNotificationPrompt = true
+        onContinue()
     }
 }
 
@@ -87,4 +94,5 @@ struct NotificationPermissionView: View {
         NotificationPermissionView {}
     }
     .environment(LanguageService.shared)
+    .environment(NotificationService.shared)
 }

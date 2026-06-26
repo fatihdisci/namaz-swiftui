@@ -16,6 +16,7 @@ struct SettingsView: View {
     @Environment(PurchaseService.self) private var purchaseService
     @Environment(AuthService.self) private var authService
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         NavigationStack {
@@ -38,6 +39,7 @@ struct SettingsView: View {
                             accountSection
                         }
                         aboutSection
+                        appActionsSection
                         legalSection
                     }
                     .padding(.horizontal, 20)
@@ -357,6 +359,25 @@ struct SettingsView: View {
                     .foregroundStyle(Color.vakitTextDim)
             }
             .padding(.vertical, 12)
+        }
+    }
+
+    // MARK: - App Aksiyonları
+
+    private var appActionsSection: some View {
+        section(titleKey: "settings.app") {
+            Button {
+                openURL(AppStoreConfig.writeReviewURL)
+            } label: {
+                HStack {
+                    rowLabel(icon: "star.bubble", titleKey: "settings.rateApp")
+                    Spacer()
+                    Image(systemName: "arrow.up.forward.app")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.vakitTextDim)
+                }
+                .padding(.vertical, 12)
+            }
         }
     }
 

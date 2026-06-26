@@ -25,12 +25,14 @@ struct VakitApp: App {
                 .environment(authService)
                 .fullScreenCover(isPresented: $showOnboarding) {
                     OnboardingView {
+                        StorageService.shared.onboardingDone = true
                         showOnboarding = false
                         Task {
                             await rescheduleNotifications()
                         }
                     }
                     .environment(languageService)
+                    .environment(notificationService)
                 }
                 .task {
                     if !showOnboarding {
