@@ -50,7 +50,7 @@ struct NotificationSettingsView: View {
         .navigationTitle(lang.t("settings.notifications"))
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            isAuthorized = await notificationService.requestPermission()
+            isAuthorized = await notificationService.refreshAuthorizationStatus()
         }
     }
 
@@ -65,10 +65,10 @@ struct NotificationSettingsView: View {
                 .background(Circle().fill(Color.vakitError.opacity(0.12)))
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(lang.t("notification.disabled.title"))
+                Text(lang.t("notifications.permission.disabled.title"))
                     .font(.system(.subheadline, weight: .semibold))
                     .foregroundStyle(Color.vakitText)
-                Text(lang.t("notification.disabled.body"))
+                Text(lang.t("notifications.permission.disabled.body"))
                     .font(.vakitReference)
                     .foregroundStyle(Color.vakitTextDim)
             }
@@ -80,7 +80,7 @@ struct NotificationSettingsView: View {
                     openURL(url)
                 }
             } label: {
-                Text(lang.t("notification.disabled.action"))
+                Text(lang.t("notifications.permission.openSettings"))
                     .font(.system(.caption, weight: .semibold))
                     .foregroundStyle(Color.vakitBg)
                     .padding(.horizontal, 12)
@@ -106,15 +106,30 @@ struct NotificationSettingsView: View {
         return VStack(spacing: 0) {
             // Header row
             HStack(spacing: 12) {
-                Image(systemName: prayer.systemImage)
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(prayer.accentColor)
-                    .frame(width: 40, height: 40)
-                    .background(Circle().fill(prayer.accentColor.opacity(0.12)))
+                ZStack(alignment: .bottomTrailing) {
+                    Image(systemName: prayer.systemImage)
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundStyle(prayer.accentColor)
+                        .frame(width: 40, height: 40)
+                        .background(Circle().fill(prayer.accentColor.opacity(0.12)))
 
-                Text(lang.t(prayer.localizationKey))
-                    .font(.system(.body, weight: .medium))
-                    .foregroundStyle(Color.vakitText)
+                    Circle()
+                        .fill(setting.enabled ? prayer.accentColor : Color.vakitTextDim)
+                        .frame(width: 8, height: 8)
+                        .overlay(Circle().stroke(Color.vakitSurface, lineWidth: 1.5))
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(lang.t(prayer.localizationKey))
+                        .font(.system(.body, weight: .semibold))
+                        .foregroundStyle(Color.vakitText)
+                        .lineLimit(1)
+
+                    Text(lang.t(setting.enabled ? "notifications.status.on" : "notifications.status.off"))
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(setting.enabled ? prayer.accentColor : Color.vakitTextDim)
+                        .textCase(.uppercase)
+                }
 
                 Spacer()
 

@@ -26,6 +26,8 @@ struct VakitApp: App {
                 .fullScreenCover(isPresented: $showOnboarding) {
                     OnboardingView {
                         StorageService.shared.onboardingDone = true
+                        StorageService.shared.shouldShowSetupCompleteCard = true
+                        NotificationCenter.default.post(name: .vakitSetupCompleteCardShouldShow, object: nil)
                         showOnboarding = false
                         Task {
                             await rescheduleNotifications()

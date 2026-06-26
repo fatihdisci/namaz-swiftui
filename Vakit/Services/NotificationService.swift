@@ -48,6 +48,15 @@ final class NotificationService {
         }
     }
 
+    /// Sistem bildirim izin durumunu prompt göstermeden günceller.
+    @discardableResult
+    func refreshAuthorizationStatus() async -> Bool {
+        let settings = await center.notificationSettings()
+        let authorized = [.authorized, .provisional, .ephemeral].contains(settings.authorizationStatus)
+        isAuthorized = authorized
+        return authorized
+    }
+
     /// Bekleyen tüm bildirimleri iptal eder.
     func cancelAll() {
         center.removeAllPendingNotificationRequests()
@@ -71,13 +80,11 @@ final class NotificationService {
 
         // Taze vakitlerden 30 günlük Home/Lock Screen widget snapshot'ı üret.
         let sortedWidgetDays = times.keys.sorted().compactMap { times[$0] }
-        await MainActor.run {
-            WidgetSnapshotWriter.update(
-                city: city,
-                days: sortedWidgetDays,
-                language: languageService.currentLanguage
-            )
-        }
+        await WidgetSnapshotWriter.update(
+            city: city,
+            days: sortedWidgetDays,
+            language: languageService.currentLanguage
+        )
 
         guard authorized else {
             cancelAll()

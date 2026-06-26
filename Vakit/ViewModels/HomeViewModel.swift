@@ -2,6 +2,13 @@ import Foundation
 import Observation
 import SwiftUI
 
+struct DailyPreviewContent: Equatable {
+    let iconName: String
+    let titleKey: String
+    let text: String
+    let reference: String
+}
+
 @Observable
 @MainActor
 final class HomeViewModel {
@@ -12,6 +19,8 @@ final class HomeViewModel {
     var countdownString: String = ""
     var hijriDate: String = ""
     var dailyVerse: Verse?
+    var dailyPreview: DailyPreviewContent?
+    var nextPrayerProgress: Double = 0
     var isLoading: Bool = false
     var currentCity: City?
     var savedLocations: [PrayerLocation] = []
@@ -30,6 +39,7 @@ final class HomeViewModel {
         self.prayerService = prayerService
         self.languageService = languageService
         self.dailyVerse = DailyContent.dailyVerse()
+        self.dailyPreview = Self.makeDailyPreview(language: languageService.currentLanguage)
 
         currentCity = storage.resolvedCity
         savedLocations = storage.savedPrayerLocations
@@ -42,6 +52,7 @@ final class HomeViewModel {
     /// Bugün + yarın vakitlerini yükler, sonraki 7 günü cache'e doldurur.
     func load() async {
         dailyVerse = DailyContent.dailyVerse()
+        dailyPreview = Self.makeDailyPreview(language: languageService.currentLanguage)
         savedLocations = storage.savedPrayerLocations
 
         guard let city = currentCity ?? storage.resolvedCity else {
@@ -103,6 +114,7 @@ final class HomeViewModel {
 
     func refreshDailyContent() {
         dailyVerse = DailyContent.dailyVerse()
+        dailyPreview = Self.makeDailyPreview(language: languageService.currentLanguage)
     }
 
     private static func hijriDateText(from times: PrayerTimes) -> String {
@@ -132,6 +144,7 @@ final class HomeViewModel {
         nextPrayer = next.prayer
         nextPrayerTime = next.time
         countdownString = countdownString(until: next.time, from: date)
+        nextPrayerProgress = progressToNextPrayer(next.time, from: date)
     }
 
     /// String Catalog üzerinden geri sayım metni.
@@ -154,6 +167,39 @@ final class HomeViewModel {
         return languageService.t("countdown.hoursMinutes", hours, minutes)
     }
 
+    private func progressToNextPrayer(_ nextTime: Date, from now: Date) -> Double {
+        guard let today = todaysTimes else { return 0 }
+
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: currentCity?.timezone ?? "") ?? .current
+
+        let rows = Prayer.allCases.map { prayer in
+            (prayer: prayer, time: today.time(for: prayer))
+        }
+
+        let previousTime: Date
+        if calendar.isDate(nextTime, inSameDayAs: today.date),
+           let nextIndex = rows.firstIndex(where: { $0.prayer == nextPrayer }) {
+            if nextIndex > 0 {
+                previousTime = rows[nextIndex - 1].time
+            } else if let yesterdayIsha = calendar.date(byAdding: .day, value: -1, to: today.isha) {
+                previousTime = yesterdayIsha
+            } else {
+                previousTime = today.isha.addingTimeInterval(-24 * 60 * 60)
+            }
+        } else {
+            previousTime = today.isha
+        }
+
+        let total = nextTime.timeIntervalSince(previousTime)
+        guard total > 0, total.isFinite else { return 0 }
+
+        let elapsed = now.timeIntervalSince(previousTime)
+        let raw = elapsed / total
+        guard raw.isFinite else { return 0 }
+        return min(1, max(0, raw))
+    }
+
     /// Liste için satır durumları.
     func rowState(for prayer: Prayer, at date: Date = Date()) -> (time: Date, isPast: Bool, isNext: Bool) {
         guard let today = todaysTimes else {
@@ -162,6 +208,59 @@ final class HomeViewModel {
         let time = today.time(for: prayer)
         let isNext = prayer == nextPrayer && Calendar.current.isDate(time, inSameDayAs: date)
         return (time, time <= date, isNext)
+    }
+
+    private static func makeDailyPreview(language: String, date: Date = Date()) -> DailyPreviewContent? {
+        let seed = Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 1
+
+        switch seed % 4 {
+        case 0:
+            if let verse = DailyContent.dailyVerse(for: date) {
+                return DailyPreviewContent(
+                    iconName: "book.closed.fill",
+                    titleKey: "home.dailyPreview.kind.verse",
+                    text: verse.text(language: language),
+                    reference: verse.reference
+                )
+            }
+        case 1:
+            if let hadith = DailyContent.dailyHadith(for: date) {
+                return DailyPreviewContent(
+                    iconName: "quote.bubble.fill",
+                    titleKey: "home.dailyPreview.kind.hadith",
+                    text: hadith.text(language: language),
+                    reference: hadith.source
+                )
+            }
+        case 2:
+            if let dua = DailyContent.dailyDua(for: date) {
+                return DailyPreviewContent(
+                    iconName: "hands.sparkles.fill",
+                    titleKey: "home.dailyPreview.kind.dua",
+                    text: dua.text(language: language),
+                    reference: dua.title(language: language) ?? dua.source
+                )
+            }
+        default:
+            if let esma = DailyContent.dailyEsma(for: date) {
+                return DailyPreviewContent(
+                    iconName: "sparkles",
+                    titleKey: "home.dailyPreview.kind.esma",
+                    text: esma.meaning(language: language),
+                    reference: esma.name(language: language)
+                )
+            }
+        }
+
+        if let verse = DailyContent.dailyVerse(for: date) {
+            return DailyPreviewContent(
+                iconName: "book.closed.fill",
+                titleKey: "home.dailyPreview.kind.verse",
+                text: verse.text(language: language),
+                reference: verse.reference
+            )
+        }
+        return nil
     }
 
     var isFriday: Bool {

@@ -6,6 +6,7 @@ struct HomeView: View {
     @State private var showLocationPicker = false
     @State private var showProGate = false
     @State private var proGateContext: ProGateContext = .general
+    @State private var showSetupCompleteCard = StorageService.shared.shouldShowSetupCompleteCard
     private let onOpenDiscover: () -> Void
 
     @Environment(LanguageService.self) private var lang
@@ -40,6 +41,7 @@ struct HomeView: View {
             .toolbar(.hidden, for: .navigationBar)
         }
         .task {
+            showSetupCompleteCard = StorageService.shared.shouldShowSetupCompleteCard
             await viewModel.load()
         }
         .onReceive(NotificationCenter.default.publisher(for: .vakitPrayerLocationChanged)) { _ in
@@ -50,6 +52,9 @@ struct HomeView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .vakitContentUpdated)) { _ in
             viewModel.refreshDailyContent()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .vakitSetupCompleteCardShouldShow)) { _ in
+            showSetupCompleteCard = true
         }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
@@ -81,8 +86,17 @@ struct HomeView: View {
                     NextPrayerCard(
                         prayer: viewModel.nextPrayer,
                         time: viewModel.nextPrayerTime,
-                        countdown: viewModel.countdownString
+                        countdown: viewModel.countdownString,
+                        progress: viewModel.nextPrayerProgress
                     )
+
+                    if showSetupCompleteCard {
+                        setupCompleteCard
+                    }
+
+                    if let preview = viewModel.dailyPreview {
+                        DailyContentCard(preview: preview, onOpenDiscover: onOpenDiscover)
+                    }
 
                     citySelector
 
@@ -111,6 +125,50 @@ struct HomeView: View {
                 .padding(.bottom, 32)
             }
         }
+    }
+
+    private var setupCompleteCard: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(Color.vakitAccent)
+                .frame(width: 34, height: 34)
+                .background(Circle().fill(Color.vakitAccent.opacity(0.14)))
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(lang.t("home.setupComplete.title"))
+                    .font(.system(.subheadline, design: .rounded, weight: .bold))
+                    .foregroundStyle(Color.vakitText)
+                Text(lang.t("home.setupComplete.body"))
+                    .font(.vakitReference)
+                    .foregroundStyle(Color.vakitTextDim)
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer(minLength: 4)
+
+            Button {
+                StorageService.shared.shouldShowSetupCompleteCard = false
+                showSetupCompleteCard = false
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Color.vakitTextDim)
+                    .frame(width: 28, height: 28)
+                    .contentShape(Rectangle())
+            }
+            .accessibilityLabel(lang.t("home.setupComplete.dismiss"))
+        }
+        .padding(16)
+        .background(Color.vakitSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .strokeBorder(Color.vakitAccent.opacity(0.22), lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(lang.t("home.setupComplete.accessibility"))
     }
 
     private var topBar: some View {

@@ -32,6 +32,7 @@ final class StorageService {
         static let asrSchoolMigrated = "asr_school_migrated"
         static let asrSchoolStandardCorrectionMigrated = "asr_school_standard_correction_migrated"
         static let hasShownNotificationPromptKey = "has_shown_notification_prompt"
+        static let shouldShowSetupCompleteCard = "should_show_setup_complete_card"
     }
 
     private static let cacheRetentionDays = 30
@@ -344,11 +345,17 @@ final class StorageService {
         favoriteDuaIDs = ids
     }
 
-    /// Bildirim izni onboarding sonrası ana ekranda değer gösterildikten sonra
-    /// bir kereliğine istenir. Gösterildikten sonra true olur.
+    /// Bildirim izni onboarding tanıtımında ele alındı mı?
     var hasShownNotificationPrompt: Bool {
         get { defaults.bool(forKey: Key.hasShownNotificationPromptKey) }
         set { defaults.set(newValue, forKey: Key.hasShownNotificationPromptKey) }
+    }
+
+    /// Onboarding tamamlandıktan sonra ana ekranda bir kez gösterilecek bilgi kartı.
+    /// Varsayılan false: mevcut kullanıcılar güncelleme sonrası kartı görmez; yeni onboarding tamamlayınca true yapılır.
+    var shouldShowSetupCompleteCard: Bool {
+        get { defaults.bool(forKey: Key.shouldShowSetupCompleteCard) }
+        set { defaults.set(newValue, forKey: Key.shouldShowSetupCompleteCard) }
     }
 
     var fridayReminderEnabled: Bool {
@@ -459,6 +466,7 @@ extension StorageService {
             Key.fridayReminderEnabled,
             Key.motivationalNotesEnabled,
             Key.hasShownNotificationPromptKey,
+            Key.shouldShowSetupCompleteCard,
         ]
         keysToRemove.forEach { defaults.removeObject(forKey: $0) }
 
@@ -473,6 +481,7 @@ extension Notification.Name {
     static let vakitPrayerLocationChanged = Notification.Name("vakitPrayerLocationChanged")
     static let vakitSavedPrayerLocationsChanged = Notification.Name("vakitSavedPrayerLocationsChanged")
     static let vakitHomePrayerLocationChanged = Notification.Name("vakitHomePrayerLocationChanged")
+    static let vakitSetupCompleteCardShouldShow = Notification.Name("vakitSetupCompleteCardShouldShow")
     /// Hesap silindiğinde gönderilir; app onboarding'e döner.
     static let vakitAccountDeleted = Notification.Name("vakitAccountDeleted")
 }
