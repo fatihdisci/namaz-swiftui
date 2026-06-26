@@ -302,12 +302,13 @@ private struct SmallView: View {
 
                     HStack(spacing: 3) {
                         Text(WidgetText.remaining(snapshot.language))
-                        Text(WidgetText.countdown(to: next.time, from: now, lang: snapshot.language))
+                        Text(timerInterval: now...next.time, countsDown: true)
+                            .monospacedDigit()
                     }
                     .font(.caption2)
                     .foregroundStyle(WidgetPalette.creamFaint)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.65)
                 }
             } else {
                 Spacer()
@@ -367,10 +368,13 @@ private struct MediumView: View {
 
                     HStack(spacing: 3) {
                         Text(WidgetText.remaining(snapshot.language))
-                        Text(WidgetText.countdown(to: next.time, from: now, lang: snapshot.language))
+                        Text(timerInterval: now...next.time, countsDown: true)
+                            .monospacedDigit()
                     }
                     .font(.caption2)
                     .foregroundStyle(WidgetPalette.creamFaint)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                 }
 
                 Spacer(minLength: 0)
@@ -468,10 +472,13 @@ private struct LargeView: View {
 
                         HStack(spacing: 4) {
                             Text(WidgetText.remaining(snapshot.language))
-                            Text(WidgetText.countdown(to: next.time, from: now, lang: snapshot.language))
+                            Text(timerInterval: now...next.time, countsDown: true)
+                                .monospacedDigit()
                         }
                         .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(WidgetPalette.creamFaint)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                         .padding(.leading, 2)
                     }
 
