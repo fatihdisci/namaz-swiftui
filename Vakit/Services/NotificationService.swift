@@ -119,9 +119,16 @@ final class NotificationService {
                 let content = UNMutableNotificationContent()
                 let prayerName = languageService.t(prayer.localizationKey)
                 content.title = prayerName
-                var body = setting.minutesBefore > 0
-                    ? languageService.t("notification.body.remaining", prayerName, setting.minutesBefore)
-                    : languageService.t("notification.body.started", prayerName)
+                var body: String
+                if prayer == .sunrise {
+                    body = setting.minutesBefore > 0
+                        ? languageService.t("notification.body.sunrise.remaining", setting.minutesBefore)
+                        : languageService.t("notification.body.sunrise")
+                } else {
+                    body = setting.minutesBefore > 0
+                        ? languageService.t("notification.body.remaining", setting.minutesBefore)
+                        : languageService.t("notification.body.started")
+                }
                 // Motive edici alt metin (opsiyonel)
                 if storage.motivationalNotesEnabled,
                    let noteKey = prayer.motivationalNoteKey {

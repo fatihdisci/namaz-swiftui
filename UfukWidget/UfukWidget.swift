@@ -25,59 +25,6 @@ private enum WidgetText {
         lang == "tr" ? "Şehir seçmek için uygulamayı açın." : "Open Ufuk to choose a city."
     }
 
-    static func progressLabel(_ lang: String) -> String {
-        localized("widget.progress.label", lang: lang)
-    }
-
-    static func progressAccessibility(_ lang: String) -> String {
-        localized("widget.progress.accessibility", lang: lang)
-    }
-
-    static func localized(_ key: String, lang: String) -> String {
-        if let path = Bundle.main.path(forResource: lang, ofType: "lproj"),
-           let bundle = Bundle(path: path) {
-            let value = bundle.localizedString(forKey: key, value: nil, table: nil)
-            if value != key { return value }
-        }
-        switch (key, lang) {
-        case ("widget.progress.label", "tr"): return "Vakit aralığı"
-        case ("widget.progress.accessibility", "tr"): return "Halka mevcut vakit aralığının ne kadarının geçtiğini gösterir."
-        case ("widget.progress.label", _): return "Prayer interval"
-        case ("widget.progress.accessibility", _): return "The ring shows how much of the current prayer interval has passed."
-        default: return key
-        }
-    }
-
-    /// "2s 14dk" / "2h 14m" — entry zamanında hesaplanır, canlı saniye yok.
-    static func countdown(to target: Date, from now: Date, lang: String) -> String {
-        let interval = max(0, target.timeIntervalSince(now))
-        if interval < 60 {
-            return lang == "tr" ? "Az kaldı" : "Almost time"
-        }
-        let totalMinutes = Int(interval) / 60
-        let hours = totalMinutes / 60
-        let minutes = totalMinutes % 60
-        if hours == 0 {
-            return lang == "tr" ? "\(minutes)dk" : "\(minutes)m"
-        }
-        return lang == "tr" ? "\(hours)s \(minutes)dk" : "\(hours)h \(minutes)m"
-    }
-
-    static func compactCountdown(to target: Date, from now: Date, lang: String) -> String {
-        let interval = max(0, target.timeIntervalSince(now))
-        if interval < 60 { return lang == "tr" ? "az" : "now" }
-        let totalMinutes = Int(interval) / 60
-        let hours = totalMinutes / 60
-        let minutes = totalMinutes % 60
-        if hours > 0 { return lang == "tr" ? "\(hours)s" : "\(hours)h" }
-        return lang == "tr" ? "\(minutes)dk" : "\(minutes)m"
-    }
-
-    static func compactPrayerName(_ key: String, _ lang: String) -> String {
-        let name = prayerName(key, lang)
-        return String(name.prefix(lang == "tr" ? 5 : 4))
-    }
-
     /// Galeri başlığı/açıklaması cihaz diline göre.
     static var deviceIsTurkish: Bool {
         (Locale.current.language.languageCode?.identifier ?? "en") == "tr"
@@ -197,8 +144,6 @@ struct UfukWidgetEntryView: View {
                 MediumView(snapshot: snapshot, now: entry.date)
             case .systemLarge:
                 LargeView(snapshot: snapshot, now: entry.date)
-            case .accessoryCircular:
-                CircularAccessoryView(snapshot: snapshot, now: entry.date)
             case .accessoryRectangular:
                 RectangularAccessoryView(snapshot: snapshot, now: entry.date)
             case .accessoryInline:
@@ -220,7 +165,7 @@ struct UfukWidgetEntryView: View {
             } else {
                 Color(rgbHex: 0x0a0a1a)
             }
-        case .accessoryCircular, .accessoryRectangular:
+        case .accessoryRectangular:
             AccessoryWidgetBackground()
         default:
             Color.clear
@@ -272,49 +217,47 @@ private struct SmallView: View {
     var body: some View {
         let phase = currentSkyPhase(now: now, snapshot: snapshot)
         let next = snapshot.next(after: now)
-        let progress = snapshot.progress(at: now)
 
         VStack(spacing: 6) {
             BrandRow(trailing: snapshot.shortCityName, phase: phase)
 
             if let next {
-                PrayerProgressRing(
-                    progress: progress,
-                    nextPrayerKey: next.key,
-                    lineWidth: 6,
-                    iconSize: 20
+                PrayerIconView(
+                    prayerKey: next.key,
+                    size: 24,
+                    color: WidgetPalette.accentGold
                 )
-                .frame(width: 58, height: 58)
-                .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
-                .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
 
                 VStack(spacing: 1) {
                     Text(WidgetText.prayerName(next.key, snapshot.language))
                         .font(.caption)
                         .fontWeight(.medium)
                         .foregroundStyle(WidgetPalette.creamDim)
+                        .frame(maxWidth: .infinity)
 
                     Text(next.time.hhmm)
                         .font(.system(size: 30, weight: .bold, design: .rounded))
                         .foregroundStyle(WidgetPalette.cream)
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
-
-                    HStack(spacing: 3) {
-                        Text(WidgetText.remaining(snapshot.language))
-                        Text(timerInterval: now...next.time, countsDown: true)
-                            .monospacedDigit()
-                    }
-                    .font(.caption2)
-                    .foregroundStyle(WidgetPalette.creamFaint)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.65)
+                        .frame(maxWidth: .infinity)
                 }
+
+                HStack(spacing: 4) {
+                    Text(WidgetText.remaining(snapshot.language))
+                    Text(timerInterval: now...next.time, countsDown: true)
+                        .monospacedDigit()
+                }
+                .font(.caption)
+                .fontWeight(.medium)
+                .foregroundStyle(WidgetPalette.creamDim)
+                .lineLimit(1)
+                .minimumScaleFactor(0.65)
             } else {
                 Spacer()
                 Text("—")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundStyle(WidgetPalette.creamFaint)
+                    .foregroundStyle(WidgetPalette.creamDim)
                 Spacer()
             }
         }
@@ -332,10 +275,9 @@ private struct MediumView: View {
     var body: some View {
         let phase = currentSkyPhase(now: now, snapshot: snapshot)
         let next = snapshot.next(after: now)
-        let progress = snapshot.progress(at: now)
 
         HStack(spacing: 14) {
-            // SOL: marka + şehir + halka + sonraki vakit/saat + hicri
+            // SOL: marka + şehir + ikon + sonraki vakit/saat + hicri
             VStack(alignment: .leading, spacing: 6) {
                 BrandRow(trailing: snapshot.shortCityName, phase: phase)
 
@@ -343,15 +285,11 @@ private struct MediumView: View {
 
                 if let next {
                     HStack(spacing: 10) {
-                        PrayerProgressRing(
-                            progress: progress,
-                            nextPrayerKey: next.key,
-                            lineWidth: 5,
-                            iconSize: 16
+                        PrayerIconView(
+                            prayerKey: next.key,
+                            size: 22,
+                            color: WidgetPalette.accentGold
                         )
-                        .frame(width: 44, height: 44)
-                .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
-                .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
 
                         VStack(alignment: .leading, spacing: 0) {
                             Text(WidgetText.prayerName(next.key, snapshot.language))
@@ -366,13 +304,14 @@ private struct MediumView: View {
                         }
                     }
 
-                    HStack(spacing: 3) {
+                    HStack(spacing: 4) {
                         Text(WidgetText.remaining(snapshot.language))
                         Text(timerInterval: now...next.time, countsDown: true)
                             .monospacedDigit()
                     }
-                    .font(.caption2)
-                    .foregroundStyle(WidgetPalette.creamFaint)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(WidgetPalette.creamDim)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                 }
@@ -434,55 +373,52 @@ private struct LargeView: View {
     var body: some View {
         let phase = currentSkyPhase(now: now, snapshot: snapshot)
         let next = snapshot.next(after: now)
-        let progress = snapshot.progress(at: now)
 
         VStack(spacing: 0) {
             // Üst: marka + şehir
             BrandRow(trailing: snapshot.cityName, phase: phase)
                 .padding(.horizontal, 2)
-                .padding(.bottom, 10)
+                .padding(.bottom, 14)
 
-            // Orta: halka + vakit bilgisi | vakit listesi
-            HStack(alignment: .center, spacing: 18) {
-                // SOL: progress halkası + sıradaki vakit + geri sayım + hicri
-                VStack(alignment: .leading, spacing: 8) {
+            // Orta: sıradaki vakit | vakit listesi (iki sütun)
+            HStack(alignment: .top, spacing: 20) {
+                // SOL: sıradaki vakit
+                VStack(alignment: .leading, spacing: 10) {
                     if let next {
-                        HStack(spacing: 14) {
-                            PrayerProgressRing(
-                                progress: progress,
-                                nextPrayerKey: next.key,
-                                lineWidth: 5,
-                                iconSize: 18
+                        HStack(alignment: .center, spacing: 12) {
+                            PrayerIconView(
+                                prayerKey: next.key,
+                                size: 20,
+                                color: WidgetPalette.accentGold
                             )
-                            .frame(width: 50, height: 50)
-                .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
-                .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
 
-                            VStack(alignment: .leading, spacing: 1) {
+                            VStack(alignment: .leading, spacing: 2) {
                                 Text(WidgetText.prayerName(next.key, snapshot.language))
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(.system(size: 13, weight: .medium))
                                     .foregroundStyle(WidgetPalette.creamDim)
                                 Text(next.time.hhmm)
-                                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                                    .font(.system(size: 36, weight: .bold, design: .rounded))
                                     .foregroundStyle(WidgetPalette.cream)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.6)
                             }
                         }
 
-                        HStack(spacing: 4) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "timer")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundStyle(WidgetPalette.accentGold.opacity(0.6))
                             Text(WidgetText.remaining(snapshot.language))
                             Text(timerInterval: now...next.time, countsDown: true)
                                 .monospacedDigit()
                         }
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(WidgetPalette.creamFaint)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(WidgetPalette.cream)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .padding(.leading, 2)
                     }
 
-                    Spacer(minLength: 4)
+                    Spacer(minLength: 6)
 
                     Text(snapshot.hijriDate(at: now).hijriDiacriticStripped)
                         .font(.system(size: 11, weight: .medium))
@@ -516,7 +452,7 @@ private struct LargeView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                         .opacity(isPast && !isNext ? 0.4 : 1)
-                        .padding(.vertical, 3.5)
+                        .padding(.vertical, 4)
                     }
                 }
                 .padding(.horizontal, 14)
@@ -525,10 +461,10 @@ private struct LargeView: View {
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(.black.opacity(0.18))
                 )
-                .frame(width: 150)
+                .frame(width: 155)
             }
 
-            Spacer(minLength: 10)
+            Spacer(minLength: 12)
 
             // Alt: günün ayeti/hadisi kartı
             if let verseText = snapshot.dailyVerseText {
@@ -583,42 +519,6 @@ private struct LargeView: View {
     }
 }
 
-// MARK: - accessoryCircular (kilit ekranı, saat etrafı)
-
-private struct CircularAccessoryView: View {
-    let snapshot: WidgetPrayerSnapshot
-    let now: Date
-
-    var body: some View {
-        if let window = snapshot.window(at: now) {
-            ZStack {
-                LivePrayerProgressRing(
-                    interval: window.previous...window.next.time,
-                    nextPrayerKey: window.next.key
-                )
-                .widgetAccentable()
-
-                VStack(spacing: -1) {
-                    Text(WidgetText.compactPrayerName(window.next.key, snapshot.language))
-                        .font(.system(size: 8, weight: .semibold, design: .rounded))
-                    Text(WidgetText.compactCountdown(to: window.next.time, from: now, lang: snapshot.language))
-                        .font(.system(size: 8, weight: .bold, design: .rounded))
-                        .monospacedDigit()
-                }
-                .minimumScaleFactor(0.6)
-                .lineLimit(1)
-                .widgetAccentable()
-            }
-            .accessibilityLabel(Text(WidgetText.progressLabel(snapshot.language)))
-            .accessibilityHint(Text(WidgetText.progressAccessibility(snapshot.language)))
-        } else {
-            Text("Ufuk")
-                .font(.system(size: 10, weight: .bold, design: .rounded))
-                .widgetAccentable()
-        }
-    }
-}
-
 // MARK: - accessoryRectangular (kilit ekranı)
 
 private struct RectangularAccessoryView: View {
@@ -646,8 +546,9 @@ private struct RectangularAccessoryView: View {
                     Text(timerInterval: now...next.time, countsDown: true)
                         .monospacedDigit()
                 }
-                .font(.caption2)
-                .foregroundStyle(.secondary)
+                .font(.caption)
+                .fontWeight(.medium)
+                .foregroundStyle(.primary)
                 .lineLimit(1)
             } else {
                 Text(snapshot.shortCityName)
@@ -687,10 +588,6 @@ private struct EmptyStateView: View {
         switch family {
         case .accessoryInline:
             Text("Ufuk")
-        case .accessoryCircular:
-            Text("Ufuk")
-                .font(.system(size: 10, weight: .bold, design: .rounded))
-                .widgetAccentable()
         case .accessoryRectangular:
             Text(WidgetText.emptyBody(lang))
                 .font(.caption)
@@ -732,7 +629,6 @@ struct UfukWidget: Widget {
             .systemSmall,
             .systemMedium,
             .systemLarge,
-            .accessoryCircular,
             .accessoryRectangular,
             .accessoryInline,
         ])
@@ -762,12 +658,6 @@ struct UfukWidgetBundle: WidgetBundle {
 }
 
 #Preview("Large", as: .systemLarge) {
-    UfukWidget()
-} timeline: {
-    UfukEntry(date: Date(), snapshot: .sample)
-}
-
-#Preview("Circular", as: .accessoryCircular) {
     UfukWidget()
 } timeline: {
     UfukEntry(date: Date(), snapshot: .sample)

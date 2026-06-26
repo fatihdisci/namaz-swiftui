@@ -14,7 +14,6 @@
 		A10000000000000000000031 /* QuranAudioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000032 /* QuranAudioServiceTests.swift */; };
 		AF0000000000000000000002 /* SkyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000001 /* SkyGradient.swift */; };
 		AF0000000000000000000004 /* PrayerIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000003 /* PrayerIcon.swift */; };
-		AF0000000000000000000006 /* PrayerProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000005 /* PrayerProgressRing.swift */; };
 		C791883C9B522D281C7AC072 /* UfukWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */; };
 		D7D177C9F1A85EEDBB060DAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB925CA7726FC375CD6DA19F /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -59,7 +58,6 @@
 		A10000000000000000000032 /* QuranAudioServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuranAudioServiceTests.swift; sourceTree = "<group>"; };
 		AF0000000000000000000001 /* SkyGradient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SkyGradient.swift; sourceTree = "<group>"; };
 		AF0000000000000000000003 /* PrayerIcon.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrayerIcon.swift; sourceTree = "<group>"; };
-		AF0000000000000000000005 /* PrayerProgressRing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrayerProgressRing.swift; sourceTree = "<group>"; };
 		BB925CA7726FC375CD6DA19F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C000000000000000000002 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		C000000000000000000003 /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 				08ACE226FCA80EC7456ABD19 /* UfukWidget.swift */,
 				AF0000000000000000000001 /* SkyGradient.swift */,
 				AF0000000000000000000003 /* PrayerIcon.swift */,
-				AF0000000000000000000005 /* PrayerProgressRing.swift */,
 				C4A9B6A946A8659B69514805 /* Info.plist */,
 				53EE6BDD0B56927D61636326 /* UfukWidget.entitlements */,
 			);
@@ -332,7 +329,6 @@
 				C791883C9B522D281C7AC072 /* UfukWidget.swift in Sources */,
 				AF0000000000000000000002 /* SkyGradient.swift in Sources */,
 				AF0000000000000000000004 /* PrayerIcon.swift in Sources */,
-				AF0000000000000000000006 /* PrayerProgressRing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
