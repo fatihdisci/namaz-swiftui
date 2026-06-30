@@ -10,7 +10,7 @@ enum ProGateContext {
         switch self {
         case .general: return "settings.pro"
         case .safar: return "safar.title"
-        case .kaza: return "kaza.title"
+        case .kaza: return "settings.pro"
         case .cities: return "pro.context.cities.title"
         }
     }
@@ -47,7 +47,6 @@ enum ProGateContext {
         case .general:
             return [
                 ProFeatureRow(icon: "airplane", titleKey: "pro.feature.safar"),
-                ProFeatureRow(icon: "checklist", titleKey: "pro.feature.kaza"),
                 ProFeatureRow(icon: "building.2", titleKey: "pro.feature.cities")
             ]
         case .safar:
@@ -58,9 +57,8 @@ enum ProGateContext {
             ]
         case .kaza:
             return [
-                ProFeatureRow(icon: "checklist", titleKey: "pro.feature.kaza"),
-                ProFeatureRow(icon: "plus.forwardslash.minus", titleKey: "pro.context.kaza.feature.counters"),
-                ProFeatureRow(icon: "lock.doc", titleKey: "pro.context.kaza.feature.local")
+                ProFeatureRow(icon: "airplane", titleKey: "pro.feature.safar"),
+                ProFeatureRow(icon: "building.2", titleKey: "pro.feature.cities")
             ]
         case .cities:
             return [

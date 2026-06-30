@@ -4,7 +4,7 @@ Ufuk, iOS 17 ve üzeri için geliştirilmiş Türkçe ve İngilizce bir namaz va
 
 ## Güncel durum
 
-- İlk App Store sürümü: `1.0.0` (build `27`), App Review için hazır
+- Sıradaki sürüm: `1.3.0`
 - Ana dal: `main`; güncel özelliklerin tamamı ilk sürüme dahil
 - Ana uygulama: `com.vakit.app`
 - Widget: `com.vakit.app.widget`
@@ -27,7 +27,22 @@ Ufuk, iOS 17 ve üzeri için geliştirilmiş Türkçe ve İngilizce bir namaz va
 - Home Screen ve Lock Screen widget'ları; dinamik gökyüzü, canlı vakit ilerleme halkası ve küçük/orta/inline/circular/rectangular düzenler
 - Türkçe ve İngilizce dil desteği
 - RevenueCat üzerinden aylık, yıllık ve ömür boyu Ufuk Pro satın alımları
-- Pro kapsamında çoklu şehir, kaza namazı takibi ve seferi mesafesi hesabı
+- Free kapsamı geniştir: vakitler, bildirimler, kıble, keşfet içerikleri, paylaşım görselleri, dua kütüphanesi/favoriler, tarih takvimi, Cuma/Ramazan kartları, temel widget ve kaza takibi ücretsizdir
+- Free kullanıcı 1 aktif + 1 ek kayıtlı şehir kullanabilir; Ufuk Pro en fazla 10 kayıtlı şehir ve seferi mesafesi hesabı sunar
+
+## Free vs Pro
+
+| Özellik | Free | Pro |
+| --- | --- | --- |
+| Namaz vakitleri, geri sayım ve bildirimler | ✅ | ✅ |
+| Kıble pusulası | ✅ | ✅ |
+| Keşfet içerikleri ve paylaşım görselleri | ✅ | ✅ |
+| Dua kütüphanesi ve favoriler | ✅ | ✅ |
+| Tarih takvimi, Cuma/Ramazan kartları | ✅ | ✅ |
+| Temel Home Screen / Lock Screen widget'ları | ✅ | ✅ |
+| Kaza takibi | ✅ | ✅ |
+| Kayıtlı şehir limiti | 2 | 10 |
+| Seferi mesafesi hesabı | ❌ | ✅ |
 
 ## Ekran görüntüleri
 
@@ -100,7 +115,7 @@ xcodebuild \
 - Entitlement: `pro`
 - Ürünler: `vakit_pro_monthly`, `vakit_pro_yearly`, `vakit_pro_lifetime`
 
-App Store Connect ürünleri aynı kimliklerle oluşturulmalı ve RevenueCat'teki `pro` entitlement'ına bağlanmalıdır.
+App Store Connect ürünleri aynı kimliklerle oluşturulmalı ve RevenueCat'teki `pro` entitlement'ına bağlanmalıdır. Kod tarafındaki kaynak değer `PurchaseService.ProductID` enum'udur; çalışan ürün kimlikleri değiştirilmemelidir.
 
 ## İçerik güncelleme
 

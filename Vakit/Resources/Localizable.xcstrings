@@ -227,13 +227,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "You can save up to 10 cities. Please delete one before adding a new one."
+            "value": "Free includes 2 saved cities. Ufuk Pro supports up to %ld saved cities."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "En fazla 10 şehir ekleyebilirsiniz. Yeni bir şehir eklemek için bir tanesini silmeniz gerekmektedir."
+            "value": "Free planda 2 kayıtlı şehir kullanabilirsiniz. Ufuk Pro en fazla %ld kayıtlı şehir destekler."
           }
         }
       }
@@ -2505,13 +2505,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add more prayer cities"
+            "value": "Save up to 10 cities"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Daha fazla vakit şehri ekle"
+            "value": "10 şehre kadar kaydet"
           }
         }
       }
@@ -2539,13 +2539,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use Ufuk Pro to add more cities and switch prayer times instantly from Home."
+            "value": "Free includes 2 saved cities. Ufuk Pro lets you keep up to 10 cities ready."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Birden fazla şehir ekleyip ana sayfadan vakitler arasında anında geçiş yapmak için Ufuk Pro gerekir."
+            "value": "Free planda 2 kayıtlı şehir kullanabilirsiniz. Ufuk Pro ile 10 şehre kadar hazır tutabilirsiniz."
           }
         }
       }
@@ -2607,13 +2607,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use Ufuk Pro to track and update your missed prayer counts privately on this device."
+            "value": "Missed prayer tracking is free. Ufuk Pro is for traveler calculation and expanded city limits."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kaza namazı borcunuzu bu cihazda özel şekilde takip edip düzenlemek için Ufuk Pro gerekir."
+            "value": "Kaza takibi ücretsizdir. Ufuk Pro seferi hesabı ve genişletilmiş şehir limiti içindir."
           }
         }
       }
@@ -2658,13 +2658,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use Ufuk Pro to calculate traveler status from your home city and current distance."
+            "value": "Preview the traveler calculator, then unlock Ufuk Pro for distance-based traveler status."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ev şehrinize ve anlık mesafeye göre seferi durumunu hesaplamak için Ufuk Pro gerekir."
+            "value": "Seferi hesabını önizleyin; mesafeye dayalı seferi durumu için Ufuk Pro'ya geçin."
           }
         }
       }
@@ -2675,13 +2675,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add Multiple Cities"
+            "value": "Use Up to 10 Cities"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Çoklu Şehir Ekle"
+            "value": "10 Şehre Kadar Kullan"
           }
         }
       }
@@ -2811,13 +2811,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Multiple Cities"
+            "value": "Up to 10 Saved Cities"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Çoklu Şehir"
+            "value": "10 Kayıtlı Şehre Kadar"
           }
         }
       }
@@ -3100,13 +3100,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Unlock advanced tools that make Ufuk more personal."
+            "value": "Unlock traveler calculation and room for up to 10 saved cities."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ufuk’u daha kişisel hale getiren gelişmiş araçların kilidini açın."
+            "value": "Seferi hesabı ve 10 kayıtlı şehre kadar kullanım için Ufuk Pro'ya geçin."
           }
         }
       }

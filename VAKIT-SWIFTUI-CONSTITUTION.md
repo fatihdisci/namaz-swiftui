@@ -194,8 +194,8 @@ Vakit/                          # Ana app target
       SettingsView.swift
       NotificationSettingsView.swift
       SafarView.swift           # Pro
-      KazaView.swift            # Pro
-      CitiesView.swift          # Pro
+      KazaView.swift            # Free
+      CitiesView.swift          # Free: 2 kayıtlı şehir, Pro: 10 kayıtlı şehir
       PaywallView.swift
     Onboarding/
       OnboardingView.swift
@@ -240,25 +240,25 @@ Shared/                         # App + Widget + Watch ortak kod
 |Namaz vakitleri + geri sayım          |✅   |✅  |
 |Bildirimler (vakit bazlı özelleştirme)|✅   |✅  |
 |Kıble yönü                            |✅   |✅  |
-|Günlük ayet/hadis                     |✅   |✅  |
-|Tek şehir                             |✅   |✅  |
+|Keşfet içerikleri + paylaşım görselleri|✅  |✅  |
+|Dua kütüphanesi + favoriler           |✅   |✅  |
+|Tarih takvimi                         |✅   |✅  |
+|Cuma/Ramazan kartları                 |✅   |✅  |
+|Kaza takibi                           |✅   |✅  |
+|Temel widget                          |✅   |✅  |
+|Kayıtlı şehir limiti                  |2    |10 |
 |**Seferi hesabı**                     |❌   |✅  |
-|**Kaza takibi**                       |❌   |✅  |
-|**Çoklu şehir (max 5)**               |❌   |✅  |
-|Widget                                |✅   |✅  |
-|**Dynamic Island / Live Activity**    |❌   |✅  |
-|**Apple Watch**                       |❌   |✅  |
 
-Not: Widget başlangıçta Pro-only planlanmıştı, ancak kod hiçbir zaman Pro kontrolü uygulamadı. 24 Haziran 2026 kararıyla widget kalıcı olarak ücretsiz/herkese açık olarak onaylandı.
+Not: Widget başlangıçta Pro-only planlanmıştı, ancak kod hiçbir zaman Pro kontrolü uygulamadı. 1.3.0 kararıyla temel widget kalıcı olarak ücretsiz/herkese açık olarak onaylandı.
 
-**Pro gating:** `PurchaseService.isPro` üzerinden. Pro olmayan bir özelliğe dokununca `ProGateView` (paywall) gösterilir.
+**Pro gating:** `PurchaseService.hasProAccess` üzerinden. Pro olmayan bir özelliğe dokununca `ProGateView` (paywall) gösterilir. RevenueCat API çağrıları yalnızca `PurchaseService.swift` içinde kalır.
 
 **RevenueCat ürünleri:**
 
 ```
-com.vakit.pro.monthly   → Aylık
-com.vakit.pro.yearly    → Yıllık
-com.vakit.pro.lifetime  → Tek seferlik
+vakit_pro_monthly   → Aylık
+vakit_pro_yearly    → Yıllık
+vakit_pro_lifetime  → Tek seferlik
 Entitlement: "pro"
 ```
 
@@ -302,9 +302,9 @@ Entitlement: "pro"
 |Phase 2|Ana ekran UI (Aurora, geri sayım, liste, ayet/hadis)         |
 |Phase 3|Onboarding + Lokalizasyon                                    |
 |Phase 4|Bildirimler + Kıble                                          |
-|Phase 5|Pro özellikler (Seferi + Kaza + Çoklu şehir) + DEV Pro toggle|
+|Phase 5|Pro özellikler (Seferi + çoklu şehir limiti) + free Kaza + DEV Pro toggle|
 |Phase 6|RevenueCat + Pro gating                                      |
-|Phase 7|Widget + Dynamic Island + Apple Watch                        |
+|Phase 7|Temel widget                                                 |
 |Phase 8|Polish + App Store hazırlık                                  |
 
 Detaylı promptlar `VAKIT-SWIFTUI-PROMPT-KIT.md` dosyasında.

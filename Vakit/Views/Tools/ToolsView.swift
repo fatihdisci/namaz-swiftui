@@ -28,13 +28,15 @@ struct ToolsView: View {
                                 SafarView()
                             }
 
-                            proTool(
-                                icon: "checklist",
-                                titleKey: "kaza.title",
-                                subtitleKey: "kaza.subtitle",
-                                context: .kaza
-                            ) {
+                            NavigationLink {
                                 KazaView()
+                            } label: {
+                                toolRow(
+                                    icon: "checklist",
+                                    titleKey: "kaza.title",
+                                    subtitleKey: "kaza.subtitle",
+                                    isLocked: false
+                                )
                             }
 
                             NavigationLink {

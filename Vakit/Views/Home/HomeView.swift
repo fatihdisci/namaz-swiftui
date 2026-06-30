@@ -61,12 +61,11 @@ struct HomeView: View {
             Task { await viewModel.load() }
         }
         .sheet(isPresented: $showLocationPicker) {
-            // Her açılışta TAZE model sahiplenen alt view; konum aynı instance'tan
-            // üretilip geri verilir (ilk açılışta kaydetme sorunu çözülür).
             NewLocationSheet(lang: lang) { location in
                 saveNewLocation(location)
                 showLocationPicker = false
             }
+            .environment(purchaseService)
         }
         .sheet(isPresented: $showProGate) {
             ProGateView(context: proGateContext)
@@ -244,11 +243,6 @@ struct HomeView: View {
             HStack(spacing: 12) {
                 ForEach(viewModel.savedLocations) { location in
                     Button {
-                        guard purchaseService.hasProAccess || location.id == viewModel.currentCity?.id else {
-                            proGateContext = .cities
-                            showProGate = true
-                            return
-                        }
                         StorageService.shared.selectedPrayerLocation = location
                     } label: {
                         Text(location.shortName)
@@ -267,14 +261,22 @@ struct HomeView: View {
                 }
 
                 Button {
-                    guard purchaseService.hasProAccess else {
+                    guard ProFeaturePolicy.canAddSavedCity(
+                        currentCount: viewModel.savedLocations.count,
+                        isNewLocation: true,
+                        hasProAccess: purchaseService.hasProAccess
+                    ) else {
                         proGateContext = .cities
                         showProGate = true
                         return
                     }
                     showLocationPicker = true
                 } label: {
-                    Image(systemName: purchaseService.hasProAccess ? "plus" : "lock.fill")
+                    Image(systemName: ProFeaturePolicy.canAddSavedCity(
+                        currentCount: viewModel.savedLocations.count,
+                        isNewLocation: true,
+                        hasProAccess: purchaseService.hasProAccess
+                    ) ? "plus" : "lock.fill")
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(Color.vakitAccent)
                         .frame(width: 36, height: 36)
@@ -308,26 +310,22 @@ struct HomeView: View {
 
 // MARK: - New location sheet
 
-/// Yeni konum ekleme sheet'i. KENDİ `LocationSelectionViewModel`'ini sahiplenir;
-/// sheet her açıldığında taze model kurulur, seçilen konum aynı instance'tan
-/// üretilip `onSave` ile geri verilir.
+/// Yeni konum ekleme sheet'i ortak `LocationPickerSheet` akışını kullanır;
+/// limit ve duplicate kontrolü policy/helper tarafında kalır.
 private struct NewLocationSheet: View {
     let lang: LanguageService
     let onSave: (PrayerLocation) -> Void
 
-    @State private var model = LocationSelectionViewModel()
+    @Environment(PurchaseService.self) private var purchaseService
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.vakitBg.ignoresSafeArea()
-                LocationSelectionView(viewModel: model) { location in
-                    onSave(location)
-                }
-            }
-        }
-        .environment(lang)
-        .preferredColorScheme(.dark)
+        LocationPickerSheet(
+            purpose: .prayer,
+            mode: .add,
+            hasProAccess: purchaseService.hasProAccess,
+            lang: lang,
+            onSave: onSave
+        )
     }
 }
 

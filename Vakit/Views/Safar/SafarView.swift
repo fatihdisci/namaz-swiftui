@@ -29,21 +29,11 @@ struct SafarView: View {
                 .padding(.top, 16)
                 .padding(.bottom, 32)
             }
-            .blur(radius: purchaseService.hasProAccess ? 0 : 8)
+            .blur(radius: purchaseService.hasProAccess ? 0 : 3)
             .allowsHitTesting(purchaseService.hasProAccess)
 
             if !purchaseService.hasProAccess {
-                Button {
-                    showProGate = true
-                } label: {
-                    Label(lang.t("pro.unlock"), systemImage: "lock.fill")
-                        .font(.system(.headline, design: .rounded, weight: .bold))
-                        .foregroundStyle(Color.vakitText)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 16)
-                        .background(Color.vakitAccent)
-                        .clipShape(Capsule())
-                }
+                safarPreviewOverlay
             }
         }
         .task {
@@ -58,7 +48,12 @@ struct SafarView: View {
                 .environment(purchaseService)
         }
         .sheet(isPresented: $showHomeCityPicker) {
-            LocationPickerSheet(purpose: .home, mode: .add, lang: lang) { location in
+            LocationPickerSheet(
+                purpose: .home,
+                mode: .add,
+                hasProAccess: true,
+                lang: lang
+            ) { location in
                 StorageService.shared.homePrayerLocation = location
                 viewModel.refreshHomeLocation()
                 showHomeCityPicker = false
@@ -75,6 +70,44 @@ struct SafarView: View {
                 .font(.vakitCaption)
                 .foregroundStyle(Color.vakitTextDim)
         }
+    }
+
+    private var safarPreviewOverlay: some View {
+        VStack(spacing: 14) {
+            Image(systemName: "airplane")
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundStyle(Color.vakitAccent)
+
+            Text(lang.t("safar.title"))
+                .font(.system(.title3, design: .rounded, weight: .bold))
+                .foregroundStyle(Color.vakitText)
+
+            Text(lang.t("pro.context.safar.subtitle"))
+                .font(.vakitCaption)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(Color.vakitTextDim)
+
+            Button {
+                showProGate = true
+            } label: {
+                Label(lang.t("pro.cta.safar"), systemImage: "lock.fill")
+                    .font(.system(.headline, design: .rounded, weight: .bold))
+                    .foregroundStyle(Color.vakitBg)
+                    .padding(.horizontal, 22)
+                    .padding(.vertical, 14)
+                    .background(Color.vakitAccent)
+                    .clipShape(Capsule())
+            }
+        }
+        .padding(22)
+        .frame(maxWidth: 320)
+        .background(Color.vakitSurface.opacity(0.96))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .strokeBorder(Color.vakitBorder, lineWidth: 1)
+        )
+        .padding(.horizontal, 20)
     }
 
     private var homeCityCard: some View {

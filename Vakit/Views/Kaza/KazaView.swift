@@ -2,10 +2,8 @@ import SwiftUI
 
 struct KazaView: View {
     @State private var viewModel = KazaViewModel()
-    @State private var showProGate = false
 
     @Environment(LanguageService.self) private var lang
-    @Environment(PurchaseService.self) private var purchaseService
 
     var body: some View {
         ZStack {
@@ -27,33 +25,9 @@ struct KazaView: View {
                 .padding(.top, 16)
                 .padding(.bottom, 32)
             }
-            .blur(radius: purchaseService.hasProAccess ? 0 : 8)
-            .allowsHitTesting(purchaseService.hasProAccess)
-
-            if !purchaseService.hasProAccess {
-                Button {
-                    showProGate = true
-                } label: {
-                    Label(lang.t("pro.unlock"), systemImage: "lock.fill")
-                        .font(.system(.headline, design: .rounded, weight: .bold))
-                        .foregroundStyle(Color.vakitText)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 16)
-                        .background(Color.vakitAccent)
-                        .clipShape(Capsule())
-                }
-            }
         }
         .navigationTitle(lang.t("kaza.title"))
         .navigationBarTitleDisplayMode(.inline)
-        .task {
-            await purchaseService.refresh()
-        }
-        .sheet(isPresented: $showProGate) {
-            ProGateView(context: .kaza)
-                .environment(lang)
-                .environment(purchaseService)
-        }
     }
 
     private var totalCard: some View {
@@ -132,10 +106,6 @@ struct KazaView: View {
     }
 
     private func handleCounterAction(action: @escaping () -> Void) {
-        guard purchaseService.hasProAccess else {
-            showProGate = true
-            return
-        }
         action()
     }
 
@@ -155,6 +125,5 @@ struct KazaView: View {
         KazaView()
     }
     .environment(LanguageService.shared)
-    .environment(PurchaseService.shared)
     .preferredColorScheme(.dark)
 }

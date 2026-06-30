@@ -50,14 +50,15 @@ struct SettingsView: View {
             .toolbar(.hidden, for: .navigationBar)
         }
         .onAppear {
-            cleanupFreeUserCities()
+            cleanupSavedCitiesForCurrentPlan()
         }
         .sheet(item: $activeLocationPicker) { purpose in
             // Her açılışta TAZE bir LocationSelectionViewModel sahiplenen alt view;
             // konum, view'ın kendi instance'ından üretilip geri verilir.
             LocationPickerSheet(
                 purpose: purpose,
-                mode: purchaseService.hasProAccess ? .add : .edit,
+                mode: purpose == .home ? .add : locationPickerMode,
+                hasProAccess: purchaseService.hasProAccess,
                 lang: lang
             ) { location in
                 switch purpose {
@@ -65,7 +66,7 @@ struct SettingsView: View {
                     viewModel.saveLocation(
                         location,
                         context: modelContext,
-                        replaceExisting: !purchaseService.hasProAccess
+                        replaceExisting: locationPickerMode == .edit
                     )
                 case .home:
                     viewModel.saveHomeLocation(location)
@@ -100,13 +101,23 @@ struct SettingsView: View {
         }
     }
 
-    /// Free kullanıcıların birikmiş çoklu şehirlerini tek şehre indirger (bir kerelik göç).
-    private func cleanupFreeUserCities() {
+    private var locationPickerMode: LocationPickerMode {
+        let storage = StorageService.shared
+        let isAtLimit = storage.savedPrayerLocations.count >= ProFeaturePolicy.savedCityLimit(
+            hasProAccess: purchaseService.hasProAccess
+        )
+        return isAtLimit ? .edit : .add
+    }
+
+    /// Kayıtlı şehir listesini mevcut Free/Pro limitine göre toparlar (bir kerelik).
+    private func cleanupSavedCitiesForCurrentPlan() {
         let storage = StorageService.shared
         guard !purchaseService.hasProAccess, !storage.hasCleanedFreeCities else { return }
-        if let current = storage.selectedPrayerLocation {
-            storage.savedPrayerLocations = [current]
-        }
+        storage.savedPrayerLocations = ProFeaturePolicy.trimmedSavedCities(
+            storage.savedPrayerLocations,
+            selectedLocation: storage.selectedPrayerLocation,
+            hasProAccess: false
+        )
         storage.hasCleanedFreeCities = true
     }
 
@@ -467,8 +478,8 @@ struct SettingsView: View {
 // MARK: - Location picker sheet
 
 /// Konum seçici modu.
-/// - `.add`: Tam yetkili — kayıtlı şehirler listesi, maksimum limit denetimi (Pro).
-/// - `.edit`: Yalnızca mevcut şehri değiştirme — kayıtlı liste gizlenir (Free).
+/// - `.add`: Kayıtlı şehirler listesi ve maksimum limit denetimi.
+/// - `.edit`: Yalnızca mevcut şehri değiştirme — kayıtlı liste gizlenir.
 enum LocationPickerMode {
     case add
     case edit
@@ -489,6 +500,7 @@ enum LocationPickerPurpose: Identifiable {
 struct LocationPickerSheet: View {
     let purpose: LocationPickerPurpose
     let mode: LocationPickerMode
+    let hasProAccess: Bool
     let lang: LanguageService
     let onSave: (PrayerLocation) -> Void
 
@@ -502,7 +514,6 @@ struct LocationPickerSheet: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let storage = StorageService.shared
-    private let maxSavedCities = 10
     private let locationService = LocationService()
 
     var body: some View {
@@ -532,9 +543,7 @@ struct LocationPickerSheet: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(mode == .add
-                         ? (purpose == .home ? lang.t("safar.homeCity") : lang.t("settings.city"))
-                         : lang.t("settings.cityEdit"))
+                    Text(pickerTitle)
                         .font(.vakitHeadline)
                         .foregroundStyle(Color.vakitText)
                 }
@@ -557,13 +566,20 @@ struct LocationPickerSheet: View {
         .alert(lang.t("cityLimit.title"), isPresented: $showCityLimitAlert) {
             Button(lang.t("cityLimit.ok"), role: .cancel) {}
         } message: {
-            Text(lang.t("cityLimit.message"))
+            Text(lang.t("cityLimit.message", ProFeaturePolicy.savedCityLimit(hasProAccess: hasProAccess)))
         }
         .alert(lang.t("cityDuplicate.title"), isPresented: $showCityDuplicateAlert) {
             Button(lang.t("cityDuplicate.ok"), role: .cancel) {}
         } message: {
             Text(lang.t("cityDuplicate.message"))
         }
+    }
+
+    private var pickerTitle: String {
+        if purpose == .home {
+            return lang.t("safar.homeCity")
+        }
+        return mode == .add ? lang.t("settings.city") : lang.t("settings.cityEdit")
     }
 
     // MARK: - Auto Locate
@@ -635,6 +651,11 @@ struct LocationPickerSheet: View {
     }
 
     private func handleCitySelection(_ location: PrayerLocation) {
+        guard purpose == .prayer else {
+            onSave(location)
+            return
+        }
+
         let isNew = !storage.savedPrayerLocations.contains(where: { $0.id == location.id })
         let isDuplicate = storage.savedPrayerLocations.contains(where: {
             $0.shortName == location.shortName && $0.countryName == location.countryName && $0.id != location.id
@@ -642,7 +663,11 @@ struct LocationPickerSheet: View {
 
         if isDuplicate {
             showCityDuplicateAlert = true
-        } else if mode == .add && isNew && storage.savedPrayerLocations.count >= maxSavedCities {
+        } else if mode == .add && !ProFeaturePolicy.canAddSavedCity(
+            currentCount: storage.savedPrayerLocations.count,
+            isNewLocation: isNew,
+            hasProAccess: hasProAccess
+        ) {
             showCityLimitAlert = true
         } else {
             onSave(location)
